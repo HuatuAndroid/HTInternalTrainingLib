@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:errorImage="@drawable/error_bg"
+    app:noDoOption="@drawable/nodo_bg"
+    app:rightOption="@drawable/right_bg"
+    android:id="@+id/html_htv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</LinearLayout>

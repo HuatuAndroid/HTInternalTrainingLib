@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_grey_f7">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:padding="15dp"
+            android:id="@+id/details_title"
+            android:text="adfafdafsadf"
+            android:textSize="15sp"
+            android:textColor="@color/main_text_black_33"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:paddingLeft="15dp"
+            android:paddingBottom="15dp"
+            android:id="@+id/details_time"
+            android:text="2018-10-29 13:14"
+            android:textSize="12sp"
+            android:textColor="@color/main_bg_grey_b8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_below="@+id/details_time"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main_line_ea" />
+
+        <TextView
+            android:padding="15dp"
+            android:id="@+id/details_context"
+            android:text="sdafafsjweklj oiweif erjg kreg nre"
+            android:textSize="15sp"
+            android:textColor="@color/main_text_black_33"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/main_bg_grey_f8" />
+
+       <!-- <com.wb.baselib.view.MyListView
+            android:id="@+id/details_listview"
+            android:divider="@null"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
+
+    </LinearLayout>
+
+
+   <!-- <RelativeLayout
+        android:id="@+id/details_rl"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_toLeftOf="@+id/details_commit"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textCursorDrawable="@drawable/user_editview_cursor"
+            android:background="@drawable/user_shape_edittext_rect_gray"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/details_commit"
+            android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:background="@drawable/user_shape_button_bule"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="发送"/>
+
+    </RelativeLayout>-->
+</RelativeLayout>

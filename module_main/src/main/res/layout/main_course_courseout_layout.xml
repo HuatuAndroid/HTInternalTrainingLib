@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.zhiyun88.www.module_main.course.view.MyExpandableListView
+        android:id="@+id/course_exl"
+        android:groupIndicator="@drawable/main_expandablelistviewselector"
+        android:footerDividersEnabled="true"
+        android:childDivider="#00000000"
+        android:divider="#00000000"
+        android:dividerHeight="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,69 @@
+//if (isModule.toBoolean()) {
+//    apply plugin: 'com.android.application'
+//} else {
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.gitee.swwq_admin'
+//}
+
+android {
+    compileSdkVersion build_versions.target_sdk
+
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+//    sourceSets {
+//        main {
+//            if (isModule.toBoolean()) {
+//                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+//            } else {
+//                manifest.srcFile 'src/main/AndroidManifest.xml'
+//                //集成开发模式下排除debug文件夹中的所有Java文件
+//                java {
+//                    exclude 'debug/**'
+//                }
+//            }
+//        }
+//    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //打包
+    api 'com.baijia.player:video-playback:1.4.4'
+//    api deps.baijia.videoPlayback
+//    api deps.baijia.livesdkppt
+    api 'com.baijia.live:liveplayer-sdk-core-ppt:1.4.6'
+//    api deps.support.constraintLayout
+    api 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+//    api deps.baijia.materialDialogs
+    api 'com.afollestad.material-dialogs:commons:0.9.4.5'
+    api deps.baijia.picasso
+//    implementation 'com.github.w513209188:BaseLib:v1.7.4.1'
+    api deps.base
+
+}

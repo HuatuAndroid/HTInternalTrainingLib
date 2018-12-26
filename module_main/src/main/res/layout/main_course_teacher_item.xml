@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="#f7f9fc"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <ImageView
+            android:layout_margin="10dp"
+            android:id="@+id/user_img"
+            android:src="@drawable/touxiang_imt"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/user_img"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title_tv"
+                android:textSize="@dimen/title2"
+                android:textColor="@color/red"
+                android:text="fsfsfs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                    android:id="@+id/context_tv"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="@dimen/title4"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="fsfsfs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.zhiyun88.www.module_main.course.view.DashedLineView
+                android:text="fsfsfs"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

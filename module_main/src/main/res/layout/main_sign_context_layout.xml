@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/course_img"
+        android:scaleType="centerCrop"
+        android:src="@drawable/course_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/name_tv"
+            android:textSize="@dimen/title2"
+            android:text="dfsds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/name_s_tv"
+            android:textSize="@dimen/title3"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/name_img"
+            android:text="dsdasdas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/time_tv"
+            android:textSize="@dimen/title3"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/sj_img"
+            android:text="dsdasdas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/teacher_tv"
+            android:textSize="@dimen/title3"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/teacher_img"
+            android:text="dsdasdas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/postsign_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:textSize="@dimen/title2"
+        android:text="签到"
+        android:textColor="@color/white"
+        android:background="@drawable/main_sign_no_bg"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+</LinearLayout>

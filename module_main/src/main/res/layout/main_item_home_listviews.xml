@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_margin="15dp"
+        android:id="@+id/item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_image"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/course_image"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/main_text_black_33"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:maxLines="1"
+                android:textColor="@color/main_text_grey_7c"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/item_browse"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/main_home_browse"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/main_text_grey_7c"
+                android:textSize="12sp" />
+
+          <!--  <TextView
+                android:id="@+id/item_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/main_home_comment"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/main_text_grey_7c"
+                android:textSize="12sp" />-->
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_below="@+id/item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_line_ea" />
+
+</RelativeLayout>

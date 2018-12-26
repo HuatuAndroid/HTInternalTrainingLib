@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.wb.baselib.view.TopBarView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dtk_tb"
+        app:centerText="答题卡"
+        app:titleBarHeight="45dp"
+        app:leftType="imageButton"
+        app:leftDrawable="@drawable/public_back_hs"
+        app:fillStatusBar="false"
+        app:centerType="textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <ListView
+        android:layout_below="@+id/dtk_tb"
+        android:layout_above="@+id/post_test_tv"
+        android:id="@+id/mgv"
+        android:numColumns="6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/duo_right_bg"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/post_test_tv"
+        android:text="交卷"
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Dotest_InitProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <!-- 最大高度50dp，最小高度10dp，进度值确定，Drawable样式文件引用 -->
+        <item name="android:maxHeight">50dp</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:progressDrawable">@drawable/dotest_init_progressbar</item>
+    </style>
+
+    <style name="main_MyDialogStyle" parent="@android:style/Theme.Holo.Light.Dialog">
+        <!-- 窗口背景色 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!--是否有覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--进出动画-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.InputMethod</item>
+    </style>
+</resources>

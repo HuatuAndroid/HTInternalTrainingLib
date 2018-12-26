@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/topbarview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bottomLineColor="@color/main_line_ea"
+        app:centerTextColor="#333333"
+        app:centerTextSize="18sp"
+        app:centerType="textView"
+        app:centerText="话题详情"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/main_back"
+        app:leftType="imageButton"
+        app:showBottomLine="true"
+        app:titleBarHeight="45dp" />
+
+    <View
+        android:id="@+id/details_line"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/topbarview"
+        android:background="@color/main_line_ea" />
+
+    <com.wangbo.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/details_rl"
+        android:layout_below="@+id/details_line">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:id="@+id/details_head"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/details_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/details_head"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/main_text_black_33"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/details_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@id/details_head"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/main_bg_grey_b8"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/details_browse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/main_bg_grey_87"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/details_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/main_text_blue_458"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/main_text_blue_458" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/main_line_ea" />
+
+                <com.wb.baselib.view.MyListView
+                    android:id="@+id/p_mlv"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </com.wangbo.smartrefresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/details_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/details_text"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/details_like"
+            android:background="@drawable/details_shape_edittext_rect_gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="说两句"
+            android:textColor="@color/main_text_grey_bf"
+            android:textSize="14sp" />
+
+
+        <ImageView
+            android:id="@+id/details_like"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:src="@drawable/details_like" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

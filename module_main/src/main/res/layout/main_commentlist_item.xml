@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_margin="10dp"
+            android:id="@+id/user_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/user_img"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/title4"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:layout_toLeftOf="@+id/right_ll"
+                    android:id="@+id/user_nice_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/right_ll"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <com.zhiyun88.www.module_main.course.view.MyRatingBar
+                        android:layout_marginLeft="10dp"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_below="@+id/cancel_img"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/pfxx_rb"
+                        app:main_starCount="5"
+                        app:main_starEmpty="@drawable/cm_no"
+                        app:main_starFill="@drawable/cm_yes"
+                        app:main_starHalf="@drawable/cm_yes"
+                        app:main_starImageSize="15dp"
+                        app:main_starPadding="5dp"
+                        app:main_starStep="5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                    <TextView
+                        android:text="2016"
+                        android:id="@+id/time_tv"
+                        android:layout_marginTop="8dp"
+                        android:gravity="right"
+                        android:textSize="11sp"
+                        android:textColor="@color/main_num_d2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </RelativeLayout>
+            <TextView
+                android:layout_marginRight="10dp"
+                android:id="@+id/comment_tv"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/title5"
+                android:textColor="@color/main_text_grey_7c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_line_ea"/>
+</LinearLayout>

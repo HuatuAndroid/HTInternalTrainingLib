@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.wb.baselib.view.MyListView
+        android:id="@+id/p_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:scrollbars="none" />
+</android.support.v4.widget.NestedScrollView>

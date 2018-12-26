@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/main_text_black_33"
+        android:text="@string/main_offlineTraining"/>
+
+        <TextView
+            android:id="@+id/offline_more"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/main_more"
+            android:drawablePadding="5dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/main_text_grey_7c"
+            android:textSize="14sp"
+            android:text="@string/main_more"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/offline_recycle"
+        android:divider="@null"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_bg_grey_f8"/>
+</LinearLayout>

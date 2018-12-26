@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_courseinfo_bg">#f69000</color>
+    <color name="main_bg_white_ff">#FFFFFF</color>
+    <color name="main_bg_grey_f9">#f9f9f9</color>
+    <color name="main_bg_grey_f8">#f8f8f8</color>
+    <color name="main_bg_grey_f7">#f7f7f7</color>
+    <color name="main_title_grey_99">#999999</color>
+    <color name="main_text_black_33">#333333</color>
+    <color name="main_text_grey_7c">#7c7c7c</color>
+    <color name="main_text_grey_bf">#bfbfbf</color>
+    <color name="main_vertical_line_90">#90b9fe</color>
+    <color name="main_text_66">#666666</color>
+    <color name="main_text_9a">#9a9a9a</color>
+    <color name="main_text_red_f1">#f13d45</color>
+    <color name="main_text_cyan_13">#13e603</color>
+    <color name="main_text_red_1">#ff000b</color>
+    <color name="main_text_red_2">#fe575e</color>
+    <color name="main_text_red_3">#ff8a00</color>
+    <color name="main_text_blue_458">#458bfd</color>
+    <color name="main_green_color_27">#27bc8a</color>
+    <color name="main_text_black_11">#111111</color>
+    <color name="main_line_ea">#eaeaea</color>
+    <color name="main_rect_dc">#dcdcdc</color>
+    <color name="main_num_d2">#d2d1d1</color>
+    <color name="main_train_03">#03c8fc</color>
+    <color name="main_test_29">#29cf9e</color>
+    <color name="main_live_3c">#3c87f2</color>
+    <color name="main_bg_grey_b8">#b8b8b8</color>
+    <color name="main_bg_grey_87">#878787</color>
+
+    <color name="fgx">#e5e5e5</color>
+    <color name="main_bg">#236bb8</color>
+
+</resources>

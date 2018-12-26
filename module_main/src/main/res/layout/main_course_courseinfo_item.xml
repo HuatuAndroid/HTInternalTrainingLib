@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_above="@+id/isbuy_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.jungan.www.common_coorinator.CoordinatorTabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/coordinatortablayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabIndicatorBackBgColor="@color/white"
+            app:tabIndicatorColor="@color/main_text_blue_458"
+            app:tabSelectTextColor="@color/main_text_blue_458"
+            app:tabTextColor="@color/black">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </com.jungan.www.common_coorinator.CoordinatorTabLayout>
+    </LinearLayout>
+        <TextView
+            android:id="@+id/isbuy_tv"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/main_button_select_bg"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title2" />
+    </RelativeLayout>

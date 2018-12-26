@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/main_questionnaire_title"
+            android:textColor="@color/main_text_black_33"
+            android:textSize="@dimen/title3" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="@string/main_questionnaire_explain"
+            android:textColor="@color/main_title_grey_99"
+            android:textSize="@dimen/title5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_bg_grey_f9"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/questionnaire_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_text_black_33"
+                android:textSize="@dimen/title3" />
+
+            <com.zhiyun88.www.module_main.course.view.MyRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ratingbar"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cancel_img"
+                android:layout_centerHorizontal="true"
+                app:main_starCount="5"
+                app:main_starEmpty="@drawable/cm_no"
+                app:main_starFill="@drawable/cm_yes"
+                app:main_starHalf="@drawable/cm_yes"
+                app:main_starImageSize="20dp"
+                app:main_starPadding="5dp"
+                app:main_starStep="5" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/main_questionnaire_merit"
+            android:textColor="@color/main_text_black_33"
+            android:textSize="@dimen/title3" />
+
+        <EditText
+            android:gravity="start"
+            android:id="@+id/questionnaire_merit"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:padding="10dp"
+            android:textSize="@dimen/title5"
+            android:textCursorDrawable="@drawable/user_editview_cursor"
+            android:background="@drawable/user_shape_edittext_rect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/main_questionnaire_insufficient"
+            android:textColor="@color/main_text_black_33"
+            android:textSize="@dimen/title3" />
+
+        <EditText
+            android:gravity="start"
+            android:id="@+id/questionnaire_insufficient"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="@dimen/title5"
+            android:textCursorDrawable="@drawable/user_editview_cursor"
+            android:background="@drawable/user_shape_edittext_rect" />
+        <TextView
+            android:id="@+id/questionnaire_commit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/user_shape_button_bule"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/main_commit"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</ScrollView>

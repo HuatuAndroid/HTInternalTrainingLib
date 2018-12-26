@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg_grey_f7">
+    <com.wb.baselib.view.TopBarView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/course_tb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerType="textView"
+        app:titleBarHeight="45dp"
+        app:fillStatusBar="false"
+        app:centerText="课程"
+        app:rightType="imageButton"
+        app:rightImageResource="@drawable/main_search_black"
+        app:leftType="imageButton"
+        app:leftImageResource="@drawable/main_back"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.wb.baselib.view.DropDownMenu
+            android:id="@+id/dropDownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.wb.baselib.view.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/mFilterContentView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:contentView="@layout/public_resh_listview"
+                app:emptyView="@layout/custom_empty_view"
+                app:errorView="@layout/custom_error_view"
+                app:loadingView="@layout/custom_loading_view"
+                app:noNetworkView="@layout/custom_no_network_view" />
+        </com.wb.baselib.view.DropDownMenu>
+    </LinearLayout>
+</LinearLayout>

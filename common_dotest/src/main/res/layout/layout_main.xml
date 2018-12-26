@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+    <TextView
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:textColor="#ffffff"
+        android:id="@+id/test_type_tv"
+        android:text="材料题"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/questtype_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/content_main"/>
+</LinearLayout>

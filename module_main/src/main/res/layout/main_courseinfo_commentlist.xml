@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.wangbo.smartrefresh.layout.SmartRefreshLayout
+        android:visibility="gone"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.zhiyun88.www.module_main.course.view.NestedScrollListView
+            android:layout_width="match_parent"
+            android:id="@+id/p_mlv"
+            android:layout_height="match_parent"/>
+    </com.wangbo.smartrefresh.layout.SmartRefreshLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/empty_retry_view"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_empty"
+                />
+
+            <TextView
+                style="@style/MultipleStatusView.Content"
+                android:id="@+id/empty_view_tv"
+                android:layout_below="@id/empty_retry_view"
+                android:text="@string/empty_view_hint"/>
+        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+</LinearLayout>

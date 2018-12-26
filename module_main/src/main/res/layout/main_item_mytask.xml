@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cardview"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:contentPaddingBottom="10dp"
+    app:contentPaddingLeft="10dp"
+    app:contentPaddingRight="5dp"
+    app:contentPaddingTop="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/task_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/task_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="fasdf"
+                    android:textColor="@color/main_text_black_33"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/task_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/task_time"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/main_text_grey_7c"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/task_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/task_credit"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/main_text_grey_7c"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <cn.bingoogolapple.progressbar.BGAProgressBar
+            android:id="@+id/task_progressbar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:progress="0"
+            app:bga_pb_isCapRounded="false"
+            app:bga_pb_isHiddenText="false"
+            app:bga_pb_mode="circle"
+            app:bga_pb_reachedColor="#188eee"
+            app:bga_pb_reachedHeight="2dp"
+            app:bga_pb_textColor="#188eee"
+            app:bga_pb_textMargin="8dp"
+            app:bga_pb_textSize="10sp"
+            app:bga_pb_unReachedColor="#8bc6f6"
+            app:bga_pb_unReachedHeight="2dp" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

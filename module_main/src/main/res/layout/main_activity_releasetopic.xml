@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/topbarview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/main_back"
+        app:leftType="imageButton"
+        app:rightText="发表"
+        app:rightTextColor="@color/main_text_blue_458"
+        app:rightTextSize="15sp"
+        app:rightType="textView"
+        app:showBottomLine="false"
+        app:titleBarHeight="45dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标题"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/topic_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/user_shape_edittext_rect"
+                android:gravity="start"
+                android:hint="请输入标题(字数请控制在100以内哟)"
+                android:maxLength="100"
+                android:padding="10dp"
+                android:textColor="@color/main_text_black_33"
+                android:textColorHint="@color/main_text_grey_7c"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="内容"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/topic_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/user_shape_edittext_rect"
+                android:gravity="start"
+                android:hint="请输入内容"
+                android:minHeight="60dp"
+                android:padding="10dp"
+                android:textColor="@color/main_text_black_33"
+                android:textColorHint="@color/main_text_grey_7c"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/select_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+            <LinearLayout
+                android:id="@+id/have_name_ll"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/show_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_select_showname"/>
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="是否匿名发帖"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

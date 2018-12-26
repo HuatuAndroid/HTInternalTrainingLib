@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <ListView
+        android:layout_above="@+id/bt_ll"
+        android:id="@+id/p_lv"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:id="@+id/bt_ll"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/all_jx_tv"
+            android:textSize="@dimen/title3"
+            android:textColor="@color/white"
+            android:background="@color/main_text_blue_458"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="查看解析"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/error_jx_tv"
+            android:textSize="@dimen/title3"
+            android:textColor="@color/white"
+            android:background="@color/red"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="错题解析"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_grey_f8">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/topbarview"
+        app:fillStatusBar="false"
+        app:titleBarHeight="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:showBottomLine="false"
+        app:leftType="imageButton"
+        app:leftImageResource="@drawable/main_back"
+        app:centerType="textView"
+        app:centerTextColor="#333333"
+        app:centerTextSize="18sp"
+        app:rightType="textView"
+        app:rightTextSize="16sp"
+        app:rightTextColor="#D1D1D1"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/main_bg_grey_f8"/>
+    <include layout="@layout/public_mu_listview"/>
+</LinearLayout>

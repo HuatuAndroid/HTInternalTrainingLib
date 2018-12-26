@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/main_rel"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:textColor="@color/option_bg"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:background="@drawable/duo_error_bg"
+        android:id="@+id/option_tv"
+        android:gravity="center"
+        android:text="A"
+        android:layout_width="35dp"
+        android:layout_height="35dp" />
+    <!--<cn.droidlover.xrichtext.XRichText-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="fsfsfsdfsdfsdfs"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:layout_toRightOf="@+id/option_tv"-->
+        <!--android:id="@+id/txt_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+    <TextView
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/option_tv"
+        android:id="@+id/txt_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <include layout="@layout/main_commom_topbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_line_ea" />
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_margin="15dp"
+                android:id="@+id/downloading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/main_title_grey_99"
+                android:text="@string/main_downloading"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="33dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/user_downloading"/>
+
+                    <ImageView
+                        android:layout_marginTop="4dp"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/download_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/user_down_corner"/>
+                    <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/download_image_num"
+                        android:textSize="8sp"
+                        android:textColor="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/download_ing"
+                    android:gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:textColor="@color/main_text_black_33"
+                    android:text="@string/main_be_downloading"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/main_line_ea" />
+
+            <TextView
+                android:layout_margin="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/main_title_grey_99"
+                android:text="@string/main_cached"/>
+
+            <com.wb.baselib.view.MyListView
+                android:id="@+id/download_listview"
+                android:divider="@null"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

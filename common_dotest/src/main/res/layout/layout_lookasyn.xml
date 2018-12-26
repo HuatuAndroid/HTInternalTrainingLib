@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/look_jx_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/look_jx_no_bg"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="查看解析"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        android:id="@+id/main_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/test_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_right_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="正确"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/user_answer_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/nd_img"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/public_error"
+                android:text="正确"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/nd_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/public_easy" />
+        </RelativeLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/dotest_cunt_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="本题做了ffsfs"
+            android:textColor="@color/test_line"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/test_bg"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="答题时间"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/user_time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="fsfsd"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/test_fgx" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="全站正确率"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/right_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="fsfsd"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/test_fgx" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="易错项"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/yc_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="fsfsd"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/sz_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="解析"
+                android:textColor="#000000" />
+
+            <com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/jx_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="参考解析"
+                app:isOption="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/known_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="考点"
+                android:textColor="#000000" />
+
+            <me.next.tagview.TagCloudView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/tag_cloud_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tcvBackground="@drawable/background_tag_selector"
+                app:tcvCanTagClick="false"
+                app:tcvTagResId="@layout/item_tag_style"
+                app:tcvTextColor="#ffffff" />
+        </LinearLayout>
+
+        <include
+            android:visibility="gone"
+            layout="@layout/layout_answer" />
+    </LinearLayout>
+</LinearLayout>

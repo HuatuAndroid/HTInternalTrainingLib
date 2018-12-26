@@ -1,0 +1,83 @@
+//if (isModule.toBoolean()) {
+//    apply plugin: 'com.android.application'
+//} else {
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.gitee.swwq_admin'
+//}
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+//        if(isModule.toBoolean()){
+//            multiDexEnabled true
+//        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        resourcePrefix "main_"
+        ndk {
+            abiFilters 'armeabi-v7a', 'armeabi', 'x86' //x86虚拟机测试用，发版可去掉
+        }
+    }
+
+    sourceSets {
+        main {
+//            if (isModule.toBoolean()) {
+//                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+//            } else {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            //集成开发模式下排除debug文件夹中的所有Java文件
+            java {
+                exclude 'debug/**'
+            }
+//            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //    api deps.base
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    api 'com.android.support:cardview-v7:28.0.0'
+    api 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
+    //    compile project(':model_liveplay')
+    api project(':module_blackplay')
+    api project(':module_down')
+    api project(':module_playvideo')
+//    compile 'com.github.xuexiangjys:XQRCode:1.0.1'
+    api deps.base
+//    compile 'com.github.w513209188:BaseLib:v1.7.4.1'
+    //    implementation project(':common_dotest')
+    implementation 'com.baijia.live:liveplayer-sdk-ui:1.4.6'
+    implementation project(':common_dotest')
+    implementation 'com.github.w513209188:photolib:v1.0.1'
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
+}

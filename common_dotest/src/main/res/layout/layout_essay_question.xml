@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/look_jx_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/look_jx_no_bg"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="查看解析"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        android:id="@+id/main_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/test_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参考答案"
+                android:textColor="#000000" />
+
+            <com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/jx_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="参考解析"
+                app:isOption="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参考解析"
+                android:textColor="#000000" />
+
+            <com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/jx_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="参考解析"
+                app:isOption="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/known_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="考点"
+                android:textColor="#000000" />
+
+            <me.next.tagview.TagCloudView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/tag_cloud_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tcvBackground="@drawable/background_tag_selector"
+                app:tcvBorder="8dp"
+                app:tcvCanTagClick="false"
+                app:tcvItemBorderHorizontal="8dp"
+                app:tcvItemBorderVertical="6dp"
+                app:tcvShowEndText="false"
+                app:tcvShowRightImg="false"
+                app:tcvSingleLine="true"
+                app:tcvTextColor="#ffffff" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_answer" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/close_img"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/sign_close_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/close_img"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/sign_state_img"
+        android:src="@drawable/sign_fail_img"
+        android:layout_width="65dp"
+        android:layout_height="65dp" />
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/msg_tv"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="15dp"
+                android:textSize="@dimen/title2"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_below="@+id/sign_state_img"
+                android:text="fsdfs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+</RelativeLayout>

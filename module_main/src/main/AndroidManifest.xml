@@ -1,0 +1,110 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zhiyun88.www.module_main" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:theme="@style/BaseAppTheme"
+        >
+        <activity android:name=".main.ui.MainActivity"/>
+        <activity android:name=".commonality.ui.DownloadManagerActivity"/>
+        <activity android:name=".commonality.ui.FeedBackActivity"/>
+        <activity android:name=".commonality.ui.MessageActivity"/>
+        <activity android:name=".commonality.ui.IntegralActivity"/>
+        <activity android:name=".commonality.ui.MessageDetailActivity"/>
+        <activity android:name=".main.ui.SearchActivity"/>
+        <activity android:name=".course.ui.CourseInfoActivity">
+            <intent-filter>
+                <!--协议部分，随便设置-->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                android:host="course"
+                android:scheme="htnx" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".train.ui.TrainInfoActivity">
+            <intent-filter>
+                <!--协议部分，随便设置-->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="peixun"
+                    android:scheme="htnx" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".commonality.ui.UserInfoActivity"/>
+        <activity android:name=".train.ui.TrainListActivity"/>
+        <activity android:name=".course.ui.CourseMainActivity"/>
+        <activity android:name=".task.ui.TaskInfoActivity">
+            <intent-filter>
+                <!--协议部分，随便设置-->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="task"
+                    android:scheme="htnx" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".main.ui.TestActivity"/>
+        <activity android:name="com.jungan.www.module_playvideo.ui.PlayVodActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:hardwareAccelerated="false"
+            />
+        <activity
+            android:name="com.jungan.www.module_blackplay.activity.PBRoomActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:hardwareAccelerated="false"
+            />
+        <activity android:name="com.jungan.www.model_liveplay.activity.LiveRoomActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:hardwareAccelerated="false"
+            />
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".commonality.ui.QuestionnaireActivity"
+            android:configChanges="keyboard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            >
+            <intent-filter>
+                <!--协议部分，随便设置-->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="investigation"
+                    android:scheme="htnx" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="667"/>
+
+        <activity android:name=".library.ui.LibraryActivity"/>
+
+        <activity android:name=".community.ui.CommunityActivity"/>
+        <activity android:name=".community.ui.GroupDetailsActivity"/>
+        <activity android:name=".community.ui.TopicDetailsActivity"/>
+        <activity android:name=".community.ui.ReleaseTopicActivity"/>
+        <activity android:name=".community.ui.MyItemActivity"/>
+        <activity android:name=".commonality.ui.CertificateActivity"/>
+        <activity android:name=".commonality.ui.MyLibraryActivity"/>
+        <activity android:name=".information.ui.InformationActivity"/>
+        <activity android:name=".dotesting.ui.CommonTestActivity"/>
+        <activity android:name=".dotesting.ui.AnswerSheetActivity"/>
+        <activity android:name=".dotesting.ui.CuntActivity"/>
+        <activity android:name=".dotesting.ui.WjCountActivity"/>
+        <activity android:name=".sys.CustomCaptureActivity"/>
+        <activity android:name=".sign.ui.UserSignActivity"/>
+
+        <activity android:name=".library.ui.LibraryShowActivity" />
+    </application>
+</manifest>

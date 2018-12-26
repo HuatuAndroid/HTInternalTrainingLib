@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HtmlTextView">
+        <attr name="isOption" format="boolean"/>
+        <attr name="errorOption" format="reference"/>
+        <attr name="rightOption" format="reference"/>
+        <attr name="noDoOption" format="reference"/>
+        <attr name="errorImage" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="SplitView">
+        <attr name="splitRatio" format="float"/>
+        <attr name="minSplitTop" format="dimension"/>
+        <attr name="minSplitBottom" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="CustomDrawView">
+        <attr name="bottom_view" format="reference"/>
+        <attr name="top_view" format="reference"/>
+        <attr name="draw_img" format="reference"/>
+        <attr name="fgx_bg" format="color"/>
+        <attr name="draw_retion" format="float"/>
+        <attr name="draw_top" format="integer"/>
+        <attr name="draw_bottom" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="ComminQuestionBankView">
+
+    </declare-styleable>
+</resources>

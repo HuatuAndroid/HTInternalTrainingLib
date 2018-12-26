@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_margin="10dp"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:text="fsfsdfds"
+        android:id="@+id/sheet_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <com.jungan.www.common_dotest.view.mGriview
+        android:id="@+id/mgv"
+        android:layout_width="match_parent"
+        android:numColumns="4"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

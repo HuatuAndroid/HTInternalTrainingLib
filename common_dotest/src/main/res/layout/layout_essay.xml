@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:textColor="#ffffff"
+        android:id="@+id/test_type_tv"
+        android:text="问答题"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/questtype_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/html_htv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorImage="@drawable/error_bg"
+                app:noDoOption="@drawable/nodo_bg"
+                app:rightOption="@drawable/right_bg" />
+
+            <EditText
+                android:layout_marginBottom="10dp"
+                android:id="@+id/question_et"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edittext_bg"
+                android:gravity="start"
+                android:hint="请输入您的答案..."
+                android:maxLength="300"
+                android:padding="5dp"
+                android:textColor="@color/test_text"
+                android:textColorHint="@color/test_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/look_jx_tv"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/look_jx_no_bg"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="查看解析"
+                    android:textColor="#ffffff" />
+
+                <LinearLayout
+                    android:id="@+id/main_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/test_line" />
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="参考答案"
+                            android:textColor="#000000" />
+
+                        <com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/da_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="参考解析"
+                            app:isOption="false" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:drawablePadding="5dp"
+                            android:drawableLeft="@drawable/sz_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="解析"
+                            android:textColor="#000000" />
+
+                        <com.jungan.www.common_dotest.view.HtmlTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/jx_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="参考解析"
+                            app:isOption="false" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/known_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="考点"
+                            android:textColor="#000000" />
+
+                        <me.next.tagview.TagCloudView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/tag_cloud_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:tcvBackground="@drawable/background_tag_selector"
+                            app:tcvBorder="8dp"
+                            app:tcvCanTagClick="false"
+                            app:tcvItemBorderHorizontal="8dp"
+                            app:tcvItemBorderVertical="6dp"
+                            app:tcvShowEndText="false"
+                            app:tcvShowRightImg="false"
+                            app:tcvSingleLine="true"
+                            app:tcvTextColor="#ffffff" />
+                    </LinearLayout>
+
+                    <include
+                        android:visibility="gone"
+                        layout="@layout/layout_answer" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

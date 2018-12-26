@@ -1,0 +1,85 @@
+<resources>
+    <string name="main_app_name">module_main</string>
+    <string name="main_home">首页</string>
+    <string name="main_task">任务</string>
+    <string name="main_course">课程</string>
+    <string name="main_train">培训</string>
+    <string name="main_mine">我的</string>
+
+    <string name="main_search">搜索</string>
+    <string name="main_Clear_history">清除历史记录</string>
+    <string name="main_Please_enter_keywords">请输入关键字</string>
+
+    <string name="main_offlineTraining">线下培训</string>
+    <string name="main_onlineClass">在线好课</string>
+    <string name="main_more">更多</string>
+
+    <string name="main_aggregate_score">积分</string>
+    <string name="main_aggregate_my">我的积分</string>
+    <string name="main_total_number">我的排名</string>
+    <string name="main_Integral_record">积分记录</string>
+    <string name="main_League_table">积分排行榜</string>
+    <string name="main_this_year_awards">本年度获得:</string>
+    <string name="main_this_year_awards_default">本年度获得:?</string>
+    <string name="main_Obtained_this_quarter">本季度获得:</string>
+    <string name="main_Obtained_this_quarter_default">本季度获得:?</string>
+
+    <string name="main_curriculum_table">课程列表</string>
+    <string name="main_my_message">我的消息</string>
+
+    <string name="main_my_task">我的任务</string>
+    <string name="main_my_course">我的课程</string>
+    <string name="main_be_the_speaker">主讲:</string>
+
+    <string name="main_my_training">我的培训</string>
+    <string name="main_classes">开课</string>
+
+    <string name="main_my_integral">我的积分</string>
+    <string name="main_content_cannot_be_empty">内容不能为空</string>
+    <string name="main_problem_feedback">问题反馈</string>
+    <string name="main_submitted">已提交</string>
+
+    <string name="main_all_the_news">全部消息</string>
+    <string name="main_Course_notice">课程通知</string>
+    <string name="main_Task_to_inform">任务通知</string>
+    <string name="main_systematic_notification">系统通知</string>
+
+    <string name="main_ranking">名次</string>
+    <string name="main_username">用户名</string>
+    <string name="main_The_current_integral">当前积分</string>
+
+    <string name="main_downloading">正在下载</string>
+    <string name="main_my_download">我的下载</string>
+    <string name="main_be_downloading">下载中</string>
+    <string name="main_cached">已缓存</string>
+
+    <string name="main_to_be_completed">待完成</string>
+    <string name="main_off_the_stocks">已完成</string>
+    <string name="main_task_overdue">任务逾期</string>
+
+    <string name="main_post_course">岗位课程</string>
+    <string name="main_optional_courses">自选课程</string>
+
+    <string name="main_underway">进行中</string>
+    <string name="main_to_stay_in">待参加</string>
+    <string name="main_have_finished">已结束</string>
+
+    <string name="main_personal_details">个人信息</string>
+    <string name="main_head_portrait">头像</string>
+    <string name="main_name">姓名</string>
+    <string name="main_gender">性别</string>
+    <string name="main_date_of_birth">出生日期</string>
+    <string name="main_cell_phone_number">手机号码</string>
+
+    <string name="main_questionnaire_title">我们想收集一下大家对此阶段培训课程和培训组织质量的意见，以便提高我们的服务质量。</string>
+    <string name="main_questionnaire_explain">说明：一星：非常不满意；二星：不满意/有明显的短板；三星：一般/及格/就那样吧/说得过；四星：满意/比较不错/瑕不掩瑜；五星:非常满意/太棒了</string>
+    <string name="main_questionnaire_merit">此次培训中，你认为老师有哪些方面的优点？</string>
+    <string name="main_questionnaire_insufficient">此次培训中，你认为老师有哪些方面的不足？</string>
+
+    <string name="main_commit">提交</string>
+
+    <string name="main_parameter_error">参数错误</string>
+    <string name="main_default_num">\?</string>
+    <string name="main_my_certificate">我的证书</string>
+    <string name="main_my_library">我的文库</string>
+</resources>

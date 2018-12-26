@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:paddingRight="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            android:id="@+id/left_img"
+            android:scaleType="center"
+            android:layout_centerVertical="true"
+            android:src="@drawable/public_back_hs"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/answer_sheet"
+            android:src="@drawable/dotest_answer_sheet"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/test_pause"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/answer_sheet"
+            android:src="@drawable/dotest_pause"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <Chronometer
+            android:id="@+id/chronmer_ctr"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+
+            android:layout_toLeftOf="@+id/test_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/main_bg_grey_f8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/test_type_tv"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/main_text_black_33"
+                android:textSize="16sp"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/current_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:visibility="gone"
+                android:text="2"
+                android:id="@+id/current_count"
+                android:textSize="16sp"
+                android:layout_alignBaseline="@+id/current_count_tv"
+                android:layout_toLeftOf="@+id/current_count_tv"
+                android:textColor="@color/main_text_blue_458"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="1"
+                android:id="@+id/current_count_tv"
+                android:layout_alignParentRight="true"
+                android:textSize="13sp"
+                android:textColor="@color/main_bg_grey_b8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <ProgressBar
+        style="@style/Dotest_InitProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:max="10"
+        android:progress="5"
+        android:id="@+id/progressBar"
+        />
+</LinearLayout>

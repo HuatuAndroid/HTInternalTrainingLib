@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/sys_tb"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:centerType="textView"
+        app:centerText="扫一扫"
+        app:leftType="imageButton"
+        app:showBottomLine="true"
+        app:titleBarHeight="45dp"
+        app:fillStatusBar="false"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/fl_my_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

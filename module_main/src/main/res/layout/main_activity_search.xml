@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_height="30dp">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:src="@drawable/main_back"
+            android:id="@+id/back_img"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/seacher_tv"
+            android:layout_toRightOf="@+id/back_img"
+            android:background="@drawable/main_search_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/se_img"
+                android:src="@drawable/main_search_white"
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
+                <EditText
+                    android:imeOptions="actionSearch"
+                    android:id="@+id/ss_et"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:hint="@string/main_Please_enter_keywords"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_text_black_33"
+                    android:textSize="15sp"
+                    android:textCursorDrawable="@null"
+                    android:textColorHint="@color/main_title_grey_99"
+                    android:layout_toRightOf="@+id/se_img"
+                    android:layout_marginRight="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/search_del"
+                android:visibility="gone"
+                android:src="@drawable/main_search_del"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/seacher_tv"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="取消"
+            android:textSize="14sp"
+            android:textColor="@color/main_title_grey_99"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View
+        android:layout_below="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_line_ea"/>
+    <include layout="@layout/main_mu_resh_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_search"/>
+    <TextView
+        android:id="@+id/search_clear"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/main_text_blue_458"
+        android:textSize="16sp"
+        android:textColor="@color/main_bg_white_ff"
+        android:text="@string/main_Clear_history" />
+</RelativeLayout>

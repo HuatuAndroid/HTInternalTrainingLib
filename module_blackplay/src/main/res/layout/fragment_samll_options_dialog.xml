@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:background="@drawable/shape_pb_small_container_options"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fragment_small_options_full_screen"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="全屏"
+            android:textColor="@color/pb_live_blue"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/pb_second_text" />
+
+        <TextView
+            android:id="@+id/fragment_small_options_close_video"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="关闭"
+            android:textColor="@color/pb_live_red"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/fragment_small_options_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/pb_live_white"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/pb_live_blue"
+        android:textSize="18sp" />
+
+</LinearLayout>

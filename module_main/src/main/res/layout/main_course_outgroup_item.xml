@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/num_tv"
+            android:textColor="@color/main_num_d2"
+            android:textSize="@dimen/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/main_text_black_33"
+            android:id="@+id/tv_group_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:layout_toRightOf="@+id/num_tv"
+            android:textSize="@dimen/title3" />
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/course_down"
+            android:id="@+id/ex_up_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_bg_grey_f7"/>
+</LinearLayout>

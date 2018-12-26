@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/topbarview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bottomLineColor="@color/main_line_ea"
+        app:centerTextColor="#333333"
+        app:centerTextSize="18sp"
+        app:centerType="textView"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/main_back"
+        app:leftType="imageButton"
+        app:showBottomLine="true"
+        app:titleBarHeight="45dp" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

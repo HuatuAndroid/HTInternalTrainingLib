@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="相关问答"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/right_more_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/public__next"
+            android:text="查看问答"
+            android:textColor="#236bb8" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/wd_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/user_tx_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/touxiang" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/user_tx_img"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/username_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="fsfsfs"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+                    <ImageView
+
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/saveanswer_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="fsfsfs" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/dn_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="答案" />
+
+        <LinearLayout
+            android:id="@+id/wd1_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/user1_tx_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/touxiang" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/user1_tx_img"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/username1_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="fsfsfs"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/saveanswer_w"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/time1_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="fsfsfs" />
+                </LinearLayout>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/dn1_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="答案" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

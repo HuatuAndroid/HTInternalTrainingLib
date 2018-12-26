@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="300dp">
+    <TextView
+    android:layout_centerVertical="true"
+    android:text="fsfsfsdfsdfsdfs"
+    android:gravity="center_vertical"
+    android:layout_margin="10dp"
+    android:layout_toRightOf="@+id/option_tv"
+    android:id="@+id/tv_tv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+</LinearLayout>

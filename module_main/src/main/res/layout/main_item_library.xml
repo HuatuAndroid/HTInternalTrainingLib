@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:id="@+id/library_rl"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/library_image"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="15dp"
+        android:layout_width="100dp"
+        android:layout_height="68dp"
+        android:src="@drawable/course_image"/>
+
+    <RelativeLayout
+        android:layout_toRightOf="@+id/library_image"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/library_type"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_toRightOf="@+id/library_type"
+            android:id="@+id/library_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/library_collected"
+            android:ellipsize="end"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:maxLines="1"
+            android:textSize="15sp"
+            android:textColor="@color/main_text_black_11"/>
+        <ImageView
+            android:id="@+id/library_collected"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_have_is_collected"/>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/library_title"
+            android:id="@+id/library_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="12sp"
+            android:textColor="@color/main_bg_grey_87"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/library_image"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/main_line_ea"/>
+</RelativeLayout>

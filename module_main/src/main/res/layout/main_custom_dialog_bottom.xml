@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/details_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/details_shape_edittext_rect_gray"
+        android:gravity="start"
+        android:minLines="3"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:textColorHint="@color/main_text_grey_bf" />
+    <LinearLayout
+        android:layout_below="@+id/details_content"
+        android:id="@+id/have_name_ll"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/show_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_select_showname"/>
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否匿名发帖"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/details_content"
+        android:id="@+id/details_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/user_shape_button_bule"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="发送评论"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_attrs"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_attr_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true" />
+        <LinearLayout
+            android:id="@+id/op"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_attr_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="fsfsfsfs"
+                android:id="@+id/tv_attr_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/main_text_black_33"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <ImageView
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/op"
+            android:id="@+id/newmessgae_img"
+            android:src="@drawable/newmessage_img"
+            android:layout_width="16dp"
+            android:layout_height="16dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/user_next" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/main_line_ea" />
+
+    </RelativeLayout>
+</LinearLayout>
+
+

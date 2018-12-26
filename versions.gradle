@@ -1,0 +1,64 @@
+ext.deps = [:]
+//版本号
+def versions = [:]
+versions.support = "28.0.0"
+versions.runner="1.0.1"
+versions.espresso="3.0.1"
+versions.arouterApi="1.3.1"
+versions.videoplayer="1.7.2-snapshot"
+versions.livesdkppt="1.3.5"
+versions.picasso="2.5.2"
+versions.materialDialogs="0.9.4.5"
+versions.videoPlayback="1.4.4"
+versions.BaseLib="v1.7.4.1"
+versions.commonimagecrop="1.2.2"
+versions.commonpermission="1.1.0"
+versions.circleimageview="2.2.0"
+versions.liveplayersdkcoreppt="1.4.2"
+versions.constraintlayout="1.1.0"
+versions.cornerlabelview="1.0.3"
+versions.gson="2.4"
+ext.deps = deps
+//android必备
+def support = [:]
+support.recyclerview="com.android.support:recyclerview-v7:$versions.support"
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.runner="com.android.support.test:runner:$versions.runner"
+support.espresso="com.android.support.test.espresso:espresso-core:$versions.espresso"
+support.multidex = "com.android.support:multidex:$versions.multidex"
+support.design="com.android.support:design:$versions.support"
+support.constraintLayout="com.android.support.constraint:constraint-layout:$versions.constraintlayout"
+deps.support = support
+//百家云
+def baijia = [:]
+baijia.videoplayer="com.baijia.player:videoplayer:$versions.videoplayer"
+baijia.liveplayersdkcore="com.baijia.live:liveplayer-sdk-core:$versions.liveplayersdkcoreppt"
+baijia.livesdkppt="com.baijia.live:liveplayer-sdk-core-ppt:$versions.liveplayersdkcoreppt"
+baijia.picasso="com.squareup.picasso:picasso:$versions.picasso"
+baijia.materialDialogs="com.afollestad.material-dialogs:commons:$versions.materialDialogs"
+baijia.videoPlayback="com.baijia.player:video-playback:$versions.videoPlayback"
+baijia.circleimageview="de.hdodenhof:circleimageview:$versions.circleimageview"
+baijia.commonimagecrop="com.baijia.common:common-image-crop:$versions.commonimagecrop"
+baijia.commonpermission="com.baijia.common:common-permission:$versions.commonpermission"
+deps.baijia = baijia
+//第三方jar
+deps.base="com.github.w513209188:BaseLib:$versions.BaseLib"
+deps.cornerlabelview="com.github.czy1121:cornerlabelview:$versions.cornerlabelview"
+deps.gson="com.google.code.gson:gson:$versions.gson"
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 16
+build_versions.target_sdk = 28
+build_versions.build_tools = "28.0.3"
+ext.build_versions = build_versions
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    handler.maven { url "https://jitpack.io" }
+    handler.maven { url "https://raw.github.com/baijia/maven/master/" }
+}
+
+ext.addRepos = this.&addRepos

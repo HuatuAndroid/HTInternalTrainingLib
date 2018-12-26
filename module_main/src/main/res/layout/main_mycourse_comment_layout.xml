@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="请对本课程评价"
+            android:textSize="@dimen/title3"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/right_close_img"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/course_back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <com.zhiyun88.www.module_main.course.view.MyRatingBar
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_below="@+id/title_tv"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/pfxx_rb"
+        app:main_starCount="5"
+        app:main_starEmpty="@drawable/cm_no"
+        app:main_starFill="@drawable/cm_yes"
+        app:main_starHalf="@drawable/cm_yes"
+        app:main_starImageSize="25dp"
+        app:main_starPadding="5dp"
+        app:main_starStep="5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+        <EditText
+            android:padding="5dp"
+            android:gravity="top|left"
+            android:id="@+id/pj_et"
+            android:layout_below="@+id/pfxx_rb"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_nomal"
+            android:layout_width="match_parent"
+            android:layout_height="89dp" />
+    <TextView
+        android:id="@+id/post_comment_tv"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/pj_et"
+        android:gravity="center"
+        android:textSize="@dimen/title3"
+        android:textColor="@color/white"
+        android:background="#4087ff"
+        android:text="提交"
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+</RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/main_commom_topbar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/main_bg_grey_f8" />
+    <EditText
+        android:id="@+id/feedback_content"
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:gravity="start"
+        android:maxLength="200"
+        android:textCursorDrawable="@drawable/user_editview_cursor"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:textColor="@color/main_text_black_11"
+        android:textSize="14sp"
+        android:textColorHint="@color/main_title_grey_99"
+        android:background="@drawable/user_shape_edittext_rect"
+        android:hint="请输入您的问题或反馈,最多200字"/>
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:id="@+id/feedback_commit"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:background="@drawable/user_shape_button_bule"
+        android:text="提交"/>
+</LinearLayout>

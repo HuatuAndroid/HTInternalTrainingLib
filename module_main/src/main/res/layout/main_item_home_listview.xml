@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cardview"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:contentPaddingTop="10dp"
+    app:contentPaddingBottom="10dp"
+    app:contentPaddingRight="5dp"
+    app:contentPaddingLeft="5dp"
+    app:cardElevation="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="145dp"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/home_image"
+                android:background="@drawable/course_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/image_type"
+                android:visibility="gone"
+                android:src="@drawable/course_live_type"
+                android:layout_width="31dp"
+                android:layout_height="16dp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:id="@+id/home_title"
+                android:textSize="16sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/main_text_black_33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/home_num"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/main_text_grey_7c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

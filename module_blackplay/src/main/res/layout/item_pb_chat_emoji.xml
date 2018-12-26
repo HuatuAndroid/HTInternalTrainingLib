@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/shape_pb_live_item_chat_bg"
+    android:orientation="vertical"
+    android:id="@+id/pb_item_chat_emoji_group"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/pb_item_chat_emoji_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pb_live_white" />
+
+    <ImageView
+        android:id="@+id/pb_item_chat_emoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:scaleType="fitCenter" />
+
+</LinearLayout>
