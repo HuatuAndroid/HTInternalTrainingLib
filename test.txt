@@ -1,2 +1,0 @@
-bintray.user=ddddllll
-bintray.apikey=8ae7dd930ab7db806a84ab6715c34dc9bee65d05
