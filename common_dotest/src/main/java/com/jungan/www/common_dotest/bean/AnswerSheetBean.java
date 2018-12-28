@@ -6,8 +6,17 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class AnswerSheetBean implements Parcelable {
+    private String groupName;
     private String group;
     private List<QuestionBankBean> questionBankBeanList;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
     public String getGroup() {
         return group;
@@ -32,6 +41,7 @@ public class AnswerSheetBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.groupName);
         dest.writeString(this.group);
         dest.writeTypedList(this.questionBankBeanList);
     }
@@ -40,6 +50,7 @@ public class AnswerSheetBean implements Parcelable {
     }
 
     protected AnswerSheetBean(Parcel in) {
+        this.groupName = in.readString();
         this.group = in.readString();
         this.questionBankBeanList = in.createTypedArrayList(QuestionBankBean.CREATOR);
     }

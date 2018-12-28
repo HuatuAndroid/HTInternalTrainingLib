@@ -13,6 +13,10 @@ public class QuestionBankBean implements Parcelable {
     private String report_id;
     //题Id
     private String questId;
+    // KaelLi, 2018/12/28 begin
+    // 题的模块名
+    private String questionModuleName;
+    // KaelLi, 2018/12/28 end
     //题的类型
     private  int questionType;
     //题号
@@ -155,6 +159,14 @@ public class QuestionBankBean implements Parcelable {
         this.knows_name = knows_name;
     }
 
+    public String getQuestionModuleName() {
+        return questionModuleName;
+    }
+
+    public void setQuestionModuleName(String questionModuleName) {
+        this.questionModuleName = questionModuleName;
+    }
+
     public int getQuestionType() {
         return questionType;
     }
@@ -239,6 +251,7 @@ public class QuestionBankBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.report_id);
         dest.writeString(this.questId);
+        dest.writeString(this.questionModuleName);
         dest.writeInt(this.questionType);
         dest.writeLong(this.questionNum);
         dest.writeInt(this.questionModel);
@@ -264,6 +277,7 @@ public class QuestionBankBean implements Parcelable {
     protected QuestionBankBean(Parcel in) {
         this.report_id = in.readString();
         this.questId = in.readString();
+        this.questionModuleName = in.readString();
         this.questionType = in.readInt();
         this.questionNum = in.readLong();
         this.questionModel = in.readInt();

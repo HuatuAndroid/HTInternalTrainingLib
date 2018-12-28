@@ -2,6 +2,8 @@ package com.zhiyun88.www.module_main.task.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.wb.baselib.adapter.ListBaseAdapter;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.utils.ToActivityUtil;
+import com.zhiyun88.www.module_main.DialogUtils;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.dotesting.ui.CommonTestActivity;
 import com.zhiyun88.www.module_main.dotesting.ui.CuntActivity;
@@ -27,10 +30,16 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
     private Context mContext;
     private String taskId;
     private int currentFlags=1;
+    private String taskStatus;
+
     public TaskInfoListAdapter(List<TaskData> list, Context context,String taskI) {
         super(list, context);
         this.mContext=context;
         this.taskId=taskI;
+    }
+
+    public void setTaskStatus(String status) {
+        this.taskStatus = status;
     }
 
     @Override
@@ -66,11 +75,10 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
                         if(taskData.getType().equals("3")){
                             //问卷
                             ToActivityUtil.newInsance().toNextActivity(mContext, WjCountActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""}});
-                        }else if(taskData.getType().equals("2")){
+                        }else if(taskData.getType().equals("2")) {
                             //考试
-                            ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
+                            ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class, new String[][]{{"reportId", taskData.getReport_id() + ""}, {"testId", taskData.getId()}, {"taskId", taskId}, {"testName", taskData.getName()}});
                         }
-
 //                        ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
                     }else {
                         if(taskData.getType().equals("3")){
@@ -78,7 +86,21 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
                             ToActivityUtil.newInsance().toNextActivity(mContext, WjCountActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""}});
                         }else if(taskData.getType().equals("2")){
                             //考试
-                            ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
+                            Log.d("kaelli", "taskStatus:"+taskStatus);
+                            if (TextUtils.equals(taskStatus, "未开始") || TextUtils.equals(taskStatus, "已结束")) {
+                                DialogUtils dialogUtils = new DialogUtils(mContext);
+                                dialogUtils.setContent(taskStatus)
+                                        .setbtncentre("确定")
+                                        .hitBtn(true)
+                                        .setOnCentreClickListenter(new DialogUtils.OnCentreClickListenter() {
+                                            @Override
+                                            public void setCentreClickListener() {
+                                            }
+                                        });
+                            } else {
+                                ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
+                            }
+//                            ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
                         }
                     }
 
@@ -91,17 +113,41 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
             @Override
             public void onClick(View v) {
                 //重考
+                //未答题
                 if(taskData.getReport_id()==0){
-                    //未答题
-                    ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
-                }else {
-                    if (taskData.getAgain_number() == 0) {
-                        ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
+                    if(taskData.getType().equals("2") && (TextUtils.equals(taskStatus, "未开始") || TextUtils.equals(taskStatus, "已结束"))) {
+                        DialogUtils dialogUtils = new DialogUtils(mContext);
+                        dialogUtils.setContent(taskStatus)
+                                .setbtncentre("确定")
+                                .hitBtn(true)
+                                .setOnCentreClickListenter(new DialogUtils.OnCentreClickListenter() {
+                                    @Override
+                                    public void setCentreClickListener() {
+                                    }
+                                });
                     } else {
-                        if (taskData.getAgain_number() - taskData.getExam_count() <= 0) {
-                            Toast.makeText(mContext, "考试次数用尽！", Toast.LENGTH_LONG).show();
+                        ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
+                    }
+                }else {
+                    if(taskData.getType().equals("2") && (TextUtils.equals(taskStatus, "未开始") || TextUtils.equals(taskStatus, "已结束"))) {
+                        DialogUtils dialogUtils = new DialogUtils(mContext);
+                        dialogUtils.setContent(taskStatus)
+                                .setbtncentre("确定")
+                                .hitBtn(true)
+                                .setOnCentreClickListenter(new DialogUtils.OnCentreClickListenter() {
+                                    @Override
+                                    public void setCentreClickListener() {
+                                    }
+                                });
+                    } else {
+                        if (taskData.getAgain_number() == 0) {
+                            ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
                         } else {
-                            ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class, new String[][]{{"testId", taskData.getId()}, {"taskId", taskId}, {"testType", taskData.getType().equals("3") ? "1" : "2"}, {"testName", taskData.getName()}});
+                            if (taskData.getAgain_number() - taskData.getExam_count() <= 0) {
+                                Toast.makeText(mContext, "考试次数用尽！", Toast.LENGTH_LONG).show();
+                            } else {
+                                ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class, new String[][]{{"testId", taskData.getId()}, {"taskId", taskId}, {"testType", taskData.getType().equals("3") ? "1" : "2"}, {"testName", taskData.getName()}});
+                            }
                         }
                     }
                 }

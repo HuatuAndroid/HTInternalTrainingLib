@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -231,23 +232,26 @@ public class HomeAdapter extends BaseAdapter {
             bannerHolder.banner.setOnBannerClickListener(new OnBannerClickListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    new FinestWebView.Builder(mContext)
-                            .titleDefault("正在加载...")
-                            .updateTitleFromHtml(true)
-                            .toolbarScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS)
-                            .iconDefaultColorRes(R.color.main_live_3c)
-                            .showIconMenu(false)
-                            .titleSizeRes(R.dimen.title2)
-                            .webViewJavaScriptEnabled(true)
-                            .progressBarHeight(PhoneUtils.newInstance().dip2px(mContext, 3))
-                            .progressBarColorRes(R.color.main_live_3c)
-                            .titleColorRes(R.color.main_live_3c)
-                            .toolbarColorRes(R.color.statusbar_color)
-                            .statusBarColorRes(R.color.statusbar_color)
-                            .backPressToClose(false)
-                            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                            .showUrl(false)
-                            .show(bean.getBanner().get(position-1).getLink());
+                    if (bean.getBanner() != null && bean.getBanner().size() >= position && bean.getBanner().get(position-1) != null
+                            && !TextUtils.isEmpty(bean.getBanner().get(position-1).getLink())) {
+                        new FinestWebView.Builder(mContext)
+                                .titleDefault("正在加载...")
+                                .updateTitleFromHtml(true)
+                                .toolbarScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS)
+                                .iconDefaultColorRes(R.color.main_live_3c)
+                                .showIconMenu(false)
+                                .titleSizeRes(R.dimen.title2)
+                                .webViewJavaScriptEnabled(true)
+                                .progressBarHeight(PhoneUtils.newInstance().dip2px(mContext, 3))
+                                .progressBarColorRes(R.color.main_live_3c)
+                                .titleColorRes(R.color.main_live_3c)
+                                .toolbarColorRes(R.color.statusbar_color)
+                                .statusBarColorRes(R.color.statusbar_color)
+                                .backPressToClose(false)
+                                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                                .showUrl(false)
+                                .show(bean.getBanner().get(position - 1).getLink());
+                    }
                 }
             });
             bannerHolder.course.setOnClickListener(new View.OnClickListener() {

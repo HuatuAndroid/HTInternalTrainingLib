@@ -134,7 +134,6 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
                                 .subscribe(new Consumer<Long>() {
                                     @Override
                                     public void accept(Long aLong) throws Exception {
-                                        Log.d("kaelli", "time:"+(SystemClock.elapsedRealtime() - mChronometer.getBase()) / 1000 + ", mRecordTime:"+mRecordTime);
                                         if (!hasCommit && mChronometer.getBase() > 0 && !isPaused) {
                                             if ((SystemClock.elapsedRealtime() - mChronometer.getBase()) / 1000 >= mLimitTime) {
                                                 mChronometer.stop();

@@ -52,7 +52,8 @@ public class AnswerSheetItemAdapter extends BaseAdapter{
         }else {
             holder= (AnswerSheetItemHolder) convertView.getTag();
         }
-        holder.title.setText(StrUtils.Instance().getTestTypeStr(Integer.parseInt(answerSheetBean.getGroup())));
+//        holder.title.setText(StrUtils.Instance().getTestTypeStr(Integer.parseInt(answerSheetBean.getGroup())));
+        holder.title.setText(answerSheetBean.getGroupName());
         holder.mgv.setAdapter(new AnswerSheetAdapter(answerSheetBean.getQuestionBankBeanList(),mContext));
         return convertView;
     }

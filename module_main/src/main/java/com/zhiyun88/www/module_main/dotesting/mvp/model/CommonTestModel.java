@@ -1,5 +1,6 @@
 package com.zhiyun88.www.module_main.dotesting.mvp.model;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jungan.www.common_dotest.bean.QuestionBankBean;
@@ -110,6 +111,7 @@ public class CommonTestModel implements CommonTestContranct.CommonTestModel {
         PaperListBean paperListBean = paperTestBean.getPaper_list();
         List<QuestionBankBean> mkdatas = new ArrayList<>();
         for (PaperModuleBean paperModuleBean : paperModuleBeans) {//2
+            String moduleName = paperModuleBean.getName();
             for (PaperModuleQuesBean paperModuleQuesBean : paperModuleBean.getModule_question()) {
                 QuestionBankBean questionBankBean = new QuestionBankBean();
                 questionBankBean.setCorrect_rate(null);
@@ -126,6 +128,8 @@ public class CommonTestModel implements CommonTestContranct.CommonTestModel {
                 questionBankBean.setQuestId(paperModuleQuesBean.getId());
                 questionBankBean.setQuestionIssue(null);
                 questionBankBean.setQuestionStem(paperModuleQuesBean.getQues_stem());
+                Log.d("kaelli", "setQuestionModuleName :"+moduleName);
+                questionBankBean.setQuestionModuleName(moduleName);
                 questionBankBean.setQuestionType(Integer.parseInt(paperModuleQuesBean.getQues_type()));
                 questionBankBean.setReport_id(paperModuleQuesBean.getReport_id());
                 questionBankBean.setRight_answer(paperModuleQuesBean.getRight_answer());
@@ -252,6 +256,9 @@ public class CommonTestModel implements CommonTestContranct.CommonTestModel {
             questionBankBean.setQuestionModel(0);
             questionBankBean.setQuestionNum(Long.parseLong(questionBean.getQues_number()));
             questionBankBean.setQuestionStem(questionBean.getQues_stem());
+            if (!TextUtils.isEmpty(questionBean.getQues_stem()) && questionBean.getQues_stem().contains("甲公司违约")) {
+                Log.d("kaelli", "forQuestionData questionBean.getQues_type():"+questionBean.getQues_type());
+            }
             questionBankBean.setQuestionType(Integer.parseInt(questionBean.getQues_type()));
             questionBankBean.setReport_id(questionBean.getReport_id());
             questionBankBean.setRight_answer(questionBean.getRight_answer());

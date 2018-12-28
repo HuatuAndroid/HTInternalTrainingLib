@@ -38,6 +38,9 @@ public class TaskInfoActivity extends MvpActivity<TaskInfoPresenter> implements 
     private TopBarView task_tb;
     private String taskId;
     private boolean isWc=false;
+    // KaelLi, 2018/12/28
+    private String taskStatus;
+
     @Override
     protected TaskInfoPresenter onCreatePresenter() {
         return new TaskInfoPresenter(this);
@@ -167,8 +170,10 @@ public class TaskInfoActivity extends MvpActivity<TaskInfoPresenter> implements 
             task_pross_tv.setText("完成"+complete+"%");
             if(taskInfoListBean.getTask_info().getTask_states().equals("1")){
                 task_status_tv.setText("未开始");
+                taskStatus = "未开始";
             }else if(taskInfoListBean.getTask_info().getTask_states().equals("2")){
                 task_status_tv.setText("已结束");
+                taskStatus = "已结束";
             }else{
                 task_status_tv.setText("待完成");
             }
@@ -177,6 +182,7 @@ public class TaskInfoActivity extends MvpActivity<TaskInfoPresenter> implements 
             }
             task_tb.getCenterTextView().setText(taskInfoListBean.getTask_info().getName());
         }
+        mAdapter.setTaskStatus(taskStatus);
         taskDataLists.clear();
         taskDataLists.addAll(taskInfoListBean.getTask_data());
         mAdapter.notifyDataSetChanged();

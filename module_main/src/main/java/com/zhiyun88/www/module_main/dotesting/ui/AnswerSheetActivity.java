@@ -44,7 +44,7 @@ public class AnswerSheetActivity extends BaseActivity implements TestViewpageCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dotest_answersheet_layout);
         questionBankBeanList=getIntent().getParcelableArrayListExtra("questionBankBeanList");
-        Log.d("kaelli", "AnswerSheetActivity onCreate");
+        Log.d("kaelli", "AnswerSheetActivity questionBankBeanList size:"+questionBankBeanList.size());
         anasy=getIntent().getBooleanExtra("anasy",false);
         griview=getViewById(com.jungan.www.common_dotest.R.id.mgv);
         griview.setDivider(null);
@@ -135,11 +135,16 @@ public class AnswerSheetActivity extends BaseActivity implements TestViewpageCal
             Map<String,List<QuestionBankBean>> map=queryQuestGroupList(questionBankBeanList);
             for (Map.Entry<String, List<QuestionBankBean>> entry : map.entrySet()) {
                 AnswerSheetBean answerSheetBean=new AnswerSheetBean();
-                answerSheetBean.setGroup(entry.getKey());
+                String key = entry.getKey();
+                Log.d("kaelli", "AnswerSheetActivity key:"+key);
+//                answerSheetBean.setGroup(key.split("_")[0]);
+//                answerSheetBean.setGroupName(key.split("_")[1]);
+                answerSheetBean.setGroupName(entry.getKey());
                 answerSheetBean.setQuestionBankBeanList( entry.getValue());
                 System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue().size());
                 answerSheetBeanLists.add(answerSheetBean);
             }
+            Log.d("kaelli", "AnswerSheet reshAnswerSheet");
 //            Iterator<Map.Entry<String, List<QuestionBankBean>>> entries = map.entrySet().iterator();
 //            List<AnswerSheetBean> answerSheetBeanLists=new ArrayList<>();
 //            while (entries.hasNext()) {
@@ -175,19 +180,28 @@ public class AnswerSheetActivity extends BaseActivity implements TestViewpageCal
     public LinkedHashMap<String, List<QuestionBankBean>> queryQuestGroupList(List<QuestionBankBean> list) {
         LinkedHashMap<String, List<QuestionBankBean>> map = new LinkedHashMap<>();
         for (QuestionBankBean li : list) {
+            li.getQuestionModel();
             //将需要归类的属性与map中的key进行比较，如果map中有该key则添加bean如果没有则新增key
-            if (map.containsKey(li.getQuestionType()+"")) {
-            //取出map中key对应的list并将遍历出的bean放入该key对应的list中
-                ArrayList<QuestionBankBean> templist = (ArrayList<QuestionBankBean>) map.get(li.getQuestionType()+"");
+            if (map.containsKey(li.getQuestionModuleName())) {
+                //取出map中key对应的list并将遍历出的bean放入该key对应的list中
+                ArrayList<QuestionBankBean> templist = (ArrayList<QuestionBankBean>) map.get(li.getQuestionModuleName());
                 Log.e("重复",templist.size()+"***");
                 templist.add(li);
-            } else {
-            //创建新的list
+            }
+//            if (map.containsKey(li.getQuestionType()+"")) {
+//                //取出map中key对应的list并将遍历出的bean放入该key对应的list中
+//                ArrayList<QuestionBankBean> templist = (ArrayList<QuestionBankBean>) map.get(li.getQuestionType()+"");
+//                Log.e("重复",templist.size()+"***");
+//                templist.add(li);
+//            }
+            else {
+                //创建新的list
                 ArrayList<QuestionBankBean> temlist = new ArrayList<QuestionBankBean>();
                 temlist.add(li);
-                map.put(li.getQuestionType()+"", temlist);
+                map.put(li.getQuestionModuleName(), temlist);
             }
         }
+
         return map;
     }
 

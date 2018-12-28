@@ -72,7 +72,9 @@ public class EssayQuestionFragment extends LazyFragment {
         analisys=getArguments().getBoolean("isAnalisys");
         html_htv=getViewById(R.id.html_htv);
         html_htv.setOption(false);
-        html_htv.showTxt(questionBankBean.getQuestionStem());
+        // KaelLi, 2018/12/28
+        String httml = "<font color='#458bfd'>（问答题）</font>";
+        html_htv.showTxt(httml + questionBankBean.getQuestionStem());
         initView();
         setListener();
     }
