@@ -1,6 +1,8 @@
 package com.zhiyun88.www.module_main.dotesting.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,9 +82,17 @@ public class CuntAdapter extends BaseAdapter {
         }
         holder.title_tv.setText(countInfoData.getPaper_name());
         holder.date_tv.setText("交卷时间："+countInfoData.getUpdated_at());
-        holder.time_tv.setText("考试时长："+countInfoData.getReport_time_long());
+        String reportTime = countInfoData.getReport_time_long();
+        if (!TextUtils.isEmpty(reportTime)) {
+            if (reportTime.startsWith("0"))
+                reportTime = reportTime.substring(1, reportTime.length());
+            reportTime = reportTime.replace("分", "′");
+            reportTime = reportTime.replace("秒", "″");
+            holder.time_tv.setText("考试时长："+reportTime);
+        }
+
         holder.right_cunt_tv.setText(countInfoData.getRight_count());
-        holder.zcunt_tv.setText("/"+countInfoData.getQues_count());
+        holder.zcunt_tv.setText("/"+countInfoData.getQues_count() + "道");
         holder.df_tv.setText(countInfoData.getPoint());
         return mView;
     }

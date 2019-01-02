@@ -86,21 +86,7 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
                             ToActivityUtil.newInsance().toNextActivity(mContext, WjCountActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""}});
                         }else if(taskData.getType().equals("2")){
                             //考试
-                            Log.d("kaelli", "taskStatus:"+taskStatus);
-                            if (TextUtils.equals(taskStatus, "未开始") || TextUtils.equals(taskStatus, "已结束")) {
-                                DialogUtils dialogUtils = new DialogUtils(mContext);
-                                dialogUtils.setContent(taskStatus)
-                                        .setbtncentre("确定")
-                                        .hitBtn(true)
-                                        .setOnCentreClickListenter(new DialogUtils.OnCentreClickListenter() {
-                                            @Override
-                                            public void setCentreClickListener() {
-                                            }
-                                        });
-                            } else {
-                                ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
-                            }
-//                            ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
+                            ToActivityUtil.newInsance().toNextActivity(mContext, CuntActivity.class,new String[][]{{"reportId",taskData.getReport_id()+""},{"testId",taskData.getId()},{"taskId",taskId},{"testName",taskData.getName()}});
                         }
                     }
 

@@ -84,7 +84,7 @@
             android:layout_margin="10dp"
             android:textColor="@color/black"
             android:textSize="@dimen/title3"
-            android:text="得分"
+            android:text="答题得分"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <RelativeLayout

@@ -34,7 +34,6 @@ import java.util.Map;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class CommonTestModel implements CommonTestContranct.CommonTestModel {
@@ -128,7 +127,6 @@ public class CommonTestModel implements CommonTestContranct.CommonTestModel {
                 questionBankBean.setQuestId(paperModuleQuesBean.getId());
                 questionBankBean.setQuestionIssue(null);
                 questionBankBean.setQuestionStem(paperModuleQuesBean.getQues_stem());
-                Log.d("kaelli", "setQuestionModuleName :"+moduleName);
                 questionBankBean.setQuestionModuleName(moduleName);
                 questionBankBean.setQuestionType(Integer.parseInt(paperModuleQuesBean.getQues_type()));
                 questionBankBean.setReport_id(paperModuleQuesBean.getReport_id());
