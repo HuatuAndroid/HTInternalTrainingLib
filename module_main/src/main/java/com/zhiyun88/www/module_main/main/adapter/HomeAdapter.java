@@ -232,8 +232,9 @@ public class HomeAdapter extends BaseAdapter {
             bannerHolder.banner.setOnBannerClickListener(new OnBannerClickListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    if (bean.getBanner() != null && bean.getBanner().size() >= position && bean.getBanner().get(position-1) != null
-                            && !TextUtils.isEmpty(bean.getBanner().get(position-1).getLink())) {
+                    if (bean.getBanner() != null && bean.getBanner().size() >= position
+                            && bean.getBanner().get(position-1) != null && !TextUtils.isEmpty(bean.getBanner().get(position-1).getLink())
+                            && !"###".equals(bean.getBanner().get(position-1).getLink())) {
                         new FinestWebView.Builder(mContext)
                                 .titleDefault("正在加载...")
                                 .updateTitleFromHtml(true)

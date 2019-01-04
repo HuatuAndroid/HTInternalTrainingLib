@@ -28,5 +28,5 @@
         android:id="@+id/post_test_tv"
         android:text="交卷"
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="45dp" />
 </RelativeLayout>

@@ -5,8 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Trace;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -96,15 +98,29 @@ public class EssayQuestionFragment extends LazyFragment {
         jx_tv=getViewById(R.id.jx_tv);
         look_jx_tv=getViewById(R.id.look_jx_tv);
         look_jx_tv.setEnabled(false);
+        question_et.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if ((view.getId() == R.id.question_et && canVerticalScroll(question_et))) {
+                    view.getParent().requestDisallowInterceptTouchEvent(true);
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        view.getParent().requestDisallowInterceptTouchEvent(false);
+                    }
+                }
+                return false;
+            }
+        });
         if(analisys){
             //解析
             main_ll.setVisibility(View.VISIBLE);
 //            look_jx_tv.setVisibility(View.GONE);
-            question_et.setEnabled(false);
+//            question_et.setEnabled(false);
+            enableEditText(false);
             question_et.setText(questionBankBean.getUser_answer()==null?"":questionBankBean.getUser_answer());
         }else {
             //非解析
-            question_et.setEnabled(true);
+//            question_et.setEnabled(true);
+            enableEditText(true);
             main_ll.setVisibility(View.GONE);
 //            look_jx_tv.setVisibility(View.VISIBLE);
         }
@@ -113,7 +129,8 @@ public class EssayQuestionFragment extends LazyFragment {
         look_jx_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                question_et.setEnabled(false);
+//                question_et.setEnabled(false);
+                enableEditText(false);
                 main_ll.setVisibility(View.VISIBLE);
                 look_jx_tv.setVisibility(View.GONE);
             }
@@ -144,7 +161,7 @@ public class EssayQuestionFragment extends LazyFragment {
             known_main.setVisibility(View.VISIBLE);
             tag_cloud_view.setTags(questionBankBean.getKnows_name());
         }
-        
+
     }
 
     @Override
@@ -184,5 +201,28 @@ public class EssayQuestionFragment extends LazyFragment {
         super.onAttach(context);
         userLookAnalisysCall= (UserLookAnalisysCall) context;
         mCall= (ViewPageCall) context;
+    }
+
+    private void enableEditText(boolean enable) {
+        if (question_et == null) return;
+        question_et.setFocusableInTouchMode(enable);
+        question_et.setCursorVisible(enable);
+    }
+
+    private boolean canVerticalScroll(EditText editText) {
+        //滚动的距离
+        int scrollY = editText.getScrollY();
+        //控件内容的总高度
+        int scrollRange = editText.getLayout().getHeight();
+        //控件实际显示的高度
+        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() -editText.getCompoundPaddingBottom();
+        //控件内容总高度与实际显示高度的差值
+        int scrollDifference = scrollRange - scrollExtent;
+
+        if(scrollDifference == 0) {
+            return false;
+        }
+
+        return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
 }

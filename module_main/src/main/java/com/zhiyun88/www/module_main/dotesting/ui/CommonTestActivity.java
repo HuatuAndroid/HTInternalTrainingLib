@@ -122,6 +122,7 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
         commonQuestionBankView.initData(questionBankBeans, getSupportFragmentManager(), testType==3||testType==4?true:false,false);
         isStartJs();
         multiplestatusview.showContent();
+        if(testType==3||testType==4) return;
         try {
             mLimitTime = Integer.parseInt(questionBankBeans.get(0).getUser_dotime()) * 60;
             if (mLimitTime > 0) {
@@ -137,7 +138,6 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
                                         if (!hasCommit && mChronometer.getBase() > 0 && !isPaused) {
                                             if ((SystemClock.elapsedRealtime() - mChronometer.getBase()) / 1000 >= mLimitTime) {
                                                 mChronometer.stop();
-                                                hasCommit = true;
                                                 commitTest();
                                             }
                                         }
@@ -226,8 +226,8 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
                 return;
             if (commonQuestionBankView.getQuestionBankBeanList() == null || commonQuestionBankView.getQuestionBankBeanList().size() == 0)
                 return;
-            if (commonQuestionBankView.currentPage() > commonQuestionBankView.getQuestionBankBeanList().size() - 1)
-                return;
+//            if (commonQuestionBankView.currentPage() > commonQuestionBankView.getQuestionBankBeanList().size() - 1)
+//                return;
             if (v.getId() == R.id.test_pause) {
                 DialogUtils dialogUtils = new DialogUtils(CommonTestActivity.this);
                 dialogUtils.setContent("休息一下,继续答题")
@@ -369,6 +369,8 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
     }
 
     private void commitTest() {
+        if (hasCommit) return;
+        hasCommit = true;
         UserPostBean u =commonQuestionBankView.getUserPostBean();
         Log.e("用户提交了数据", "-----" + GsonUtils.newInstance().GsonToString(u));
         SubmitTestBean submitTestBean = new SubmitTestBean();
@@ -433,7 +435,7 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
             return;
         if(testType==3||testType==4)
             return;
-        isStartJs();
+//        isStartJs();
 //        commonQuestionBankView.setPause(false);
     }
 
@@ -447,10 +449,10 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
         }
         if(testType==3||testType==4)
             return;
-        mChronometer.stop();
-        mRecordTime = SystemClock.elapsedRealtime();
-        commonQuestionBankView.setPause(true);
-        isPaused = true;
+//        mChronometer.stop();
+//        mRecordTime = SystemClock.elapsedRealtime();
+//        commonQuestionBankView.setPause(true);
+//        isPaused = true;
     }
 
     @Override
@@ -609,12 +611,12 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
 
     @Override
     public void submitSuccess(SubmitBean msg) {
-            if(msg.getType().equals("3")){
-                ToActivityUtil.newInsance().toNextActivity(CommonTestActivity.this,WjCountActivity.class,new String[][]{{"reportId",msg.getReport_id()}});
-            }else {
-                showDidlogMsg(msg.getMsg());
-            }
-
+        hasCommit = true;
+        if(msg.getType().equals("3")){
+            ToActivityUtil.newInsance().toNextActivity(CommonTestActivity.this,WjCountActivity.class,new String[][]{{"reportId",msg.getReport_id()}});
+        }else {
+            showDidlogMsg(msg.getMsg());
+        }
     }
 
     @Override
