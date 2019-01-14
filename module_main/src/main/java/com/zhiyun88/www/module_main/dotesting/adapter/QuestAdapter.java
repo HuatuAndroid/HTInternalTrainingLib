@@ -32,14 +32,21 @@ public class QuestAdapter extends ListBaseAdapter<CuntQuesData> {
             holder= (QuestHolder) view.getTag();
         }
         holder.textView.setText(getItem(i).getQues_number());
-        if(getItem(i).getIs_right().equals("1")){
+        if ("5".equals(getItem(i).getQues_type())){
+            //问答题显示灰色
+            holder.textView.setBackgroundResource(R.drawable.essay_question_bg);
+            holder.textView.setTextColor(Color.BLACK);
+        }else if(getItem(i).getIs_right().equals("1")){
+            //答对 蓝色
             holder.textView.setBackgroundResource(R.drawable.right_bg);
             holder.textView.setTextColor(Color.WHITE);
         }else if(getItem(i).getIs_right().equals("2")){
+            //答错 红色
             holder.textView.setBackgroundResource(R.drawable.error_bg);
             holder.textView.setTextColor(Color.WHITE);
-        }else {
-            holder.textView.setBackgroundResource(R.drawable.nodo_bg);
+        }else if (getItem(i).getIs_right().equals("3")){
+            //未做 黄色
+            holder.textView.setBackgroundResource(R.drawable.no_do_bg);
             holder.textView.setTextColor(Color.BLACK);
         }
         return view;

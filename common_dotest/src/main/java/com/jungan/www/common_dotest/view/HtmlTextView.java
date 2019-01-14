@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -139,6 +140,7 @@ public class HtmlTextView extends RelativeLayout {
             return;
         mRichTv.setMovementMethod(LinkMovementMethod.getInstance());
         String sample="<u>njnkjnsvdn</u>";//"<p><strong>字体测试字体测试字体测试字体测试字体测试</strong></p><p><em><strong>字体测试字体测试字体测试字体测试字体测试</strong></em></p><p><span style=\"text-decoration: underline;\">字体测试字体测试字体测试字体测试字体测试</span></p><p><span style=\"text-decoration: line-through; color: rgb(255, 0, 0);\">字体测试字体测试字体测试字体测试字体测试</span></p><p><span style=\"text-decoration: line-through; color: rgb(255, 0, 0);\"><img src=\"http://test-px.huatu.com//uploads/ueditor/image/20181122/1542888683164610.jpg\" title=\"1542888683164610.jpg\" _src=\"http://test-px.huatu.com//uploads/ueditor/image/20181122/1542888683164610.jpg\" alt=\"0-3.jpg\"></span></p>";
+        Log.d("hahaha","图标文本:"+txt);
         HtmlText.from(txt)
                 .setImageLoader(new HtmlImageLoader() {
                     @Override
@@ -146,7 +148,22 @@ public class HtmlTextView extends RelativeLayout {
                         com.baijiayun.glide.Glide.with(mContext).asBitmap().load(url).into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                callback.onLoadComplete(resource);
+
+                                // 获得图片的宽高
+                                int width = resource.getWidth();
+                                int height = resource.getHeight();
+                                // 设置想要的大小
+                                int newWidth = 800;
+                                int newHeight = 600;
+                                // 计算缩放比例
+                                float scaleWidth = ((float) newWidth) / width;
+                                float scaleHeight = ((float) newHeight) / height;
+                                // 取得想要缩放的matrix参数
+                                Matrix matrix = new Matrix();
+                                matrix.postScale(scaleWidth, scaleHeight);
+                                // 得到新的图片
+                                Bitmap newbm = Bitmap.createBitmap(resource, 0, 0, width, height, matrix, true);
+                                callback.onLoadComplete(newbm);
                             }
                         });
                     }

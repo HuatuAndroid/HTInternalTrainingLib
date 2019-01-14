@@ -15,7 +15,7 @@ public class CuntQuesData implements Parcelable {
 
     private String ques_id;
     private String is_right;
-    private String ques_type;
+    private String ques_type;//试题类型:1:单选题 2:多选题  5:问答题
     private String ques_number;
 
     public String getQues_id() {
