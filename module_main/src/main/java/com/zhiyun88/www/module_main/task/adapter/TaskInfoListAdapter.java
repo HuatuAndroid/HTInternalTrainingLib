@@ -112,7 +112,9 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
                                     }
                                 });
                     } else {
-                        ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
+                        ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class
+                                ,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"}
+                                ,{"testName",taskData.getName()},{"page","1"}});
                     }
                 }else {
                     if(taskData.getType().equals("2") && (TextUtils.equals(taskStatus, "未开始") || TextUtils.equals(taskStatus, "已结束"))) {
@@ -127,12 +129,16 @@ public class TaskInfoListAdapter extends ListBaseAdapter<TaskData> {
                                 });
                     } else {
                         if (taskData.getAgain_number() == 0) {
-                            ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
+                            ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class
+                                    ,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"}
+                                    ,{"testName",taskData.getName()},{"page","1"}});
                         } else {
                             if (taskData.getAgain_number() - taskData.getExam_count() <= 0) {
                                 Toast.makeText(mContext, "考试次数用尽！", Toast.LENGTH_LONG).show();
                             } else {
-                                ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class, new String[][]{{"testId", taskData.getId()}, {"taskId", taskId}, {"testType", taskData.getType().equals("3") ? "1" : "2"}, {"testName", taskData.getName()}});
+                                ToActivityUtil.newInsance().toNextActivity(mContext, CommonTestActivity.class
+                                        , new String[][]{{"testId", taskData.getId()}, {"taskId", taskId}, {"testType", taskData.getType().equals("3") ? "1" : "2"}
+                                        , {"testName", taskData.getName()},{"page","1"}});
                             }
                         }
                     }

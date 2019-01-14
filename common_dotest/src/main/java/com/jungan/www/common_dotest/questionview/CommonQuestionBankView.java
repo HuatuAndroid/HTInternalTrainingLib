@@ -124,7 +124,7 @@ public class CommonQuestionBankView extends LinearLayout{
         });
     }
 
-    public void initData(List<QuestionBankBean> questionBankBean, FragmentManager fragmentManager,boolean analisys,boolean isShow){
+    public void initData(List<QuestionBankBean> questionBankBean, FragmentManager fragmentManager,boolean analisys,boolean isShow,int page){
         for(QuestionBankBean questionBankBean1:questionBankBean){
             Log.e("虎丘",questionBankBean1.getQuestionType()+"----"+questionBankBean1.getMaterial_type());
         }
@@ -132,6 +132,7 @@ public class CommonQuestionBankView extends LinearLayout{
         QuestTestConfig.testTime=0;
         mAdapter=new CommonQuestionAdapter(fragmentManager,questionBankBean,analisys,isShow);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(page-1);
         mViewPager.setOffscreenPageLimit(questionBankBean.size());
         new Thread(timeRunable).start();
         new Thread(TestData).start();

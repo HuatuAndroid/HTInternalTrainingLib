@@ -68,6 +68,11 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
     private int testType;
     private boolean looksys = false;
     private String testName;
+    /**
+     * lienlin
+     * 当前要显示的题目编号
+     */
+    private int page=1;
     //current_count
     private MultipleStatusView multiplestatusview;
 
@@ -87,6 +92,7 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
         taskId = getIntent().getStringExtra("taskId");
         testType = Integer.parseInt(getIntent().getStringExtra("testType"));
         testName = getIntent().getStringExtra("testName");
+        page = Integer.valueOf(getIntent().getStringExtra("page"));
         left_img = getViewById(R.id.left_img);
         mChronometer = getViewById(R.id.chronmer_ctr);
         current_count_tv = getViewById(R.id.current_count_tv);
@@ -118,8 +124,8 @@ public class CommonTestActivity extends MvpActivity<CommonTestPresenter> impleme
 
 
         progressBar.setMax(testsSize);
-        progressBar.setProgress(1);
-        commonQuestionBankView.initData(questionBankBeans, getSupportFragmentManager(), testType==3||testType==4?true:false,false);
+        progressBar.setProgress(page);// TODO: 2019/1/11
+        commonQuestionBankView.initData(questionBankBeans, getSupportFragmentManager(), testType==3||testType==4?true:false,false,page);
         isStartJs();
         multiplestatusview.showContent();
         if(testType==3||testType==4) return;

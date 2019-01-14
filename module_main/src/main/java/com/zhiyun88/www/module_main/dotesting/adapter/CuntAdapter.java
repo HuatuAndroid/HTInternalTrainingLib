@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MyGrideView;
 import com.wb.baselib.view.MyListView;
 import com.zhiyun88.www.module_main.R;
@@ -21,10 +23,16 @@ import java.util.List;
 public class CuntAdapter extends BaseAdapter {
     private CountBean countBean;
     private Context mContext;
+    /**
+     * lienlin
+     * 增加题号点击进入题目详情
+     */
+    private AdapterView.OnItemClickListener itemListener;
 
-    public CuntAdapter(CountBean countBean, Context mContext) {
+    public CuntAdapter(CountBean countBean, Context mContext,AdapterView.OnItemClickListener itemListener) {
         this.countBean = countBean;
         this.mContext = mContext;
+        this.itemListener=itemListener;
     }
 
     @Override
@@ -100,13 +108,14 @@ public class CuntAdapter extends BaseAdapter {
         TextView title_tv,date_tv,time_tv,right_cunt_tv,zcunt_tv,df_tv;
     }
 
-    private View getBottomView(List<CuntQuesData> countInfoData, View mView){
+    private View getBottomView(final List<CuntQuesData> countInfoData, View mView){
         BottomCuntHolder holder=null;
         if(mView==null){
             holder=new BottomCuntHolder();
             mView= LayoutInflater.from(mContext).inflate(R.layout.dotest_bottom_layout,null);
             holder.myListView=mView.findViewById(R.id.mlist_lv);
             holder.myListView.setAdapter(new QuestAdapter(countInfoData,mContext));
+            holder.myListView.setOnItemClickListener(itemListener);
             mView.setTag(mView);
         }else {
             holder= (BottomCuntHolder) mView.getTag();

@@ -86,9 +86,11 @@ public class MyLibraryAdapter extends BaseAdapter{
         viewHolder.collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnItemClickListener == null) return;
+                if (mOnItemClickListener == null) {
+                    return;
+                }
                 mOnItemClickListener.setCollection(myLibraryListBean.getId(), "30860", myLibraryListBean.getIs_collection(), position);
-                viewHolder.collect.setEnabled(false);
+//                viewHolder.collect.setEnabled(false);
             }
         });
         return convertView;

@@ -2,6 +2,7 @@ package com.zhiyun88.www.module_main.dotesting.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,16 +14,19 @@ import com.wb.baselib.view.TopBarView;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.dotesting.adapter.CuntAdapter;
 import com.zhiyun88.www.module_main.dotesting.bean.CountBean;
+import com.zhiyun88.www.module_main.dotesting.bean.CuntQuesData;
 import com.zhiyun88.www.module_main.dotesting.mvp.contranct.CuntContranct;
 import com.zhiyun88.www.module_main.dotesting.mvp.presenter.CuntPresenter;
 import com.zhiyun88.www.module_main.task.ui.TaskInfoActivity;
 
-public class CuntActivity extends MvpActivity<CuntPresenter> implements CuntContranct.CuntView {
+public class CuntActivity extends MvpActivity<CuntPresenter> implements CuntContranct.CuntView, AdapterView.OnItemClickListener {
     private MultipleStatusView multiplestatusview;
     private ListView mListView;
     private TopBarView topBarView;
     private TextView all_jx_tv,error_jx_tv;
     private String reportId,testId,taskId,testName;
+    private CountBean countBean;
+
     @Override
     protected CuntPresenter onCreatePresenter() {
         return new CuntPresenter(this);
@@ -50,13 +54,15 @@ public class CuntActivity extends MvpActivity<CuntPresenter> implements CuntCont
         all_jx_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToActivityUtil.newInsance().toNextActivity(CuntActivity.this, CommonTestActivity.class,new String[][]{{"testId",reportId},{"taskId",reportId},{"testType","3"},{"testName",testName}});
+                ToActivityUtil.newInsance().toNextActivity(CuntActivity.this
+                        , CommonTestActivity.class,new String[][]{{"testId",reportId},{"taskId",reportId},{"testType","3"},{"testName",testName},{"page","1"}});
             }
         });
         error_jx_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToActivityUtil.newInsance().toNextActivity(CuntActivity.this, CommonTestActivity.class,new String[][]{{"testId",reportId},{"taskId",reportId},{"testType","4"},{"testName",testName}});
+                ToActivityUtil.newInsance().toNextActivity(CuntActivity.this
+                        , CommonTestActivity.class,new String[][]{{"testId",reportId},{"taskId",reportId},{"testType","4"},{"testName",testName},{"page","1"}});
             }
         });
     }
@@ -110,12 +116,32 @@ public class CuntActivity extends MvpActivity<CuntPresenter> implements CuntCont
 
     @Override
     public void SuccessData(Object o) {
-        mListView.setAdapter(new CuntAdapter((CountBean) o,CuntActivity.this));
+        countBean = (CountBean) o;
+        mListView.setAdapter(new CuntAdapter((CountBean) o,CuntActivity.this,this));
         multiplestatusview.showContent();
     }
 
     @Override
     public LifecycleTransformer binLifecycle() {
         return bindToLifecycle();
+    }
+
+    /**
+     * lienlin
+     * 增加题号点击进入题目详情
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (countBean!=null){
+            CuntQuesData cuntQuesData = countBean.getQues_data().get(position);
+            // TODO: 2019/1/11
+            ToActivityUtil.newInsance().toNextActivity(CuntActivity.this, CommonTestActivity.class
+                    ,new String[][]{{"testId",reportId},{"taskId",reportId},{"testType","3"},{"testName",testName},{"page",cuntQuesData.getQues_number()}});
+        }
+
     }
 }

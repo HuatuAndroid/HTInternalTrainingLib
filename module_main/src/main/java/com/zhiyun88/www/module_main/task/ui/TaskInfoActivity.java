@@ -105,7 +105,9 @@ public class TaskInfoActivity extends MvpActivity<TaskInfoPresenter> implements 
                 }else if(taskData.getType().equals("3")){
                     if(taskData.getComplete().equals("100"))
                         return;
-                    ToActivityUtil.newInsance().toNextActivity(TaskInfoActivity.this, CommonTestActivity.class,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"},{"testName",taskData.getName()}});
+                    ToActivityUtil.newInsance().toNextActivity(TaskInfoActivity.this, CommonTestActivity.class
+                            ,new String[][]{{"testId",taskData.getId()},{"taskId",taskId},{"testType",taskData.getType().equals("3")?"1":"2"}
+                            ,{"testName",taskData.getName()},{"page","1"}});
                 }
             }
         });
