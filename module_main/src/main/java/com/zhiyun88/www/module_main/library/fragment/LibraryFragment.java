@@ -19,6 +19,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.fragment.MvpFragment;
 import com.wb.baselib.phone.PhoneUtils;
 import com.wb.baselib.utils.RefreshUtils;
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.library.adapter.LibraryListAdapter;
@@ -219,7 +220,12 @@ public class LibraryFragment extends MvpFragment<LibraryFragmentPresenter> imple
     }
 
     @Override
-    public void setCollectedSuccess() {
+    public void setCollectedSuccess(String isClick) {
+        if ("0".equals(isClick)){
+            ToastUtils.showToast(getContext(),"成功收藏");
+        }else {
+            ToastUtils.showToast(getContext(),"取消收藏");
+        }
         libraryListAdapter.updateItem(index,listView,isCollected);
     }
 }

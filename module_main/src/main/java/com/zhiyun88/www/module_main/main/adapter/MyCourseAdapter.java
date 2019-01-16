@@ -86,8 +86,8 @@ public class MyCourseAdapter extends BaseAdapter {
         viewHolder.title.setText(myCourseListBean.getTitle());
         viewHolder.teacher.setVisibility(View.VISIBLE);
         viewHolder.teacher.setText(mContext.getString(R.string.main_be_the_speaker)+myCourseListBean.getTeacher());
-        Log.e("进度",myCourseListBean.getRate_progress()+"-----");
-        if(myCourseListBean.getRate_progress()==100){
+        Log.e("进度",(int)myCourseListBean.getRate_progress()+"-----");
+        if((int)myCourseListBean.getRate_progress()==100){
             viewHolder.progressbar.setVisibility(View.GONE);
             viewHolder.course_pj_img.setVisibility(View.VISIBLE);
             if(myCourseListBean.getIs_comment()==0){
@@ -103,7 +103,7 @@ public class MyCourseAdapter extends BaseAdapter {
             viewHolder.course_pj_img.setVisibility(View.GONE);
         }
 
-        viewHolder.progressbar.setProgress(myCourseListBean.getRate_progress());
+        viewHolder.progressbar.setProgress((int)myCourseListBean.getRate_progress());
         viewHolder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

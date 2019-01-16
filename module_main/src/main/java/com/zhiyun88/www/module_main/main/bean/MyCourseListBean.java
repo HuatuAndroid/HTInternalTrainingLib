@@ -14,7 +14,7 @@ public class MyCourseListBean implements Parcelable {
     private String end_date;
     private String teacher;
     private int study_chapter_count;
-    private int rate_progress;
+    private float rate_progress;
     private int is_comment;
 
     public String getId() {
@@ -89,11 +89,11 @@ public class MyCourseListBean implements Parcelable {
         this.study_chapter_count = study_chapter_count;
     }
 
-    public int getRate_progress() {
+    public float getRate_progress() {
         return rate_progress;
     }
 
-    public void setRate_progress(int rate_progress) {
+    public void setRate_progress(float rate_progress) {
         this.rate_progress = rate_progress;
     }
 
@@ -121,7 +121,7 @@ public class MyCourseListBean implements Parcelable {
         dest.writeString(this.end_date);
         dest.writeString(this.teacher);
         dest.writeInt(this.study_chapter_count);
-        dest.writeInt(this.rate_progress);
+        dest.writeFloat(this.rate_progress);
         dest.writeInt(this.is_comment);
     }
 

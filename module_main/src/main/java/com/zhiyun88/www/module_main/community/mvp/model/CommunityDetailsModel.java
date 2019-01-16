@@ -5,6 +5,7 @@ import com.wb.baselib.http.HttpManager;
 import com.zhiyun88.www.module_main.community.api.CommunityServiceApi;
 import com.zhiyun88.www.module_main.community.bean.CommunityDetailsBean;
 import com.zhiyun88.www.module_main.community.bean.DetailsCommentBean;
+import com.zhiyun88.www.module_main.community.bean.DetailsLikeBean;
 import com.zhiyun88.www.module_main.community.mvp.contranct.CommunityDetailsContranct;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class CommunityDetailsModel implements CommunityDetailsContranct.Communit
     }
 
     @Override
-    public Observable<Result> setLike(String question_id) {
+    public Observable<Result<DetailsLikeBean>> setLike(String question_id) {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).setDetailsLike(question_id);
     }
 }

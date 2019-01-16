@@ -39,7 +39,7 @@ public class CommunityDiscussPresenter extends CommunityDiscussContranct.Communi
                         if (page == 1) {
                             mView.NoData();
                         } else {
-                            mView.showErrorMsg("已经没有数据了!");
+                            mView.showErrorMsg("没有更多话题了");
                             mView.isLoadMore(false);
                         }
                     } else {
@@ -94,7 +94,7 @@ public class CommunityDiscussPresenter extends CommunityDiscussContranct.Communi
                         if (page == 1) {
                             mView.NoData();
                         } else {
-                            mView.showErrorMsg("已经没有数据了!");
+                            mView.showErrorMsg("没有更多话题了");
                             mView.isLoadMore(false);
                         }
                     } else {

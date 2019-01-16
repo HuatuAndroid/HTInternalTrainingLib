@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 public interface LibraryFragmentContranct {
     interface LibraryFragmentView extends MvpView{
         void isLoadMore(boolean isLoadMore);
-        void setCollectedSuccess();
+        void setCollectedSuccess(String isClick);
         void bindDetailsData(LibraryDetailsBean bean);
     }
     interface LibraryFragmentModel extends BaseModel{

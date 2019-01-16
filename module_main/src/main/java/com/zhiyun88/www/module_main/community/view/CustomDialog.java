@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wb.baselib.utils.ToastUtils;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.community.config.CommunityConfig;
 
@@ -81,8 +82,13 @@ public class CustomDialog extends Dialog {
             public void onClick(View v) {
                 if (onEditChangeListener == null) return;
                 String str = content_et.getText().toString().trim();
-                onEditChangeListener.getEditChange(str, is_show);
-                commit_tv.setEnabled(false);
+                if (str.isEmpty()){
+                    ToastUtils.showToast(context,"输入不能为空");
+                }else {
+                    onEditChangeListener.getEditChange(str, is_show);
+                    commit_tv.setEnabled(false);
+                }
+
             }
         });
     }

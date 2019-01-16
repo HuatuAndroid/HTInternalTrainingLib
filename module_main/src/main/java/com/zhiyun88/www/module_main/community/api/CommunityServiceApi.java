@@ -5,6 +5,7 @@ import com.zhiyun88.www.module_main.community.bean.CommunityDetailsBean;
 import com.zhiyun88.www.module_main.community.bean.CommunityDiscussBean;
 import com.zhiyun88.www.module_main.community.bean.CommunityGroupBean;
 import com.zhiyun88.www.module_main.community.bean.DetailsCommentBean;
+import com.zhiyun88.www.module_main.community.bean.DetailsLikeBean;
 import com.zhiyun88.www.module_main.community.bean.GroupDetailsBean;
 import com.zhiyun88.www.module_main.community.bean.ImageListBean;
 import com.zhiyun88.www.module_main.community.bean.MyItemBean;
@@ -50,7 +51,7 @@ public interface CommunityServiceApi {
     Observable<Result<CommunityDiscussBean>> getGroupTypeData(@Path("type") String type, @Query("group_id") String group_id, @Query("page") int page);
 
     @GET(CommunityHttpConfig.DETAILS_LIKE)
-    Observable<Result> setDetailsLike(@Path("question_id") String question_id);
+    Observable<Result<DetailsLikeBean>> setDetailsLike(@Path("question_id") String question_id);
  /*
     @FormUrlEncoded
     @POST(CommunityHttpConfig.DETAILS_COLLECT)

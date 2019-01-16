@@ -115,7 +115,6 @@ public class HomeFragment extends MvpFragment<HomeFragmentPresenter> implements 
         return true;
     }
 
-
     @Override
     public void ShowLoadView() {
         multiplestatusview.showLoading();

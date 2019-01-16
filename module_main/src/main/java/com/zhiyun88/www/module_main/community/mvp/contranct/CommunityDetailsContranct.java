@@ -7,6 +7,7 @@ import com.wb.baselib.bean.Result;
 import com.zhiyun88.www.module_main.community.bean.CommunityDetailsBean;
 import com.zhiyun88.www.module_main.community.bean.DetailsCommentBean;
 import com.zhiyun88.www.module_main.community.bean.DetailsCommentListBean;
+import com.zhiyun88.www.module_main.community.bean.DetailsLikeBean;
 
 import java.util.List;
 
@@ -21,13 +22,13 @@ public interface CommunityDetailsContranct {
 
         void sendSuccess(String msg);
 
-        void setLikeSuccess(String msg);
+        void setLikeSuccess(DetailsLikeBean msg);
     }
     interface CommunityDetailsModel extends BaseModel {
         Observable<Result<CommunityDetailsBean>> getCommunityDetails(String question_id);
         Observable<Result<DetailsCommentBean>> getCommentList(String question_id, String st, int page);
         Observable<Result> sendComment(String question_id, String content, String is_anonymity, String comment_id);
-        Observable<Result> setLike(String question_id);
+        Observable<Result<DetailsLikeBean>> setLike(String question_id);
 
     }
     abstract class CommunityDetailsPresenter extends BasePreaenter<CommunityDetailsView,CommunityDetailsModel> {

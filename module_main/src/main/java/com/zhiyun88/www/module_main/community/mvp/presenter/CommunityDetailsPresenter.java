@@ -7,6 +7,7 @@ import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
 import com.zhiyun88.www.module_main.community.bean.CommunityDetailsBean;
 import com.zhiyun88.www.module_main.community.bean.DetailsCommentBean;
+import com.zhiyun88.www.module_main.community.bean.DetailsLikeBean;
 import com.zhiyun88.www.module_main.community.mvp.contranct.CommunityDetailsContranct;
 import com.zhiyun88.www.module_main.community.mvp.model.CommunityDetailsModel;
 
@@ -135,10 +136,10 @@ public class CommunityDetailsPresenter extends CommunityDetailsContranct.Communi
 
     @Override
     public void setLike(String question_id) {
-        HttpManager.newInstance().commonRequest(mModel.setLike(question_id), new BaseObserver<Result>(AppUtils.getContext()) {
+        HttpManager.newInstance().commonRequest(mModel.setLike(question_id), new BaseObserver<Result<DetailsLikeBean>>(AppUtils.getContext()) {
             @Override
-            public void onSuccess(Result result) {
-                mView.setLikeSuccess(result.getMsg());
+            public void onSuccess(Result<DetailsLikeBean> result) {
+                mView.setLikeSuccess(result.getData());
             }
 
             @Override

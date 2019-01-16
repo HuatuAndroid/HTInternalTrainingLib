@@ -36,6 +36,7 @@ import com.wb.rxbus.taskBean.RxMessageBean;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.community.adapter.CommentAdapater;
 import com.zhiyun88.www.module_main.community.bean.DetailsCommentListBean;
+import com.zhiyun88.www.module_main.community.bean.DetailsLikeBean;
 import com.zhiyun88.www.module_main.community.bean.QuestionInfoBean;
 import com.zhiyun88.www.module_main.community.config.CommunityConfig;
 import com.zhiyun88.www.module_main.community.mvp.contranct.CommunityDetailsContranct;
@@ -62,6 +63,8 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     private SmartRefreshLayout smartRefreshLayout;
     private int page = 1;
     private int index;
+    //点赞状态 1=已点赞 0 未点赞
+    private int isList;
 
     private Handler mHandler = new Handler() {
 
@@ -134,8 +137,10 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.setLike(question_id);
-                like.setEnabled(false);
+//                if (!isFastClick()){
+                    mPresenter.setLike(question_id);
+//                }
+//                like.setEnabled(false);
             }
         });
         text.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +234,15 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         details_browse.setText(questionInfoBean.getRead_count() + "次浏览");
 
         comment_count.setText("全部评论 (" + 0 + ")");
+
+        //1=已点赞 0 未点赞
+        if (questionInfoBean.getIs_like()==1){
+            like.setImageResource(R.drawable.details_like_org);
+        }else {
+            like.setImageResource(R.drawable.details_like);
+        }
+        isList=questionInfoBean.getIs_like();
+
         mPresenter.getCommentList(question_id, "1", page);
     }
 
@@ -330,9 +344,17 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     }
 
     @Override
-    public void setLikeSuccess(String msg) {
-        like.setImageResource(R.drawable.details_like_org);
-        int likeCount = Integer.parseInt(questionInfoBean.getLike_count()) + 1;
+    public void setLikeSuccess(DetailsLikeBean msg) {
+        int likeCount;
+        //result_type 1=取消成功 2：点赞成功
+        if (msg.getResult_type()==1){
+            like.setImageResource(R.drawable.details_like);
+            likeCount = Integer.parseInt(questionInfoBean.getLike_count()) - 1;
+        }else {
+            like.setImageResource(R.drawable.details_like_org);
+            likeCount = Integer.parseInt(questionInfoBean.getLike_count()) + 1;
+        }
+        questionInfoBean.setLike_count(likeCount+"");
         RxBus.getIntanceBus().post(new RxMessageBean(487,likeCount+"",""));
     }
 
@@ -341,4 +363,18 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         super.onDestroy();
         RxBus.getIntanceBus().unSubscribe(this);
     }
+
+    // 两次点击间隔不能少于1000ms
+    private static final int MIN_DELAY_TIME= 1000;
+    private static long lastClickTime;
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
+
 }

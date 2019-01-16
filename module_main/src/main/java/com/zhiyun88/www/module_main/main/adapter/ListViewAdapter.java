@@ -58,7 +58,7 @@ public class ListViewAdapter extends BaseAdapter{
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.image_type.setVisibility(View.VISIBLE);
+        viewHolder.image_type.setVisibility(View.GONE);
         if (homeCourseBean.getCover()==null||homeCourseBean.getCover().equals("")) {
             Picasso.with(mContext).load("http://ww.baid.com").error(R.drawable.course_image).placeholder(R.drawable.course_image).transform(new RoundTransform(4)).into(viewHolder.imageView);
 //            GlideManager.getInstance().setRoundPhoto(viewHolder.imageView,R.drawable.course_image ,mContext , "http://ww.baid.com", 4);

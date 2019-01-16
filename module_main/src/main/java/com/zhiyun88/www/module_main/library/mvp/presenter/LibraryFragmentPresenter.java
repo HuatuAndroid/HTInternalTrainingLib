@@ -79,12 +79,12 @@ public class LibraryFragmentPresenter extends LibraryFragmentContranct.LibraryFr
     }
 
     @Override
-    public void setLibraryCollection(String libraryId, String userId, String isClick) {
+    public void setLibraryCollection(String libraryId, String userId, final String isClick) {
         HttpManager.newInstance().commonRequest(mModel.setLibraryCollection(libraryId, userId, isClick), new BaseObserver<Result>(AppUtils.getContext()) {
             @Override
             public void onSuccess(Result result) {
-                mView.showErrorMsg(result.getMsg());
-                mView.setCollectedSuccess();
+//                mView.showErrorMsg(result.getMsg());
+                mView.setCollectedSuccess(isClick);
             }
 
             @Override

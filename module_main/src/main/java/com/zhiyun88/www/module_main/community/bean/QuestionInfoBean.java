@@ -24,6 +24,51 @@ public class QuestionInfoBean implements Parcelable {
     private String avatar;
     private String is_collect;
 
+    private int is_like;
+
+    protected QuestionInfoBean(Parcel in) {
+        id = in.readString();
+        group_id = in.readString();
+        title = in.readString();
+        content = in.readString();
+        like_count = in.readString();
+        read_count = in.readString();
+        comment_count = in.readString();
+        is_essence = in.readString();
+        is_top = in.readString();
+        is_recommend = in.readString();
+        is_anonymity = in.readString();
+        created_id = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        group_name = in.readString();
+        user_name = in.readString();
+        avatar = in.readString();
+        is_collect = in.readString();
+        is_like = in.readInt();
+    }
+
+    public static final Creator<QuestionInfoBean> CREATOR = new Creator<QuestionInfoBean>() {
+        @Override
+        public QuestionInfoBean createFromParcel(Parcel in) {
+            return new QuestionInfoBean(in);
+        }
+
+        @Override
+        public QuestionInfoBean[] newArray(int size) {
+            return new QuestionInfoBean[size];
+        }
+    };
+
+    public void setIs_like(int is_like) {
+        this.is_like = is_like;
+    }
+
+    public int getIs_like() {
+
+        return is_like;
+    }
+
     public String getId() {
         return id;
     }
@@ -168,6 +213,7 @@ public class QuestionInfoBean implements Parcelable {
         this.is_collect = is_collect;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -175,59 +221,24 @@ public class QuestionInfoBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.group_id);
-        dest.writeString(this.title);
-        dest.writeString(this.content);
-        dest.writeString(this.like_count);
-        dest.writeString(this.read_count);
-        dest.writeString(this.comment_count);
-        dest.writeString(this.is_essence);
-        dest.writeString(this.is_top);
-        dest.writeString(this.is_recommend);
-        dest.writeString(this.is_anonymity);
-        dest.writeString(this.created_id);
-        dest.writeString(this.created_at);
-        dest.writeString(this.updated_at);
-        dest.writeString(this.group_name);
-        dest.writeString(this.user_name);
-        dest.writeString(this.avatar);
-        dest.writeString(this.is_collect);
+        dest.writeString(id);
+        dest.writeString(group_id);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(like_count);
+        dest.writeString(read_count);
+        dest.writeString(comment_count);
+        dest.writeString(is_essence);
+        dest.writeString(is_top);
+        dest.writeString(is_recommend);
+        dest.writeString(is_anonymity);
+        dest.writeString(created_id);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(group_name);
+        dest.writeString(user_name);
+        dest.writeString(avatar);
+        dest.writeString(is_collect);
+        dest.writeInt(is_like);
     }
-
-    public QuestionInfoBean() {
-    }
-
-    protected QuestionInfoBean(Parcel in) {
-        this.id = in.readString();
-        this.group_id = in.readString();
-        this.title = in.readString();
-        this.content = in.readString();
-        this.like_count = in.readString();
-        this.read_count = in.readString();
-        this.comment_count = in.readString();
-        this.is_essence = in.readString();
-        this.is_top = in.readString();
-        this.is_recommend = in.readString();
-        this.is_anonymity = in.readString();
-        this.created_id = in.readString();
-        this.created_at = in.readString();
-        this.updated_at = in.readString();
-        this.group_name = in.readString();
-        this.user_name = in.readString();
-        this.avatar = in.readString();
-        this.is_collect = in.readString();
-    }
-
-    public static final Creator<QuestionInfoBean> CREATOR = new Creator<QuestionInfoBean>() {
-        @Override
-        public QuestionInfoBean createFromParcel(Parcel source) {
-            return new QuestionInfoBean(source);
-        }
-
-        @Override
-        public QuestionInfoBean[] newArray(int size) {
-            return new QuestionInfoBean[size];
-        }
-    };
 }
