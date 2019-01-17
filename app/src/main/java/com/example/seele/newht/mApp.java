@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class mApp extends BaseApplication {
+
+    private final String TEXT_URL="http://test-px.huatu.com";
+    private final String BATE_URL="http://beta-px.huatu.com";
+
     @Override
     public String getRootPackAge() {
         return "wwww";
@@ -32,7 +36,7 @@ public class mApp extends BaseApplication {
         HttpConfig.HttpConfigBuilder httpConfig =
                 new HttpConfig.HttpConfigBuilder()
                         .setUseCustGson(true)
-                        .setmBaseUrl("http://test-px.huatu.com")
+                        .setmBaseUrl(BATE_URL)
                 .setmIsUseLog(true);
         HttpConfig.newInstanceBuild(httpConfig);
         hApp.newInstance().initVideoPlay(this);

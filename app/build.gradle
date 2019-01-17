@@ -1,5 +1,5 @@
-apply plugin: 'com.android.application'
-//apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 android {
 //    signingConfigs {
 //        config {
@@ -16,7 +16,7 @@ android {
              }
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.seele.newht"
+        //applicationId "com.example.seele.newht"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
