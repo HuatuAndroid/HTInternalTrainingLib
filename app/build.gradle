@@ -1,5 +1,7 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.HuatuAndroid'
 android {
 //    signingConfigs {
 //        config {
@@ -31,7 +33,7 @@ android {
         }
     }
     buildTypes {
-        debug {
+        release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
