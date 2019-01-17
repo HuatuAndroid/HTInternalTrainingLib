@@ -38,7 +38,7 @@
             android:textSize="13sp"
             android:drawablePadding="10dp"
             android:gravity="center"
-            android:text="社区"
+            android:text="员工天地"
             android:textColor="@color/main_text_66"/>
 
         <TextView
@@ -50,10 +50,10 @@
             android:textSize="13sp"
             android:drawablePadding="10dp"
             android:gravity="center"
-            android:text="文库"
+            android:text="知识库"
             android:textColor="@color/main_text_66"/>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/home_shop"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -63,7 +63,7 @@
             android:drawablePadding="10dp"
             android:gravity="center"
             android:text="商城"
-            android:textColor="@color/main_text_66"/>
+            android:textColor="@color/main_text_66"/>-->
 
 
     </LinearLayout>

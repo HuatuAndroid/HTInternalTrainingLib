@@ -201,7 +201,7 @@ public class HomeAdapter extends BaseAdapter {
             bannerHolder.course = convertView.findViewById(R.id.home_course);
             bannerHolder.community = convertView.findViewById(R.id.home_community);
             bannerHolder.library = convertView.findViewById(R.id.home_library);
-            bannerHolder.shop = convertView.findViewById(R.id.home_shop);
+//            bannerHolder.shop = convertView.findViewById(R.id.home_shop);
             convertView.setTag(bannerHolder);
         } else {
             bannerHolder = (BannerHolder) convertView.getTag();
@@ -273,12 +273,12 @@ public class HomeAdapter extends BaseAdapter {
                     mContext.startActivity(new Intent(mContext,LibraryActivity.class));
                 }
             });
-            bannerHolder.shop.setOnClickListener(new View.OnClickListener() {
+            /*bannerHolder.shop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    mContext.startActivity(new Intent(mContext,ShoppingActivity.class));
                 }
-            });
+            });*/
         }
 
         return convertView;
