@@ -55,7 +55,6 @@ dependencies {
 //    compile 'com.github.w513209188:BaseLib:v1.6.4'
 //    compile 'cn.yipianfengye.android:zxing-library:2.2'
 
-
     implementation 'com.github.wangchenyan:html-text:1.0'
     api 'com.zzhoujay.richtext:richtext:3.0.7'
     api 'com.github.limedroid:XRichText:v1.0.0'
