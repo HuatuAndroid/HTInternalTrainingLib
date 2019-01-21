@@ -133,7 +133,10 @@ public class DropMenuAdapter implements MenuAdapter {
         return singleListView;
     }
 
-
+    /**
+     * 分类
+     * @return
+     */
     private View createDoubleListView() {
         DoubleListView<FilterType, FilterChilderType> comTypeDoubleListView = new DoubleListView<FilterType, FilterChilderType>(mContext)
                 .leftAdapter(new Simple1TextAdapter<FilterType>(null,mContext,0) {

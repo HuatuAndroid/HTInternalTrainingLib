@@ -25,7 +25,9 @@ public class LibraryShowActivity extends BaseActivity {
     public final static int LIBRARY_TYPE_PPT = 3;
     private final static String OFFICE_PREFIX = "https://view.officeapps.live.com/op/view.aspx?src=";
     private final static String PDF_PREFIX = "file:///android_asset/pdfjs/web/viewer.html?file=";
-    private final static String PREFIX = "http://ow365.cn/?i=17217&furl=";
+    private final static String PREFIX_BATE = "http://ow365.cn/?i=17755&furl=";
+    private final static String PREFIX_TEXT = "http://ow365.cn/?i=17217&furl=";
+    private final static String PREFIX_PEIXUN = "http://ow365.cn/?i=17754&furl=";
     private TopBarView topBarView;
     private WebView webView;
     private String mUrl;
@@ -52,7 +54,14 @@ public class LibraryShowActivity extends BaseActivity {
 //        } else {
 //            mUrl = OFFICE_PREFIX + mUrl;
 //        }
-        webView.loadUrl(PREFIX + mUrl);
+        if (mUrl.contains("beta-px")){
+            webView.loadUrl(PREFIX_BATE + mUrl);
+        }else if (mUrl.contains("test-px")){
+            webView.loadUrl(PREFIX_TEXT + mUrl);
+        }else if (mUrl.contains("peixun")){
+            webView.loadUrl(PREFIX_PEIXUN + mUrl);
+        }
+
     }
 
     @Override

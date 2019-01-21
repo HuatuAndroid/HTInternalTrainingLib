@@ -45,7 +45,7 @@ public class LibraryActivity extends MvpActivity<LibraryPresenter> implements Li
         view = getViewById(R.id.view_line_xi);
         mViewPager = getViewById(R.id.viewpager);
         view.setVisibility(View.VISIBLE);
-        topBarView.getCenterTextView().setText("文库");
+        topBarView.getCenterTextView().setText("知识库");
         libraryTypeListBeans = new ArrayList<>();
         mPresenter.getLibraryType();
     }

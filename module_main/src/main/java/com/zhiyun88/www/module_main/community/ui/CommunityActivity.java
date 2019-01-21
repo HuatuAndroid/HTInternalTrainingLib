@@ -38,7 +38,7 @@ public class CommunityActivity extends BaseActivity {
         view = getViewById(R.id.view_line_xi);
         mViewPager = getViewById(R.id.viewpager);
         view.setVisibility(View.VISIBLE);
-        topBarView.getCenterTextView().setText("社区");
+        topBarView.getCenterTextView().setText("员工天地");
         initView(savedInstanceState);
         setListener();
     }

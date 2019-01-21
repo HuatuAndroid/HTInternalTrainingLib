@@ -58,10 +58,10 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         if (discussListBean.getIs_top().equals("1")) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
             String title = discussListBean.getTitle();
-            title = title + " ";
+            title = title + "  ";
             sb.append(title);
             Drawable d = context.getResources().getDrawable(R.drawable.ding) ;
-            d.setBounds(0, 0,25, 25);//设置图片大小
+            d.setBounds(0, 0,d.getMinimumWidth(), d.getMinimumHeight());//设置图片大小
             sb.setSpan(new ImageSpan(d,ImageSpan.ALIGN_BASELINE), title.length() - 1, title.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             //回复
             viewHolder.title.setText(sb);

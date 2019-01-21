@@ -120,9 +120,23 @@ public class CourseMainActivity extends MvpActivity<CourseMainPresenter> impleme
         LogTools.e("查看标题"+positionTitle);
         if(dropDownMenu==null){
         }else {
-            if(position!=2){
-                dropDownMenu.setPositionIndicatorText(position,positionTitle);
+            if(position==2){
+                /**
+                 * 由于此监听的调用时封装在依赖库中，当position=2时positionTitle为索引值， 遂只能再此再次再做此判断
+                 */
+                if ("0".equals(positionTitle)){
+                    positionTitle="全部";
+                }else if ("1".equals(positionTitle)){
+                    positionTitle="直播课";
+                }else if ("2".equals(positionTitle)){
+                    positionTitle="录播课";
+                }else if ("3".equals(positionTitle)){
+                    positionTitle="音频课";
+                }else {
+                    positionTitle="筛选";
+                }
             }
+            dropDownMenu.setPositionIndicatorText(position,positionTitle);
             dropDownMenu.close();
         }
         if(position==0){
