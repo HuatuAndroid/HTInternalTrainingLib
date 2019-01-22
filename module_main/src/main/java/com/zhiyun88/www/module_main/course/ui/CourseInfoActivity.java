@@ -127,6 +127,7 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
             }
              mViewPager.setAdapter(new CoordinatorPagerAdapter(getSupportFragmentManager(), mFragments, mTitles));
             mViewPager.setOffscreenPageLimit(3);
+
         isLoad=true;
     }
     @Override
@@ -160,7 +161,7 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
     public void initCoorLayout(CourseInfoBean courseInfoBean) {
         LogTools.e(courseInfoBean.toString()+"------>>>");
         this.courseInfoBean=courseInfoBean;
-        courseOrTrain(courseInfoBean);
+
         if(isCourseTaskInfo){
             mCoordinatorTabLayout
                     .setBackEnable(true)
@@ -194,6 +195,7 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
 
         initFragments(courseInfoBean);
         initViewPager();
+        courseOrTrain(courseInfoBean);
         try {
             GlideManager.getInstance().setCommonPhoto(mCoordinatorTabLayout.getImageView(),R.drawable.course_image ,CourseInfoActivity.this , courseInfoBean.getInfo().getCover()==null||courseInfoBean.getInfo().getCover().equals("")?"http://ww.baid.com":courseInfoBean.getInfo().getCover(), false);
         }catch (Exception e){
@@ -210,6 +212,8 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
             //已加入
 //            isbuy_state(applied,false,true,true);
             isbuy_state(isCourseTaskInfo?"已报名":"已加入",false,false,true);
+            //已加入的默认显示“课程大纲”模块
+            mViewPager.setCurrentItem(1,true);
         }else if(courseInfoBean.getInfo().getIs_buy().equals("2")){
             //已截止
 //            isbuy_state(abort,false,true,false);

@@ -68,7 +68,7 @@ public class CommentAdapater extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (listBean.getIs_anonymity().equals("1")) {
-            viewHolder.comment_image.setImageResource(R.drawable.name_no);
+            viewHolder.comment_image.setImageResource(R.drawable.user_head);
             viewHolder.comment_name.setText("匿名");
         } else {
             if (listBean.getAvatar() == null || listBean.getAvatar().equals("")) {

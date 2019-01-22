@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/discuss_title"
             android:layout_marginTop="10dp"
-            android:textColor="@color/main_text_black_11"
+            android:textColor="@color/main_bg_grey_b8"
             android:textSize="13sp" />
 
     </RelativeLayout>

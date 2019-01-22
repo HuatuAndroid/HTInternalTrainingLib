@@ -168,8 +168,8 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ArrayList<Fragment> mFragments = new ArrayList<>();
         str.add("热门话题");
         str.add("最新话题");
-        mFragments.add(CommunityDiscussFragment.newInstance("1",groupId,false));
-        mFragments.add(CommunityDiscussFragment.newInstance("2",groupId,false));
+        mFragments.add(CommunityDiscussFragment.newInstance("1",groupId,true));
+        mFragments.add(CommunityDiscussFragment.newInstance("2",groupId,true));
         scrollIndicatorView.setSplitAuto(true);
         scrollIndicatorView.setOnTransitionListener(new OnTransitionTextListener() {
             @Override

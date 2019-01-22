@@ -117,26 +117,31 @@ public class CourseMainActivity extends MvpActivity<CourseMainPresenter> impleme
 
     @Override
     public void onFilterDone(int position, String positionTitle, String id1,String id2) {
-        LogTools.e("查看标题"+positionTitle);
+        Log.d("aaaaa",position+","+positionTitle+","+id1+","+id2);
         if(dropDownMenu==null){
         }else {
+
             if(position==2){
                 /**
                  * 由于此监听的调用时封装在依赖库中，当position=2时positionTitle为索引值， 遂只能再此再次再做此判断
                  */
+                String tabStr="";
                 if ("0".equals(positionTitle)){
-                    positionTitle="全部";
+                    tabStr="全部";
                 }else if ("1".equals(positionTitle)){
-                    positionTitle="直播课";
+                    tabStr="直播课";
                 }else if ("2".equals(positionTitle)){
-                    positionTitle="录播课";
+                    tabStr="录播课";
                 }else if ("3".equals(positionTitle)){
-                    positionTitle="音频课";
+                    tabStr="音频课";
                 }else {
-                    positionTitle="筛选";
+                    tabStr="筛选";
                 }
+                dropDownMenu.setPositionIndicatorText(position,tabStr);
+            }else {
+                dropDownMenu.setPositionIndicatorText(position,positionTitle);
             }
-            dropDownMenu.setPositionIndicatorText(position,positionTitle);
+
             dropDownMenu.close();
         }
         if(position==0){

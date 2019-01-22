@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -228,7 +229,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             }
         }else {
             details_name.setText("匿名");
-            Picasso.with(TopicDetailsActivity.this).load(R.drawable.name_no).error(R.drawable.name_no).placeholder(R.drawable.name_no).transform(new CircleTransform()).into(headImage);
+            Picasso.with(TopicDetailsActivity.this).load(R.drawable.user_head).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(headImage);
         }
         details_time.setText(questionInfoBean.getCreated_at());
         details_browse.setText(questionInfoBean.getRead_count() + "次浏览");
@@ -255,12 +256,13 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
 
                     @Override
                     public Drawable getDrawable(String source) {
+
                         Drawable drawable;
                         drawable = getImageNetwork(source);
                         if (drawable == null) {
                             drawable = getResources().getDrawable(R.drawable.image_failure);
                         }
-                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        drawable.setBounds(0, 0,800 ,1100);
                         return drawable;
                     }
                 };
