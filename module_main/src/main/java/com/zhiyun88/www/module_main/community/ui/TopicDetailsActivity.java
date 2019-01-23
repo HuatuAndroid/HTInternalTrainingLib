@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -59,6 +61,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     private TextView comment_count, text, htmlTextView, details_name, details_time, details_browse;
     private String question_id;
     private MyListView details_list;
+    private LinearLayout listEmpty;
     private CommentAdapater mAdapter;
     private MultipleStatusView multiplestatusview;
     private SmartRefreshLayout smartRefreshLayout;
@@ -109,6 +112,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         htmlTextView = getViewById(R.id.details_textview);
         comment_count = getViewById(R.id.comment_count);
         details_list = getViewById(R.id.p_mlv);
+        listEmpty = getViewById(R.id.list_empty_view);
         text = getViewById(R.id.details_text);
         like = getViewById(R.id.details_like);
         headImage = getViewById(R.id.details_head);
@@ -335,6 +339,14 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         comment_count.setText("全部评论 (" + total + ")");
         page++;
         RxBus.getIntanceBus().post(new RxMessageBean(486,total+"",""));
+
+        if (total==0){
+            listEmpty.setVisibility(View.VISIBLE);
+            details_list.setVisibility(View.GONE);
+        }else {
+            listEmpty.setVisibility(View.GONE);
+            details_list.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

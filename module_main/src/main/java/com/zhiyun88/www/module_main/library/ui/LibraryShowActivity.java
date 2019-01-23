@@ -44,7 +44,7 @@ public class LibraryShowActivity extends BaseActivity {
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_library_show);
         topBarView = getViewById(R.id.topbarview);
-        topBarView.getCenterTextView().setText("文库详情");
+        topBarView.getCenterTextView().setText("详情");
         webView = getViewById(R.id.webView);
         mUrl = getIntent().getStringExtra("url");
         mType = getIntent().getIntExtra("type", LIBRARY_TYPE_PDF);
