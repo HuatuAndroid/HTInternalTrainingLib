@@ -43,7 +43,7 @@ public class CourseMainAdapter extends ListBaseAdapter<CourseMainData> {
         }
         holder.image_type.setVisibility(courseMainData.getType().equals("1")?View.VISIBLE:View.GONE);
         holder.coursemain_title.setText(courseMainData.getTitle());
-        holder.coursemain_teacher.setText("讲师："+courseMainData.getTeacher());
+        holder.coursemain_teacher.setText(courseMainData.getTeacher());
         holder.coursemain_num.setText(courseMainData.getStudy_num()+"人学习");
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override

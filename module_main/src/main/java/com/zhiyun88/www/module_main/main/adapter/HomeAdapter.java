@@ -129,7 +129,7 @@ public class HomeAdapter extends BaseAdapter {
         }else {
             final List<HomeInformationBean> homeInformationBeanList = homeBean.getInformation();
             onLineHolder.online_line.setVisibility(View.GONE);
-            onLineHolder.online_head.setText("行业动态");
+            onLineHolder.online_head.setText("资讯");
             onLineHolder.online_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

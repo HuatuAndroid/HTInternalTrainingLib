@@ -55,7 +55,18 @@
                 android:ellipsize="end"
                 android:textColor="@color/main_text_black_33"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/home_teacher"
+                android:layout_alignParentLeft="true"
+                android:textSize="12sp"
+                android:textColor="@color/main_text_grey_7c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_title"
+                android:layout_marginTop="5dp"
+                android:text="李恩林"/>
 
             <TextView
                 android:layout_alignParentBottom="true"

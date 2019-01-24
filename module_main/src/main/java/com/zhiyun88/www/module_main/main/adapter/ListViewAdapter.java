@@ -52,6 +52,7 @@ public class ListViewAdapter extends BaseAdapter{
             viewHolder.imageView = convertView.findViewById(R.id.home_image);
             viewHolder.image_type=convertView.findViewById(R.id.image_type);
             viewHolder.title = convertView.findViewById(R.id.home_title);
+            viewHolder.home_teacher = convertView.findViewById(R.id.home_teacher);
             viewHolder.num = convertView.findViewById(R.id.home_num);
             viewHolder.cardview = convertView.findViewById(R.id.cardview);
             convertView.setTag(viewHolder);
@@ -67,6 +68,7 @@ public class ListViewAdapter extends BaseAdapter{
 //            GlideManager.getInstance().setRoundPhoto(viewHolder.imageView,R.drawable.course_image ,mContext , homeCourseBean.getCover(), 4);
         }
         viewHolder.title.setText(homeCourseBean.getTitle());
+        viewHolder.home_teacher.setText(homeCourseBean.getTeacher());
         viewHolder.num.setText(homeCourseBean.getStudy_count()+"人在学");
         viewHolder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +84,6 @@ public class ListViewAdapter extends BaseAdapter{
     class ViewHolder{
         CardView cardview;
         ImageView imageView,image_type;
-        TextView title,num;
+        TextView title,num,home_teacher;
     }
 }
