@@ -96,7 +96,6 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
         RxBus.getIntanceBus().registerRxBus(BjyPlayTimeEvent.class, new Consumer<BjyPlayTimeEvent>() {
             @Override
             public void accept(BjyPlayTimeEvent event) throws Exception {
-                Log.d("kaelli", "event :"+event.toString());
                 try {
                     mPresenter.uploadWatchVideoTime(event.playId, event.begin_time, event.end_time, event.watch_time, event.abort_time);
                 } catch (Exception e) {
@@ -159,7 +158,6 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
     }
     @Override
     public void initCoorLayout(CourseInfoBean courseInfoBean) {
-        LogTools.e(courseInfoBean.toString()+"------>>>");
         this.courseInfoBean=courseInfoBean;
 
         if(isCourseTaskInfo){
@@ -193,9 +191,9 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
                     .setupWithViewPager(mViewPager);
         }
 
+        courseOrTrain(courseInfoBean);
         initFragments(courseInfoBean);
         initViewPager();
-        courseOrTrain(courseInfoBean);
         try {
             GlideManager.getInstance().setCommonPhoto(mCoordinatorTabLayout.getImageView(),R.drawable.course_image ,CourseInfoActivity.this , courseInfoBean.getInfo().getCover()==null||courseInfoBean.getInfo().getCover().equals("")?"http://ww.baid.com":courseInfoBean.getInfo().getCover(), false);
         }catch (Exception e){

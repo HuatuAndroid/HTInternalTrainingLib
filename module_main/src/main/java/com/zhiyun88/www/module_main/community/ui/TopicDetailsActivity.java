@@ -252,21 +252,23 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     }
 
     private void setActivityContent(final String activityContent) {
+        final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 Html.ImageGetter imageGetter = new Html.ImageGetter() {
-
                     @Override
                     public Drawable getDrawable(String source) {
-
                         Drawable drawable;
                         drawable = getImageNetwork(source);
                         if (drawable == null) {
                             drawable = getResources().getDrawable(R.drawable.image_failure);
                         }
-                        drawable.setBounds(0, 0,800 ,1100);
+                        int minimumWidth = drawable.getMinimumWidth();
+                        int minimumHeight = drawable.getMinimumHeight();
+                        int height = (int) (((float)screenWidth / minimumWidth) * minimumHeight);
+                        drawable.setBounds(0, 0,screenWidth ,height);
                         return drawable;
                     }
                 };

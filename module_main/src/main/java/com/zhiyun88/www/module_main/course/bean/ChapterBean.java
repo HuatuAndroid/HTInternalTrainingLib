@@ -73,4 +73,13 @@ public class ChapterBean implements Parcelable {
             return new ChapterBean[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "ChapterBean{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", child=" + child +
+                '}';
+    }
 }

@@ -233,4 +233,27 @@ private String details_url;
             return new CourseIntroBean[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "CourseIntroBean{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", course_type='" + course_type + '\'' +
+                ", cover='" + cover + '\'' +
+                ", is_public='" + is_public + '\'' +
+                ", page_view='" + page_view + '\'' +
+                ", details='" + details + '\'' +
+                ", teacher_name='" + teacher_name + '\'' +
+                ", is_buy='" + is_buy + '\'' +
+                ", apply_num='" + apply_num + '\'' +
+                ", advance_time='" + advance_time + '\'' +
+                ", start_end_date='" + start_end_date + '\'' +
+                ", address='" + address + '\'' +
+                ", department='" + department + '\'' +
+                ", surplus_num='" + surplus_num + '\'' +
+                ", details_url='" + details_url + '\'' +
+                '}';
+    }
 }

@@ -65,4 +65,13 @@ public class CourseInfoBean implements Parcelable {
             return new CourseInfoBean[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "CourseInfoBean{" +
+                "info=" + info +
+                ", chapter=" + chapter +
+                ", teacher=" + teacher +
+                '}';
+    }
 }

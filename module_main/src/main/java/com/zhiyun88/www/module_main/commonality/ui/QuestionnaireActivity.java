@@ -24,6 +24,9 @@ import com.zhiyun88.www.module_main.commonality.mvp.presenter.QuestionnairePrese
 import com.zhiyun88.www.module_main.course.view.MyRatingBar;
 import com.zhiyun88.www.module_main.hApp;
 
+/**
+ * 填写温泉调查
+ */
 public class QuestionnaireActivity extends MvpActivity<QuestionnairePresenter> implements QuestionnaireContranct.QuestionnaireView,View.OnTouchListener{
 
     private TopBarView topBarView;
@@ -99,8 +102,12 @@ public class QuestionnaireActivity extends MvpActivity<QuestionnairePresenter> i
                 int chapter_id = infoBean.getChapter_id();
                 String nice = merit.getText().toString().trim();
                 String negative = insufficient.getText().toString().trim();
-                mPresenter.setQuestionData(basis_id,chapter_id ,ratingNum ,nice ,negative );
-                showLoadV("提交中...");
+                if (!TextUtils.isEmpty(nice)&&!TextUtils.isEmpty(negative)){
+                    mPresenter.setQuestionData(basis_id,chapter_id ,ratingNum ,nice ,negative );
+                    showLoadV("提交中...");
+                }else {
+                    showShortToast("好的评价 必须填写");
+                }
             }
         });
     }

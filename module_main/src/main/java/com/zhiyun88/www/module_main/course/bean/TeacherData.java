@@ -96,4 +96,15 @@ public class TeacherData implements Parcelable {
             return new TeacherData[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "TeacherData{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", teacher_info='" + teacher_info + '\'' +
+                ", user_id='" + user_id + '\'' +
+                '}';
+    }
 }

@@ -33,6 +33,9 @@ import java.util.Date;
 
 import io.reactivex.functions.Consumer;
 
+/**
+ * 我的消息-消息列表
+ */
 public class MessageDetailActivity extends BaseActivity{
 
     private TopBarView topBarView;
