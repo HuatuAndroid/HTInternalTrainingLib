@@ -16,6 +16,7 @@ public class mApp extends BaseApplication {
 
     private final String TEXT_URL="http://test-px.huatu.com";
     private final String BATE_URL="http://beta-px.huatu.com";
+    private final String ONLINE_URL="http://peixun.huatu.com";
 
     @Override
     public String getRootPackAge() {
@@ -36,7 +37,7 @@ public class mApp extends BaseApplication {
         HttpConfig.HttpConfigBuilder httpConfig =
                 new HttpConfig.HttpConfigBuilder()
                         .setUseCustGson(true)
-                        .setmBaseUrl(BATE_URL)
+                        .setmBaseUrl(ONLINE_URL)
                 .setmIsUseLog(true);
         HttpConfig.newInstanceBuild(httpConfig);
         hApp.newInstance().initVideoPlay(this);

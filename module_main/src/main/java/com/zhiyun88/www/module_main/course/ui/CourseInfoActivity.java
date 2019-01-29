@@ -112,23 +112,27 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
         mFragments.add(CommentListFrament.newInstance(courseInfoBean.getInfo().getId()));
 
     }
-    private void initViewPager() {
-            if(isCourseTaskInfo){
-                mTitles.add("培训详情");
-                mTitles.add("培训大纲");
-                mTitles.add("名师介绍");
-                mTitles.add("培训评价");
-            }else {
-                mTitles.add("课程详情");
-                mTitles.add("课程大纲");
-                mTitles.add("名师介绍");
-                mTitles.add("课程评价");
-            }
-             mViewPager.setAdapter(new CoordinatorPagerAdapter(getSupportFragmentManager(), mFragments, mTitles));
-            mViewPager.setOffscreenPageLimit(3);
-
+    private void initViewPager(CourseInfoBean courseInfoBean) {
+        if(isCourseTaskInfo){
+            mTitles.add("培训详情");
+            mTitles.add("培训大纲");
+            mTitles.add("名师介绍");
+            mTitles.add("培训评价");
+        }else {
+            mTitles.add("课程详情");
+            mTitles.add("课程大纲");
+            mTitles.add("名师介绍");
+            mTitles.add("课程评价");
+        }
+        mViewPager.setAdapter(new CoordinatorPagerAdapter(getSupportFragmentManager(), mFragments, mTitles));
+        mViewPager.setOffscreenPageLimit(3);
+        if(courseInfoBean.getInfo().getIs_buy().equals("1")){
+            //已加入的默认显示“课程大纲”模块
+            mViewPager.setCurrentItem(1,true);
+        }
         isLoad=true;
     }
+
     @Override
     protected void setListener() {
         isbuy_tv.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +197,7 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
 
         courseOrTrain(courseInfoBean);
         initFragments(courseInfoBean);
-        initViewPager();
+        initViewPager(courseInfoBean);
         try {
             GlideManager.getInstance().setCommonPhoto(mCoordinatorTabLayout.getImageView(),R.drawable.course_image ,CourseInfoActivity.this , courseInfoBean.getInfo().getCover()==null||courseInfoBean.getInfo().getCover().equals("")?"http://ww.baid.com":courseInfoBean.getInfo().getCover(), false);
         }catch (Exception e){

@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -260,8 +261,9 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
                 Html.ImageGetter imageGetter = new Html.ImageGetter() {
                     @Override
                     public Drawable getDrawable(String source) {
+                        Log.d("Test","url:"+source);
                         Drawable drawable;
-                        drawable = getImageNetwork(source);
+                        drawable = getBase64ImageNetwork(source);
                         if (drawable == null) {
                             drawable = getResources().getDrawable(R.drawable.image_failure);
                         }
@@ -299,6 +301,12 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             e.printStackTrace();
         }
         return drawable;
+    }
+
+    public Drawable getBase64ImageNetwork(String imageUrl) {
+        byte[] decode = Base64.decode(imageUrl.split(",")[1], Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
+        return new BitmapDrawable(bitmap);
     }
 
     @Override
