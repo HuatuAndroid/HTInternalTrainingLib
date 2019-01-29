@@ -261,9 +261,14 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
                 Html.ImageGetter imageGetter = new Html.ImageGetter() {
                     @Override
                     public Drawable getDrawable(String source) {
-                        Log.d("Test","url:"+source);
                         Drawable drawable;
-                        drawable = getBase64ImageNetwork(source);
+                        //临时解决方案，介于目前前端上传图片没base64编码，web端有base64编码，判断是否通过base64编码临时解决
+                        if (source.contains("data:image/png;base64")){
+                            drawable = getBase64ImageNetwork(source);
+                        }else {
+                            drawable = getImageNetwork(source);
+                        }
+
                         if (drawable == null) {
                             drawable = getResources().getDrawable(R.drawable.image_failure);
                         }

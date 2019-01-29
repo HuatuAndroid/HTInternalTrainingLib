@@ -1,5 +1,7 @@
 package com.zhiyun88.www.module_main.community.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,12 +24,20 @@ import com.zhiyun88.www.module_main.community.fragment.CommunityGroupFragment;
 
 import java.util.ArrayList;
 
+/**
+ * 员工天地
+ */
 public class CommunityActivity extends BaseActivity {
 
     private TopBarView topBarView;
     private View view;
     private ViewPager mViewPager;
     private ScrollIndicatorView scrollIndicatorView;
+
+    public static void startForResult(Activity activity) {
+        Intent intent = new Intent(activity, CommunityActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

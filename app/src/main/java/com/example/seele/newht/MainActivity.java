@@ -18,6 +18,7 @@ import com.wb.baselib.permissions.PerMissionsManager;
 import com.wb.baselib.permissions.interfaces.PerMissionCall;
 import com.wb.baselib.view.MyListView;
 import com.zhiyun88.www.module_main.call.LoginStatusCall;
+import com.zhiyun88.www.module_main.community.ui.CommunityActivity;
 import com.zhiyun88.www.module_main.hApp;
 import com.zzhoujay.richtext.RichText;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         toact4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hApp.newInstance().toMainActivity(MainActivity.this, "31192", "dfsfsfds", new LoginStatusCall() {
+                hApp.newInstance().jumpToActivity(MainActivity.this, com.zhiyun88.www.module_main.main.ui.MainActivity.class,"31192", "dfsfsfds", new LoginStatusCall() {
                     @Override
                     public void LoginError(String msg, int code) {
                         Log.e("---->>",msg+code);

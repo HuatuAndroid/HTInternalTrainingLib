@@ -14,6 +14,7 @@ import com.baijiahulian.BJVideoPlayerSDK;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.appconfig.AppConfigManager;
+import com.wb.baselib.base.activity.BaseActivity;
 import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.http.HttpManager;
@@ -23,6 +24,7 @@ import com.wb.baselib.utils.ToActivityUtil;
 import com.zhiyun88.www.module_main.api.AppBean;
 import com.zhiyun88.www.module_main.api.AppServiceApi;
 import com.zhiyun88.www.module_main.call.LoginStatusCall;
+import com.zhiyun88.www.module_main.community.ui.CommunityActivity;
 import com.zhiyun88.www.module_main.main.ui.MainActivity;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +45,7 @@ public class hApp {
     }
 
     /**
-     * 调起内训
+     * 调起内训主界面
      * @param source
      * @param uid
      * @param token
@@ -108,6 +110,78 @@ public class hApp {
             }
         });
     }
+
+    /**
+     * 调起内训界面通用方法
+     * @param source 跳转来源
+     * @param cls 跳转到
+     * @param uid
+     * @param token
+     * @param loginStatusCall
+     */
+    public void jumpToActivity(final Object source, final Class<?> cls, final String uid, final String token, final LoginStatusCall loginStatusCall){
+        if(loginStatusCall==null){
+            throw new NullPointerException("loginStatusCall is not null");
+        }
+        if(uid==null||uid.equals("")){
+            loginStatusCall.LoginError("uid is null",1001);
+            return;
+        }
+        if(token==null||token.equals("")){
+            loginStatusCall.LoginError("token is null",1002);
+        }
+        Map<String,String> map=new HashMap<>();
+        map.put("uid",uid);
+        HttpManager.newInstance().commonRequest(HttpManager.newInstance().getService(AppServiceApi.class).getLoginInfo(map), new BaseObserver<Result<AppBean>>(AppUtils.getContext()) {
+            @Override
+            public void onSuccess(Result<AppBean> o) {
+                if(o.getStatus()== AppConfigManager.newInstance().getAppConfig().getHttpCodeSuccess()){
+                    //校检成功
+                    if (source instanceof Activity) {
+                        Map<String,String> map1=new HashMap<>();
+                        map1.put("httoken",token);
+                        map1.put("Authorization","bearer "+o.getData().getRemember_token());
+                        map1.put("uid",uid);
+                        HttpConfig.HttpConfigBuilder httpConfig =
+                                new HttpConfig.HttpConfigBuilder()
+                                        .setmBaseUrl(HttpManager.newInstance().getHttpConfig().getmBaseUrl())
+                                        .setUseCustGson(HttpManager.newInstance().getHttpConfig().isUseCustGson())
+                                        .setmCacheFolder(HttpManager.newInstance().getHttpConfig().getmCacheFolder())
+                                        .setmCacheTimeWithNet(HttpManager.newInstance().getHttpConfig().getmCacheTimeWithoutNet())
+                                        .setmCacheSize(HttpManager.newInstance().getHttpConfig().getmCacheSize())
+                                        .setmConnectTimeout(HttpManager.newInstance().getHttpConfig().getmConnectTimeout())
+                                        .setmIsUseCache(HttpManager.newInstance().getHttpConfig().ismIsUseCache())
+                                        .setmMapHeader(map1)
+                                        .setIsReshConfig(true)
+                                        .setmIsUseLog(HttpManager.newInstance().getHttpConfig().ismIsUseLog());
+                        HttpConfig.newInstanceBuild(httpConfig);
+//                        CommunityActivity.startForResult((Activity) source);
+                        Intent intent = new Intent((Activity) source,cls);
+                        ((Activity) source).startActivity(intent);
+                    }
+                }else {
+                    loginStatusCall.LoginError(o.getMsg(),o.getStatus());
+                }
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                loginStatusCall.LoginError(e.getMessage(),e.getErrorCode());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+
 
     /**
      * 调起Schemme协议
