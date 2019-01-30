@@ -263,7 +263,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
                     public Drawable getDrawable(String source) {
                         Drawable drawable;
                         //临时解决方案，介于目前前端上传图片没base64编码，web端有base64编码，判断是否通过base64编码临时解决
-                        if (source.contains("data:image/png;base64")){
+                        if (source.startsWith("data:image/")){
                             drawable = getBase64ImageNetwork(source);
                         }else {
                             drawable = getImageNetwork(source);
