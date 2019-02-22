@@ -27,6 +27,9 @@ import com.zhiyun88.www.module_main.utils.CircleTransform;
 
 import java.util.List;
 
+/**
+ * 员工天地-帖子列表
+ */
 public class CommunityDiscussAdapter extends ListBaseAdapter {
 
     public CommunityDiscussAdapter(Context context, List<DiscussListBean> discussListBeans) {
@@ -74,16 +77,17 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         }
         if (discussListBean.getIs_anonymity().equals("1")) {
             viewHolder.name.setText("匿名");
-            viewHolder.image.setImageResource(R.drawable.user_head);
+//            viewHolder.image.setImageResource(R.drawable.user_head);
         }else {
             viewHolder.name.setText(discussListBean.getUser_name());
-            if (discussListBean.getAvatar() == null || discussListBean.getAvatar().equals("")) {
+            /*if (discussListBean.getAvatar() == null || discussListBean.getAvatar().equals("")) {
                 Picasso.with(context).load("www").error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
             }else {
                 Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
-            }
-
+            }*/
         }
+        //头像统一由服务器获取
+        Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
         viewHolder.read.setText(discussListBean.getRead_count());
         //  viewHolder.content.setText(discussListBean.getContent());
 

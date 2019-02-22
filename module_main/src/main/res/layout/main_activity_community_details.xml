@@ -16,6 +16,10 @@
         app:centerText="话题详情"
         app:fillStatusBar="false"
         app:leftImageResource="@drawable/main_back"
+        app:rightText="编辑"
+        app:rightTextSize="14sp"
+        app:rightType="textView"
+        app:rightTextColor="#333333"
         app:leftType="imageButton"
         app:showBottomLine="true"
         app:titleBarHeight="45dp" />

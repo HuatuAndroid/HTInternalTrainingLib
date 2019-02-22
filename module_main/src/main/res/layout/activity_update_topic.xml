@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg_grey_f8"
+    tools:context="com.zhiyun88.www.module_main.community.ui.ReleaseOrUpdateTopicActivity">
+
+   <!-- <View
+        android:id="@+id/details_line"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/white" />-->
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/topbarview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bottomLineColor="@color/main_line_ea"
+        app:centerTextColor="#333333"
+        app:centerTextSize="18sp"
+        app:centerType="textView"
+        app:centerText="编辑帖子"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/main_back"
+        app:rightText="发布"
+        app:rightTextSize="14sp"
+        app:rightType="textView"
+        app:rightTextColor="#007AFF"
+        app:leftType="imageButton"
+        app:showBottomLine="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@color/white">
+        <EditText
+            android:id="@+id/et_update_topic_title"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:hint="输入标题"
+            android:background="@color/white"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/main_bg_grey_f8"/>
+
+        <EditText
+            android:id="@+id/et_new_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_bg_grey_f8"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:paddingRight="16dp"
+        android:paddingLeft="6dp"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/iv_update_topic_camare"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10sp"
+            android:src="@drawable/topic_update_camera"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/iv_update_topic_niming"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10sp"
+            android:src="@drawable/topic_update_niming1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#999CAA"
+
+            android:text="匿名发表"/>
+    </LinearLayout>
+
+</LinearLayout>

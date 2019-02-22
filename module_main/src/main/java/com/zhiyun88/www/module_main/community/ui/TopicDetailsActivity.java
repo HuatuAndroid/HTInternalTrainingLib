@@ -1,5 +1,6 @@
 package com.zhiyun88.www.module_main.community.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -54,7 +55,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 话题详情
+ */
 public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter> implements CommunityDetailsContranct.CommunityDetailsView {
 
     private TopBarView topBarView;
@@ -137,6 +140,12 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             public void onClicked(View v, int action, String extra) {
                 if (action == TopBarView.ACTION_LEFT_BUTTON) {
                     finish();
+                }else if (action == TopBarView.ACTION_RIGHT_TEXT&&questionInfoBean!=null){
+                    Intent intent = new Intent(TopicDetailsActivity.this, UpdateTopicActivity.class);
+                    intent.putExtra(UpdateTopicActivity.TOPIN_TITLE,questionInfoBean.getTitle());
+                    intent.putExtra(UpdateTopicActivity.TOPIN_CONTENT,questionInfoBean.getContent());
+                    intent.putExtra(UpdateTopicActivity.TOPIN_NIMING,questionInfoBean.getIs_anonymity());
+                    startActivity(intent);
                 }
             }
         });
@@ -255,7 +264,6 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     private void setActivityContent(final String activityContent) {
         final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
         new Thread(new Runnable() {
-
             @Override
             public void run() {
                 Html.ImageGetter imageGetter = new Html.ImageGetter() {

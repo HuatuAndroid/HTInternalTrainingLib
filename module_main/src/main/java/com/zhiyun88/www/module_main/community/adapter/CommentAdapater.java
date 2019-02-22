@@ -21,6 +21,9 @@ import com.zhiyun88.www.module_main.utils.CircleTransform;
 
 import java.util.List;
 
+/**
+ * 帖子详情，帖子回复列表
+ */
 public class CommentAdapater extends BaseAdapter {
     private Context mContext;
     private List<DetailsCommentListBean> listBeans;
@@ -68,16 +71,18 @@ public class CommentAdapater extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (listBean.getIs_anonymity().equals("1")) {
-            viewHolder.comment_image.setImageResource(R.drawable.user_head);
+//            viewHolder.comment_image.setImageResource(R.drawable.user_head);
             viewHolder.comment_name.setText("匿名");
         } else {
-            if (listBean.getAvatar() == null || listBean.getAvatar().equals("")) {
+            /*if (listBean.getAvatar() == null || listBean.getAvatar().equals("")) {
                 Picasso.with(mContext).load("www").error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.comment_image);
             } else {
                 Picasso.with(mContext).load(listBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.comment_image);
-            }
+            }*/
             viewHolder.comment_name.setText(listBean.getUser_name());
         }
+        //头像统一由后台获取
+        Picasso.with(mContext).load(listBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.comment_image);
         viewHolder.comment_title.setText(listBean.getContent());
         viewHolder.comment_time.setText("发表于: " + listBean.getCreated_at());
         // viewHolder.comment_num.setText();
