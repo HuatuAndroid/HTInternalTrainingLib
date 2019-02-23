@@ -76,6 +76,7 @@ public class CommunityActivity extends BaseActivity {
         ViewPageTabAdapter viewPageTabAdapter= new ViewPageTabAdapter(getSupportFragmentManager(), CommunityActivity.this, mFragments, str);
         indicatorViewPager.setAdapter(viewPageTabAdapter);
         mViewPager.setOffscreenPageLimit(mFragments.size());
+        mViewPager.setCurrentItem(1);
     }
 
     @Override

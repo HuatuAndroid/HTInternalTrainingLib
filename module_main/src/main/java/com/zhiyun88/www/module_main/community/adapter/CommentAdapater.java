@@ -57,10 +57,9 @@ public class CommentAdapater extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.main_item_comment, null);
             viewHolder.comment_title = convertView.findViewById(R.id.comment_title);
-            viewHolder.comment_time = convertView.findViewById(R.id.comment_time);
-            viewHolder.comment_num = convertView.findViewById(R.id.comment_num);
+            viewHolder.comment_time = convertView.findViewById(R.id.tv_comment_time);
             viewHolder.comment_name = convertView.findViewById(R.id.comment_name);
-            viewHolder.comment_reply = convertView.findViewById(R.id.comment_reply);
+            viewHolder.comment_reply = convertView.findViewById(R.id.tv_comment_reply);
             viewHolder.comment_image = convertView.findViewById(R.id.comment_image);
             viewHolder.reply_rl = convertView.findViewById(R.id.reply_rl);
             viewHolder.reply_name = convertView.findViewById(R.id.reply_name);
@@ -84,8 +83,8 @@ public class CommentAdapater extends BaseAdapter {
         //头像统一由后台获取
         Picasso.with(mContext).load(listBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.comment_image);
         viewHolder.comment_title.setText(listBean.getContent());
-        viewHolder.comment_time.setText("发表于: " + listBean.getCreated_at());
-        // viewHolder.comment_num.setText();
+        viewHolder.comment_time.setText(listBean.getCreated_at());
+
         if (listBean.getParent() == null) {
             viewHolder.reply_rl.setVisibility(View.GONE);
         } else {
@@ -110,7 +109,7 @@ public class CommentAdapater extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView comment_title, comment_time, comment_num, comment_name, comment_reply, reply_name, reply_time, reply_content;
+        TextView comment_title, comment_time, comment_name, comment_reply, reply_name, reply_time, reply_content;
         ImageView comment_image;
         RelativeLayout reply_rl;
     }

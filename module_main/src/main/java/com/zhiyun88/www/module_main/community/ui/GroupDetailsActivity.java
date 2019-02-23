@@ -166,8 +166,8 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     private void initFragment() {
         ArrayList<String> str = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
-        str.add("热门话题");
-        str.add("最新话题");
+        str.add("热门");
+        str.add("最新");
         mFragments.add(CommunityDiscussFragment.newInstance("1",groupId,true));
         mFragments.add(CommunityDiscussFragment.newInstance("2",groupId,true));
         scrollIndicatorView.setSplitAuto(true);

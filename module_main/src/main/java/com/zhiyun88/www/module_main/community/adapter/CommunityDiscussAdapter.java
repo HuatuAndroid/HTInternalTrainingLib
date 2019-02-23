@@ -58,43 +58,28 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (discussListBean.getIs_top().equals("1")) {
-            SpannableStringBuilder sb = new SpannableStringBuilder();
-            String title = discussListBean.getTitle();
-            title = "  "+title;
-            sb.append(title);
-            Drawable d = context.getResources().getDrawable(R.drawable.ding) ;
-            d.setBounds(0, 0,d.getMinimumWidth()+8, d.getMinimumHeight()+8);//设置图片大小
-            sb.setSpan(new ImageSpan(d,ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            //回复
-            viewHolder.title.setText(sb);
-         /*   SpanUtil.create().addSection(discussListBean.getTitle()+" ")
-                    .addImage(context, R.drawable.ding)
-                    .showIn(viewHolder.title);*/
-        }else {
-            viewHolder.title.setText(discussListBean.getTitle());
-
-        }
         if (discussListBean.getIs_anonymity().equals("1")) {
             viewHolder.name.setText("匿名");
-//            viewHolder.image.setImageResource(R.drawable.user_head);
         }else {
             viewHolder.name.setText(discussListBean.getUser_name());
-            /*if (discussListBean.getAvatar() == null || discussListBean.getAvatar().equals("")) {
-                Picasso.with(context).load("www").error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
-            }else {
-                Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
-            }*/
         }
+
+        if (discussListBean.getIs_top().equals("1")) {
+            Drawable d = context.getResources().getDrawable(R.drawable.ding) ;
+            viewHolder.name.setCompoundDrawablesWithIntrinsicBounds(null,null,d,null);
+            viewHolder.name.setCompoundDrawablePadding(10);
+        }
+
         //头像统一由服务器获取
         Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
         viewHolder.read.setText(discussListBean.getRead_count());
         //  viewHolder.content.setText(discussListBean.getContent());
 
+        viewHolder.title.setText(discussListBean.getTitle());
         viewHolder.like.setText(discussListBean.getLike_count());
         viewHolder.comment.setText(discussListBean.getComment_count());
         viewHolder.time.setText(discussListBean.getCreated_at());
-        viewHolder.group.setText("来自【"+discussListBean.getGroup_name()+"】小组");
+        viewHolder.group.setText(discussListBean.getGroup_name());
         return convertView;
     }
     class ViewHolder{

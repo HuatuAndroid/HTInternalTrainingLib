@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Base64;
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.utils.RefreshUtils;
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.MyListView;
 import com.wb.baselib.view.TopBarView;
@@ -62,7 +64,8 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
 
     private TopBarView topBarView;
     private ImageView like, headImage;
-    private TextView comment_count, text, htmlTextView, details_name, details_time, details_browse;
+    private TextView comment_count, text, htmlTextView, details_name, details_time, details_browse,tvTopicGroup;
+    private ImageView ivTopicEdit,ivTopicDel;
     private String question_id;
     private MyListView details_list;
     private LinearLayout listEmpty;
@@ -123,6 +126,9 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         details_name = getViewById(R.id.details_name);
         details_time = getViewById(R.id.details_time);
         details_browse = getViewById(R.id.details_browse);
+        tvTopicGroup = getViewById(R.id.tv_topic_group);
+        ivTopicEdit = getViewById(R.id.iv_topic_edit);
+        ivTopicDel = getViewById(R.id.iv_topic_del);
         RefreshUtils.getInstance(smartRefreshLayout,this ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(false);
         listBeans = new ArrayList<>();
@@ -175,6 +181,37 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.getCommentList(question_id, "1", page);
+            }
+        });
+
+        tvTopicGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (questionInfoBean!=null&& !TextUtils.isEmpty(questionInfoBean.getGroup_id())){
+                    Intent intent = new Intent(TopicDetailsActivity.this, GroupDetailsActivity.class);
+                    intent.putExtra("groupId",questionInfoBean.getGroup_id());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        ivTopicEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (questionInfoBean!=null) {
+                    Intent intent = new Intent(TopicDetailsActivity.this, UpdateTopicActivity.class);
+                    intent.putExtra(UpdateTopicActivity.TOPIN_TITLE, questionInfoBean.getTitle());
+                    intent.putExtra(UpdateTopicActivity.TOPIN_CONTENT, questionInfoBean.getContent());
+                    intent.putExtra(UpdateTopicActivity.TOPIN_NIMING, questionInfoBean.getIs_anonymity());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        ivTopicDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToast(TopicDetailsActivity.this,"删除");
             }
         });
     }
@@ -246,9 +283,9 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             Picasso.with(TopicDetailsActivity.this).load(R.drawable.user_head).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(headImage);
         }
         details_time.setText(questionInfoBean.getCreated_at());
-        details_browse.setText(questionInfoBean.getRead_count() + "次浏览");
-
+        details_browse.setText("l  阅读:"+questionInfoBean.getRead_count());
         comment_count.setText("全部评论 (" + 0 + ")");
+        tvTopicGroup.setText(questionInfoBean.getGroup_name());
 
         //1=已点赞 0 未点赞
         if (questionInfoBean.getIs_like()==1){
