@@ -273,12 +273,8 @@ public class HomeAdapter extends BaseAdapter {
                     mContext.startActivity(new Intent(mContext,LibraryActivity.class));
                 }
             });
-            /*bannerHolder.shop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    mContext.startActivity(new Intent(mContext,ShoppingActivity.class));
-                }
-            });*/
+            //在内训中隐藏“员工天地”入口
+            bannerHolder.community.setVisibility(View.GONE);
         }
 
         return convertView;
