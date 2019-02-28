@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_bg_grey_f8"
-    tools:context="com.zhiyun88.www.module_main.community.ui.ReleaseOrUpdateTopicActivity">
+    tools:context="com.zhiyun88.www.module_main.community.ui.EditTopicActivity">
 
    <!-- <View
         android:id="@+id/details_line"

@@ -274,7 +274,7 @@ public class HomeAdapter extends BaseAdapter {
                 }
             });
             //在内训中隐藏“员工天地”入口
-            bannerHolder.community.setVisibility(View.GONE);
+            bannerHolder.community.setVisibility(View.VISIBLE);
         }
 
         return convertView;

@@ -115,7 +115,6 @@
         <activity android:name=".sys.CustomCaptureActivity" />
         <activity android:name=".sign.ui.UserSignActivity" />
         <activity android:name=".library.ui.LibraryShowActivity" />
-        <activity android:name=".community.ui.ReleaseOrUpdateTopicActivity"/>
         <activity android:name=".community.ui.EditTopicActivity"/>
     </application>
 

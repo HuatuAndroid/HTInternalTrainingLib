@@ -72,7 +72,6 @@ dependencies {
     api project(':module_blackplay')
     api project(':module_down')
     api project(':module_playvideo')
-    api project(':xrichtext')
     //    compile 'com.github.xuexiangjys:XQRCode:1.0.1'
     api deps.base
     //    compile 'com.github.w513209188:BaseLib:v1.7.4.1'

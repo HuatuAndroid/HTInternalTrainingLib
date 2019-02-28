@@ -1,1 +1,1 @@
-include ':app', ':module_main', ':module_playvideo', ':module_blackplay', ':module_down', ':common_dotest', ':xrichtext'
+include ':app', ':module_main', ':module_playvideo', ':module_blackplay', ':module_down', ':common_dotest'
