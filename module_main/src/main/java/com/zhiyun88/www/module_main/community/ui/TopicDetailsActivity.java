@@ -13,17 +13,14 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 
 import com.squareup.picasso.Picasso;
@@ -34,7 +31,6 @@ import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.utils.RefreshUtils;
-import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.MyListView;
 import com.wb.baselib.view.TopBarView;
@@ -50,7 +46,10 @@ import com.zhiyun88.www.module_main.community.mvp.contranct.CommunityDetailsCont
 import com.zhiyun88.www.module_main.community.mvp.presenter.CommunityDetailsPresenter;
 import com.zhiyun88.www.module_main.community.view.CustomDialog;
 import com.zhiyun88.www.module_main.utils.CircleTransform;
+import com.zhiyun88.www.module_main.community.view.CommontPopw;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -98,10 +97,18 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     private List<DetailsCommentListBean> listBeans;
     private CustomDialog customDialog;
     private QuestionInfoBean questionInfoBean;
+    private CommontPopw delTopicPopw;
+    private CommontPopw delCommontPopw;
 
     @Override
     protected CommunityDetailsPresenter onCreatePresenter() {
         return new CommunityDetailsPresenter(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getCommunityDetails(question_id);
     }
 
     @Override
@@ -136,7 +143,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         details_list.setDivider(null);
         details_list.setAdapter(mAdapter);
         multiplestatusview.showLoading();
-        mPresenter.getCommunityDetails(question_id);
+//        mPresenter.getCommunityDetails(question_id);
     }
 
     @Override
@@ -146,22 +153,13 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             public void onClicked(View v, int action, String extra) {
                 if (action == TopBarView.ACTION_LEFT_BUTTON) {
                     finish();
-                }else if (action == TopBarView.ACTION_RIGHT_TEXT&&questionInfoBean!=null){
-                    Intent intent = new Intent(TopicDetailsActivity.this, UpdateTopicActivity.class);
-                    intent.putExtra(UpdateTopicActivity.TOPIN_TITLE,questionInfoBean.getTitle());
-                    intent.putExtra(UpdateTopicActivity.TOPIN_CONTENT,questionInfoBean.getContent());
-                    intent.putExtra(UpdateTopicActivity.TOPIN_NIMING,questionInfoBean.getIs_anonymity());
-                    startActivity(intent);
                 }
             }
         });
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (!isFastClick()){
                     mPresenter.setLike(question_id);
-//                }
-//                like.setEnabled(false);
             }
         });
         text.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +173,18 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             public void setReplyClick(int position) {
                 index = position;
                 showDiaLog(true);
+            }
+
+            @Override
+            public void setDeleteConmment(final String conmmentId, final int position) {
+                delCommontPopw = new CommontPopw(TopicDetailsActivity.this, "确定删除评论吗?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        delCommontPopw.myDismiss();
+                        showLoadDiaLog("删除中");
+                        mPresenter.deleteConmment(conmmentId, position);
+                    }
+                });
             }
         });
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -199,10 +209,11 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             @Override
             public void onClick(View v) {
                 if (questionInfoBean!=null) {
-                    Intent intent = new Intent(TopicDetailsActivity.this, UpdateTopicActivity.class);
-                    intent.putExtra(UpdateTopicActivity.TOPIN_TITLE, questionInfoBean.getTitle());
-                    intent.putExtra(UpdateTopicActivity.TOPIN_CONTENT, questionInfoBean.getContent());
-                    intent.putExtra(UpdateTopicActivity.TOPIN_NIMING, questionInfoBean.getIs_anonymity());
+                    Intent intent = new Intent(TopicDetailsActivity.this, EditTopicActivity.class);
+                    intent.putExtra(EditTopicActivity.TOPIN_ID, questionInfoBean.getId());
+                    intent.putExtra(EditTopicActivity.TOPIN_TITLE, questionInfoBean.getTitle());
+                    intent.putExtra(EditTopicActivity.TOPIN_CONTENT, questionInfoBean.getContent());
+                    intent.putExtra(EditTopicActivity.TOPIN_NIMING, questionInfoBean.getIs_anonymity());
                     startActivity(intent);
                 }
             }
@@ -211,9 +222,28 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         ivTopicDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.showToast(TopicDetailsActivity.this,"删除");
+
+                delTopicPopw = new CommontPopw(TopicDetailsActivity.this,"确定删除帖子吗?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        delTopicPopw.myDismiss();
+                        showLoadDiaLog("删除中");
+                        mPresenter.deleteTopic(questionInfoBean.getId());
+                    }
+                });
+
             }
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (delTopicPopw != null && delTopicPopw.isShowing())
+            return false;
+        if (delCommontPopw!=null && delCommontPopw.isShowing())
+            return false;
+
+            return super.dispatchTouchEvent(ev);
     }
 
     private void showDiaLog(final boolean isReply) {
@@ -252,6 +282,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
     @Override
     public void showErrorMsg(String msg) {
         showShortToast(msg);
+        hidLoadDiaLog();
     }
 
     @Override
@@ -266,10 +297,17 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
 
     @Override
     public void SuccessData(Object o) {
+        hidLoadDiaLog();
         questionInfoBean = (QuestionInfoBean) o;
         setActivityContent(questionInfoBean.getContent());
 
-        //topBarView.getCenterTextView().setText(questionInfoBean.getTitle());
+        if (questionInfoBean.getAllow_del()==1){
+            ivTopicDel.setVisibility(View.VISIBLE);
+            ivTopicEdit.setVisibility(View.VISIBLE);
+        }else {
+            ivTopicDel.setVisibility(View.GONE);
+            ivTopicEdit.setVisibility(View.GONE);
+        }
 
         if (questionInfoBean.getIs_anonymity().equals("0")) {
             details_name.setText(questionInfoBean.getUser_name());
@@ -298,6 +336,10 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         mPresenter.getCommentList(question_id, "1", page);
     }
 
+    /**
+     * 加载HTML文本
+     * @param activityContent
+     */
     private void setActivityContent(final String activityContent) {
         final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
         new Thread(new Runnable() {
@@ -344,13 +386,53 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
             conn.connect();
             InputStream is = conn.getInputStream();
             // 在这一步最好先将图片进行压缩，避免消耗内存过多
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
+//            Bitmap bitmap = BitmapFactory.decodeStream(is);
+            Bitmap bitmap = getFitSampleBitmap(is);
             drawable = new BitmapDrawable(bitmap);
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return drawable;
+    }
+
+    public  static  Bitmap  getFitSampleBitmap(InputStream  inputStream) throws Exception{
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inPreferredConfig=Bitmap.Config.ALPHA_8;
+        byte[] bytes = readStream(inputStream);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, baos);*/
+
+        options.inSampleSize = 2;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+//        return bitmap;
+    }
+
+    /**
+     * 从inputStream中获取字节流 数组大小
+     **/
+    public static byte[] readStream(InputStream inStream) throws Exception {
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        while ((len = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+        outStream.close();
+        inStream.close();
+        return outStream.toByteArray();
+    }
+
+    public static Bitmap compressImage(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 50, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
+//        bitmap.setConfig(Bitmap.Config.RGB_565);
+        return bitmap;
     }
 
     public Drawable getBase64ImageNetwork(String imageUrl) {
@@ -432,10 +514,38 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         RxBus.getIntanceBus().post(new RxMessageBean(487,likeCount+"",""));
     }
 
+    /**
+     * 删除帖子
+     * @param msg
+     */
+    @Override
+    public void deleteTopicSuccess(String msg) {
+        //帖子删除成功，退出界面
+        hidLoadDiaLog();
+        RxBus.getIntanceBus().post(new RxMessageBean(852, "", ""));
+        finish();
+    }
+
+    @Override
+    public void deleteConmmentSuccess(String msg,int position) {
+        // TODO: 2019/2/25
+        hidLoadDiaLog();
+        if (listBeans.size()>position){
+            listBeans.remove(position);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         RxBus.getIntanceBus().unSubscribe(this);
+        if (delTopicPopw !=null&& delTopicPopw.isShowing())
+            delTopicPopw.myDismiss();
+        if (delCommontPopw!=null&&delCommontPopw.isShowing())
+            delCommontPopw.myDismiss();
+
+        super.onDestroy();
+
     }
 
     // 两次点击间隔不能少于1000ms

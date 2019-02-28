@@ -158,5 +158,53 @@ public class CommunityDetailsPresenter extends CommunityDetailsContranct.Communi
             }
         }, mView.binLifecycle());
     }
+
+    @Override
+    public void deleteTopic(String topicId) {
+        HttpManager.newInstance().commonRequest(mModel.deleteTopic(topicId), new BaseObserver<Result>(AppUtils.getContext()) {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.deleteTopicSuccess(result.getMsg());
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        },mView.binLifecycle());
+    }
+
+    @Override
+    public void deleteConmment(String conmmentId, final int position) {
+        HttpManager.newInstance().commonRequest(mModel.deleteConmment(conmmentId), new BaseObserver<Result>(AppUtils.getContext()) {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.deleteConmmentSuccess(result.getMsg(),position);
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        },mView.binLifecycle());
+    }
 }
 

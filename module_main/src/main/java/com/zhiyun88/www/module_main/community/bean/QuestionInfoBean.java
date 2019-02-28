@@ -3,6 +3,9 @@ package com.zhiyun88.www.module_main.community.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * 帖子详情
+ */
 public class QuestionInfoBean implements Parcelable {
 
     private String id;
@@ -23,8 +26,170 @@ public class QuestionInfoBean implements Parcelable {
     private String user_name;
     private String avatar;
     private String is_collect;
-
+    //是否点赞
     private int is_like;
+    //是否有权限删除帖子 1:有权限
+    private int allow_del;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getGroup_id() {
+        return group_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getLike_count() {
+        return like_count;
+    }
+
+    public String getRead_count() {
+        return read_count;
+    }
+
+    public String getComment_count() {
+        return comment_count;
+    }
+
+    public String getIs_essence() {
+        return is_essence;
+    }
+
+    public String getIs_top() {
+        return is_top;
+    }
+
+    public String getIs_recommend() {
+        return is_recommend;
+    }
+
+    public String getIs_anonymity() {
+        return is_anonymity;
+    }
+
+    public String getCreated_id() {
+        return created_id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public String getGroup_name() {
+        return group_name;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public int getIs_like() {
+        return is_like;
+    }
+
+    public int getAllow_del() {
+        return allow_del;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setGroup_id(String group_id) {
+        this.group_id = group_id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setLike_count(String like_count) {
+        this.like_count = like_count;
+    }
+
+    public void setRead_count(String read_count) {
+        this.read_count = read_count;
+    }
+
+    public void setComment_count(String comment_count) {
+        this.comment_count = comment_count;
+    }
+
+    public void setIs_essence(String is_essence) {
+        this.is_essence = is_essence;
+    }
+
+    public void setIs_top(String is_top) {
+        this.is_top = is_top;
+    }
+
+    public void setIs_recommend(String is_recommend) {
+        this.is_recommend = is_recommend;
+    }
+
+    public void setIs_anonymity(String is_anonymity) {
+        this.is_anonymity = is_anonymity;
+    }
+
+    public void setCreated_id(String created_id) {
+        this.created_id = created_id;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public void setGroup_name(String group_name) {
+        this.group_name = group_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
+    }
+
+    public void setIs_like(int is_like) {
+        this.is_like = is_like;
+    }
+
+    public void setAllow_del(int allow_del) {
+        this.allow_del = allow_del;
+    }
 
     protected QuestionInfoBean(Parcel in) {
         id = in.readString();
@@ -46,6 +211,7 @@ public class QuestionInfoBean implements Parcelable {
         avatar = in.readString();
         is_collect = in.readString();
         is_like = in.readInt();
+        allow_del = in.readInt();
     }
 
     public static final Creator<QuestionInfoBean> CREATOR = new Creator<QuestionInfoBean>() {
@@ -59,160 +225,6 @@ public class QuestionInfoBean implements Parcelable {
             return new QuestionInfoBean[size];
         }
     };
-
-    public void setIs_like(int is_like) {
-        this.is_like = is_like;
-    }
-
-    public int getIs_like() {
-
-        return is_like;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getGroup_id() {
-        return group_id;
-    }
-
-    public void setGroup_id(String group_id) {
-        this.group_id = group_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getLike_count() {
-        return like_count;
-    }
-
-    public void setLike_count(String like_count) {
-        this.like_count = like_count;
-    }
-
-    public String getRead_count() {
-        return read_count;
-    }
-
-    public void setRead_count(String read_count) {
-        this.read_count = read_count;
-    }
-
-    public String getComment_count() {
-        return comment_count;
-    }
-
-    public void setComment_count(String comment_count) {
-        this.comment_count = comment_count;
-    }
-
-    public String getIs_essence() {
-        return is_essence;
-    }
-
-    public void setIs_essence(String is_essence) {
-        this.is_essence = is_essence;
-    }
-
-    public String getIs_top() {
-        return is_top;
-    }
-
-    public void setIs_top(String is_top) {
-        this.is_top = is_top;
-    }
-
-    public String getIs_recommend() {
-        return is_recommend;
-    }
-
-    public void setIs_recommend(String is_recommend) {
-        this.is_recommend = is_recommend;
-    }
-
-    public String getIs_anonymity() {
-        return is_anonymity;
-    }
-
-    public void setIs_anonymity(String is_anonymity) {
-        this.is_anonymity = is_anonymity;
-    }
-
-    public String getCreated_id() {
-        return created_id;
-    }
-
-    public void setCreated_id(String created_id) {
-        this.created_id = created_id;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public String getGroup_name() {
-        return group_name;
-    }
-
-    public void setGroup_name(String group_name) {
-        this.group_name = group_name;
-    }
-
-    public String getUser_name() {
-        return user_name;
-    }
-
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getIs_collect() {
-        return is_collect;
-    }
-
-    public void setIs_collect(String is_collect) {
-        this.is_collect = is_collect;
-    }
-
 
     @Override
     public int describeContents() {
@@ -240,5 +252,6 @@ public class QuestionInfoBean implements Parcelable {
         dest.writeString(avatar);
         dest.writeString(is_collect);
         dest.writeInt(is_like);
+        dest.writeInt(allow_del);
     }
 }

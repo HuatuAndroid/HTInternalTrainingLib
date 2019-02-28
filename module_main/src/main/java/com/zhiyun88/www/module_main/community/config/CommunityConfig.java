@@ -20,6 +20,8 @@ public interface CommunityConfig extends CommunityHttpConfig {
     }
     interface OnReplyListener {
         void setReplyClick(int position);
+
+        void setDeleteConmment(String commentId,int position);
     }
     interface OnEditChangeListener {
         void getEditChange(String content,boolean is_show);

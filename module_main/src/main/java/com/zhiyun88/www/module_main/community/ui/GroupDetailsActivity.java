@@ -129,7 +129,6 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.phone.PhoneUtils;
 import com.wb.baselib.view.TopBarView;
@@ -32,6 +33,7 @@ import com.zhiyun88.www.module_main.community.adapter.ImageShowAdapter;
 import com.zhiyun88.www.module_main.community.bean.ImageBean;
 import com.zhiyun88.www.module_main.community.mvp.contranct.ReleaseTopicContranct;
 import com.zhiyun88.www.module_main.community.mvp.presenter.ReleaseTopicPresenter;
+import com.zhiyun88.www.module_main.community.view.MyGridLayoutManagerr;
 import com.zhiyun88.www.module_main.community.view.RecycleItemSpance;
 
 import java.io.File;
@@ -43,6 +45,9 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+/**
+ * 帖子发布
+ */
 public class ReleaseTopicActivity extends MvpActivity<ReleaseTopicPresenter> implements ReleaseTopicContranct.ReleaseTopicView {
 
     private TopBarView topBarView;
@@ -87,7 +92,8 @@ public class ReleaseTopicActivity extends MvpActivity<ReleaseTopicPresenter> imp
                         .into(imageView);
             }
         });
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        MyGridLayoutManagerr gridLayoutManager = new MyGridLayoutManagerr(this, 3);
+        gridLayoutManager.setScrollEnabled(false);
         select_image.addItemDecoration(new RecycleItemSpance(15, 3));
         // select_image.addItemDecoration(new DividerGridItemDecoration(this));
         select_image.setLayoutManager(gridLayoutManager);
@@ -176,14 +182,11 @@ public class ReleaseTopicActivity extends MvpActivity<ReleaseTopicPresenter> imp
         List<ImageBean> imageBeans = new ArrayList<>();
         imageBeans.addAll((List<ImageBean>) o);
         for (int i = 0; i < imageBeans.size(); i++) {
-            if (i == 0) {
-                path = imageBeans.get(i).getPath();
-            } else {
-                path = path + "," + imageBeans.get(i).getPath();
-            }
+            //上传图片地址随文本一起拼接上传
+            content+="<img src=\"" + HttpConfig.newInstance().getmBaseUrl() + "/" + imageBeans.get(i).getPath() + "\"><br>";
         }
         String showName = is_show ? "1" : "0";
-        mPresenter.commitTopicData(groupId, title, content, showName, path);
+        mPresenter.commitTopicData(groupId, title, content, showName, "");
     }
 
     @Override

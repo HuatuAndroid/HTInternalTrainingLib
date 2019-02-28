@@ -70,7 +70,7 @@ public class CommunityActivity extends BaseActivity {
                 return (TextView) tabItemView.findViewById(R.id.test_tv);
             }
         }.setColor(getResources().getColor(R.color.main_text_blue_458), Color.BLACK));
-        ColorBar colorBar = new ColorBar(CommunityActivity.this, getResources().getColor(R.color.main_text_blue_458), 4);
+        ColorBar colorBar = new ColorBar(CommunityActivity.this, getResources().getColor(R.color.main_text_blue_458), 8);
         scrollIndicatorView.setScrollBar(colorBar);
         IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, mViewPager);
         ViewPageTabAdapter viewPageTabAdapter= new ViewPageTabAdapter(getSupportFragmentManager(), CommunityActivity.this, mFragments, str);
@@ -86,7 +86,7 @@ public class CommunityActivity extends BaseActivity {
             public void onClicked(View v, int action, String extra) {
                 if (action == TopBarView.ACTION_LEFT_BUTTON) {
                     finish();
-                }else if (action == TopBarView.ACTION_RIGHT_TEXT) {
+                }else if (action == TopBarView.ACTION_RIGHT_BUTTON) {
                     ToActivityUtil.newInsance().toNextActivity(CommunityActivity.this, MyItemActivity.class);
                 }
             }

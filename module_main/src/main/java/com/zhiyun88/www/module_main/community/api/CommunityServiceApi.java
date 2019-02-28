@@ -74,4 +74,16 @@ public interface CommunityServiceApi {
     @FormUrlEncoded
     @POST(CommunityHttpConfig.SENDCOMMENT)
     Observable<Result> sendComment(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.DELETE_TOPIC)
+    Observable<Result> deleteTopic(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.DELETE_COMMENT)
+    Observable<Result> deleteConmment(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.EDIT_TOPIC)
+    Observable<Result> editTopic(@Field("id") String id,@Field("title") String title,@Field("content") String content,@Field("is_anonymity") String is_anonymity);
 }

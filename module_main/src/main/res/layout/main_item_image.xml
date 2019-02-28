@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="48dp"
+    android:layout_height="48dp">
 
     <ImageView
         android:id="@+id/show_image"
@@ -10,10 +10,11 @@
         android:scaleType="centerCrop" />
 
     <ImageView
-        android:layout_alignParentRight="true"
-        android:padding="5dp"
         android:id="@+id/show_image_del"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/photo_del"/>
+        android:src="@drawable/release_topic_del_pic_icon"/>
 </RelativeLayout>

@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingRight="15dp">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="55dp"
+        android:paddingRight="15dp">
 
         <ImageView
             android:id="@+id/discuss_image"
@@ -23,9 +23,19 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/discuss_image"
-            android:textColor="@color/main_text_black_33"
+            android:textColor="#999CAA"
             android:textSize="15sp"
             android:text="李曼青"/>
+
+        <ImageView
+            android:id="@+id/discuss_ding"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/discuss_name"
+            android:visibility="invisible"
+            android:src="@drawable/ding" />
 
         <TextView
             android:id="@+id/discuss_group"
@@ -38,7 +48,7 @@
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             android:text="薪酬组"
-            android:textColor="@color/main_text_blue_458"
+            android:textColor="#999CAA"
             android:textSize="11sp" />
 
     </RelativeLayout>
@@ -60,18 +70,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_text_black_33"
+                android:layout_marginRight="15dp"
                 android:textSize="14sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp">
 
                 <TextView
                     android:id="@+id/discuss_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/main_bg_grey_b8"
+                    android:textColor="#999CAA"
                     android:textSize="12sp"
                     android:layout_centerVertical="true"
                     android:text="2019-12-12"/>
@@ -85,7 +97,7 @@
                     android:layout_toLeftOf="@+id/discuss_comment"
                     android:drawableLeft="@drawable/topic_list_like"
                     android:drawablePadding="4dp"
-                    android:textColor="@color/main_bg_grey_b8"
+                    android:textColor="#999CAA"
                     android:textSize="12sp" />
 
                 <TextView
@@ -97,7 +109,7 @@
                     android:layout_toLeftOf="@+id/discuss_read"
                     android:drawableLeft="@drawable/topic_list_comment"
                     android:drawablePadding="4dp"
-                    android:textColor="@color/main_bg_grey_b8"
+                    android:textColor="#999CAA"
                     android:textSize="12sp" />
 
                 <TextView
@@ -108,19 +120,16 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/topic_list_look"
                     android:drawablePadding="4dp"
-                    android:textColor="@color/main_bg_grey_b8"
+                    android:textColor="#999CAA"
                     android:textSize="12sp" />
 
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/main_bg_grey_f8" />
+                android:background="#FFE1E3E9" />
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>

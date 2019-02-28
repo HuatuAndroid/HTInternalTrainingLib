@@ -33,7 +33,9 @@ import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
-
+/**
+ * 员工天地/小组详情-热门、最新列表
+ */
 public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresenter> implements CommunityDiscussContranct.CommunityDiscussView {
 
     private MultipleStatusView multipleStatusView;

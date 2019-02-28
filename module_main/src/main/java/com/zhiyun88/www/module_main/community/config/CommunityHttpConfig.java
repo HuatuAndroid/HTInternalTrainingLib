@@ -33,5 +33,10 @@ public interface CommunityHttpConfig {
     String COMMENT= "api/app/discuss/comment/question_id={question_id}";
     //发表评论
     String SENDCOMMENT= "api/app/discuss/createComment";
-
+    /**删除帖子*/
+    String DELETE_TOPIC="api/app/discuss/delQuestion";
+    /**删除评论*/
+    String DELETE_COMMENT="api/app/discuss/delComment";
+    /**编辑帖子*/
+    String EDIT_TOPIC="api/app/discuss/editQuestion";
 }

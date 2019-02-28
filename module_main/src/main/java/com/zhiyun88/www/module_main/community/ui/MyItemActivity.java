@@ -21,6 +21,9 @@ import com.zhiyun88.www.module_main.community.fragment.CommunityMyJoinFragment;
 
 import java.util.ArrayList;
 
+/**
+ * 我的小组
+ */
 public class MyItemActivity extends BaseActivity {
 
     private TopBarView topBarView;
@@ -38,7 +41,7 @@ public class MyItemActivity extends BaseActivity {
         mViewPager = getViewById(R.id.viewpager);
         view.setVisibility(View.VISIBLE);
         topBarView.getCenterTextView().setText("我的小组");
-        topBarView.getRightTextView().setVisibility(View.GONE);
+        topBarView.getRightImageButton().setVisibility(View.GONE);
         initView(savedInstanceState);
         setListener();
     }

@@ -3,6 +3,8 @@ package com.zhiyun88.www.module_main.community.adapter;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import com.baijiahulian.livecore.models.imodels.IForbidChatModel;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 import com.wb.baselib.permissions.PerMissionsManager;
 import com.wb.baselib.permissions.interfaces.PerMissionCall;
 import com.wb.baselib.utils.ToastUtils;
@@ -24,6 +27,8 @@ import com.zhiyun88.www.module_main.R;
 
 import org.junit.Ignore;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.List;
 
@@ -46,10 +51,16 @@ public class ImageShowAdapter extends RecyclerView.Adapter<ImageShowAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
         if (position == pathList.size()) {
             holder.photo_del.setVisibility(View.GONE);
-            holder.imageView.setImageResource(R.drawable.add_image);
+            holder.imageView.setImageResource(R.drawable.release_topic_add_pic_icon);
         }else {
             holder.photo_del.setVisibility(View.VISIBLE);
-            Picasso.with(mContext).load("file://"+pathList.get(position)).placeholder(R.drawable.course_image).error(R.drawable.course_image).into(holder.imageView);
+
+            Picasso.with(mContext).load("file://"+pathList.get(position)).placeholder(R.drawable.course_image)
+                    .error(R.drawable.course_image)
+//                    .resize(96,96)
+//                    .centerCrop()
+                    .transform(transformation)
+                    .into(holder.imageView);
         }
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,4 +117,23 @@ public class ImageShowAdapter extends RecyclerView.Adapter<ImageShowAdapter.View
             photo_del = itemView.findViewById(R.id.show_image_del);
         }
     }
+
+    Transformation transformation=new Transformation() {
+        @Override
+        public Bitmap transform(Bitmap source) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            source.compress(Bitmap.CompressFormat.JPEG, 50, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+            ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+            Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
+            source.recycle();
+            return bitmap;
+        }
+
+        @Override
+        public String key() {
+            return "aaa";
+        }
+    };
+
 }

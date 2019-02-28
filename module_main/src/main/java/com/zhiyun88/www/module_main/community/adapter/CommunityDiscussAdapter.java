@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
@@ -53,6 +54,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.name = convertView.findViewById(R.id.discuss_name);
             viewHolder.like = convertView.findViewById(R.id.discuss_like);
             viewHolder.comment = convertView.findViewById(R.id.discuss_comment);
+            viewHolder.ivDing = convertView.findViewById(R.id.discuss_ding);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -65,12 +67,16 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         }
 
         if (discussListBean.getIs_top().equals("1")) {
-            Drawable d = context.getResources().getDrawable(R.drawable.ding) ;
+            viewHolder.ivDing.setVisibility(View.VISIBLE);
+            /*Drawable d = context.getResources().getDrawable(R.drawable.ding) ;
             viewHolder.name.setCompoundDrawablesWithIntrinsicBounds(null,null,d,null);
-            viewHolder.name.setCompoundDrawablePadding(10);
+            viewHolder.name.setCompoundDrawablePadding(10);*/
+        }else {
+            viewHolder.ivDing.setVisibility(View.INVISIBLE);
         }
 
         //头像统一由服务器获取
+        if (!TextUtils.isEmpty(discussListBean.getAvatar()))
         Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
         viewHolder.read.setText(discussListBean.getRead_count());
         //  viewHolder.content.setText(discussListBean.getContent());
@@ -83,7 +89,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         return convertView;
     }
     class ViewHolder{
-        ImageView image;
+        ImageView image,ivDing;
         TextView title,read,name,like,comment,time,group;
     }
 }

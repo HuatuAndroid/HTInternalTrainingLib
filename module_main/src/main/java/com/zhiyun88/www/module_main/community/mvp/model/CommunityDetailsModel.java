@@ -38,4 +38,14 @@ public class CommunityDetailsModel implements CommunityDetailsContranct.Communit
     public Observable<Result<DetailsLikeBean>> setLike(String question_id) {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).setDetailsLike(question_id);
     }
+
+    @Override
+    public Observable<Result> deleteTopic(String topicId) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).deleteTopic(topicId);
+    }
+
+    @Override
+    public Observable<Result> deleteConmment(String conmmentId) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).deleteConmment(conmmentId);
+    }
 }

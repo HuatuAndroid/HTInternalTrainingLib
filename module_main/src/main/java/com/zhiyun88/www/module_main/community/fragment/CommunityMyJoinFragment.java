@@ -15,6 +15,8 @@ import com.wangbo.smartrefresh.layout.listener.OnRefreshListener;
 import com.wb.baselib.base.fragment.MvpFragment;
 import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.view.MultipleStatusView;
+import com.wb.rxbus.taskBean.RxBus;
+import com.wb.rxbus.taskBean.RxMessageBean;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.community.adapter.CommunityMyPartAdapter;
 import com.zhiyun88.www.module_main.community.bean.MyPartListBean;
@@ -26,6 +28,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+
+/**
+ * 我的小组-我的参与
+ */
 public class CommunityMyJoinFragment extends MvpFragment<CommunityMyJoinPresenter> implements CommunityMyJoinContranct.CommunityMyJoinView {
 
     private MultipleStatusView multipleStatusView;
@@ -58,6 +65,15 @@ public class CommunityMyJoinFragment extends MvpFragment<CommunityMyJoinPresente
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         multipleStatusView.showLoading();
         mPresenter.getMyPartData(page);
+        RxBus.getIntanceBus().registerRxBus(RxMessageBean.class, new Consumer<RxMessageBean>() {
+            @Override
+            public void accept(RxMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageType() == 852) {
+                    page = 1;
+                    mPresenter.getMyPartData(page);
+                }
+            }
+        });
         setListener();
     }
 

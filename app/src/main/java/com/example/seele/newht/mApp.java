@@ -37,7 +37,7 @@ public class mApp extends BaseApplication {
         HttpConfig.HttpConfigBuilder httpConfig =
                 new HttpConfig.HttpConfigBuilder()
                         .setUseCustGson(true)
-                        .setmBaseUrl(ONLINE_URL)
+                        .setmBaseUrl(TEXT_URL)
                 .setmIsUseLog(true);
         HttpConfig.newInstanceBuild(httpConfig);
         hApp.newInstance().initVideoPlay(this);

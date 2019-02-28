@@ -29,9 +29,10 @@
             android:text="李曼青"/>
 
         <ImageView
+            android:id="@+id/iv_conmment_del"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:padding="5dp"
+            android:paddingLeft="10dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/topic_detail_comment"/>
 
@@ -83,18 +84,6 @@
                     android:drawableLeft="@drawable/topic_comment_reply"
                     android:drawablePadding="3dp"
                     android:layout_marginLeft="10dp"/>
-
-                <TextView
-                    android:id="@+id/tv_comment_like_num"
-                    android:textSize="12sp"
-                    android:textColor="@color/main_title_grey_99"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_toLeftOf="@+id/tv_comment_reply"
-                    android:drawableLeft="@drawable/topic_comment_like"
-                    android:drawablePadding="3dp"
-                    android:text="30"/>
 
             </RelativeLayout>
 
