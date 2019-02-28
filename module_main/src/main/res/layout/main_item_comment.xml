@@ -7,26 +7,41 @@
     <RelativeLayout
         android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="55dp">
 
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/comment_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:scaleType="fitXY"
+            android:layout_centerVertical="true"
             android:src="@drawable/user_head"/>
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/comment_image"
-            android:layout_marginLeft="10dp"
-            android:textSize="16sp"
-            android:textColor="@color/main_text_black_33"
-            android:id="@+id/comment_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="李曼青"/>
+            android:layout_toRightOf="@id/comment_image"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/comment_name"
+                android:textSize="14sp"
+                android:textColor="#3D3E43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="李曼青"/>
+
+            <TextView
+                android:id="@+id/comment_part"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999CAA"
+                android:layout_marginLeft="15sp"
+                android:textSize="11sp" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_conmment_del"

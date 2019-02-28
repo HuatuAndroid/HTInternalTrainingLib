@@ -30,6 +30,44 @@ public class QuestionInfoBean implements Parcelable {
     private int is_like;
     //是否有权限删除帖子 1:有权限
     private int allow_del;
+    //部门名称
+    private String department_name;
+
+    protected QuestionInfoBean(Parcel in) {
+        id = in.readString();
+        group_id = in.readString();
+        title = in.readString();
+        content = in.readString();
+        like_count = in.readString();
+        read_count = in.readString();
+        comment_count = in.readString();
+        is_essence = in.readString();
+        is_top = in.readString();
+        is_recommend = in.readString();
+        is_anonymity = in.readString();
+        created_id = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        group_name = in.readString();
+        user_name = in.readString();
+        avatar = in.readString();
+        is_collect = in.readString();
+        is_like = in.readInt();
+        allow_del = in.readInt();
+        department_name = in.readString();
+    }
+
+    public static final Creator<QuestionInfoBean> CREATOR = new Creator<QuestionInfoBean>() {
+        @Override
+        public QuestionInfoBean createFromParcel(Parcel in) {
+            return new QuestionInfoBean(in);
+        }
+
+        @Override
+        public QuestionInfoBean[] newArray(int size) {
+            return new QuestionInfoBean[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -191,40 +229,13 @@ public class QuestionInfoBean implements Parcelable {
         this.allow_del = allow_del;
     }
 
-    protected QuestionInfoBean(Parcel in) {
-        id = in.readString();
-        group_id = in.readString();
-        title = in.readString();
-        content = in.readString();
-        like_count = in.readString();
-        read_count = in.readString();
-        comment_count = in.readString();
-        is_essence = in.readString();
-        is_top = in.readString();
-        is_recommend = in.readString();
-        is_anonymity = in.readString();
-        created_id = in.readString();
-        created_at = in.readString();
-        updated_at = in.readString();
-        group_name = in.readString();
-        user_name = in.readString();
-        avatar = in.readString();
-        is_collect = in.readString();
-        is_like = in.readInt();
-        allow_del = in.readInt();
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
     }
 
-    public static final Creator<QuestionInfoBean> CREATOR = new Creator<QuestionInfoBean>() {
-        @Override
-        public QuestionInfoBean createFromParcel(Parcel in) {
-            return new QuestionInfoBean(in);
-        }
-
-        @Override
-        public QuestionInfoBean[] newArray(int size) {
-            return new QuestionInfoBean[size];
-        }
-    };
+    public String getDepartment_name() {
+        return department_name;
+    }
 
     @Override
     public int describeContents() {
@@ -253,5 +264,6 @@ public class QuestionInfoBean implements Parcelable {
         dest.writeString(is_collect);
         dest.writeInt(is_like);
         dest.writeInt(allow_del);
+        dest.writeString(department_name);
     }
 }

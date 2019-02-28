@@ -66,8 +66,7 @@ public class CommentAdapater extends BaseAdapter {
             viewHolder.comment_image = convertView.findViewById(R.id.comment_image);
             viewHolder.iv_conmment_del = convertView.findViewById(R.id.iv_conmment_del);
             viewHolder.reply_rl = convertView.findViewById(R.id.reply_rl);
-//            viewHolder.reply_name = convertView.findViewById(R.id.reply_name);
-//            viewHolder.reply_time = convertView.findViewById(R.id.reply_time);
+            viewHolder.tvCommentPart = convertView.findViewById(R.id.comment_part);
             viewHolder.reply_content = convertView.findViewById(R.id.reply_content);
             convertView.setTag(viewHolder);
         } else {
@@ -83,6 +82,7 @@ public class CommentAdapater extends BaseAdapter {
         Picasso.with(mContext).load(listBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.comment_image);
         viewHolder.comment_title.setText(listBean.getContent());
         viewHolder.comment_time.setText(listBean.getCreated_at());
+        viewHolder.tvCommentPart.setText(listBean.getDepartment_name());
 
         if (listBean.getParent() == null) {
             viewHolder.reply_rl.setVisibility(View.GONE);
@@ -124,7 +124,7 @@ public class CommentAdapater extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView comment_title, comment_time, comment_name, comment_reply, reply_content;
+        TextView comment_title, comment_time, comment_name, comment_reply, reply_content,tvCommentPart;
         ImageView comment_image,iv_conmment_del;
         LinearLayout reply_rl;
     }

@@ -98,13 +98,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="10sp"
+            android:visibility="invisible"
             android:src="@drawable/topic_update_niming1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#999CAA"
-
+            android:visibility="invisible"
             android:text="匿名发表"/>
     </LinearLayout>
 

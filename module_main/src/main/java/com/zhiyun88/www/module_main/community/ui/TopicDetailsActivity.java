@@ -63,7 +63,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
 
     private TopBarView topBarView;
     private ImageView like, headImage;
-    private TextView comment_count, text, htmlTextView, details_name, details_time, details_browse,tvTopicGroup;
+    private TextView comment_count, text, htmlTextView, details_name, details_time, details_browse,tvTopicGroup,tvDetailsPart;
     private ImageView ivTopicEdit,ivTopicDel;
     private String question_id;
     private MyListView details_list;
@@ -136,6 +136,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         tvTopicGroup = getViewById(R.id.tv_topic_group);
         ivTopicEdit = getViewById(R.id.iv_topic_edit);
         ivTopicDel = getViewById(R.id.iv_topic_del);
+        tvDetailsPart = getViewById(R.id.details_part);
         RefreshUtils.getInstance(smartRefreshLayout,this ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(false);
         listBeans = new ArrayList<>();
@@ -324,6 +325,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         details_browse.setText("l  阅读:"+questionInfoBean.getRead_count());
         comment_count.setText("全部评论 (" + 0 + ")");
         tvTopicGroup.setText(questionInfoBean.getGroup_name());
+        tvDetailsPart.setText(questionInfoBean.getDepartment_name());
 
         //1=已点赞 0 未点赞
         if (questionInfoBean.getIs_like()==1){

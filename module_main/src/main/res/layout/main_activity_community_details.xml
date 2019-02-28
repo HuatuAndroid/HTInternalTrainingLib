@@ -56,16 +56,58 @@
                         android:layout_height="50dp"
                         android:layout_centerVertical="true" />
 
-                    <TextView
-                        android:id="@+id/details_name"
+                    <LinearLayout
+                        android:id="@+id/ll_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/details_head"
-                        android:paddingLeft="10dp"
-                        android:textColor="@color/main_text_black_33"
-                        android:textSize="15sp" />
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/details_head">
+                        <TextView
+                            android:id="@+id/details_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/main_text_black_33"
+                            android:textSize="15sp"
+                            android:text="张三"/>
+                        <TextView
+                            android:id="@+id/details_part"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="组织部"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="#999CAA"
+                            android:textSize="11sp" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:layout_below="@+id/ll_name"
+                        android:layout_toRightOf="@id/details_head">
+                        <TextView
+                            android:id="@+id/details_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/main_bg_grey_b8"
+                            android:textSize="12sp"
+                            android:text="2019-12-12"/>
+
+                        <TextView
+                            android:id="@+id/details_browse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/main_bg_grey_b8"
+                            android:layout_marginLeft="7dp"
+                            android:textSize="12sp"
+                            android:text="l 阅读222"/>
+                    </LinearLayout>
+
+                    <!--<TextView
                         android:id="@+id/details_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,7 +125,7 @@
                         android:layout_toRightOf="@+id/details_time"
                         android:textColor="@color/main_bg_grey_b8"
                         android:layout_marginLeft="7dp"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp"/>-->
 
                     <TextView
                         android:id="@+id/tv_topic_group"
@@ -107,6 +149,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/main_line_ea" />
 
                 <TextView
                     android:id="@+id/comment_count"

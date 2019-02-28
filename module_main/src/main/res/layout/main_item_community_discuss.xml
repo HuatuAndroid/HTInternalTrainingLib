@@ -17,25 +17,25 @@
             android:layout_centerVertical="true"
             android:src="@drawable/user_head" />
 
-        <TextView
-            android:id="@+id/discuss_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/discuss_image"
-            android:textColor="#999CAA"
-            android:textSize="15sp"
-            android:text="李曼青"/>
+            <TextView
+                android:id="@+id/discuss_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/discuss_image"
+                android:layout_centerVertical="true"
+                android:text="李曼青"
+                android:textColor="#999CAA"
+                android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/discuss_ding"
-            android:layout_width="13dp"
-            android:layout_height="13dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@+id/discuss_name"
-            android:visibility="invisible"
-            android:src="@drawable/ding" />
+            <TextView
+                android:id="@+id/discuss_part"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/discuss_name"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15sp"
+                android:textColor="#999CAA"
+                android:textSize="11sp" />
 
         <TextView
             android:id="@+id/discuss_group"

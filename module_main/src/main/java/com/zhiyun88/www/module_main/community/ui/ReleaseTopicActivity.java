@@ -92,9 +92,9 @@ public class ReleaseTopicActivity extends MvpActivity<ReleaseTopicPresenter> imp
                         .into(imageView);
             }
         });
-        MyGridLayoutManagerr gridLayoutManager = new MyGridLayoutManagerr(this, 3);
+        MyGridLayoutManagerr gridLayoutManager = new MyGridLayoutManagerr(this, 5);
         gridLayoutManager.setScrollEnabled(false);
-        select_image.addItemDecoration(new RecycleItemSpance(15, 3));
+        select_image.addItemDecoration(new RecycleItemSpance(40, 5));
         // select_image.addItemDecoration(new DividerGridItemDecoration(this));
         select_image.setLayoutManager(gridLayoutManager);
         result = new ArrayList<>();

@@ -18,6 +18,36 @@ public class DetailsCommentListBean implements Parcelable {
     private String avatar;
     private ParentCommentBean parent;
     private int allow_del;
+    private String department_name;
+
+    protected DetailsCommentListBean(Parcel in) {
+        id = in.readString();
+        question_id = in.readString();
+        parent_id = in.readString();
+        content = in.readString();
+        reply_count = in.readString();
+        is_anonymity = in.readString();
+        created_id = in.readString();
+        created_at = in.readString();
+        user_id = in.readString();
+        user_name = in.readString();
+        avatar = in.readString();
+        parent = in.readParcelable(ParentCommentBean.class.getClassLoader());
+        allow_del = in.readInt();
+        department_name = in.readString();
+    }
+
+    public static final Creator<DetailsCommentListBean> CREATOR = new Creator<DetailsCommentListBean>() {
+        @Override
+        public DetailsCommentListBean createFromParcel(Parcel in) {
+            return new DetailsCommentListBean(in);
+        }
+
+        @Override
+        public DetailsCommentListBean[] newArray(int size) {
+            return new DetailsCommentListBean[size];
+        }
+    };
 
     public void setId(String id) {
         this.id = id;
@@ -123,33 +153,13 @@ public class DetailsCommentListBean implements Parcelable {
         return allow_del;
     }
 
-    protected DetailsCommentListBean(Parcel in) {
-        id = in.readString();
-        question_id = in.readString();
-        parent_id = in.readString();
-        content = in.readString();
-        reply_count = in.readString();
-        is_anonymity = in.readString();
-        created_id = in.readString();
-        created_at = in.readString();
-        user_id = in.readString();
-        user_name = in.readString();
-        avatar = in.readString();
-        parent = in.readParcelable(ParentCommentBean.class.getClassLoader());
-        allow_del = in.readInt();
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
     }
 
-    public static final Creator<DetailsCommentListBean> CREATOR = new Creator<DetailsCommentListBean>() {
-        @Override
-        public DetailsCommentListBean createFromParcel(Parcel in) {
-            return new DetailsCommentListBean(in);
-        }
-
-        @Override
-        public DetailsCommentListBean[] newArray(int size) {
-            return new DetailsCommentListBean[size];
-        }
-    };
+    public String getDepartment_name() {
+        return department_name;
+    }
 
     @Override
     public int describeContents() {
@@ -171,5 +181,6 @@ public class DetailsCommentListBean implements Parcelable {
         dest.writeString(avatar);
         dest.writeParcelable(parent, flags);
         dest.writeInt(allow_del);
+        dest.writeString(department_name);
     }
 }

@@ -208,7 +208,6 @@ public class EditTopicActivity extends MvpActivity<EditTopicPresenter> implement
                             drawable = getBase64ImageNetwork(source);
                         }else {
                             drawable = getImageNetwork(source);
-
                         }
 
                         if (drawable == null) {
@@ -230,29 +229,26 @@ public class EditTopicActivity extends MvpActivity<EditTopicPresenter> implement
         }).start();
     }
 
+    /**
+     * 发起图片请求
+     * @param imageUrl
+     * @return
+     */
     public Drawable getImageNetwork(String imageUrl) {
 
         URL myFileUrl = null;
         Drawable drawable = null;
         try {
             myFileUrl = new URL(imageUrl);
-            HttpURLConnection conn = (HttpURLConnection) myFileUrl
-                    .openConnection();
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
             conn.setDoInput(true);
             conn.connect();
             InputStream is = conn.getInputStream();
             // 在这一步最好先将图片进行压缩，避免消耗内存过多
-
-            /*BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(is,null,options);
-            options.inSampleSize=4;
-            options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);*/
-
             Bitmap bitmap = getFitSampleBitmap(is);
             drawable = new BitmapDrawable(bitmap);
-
+            //再次休息100毫秒，等待图片加载
+            Thread.sleep(100);
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -267,13 +263,9 @@ public class EditTopicActivity extends MvpActivity<EditTopicPresenter> implement
         options.inPreferredConfig=Bitmap.Config.ALPHA_8;
         byte[] bytes = readStream(inputStream);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-        /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, baos);*/
-
         options.inSampleSize = 2;
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-//        return bitmap;
     }
 
     /**
