@@ -63,11 +63,11 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
 
     private TopBarView topBarView;
     private ImageView like, headImage;
-    private TextView comment_count, text, htmlTextView, details_name, details_time, details_browse,tvTopicGroup,tvDetailsPart;
+    private TextView comment_count, htmlTextView, details_name, details_time, details_browse,tvTopicGroup,tvDetailsPart;
     private ImageView ivTopicEdit,ivTopicDel;
     private String question_id;
     private MyListView details_list;
-    private LinearLayout listEmpty;
+    private LinearLayout listEmpty,text,llDetailsZan;
     private CommentAdapater mAdapter;
     private MultipleStatusView multiplestatusview;
     private SmartRefreshLayout smartRefreshLayout;
@@ -137,6 +137,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
         ivTopicEdit = getViewById(R.id.iv_topic_edit);
         ivTopicDel = getViewById(R.id.iv_topic_del);
         tvDetailsPart = getViewById(R.id.details_part);
+        llDetailsZan = getViewById(R.id.details_zan);
         RefreshUtils.getInstance(smartRefreshLayout,this ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(false);
         listBeans = new ArrayList<>();
@@ -157,7 +158,7 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
                 }
             }
         });
-        like.setOnClickListener(new View.OnClickListener() {
+        llDetailsZan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     mPresenter.setLike(question_id);
@@ -329,9 +330,9 @@ public class TopicDetailsActivity extends MvpActivity<CommunityDetailsPresenter>
 
         //1=已点赞 0 未点赞
         if (questionInfoBean.getIs_like()==1){
-            like.setImageResource(R.drawable.details_like_org);
+            like.setImageResource(R.drawable.topic_detail_zan2);
         }else {
-            like.setImageResource(R.drawable.details_like);
+            like.setImageResource(R.drawable.topic_detail_zan1);
         }
         isList=questionInfoBean.getIs_like();
 
