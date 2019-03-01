@@ -40,14 +40,11 @@
         <TextView
             android:id="@+id/discuss_group"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/shape_topic_list_group_bg"
             android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:text="薪酬组"
+            android:text="「员工关怀」"
             android:textColor="#999CAA"
             android:textSize="11sp" />
 
@@ -65,14 +62,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/discuss_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_text_black_33"
-                android:layout_marginRight="15dp"
-                android:lineSpacingExtra="5dp"
-                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/discuss_ding"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/ding"
+                    android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/discuss_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_text_black_33"
+                    android:layout_marginRight="15dp"
+                    android:lineSpacingExtra="5dp"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

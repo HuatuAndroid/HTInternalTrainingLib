@@ -55,6 +55,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.like = convertView.findViewById(R.id.discuss_like);
             viewHolder.comment = convertView.findViewById(R.id.discuss_comment);
             viewHolder.partName = convertView.findViewById(R.id.discuss_part);
+            viewHolder.tvDing = convertView.findViewById(R.id.discuss_ding);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -67,16 +68,18 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         }
 
         if (discussListBean.getIs_top().equals("1")) {
-            SpannableStringBuilder sb = new SpannableStringBuilder();
+            /*SpannableStringBuilder sb = new SpannableStringBuilder();
             String title = discussListBean.getTitle();
             title = "  "+title;
             sb.append(title);
-            Drawable d = context.getResources().getDrawable(R.drawable.ding) ;
+            Drawable d = context.getResources().getDrawable(R.drawable.ding);
             d.setBounds(0, 0,d.getMinimumWidth()+8, d.getMinimumHeight()+8);//设置图片大小
-            sb.setSpan(new ImageSpan(d,ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            sb.setSpan(new ImageSpan(d,ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);*/
+            viewHolder.tvDing.setVisibility(View.VISIBLE);
             //回复
-            viewHolder.title.setText(sb);
+            viewHolder.title.setText("     "+discussListBean.getTitle());
         }else {
+            viewHolder.tvDing.setVisibility(View.GONE);
             viewHolder.title.setText(discussListBean.getTitle());
         }
 
@@ -90,12 +93,12 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         viewHolder.like.setText(discussListBean.getLike_count());
         viewHolder.comment.setText(discussListBean.getComment_count());
         viewHolder.time.setText(discussListBean.getCreated_at());
-        viewHolder.group.setText(discussListBean.getGroup_name());
+        viewHolder.group.setText("「"+discussListBean.getGroup_name()+"」");
         viewHolder.partName.setText(discussListBean.getDepartment_name());
         return convertView;
     }
     class ViewHolder{
-        ImageView image;
+        ImageView image,tvDing;
         TextView title,read,name,like,comment,time,group,partName;
     }
 }
