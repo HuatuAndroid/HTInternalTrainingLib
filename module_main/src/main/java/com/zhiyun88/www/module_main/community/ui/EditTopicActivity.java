@@ -305,24 +305,25 @@ public class EditTopicActivity extends MvpActivity<EditTopicPresenter> implement
      * @param picNum
      */
     private void showAlbue(final int picNum) {
-        PerMissionsManager.newInstance().getUserPerMissions(this, new PerMissionCall() {
-            @Override
-            public void userPerMissionStatus(boolean b) {
-                if (b) {
-                    ISListConfig config = new ISListConfig.Builder()
-                            .multiSelect(true)
-                            .rememberSelected(false)
-                            .maxNum(picNum)
-                            .needCamera(true)
-                            // .backResId()
-                            .build();
-                    ISNav.getInstance().toListActivity(EditTopicActivity.this, config, TAG_ACTIVTY_RESULT_CODE);
-                }else {
-                    ToastUtils.showToast(EditTopicActivity.this,"无相应权限" );
+        if (picNum>0){
+            PerMissionsManager.newInstance().getUserPerMissions(this, new PerMissionCall() {
+                @Override
+                public void userPerMissionStatus(boolean b) {
+                    if (b) {
+                        ISListConfig config = new ISListConfig.Builder()
+                                .multiSelect(true)
+                                .rememberSelected(false)
+                                .maxNum(picNum)
+                                .needCamera(true)
+                                // .backResId()
+                                .build();
+                        ISNav.getInstance().toListActivity(EditTopicActivity.this, config, TAG_ACTIVTY_RESULT_CODE);
+                    }else {
+                        ToastUtils.showToast(EditTopicActivity.this,"无相应权限" );
+                    }
                 }
-            }
-        },new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE});
-
+            },new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE});
+        }
     }
 
     @Override

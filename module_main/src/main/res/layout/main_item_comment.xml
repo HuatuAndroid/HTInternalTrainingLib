@@ -71,6 +71,7 @@
                 android:id="@+id/comment_title"
                 android:textSize="14sp"
                 android:textColor="@color/main_text_black_33"
+                android:lineSpacingExtra="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <!--评论时间，点赞回复-->

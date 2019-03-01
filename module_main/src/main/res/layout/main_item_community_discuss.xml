@@ -71,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_text_black_33"
                 android:layout_marginRight="15dp"
+                android:lineSpacingExtra="5dp"
                 android:textSize="14sp" />
 
             <RelativeLayout

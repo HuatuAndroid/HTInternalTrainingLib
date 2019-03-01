@@ -8,14 +8,38 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application android:theme="@style/BaseAppTheme">
-        <activity android:name=".main.ui.MainActivity" />
-        <activity android:name=".commonality.ui.DownloadManagerActivity" />
-        <activity android:name=".commonality.ui.FeedBackActivity" />
-        <activity android:name=".commonality.ui.MessageActivity" />
-        <activity android:name=".commonality.ui.IntegralActivity" />
-        <activity android:name=".commonality.ui.MessageDetailActivity" />
-        <activity android:name=".main.ui.SearchActivity" />
-        <activity android:name=".course.ui.CourseInfoActivity">
+        <activity
+            android:name=".main.ui.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.DownloadManagerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.FeedBackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.MessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.IntegralActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.MessageDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.ui.SearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".course.ui.CourseInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
 
                 <!-- 协议部分，随便设置 -->
@@ -28,7 +52,10 @@
                     android:scheme="htnx" />
             </intent-filter>
         </activity>
-        <activity android:name=".train.ui.TrainInfoActivity">
+        <activity
+            android:name=".train.ui.TrainInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
 
                 <!-- 协议部分，随便设置 -->
@@ -41,10 +68,22 @@
                     android:scheme="htnx" />
             </intent-filter>
         </activity>
-        <activity android:name=".commonality.ui.UserInfoActivity" />
-        <activity android:name=".train.ui.TrainListActivity" />
-        <activity android:name=".course.ui.CourseMainActivity" />
-        <activity android:name=".task.ui.TaskInfoActivity">
+        <activity
+            android:name=".commonality.ui.UserInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".train.ui.TrainListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".course.ui.CourseMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".task.ui.TaskInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
 
                 <!-- 协议部分，随便设置 -->
@@ -57,26 +96,37 @@
                     android:scheme="htnx" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.ui.TestActivity" />
+        <activity
+            android:name=".main.ui.TestActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.jungan.www.module_playvideo.ui.PlayVodActivity"
             android:configChanges="orientation|screenSize|layoutDirection"
-            android:hardwareAccelerated="false" />
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.jungan.www.module_blackplay.activity.PBRoomActivity"
             android:configChanges="orientation|screenSize|layoutDirection"
-            android:hardwareAccelerated="false" />
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.jungan.www.model_liveplay.activity.LiveRoomActivity"
             android:configChanges="orientation|screenSize|layoutDirection"
-            android:hardwareAccelerated="false" />
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".commonality.ui.QuestionnaireActivity"
             android:configChanges="keyboard"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -99,23 +149,76 @@
             android:name="design_height_in_dp"
             android:value="667" />
 
-        <activity android:name=".library.ui.LibraryActivity" />
-        <activity android:name=".community.ui.CommunityActivity" />
-        <activity android:name=".community.ui.GroupDetailsActivity" />
-        <activity android:name=".community.ui.TopicDetailsActivity" />
-        <activity android:name=".community.ui.ReleaseTopicActivity" />
-        <activity android:name=".community.ui.MyItemActivity" />
-        <activity android:name=".commonality.ui.CertificateActivity" />
-        <activity android:name=".commonality.ui.MyLibraryActivity" />
-        <activity android:name=".information.ui.InformationActivity" />
-        <activity android:name=".dotesting.ui.CommonTestActivity" />
-        <activity android:name=".dotesting.ui.AnswerSheetActivity" />
-        <activity android:name=".dotesting.ui.CuntActivity" />
-        <activity android:name=".dotesting.ui.WjCountActivity" />
-        <activity android:name=".sys.CustomCaptureActivity" />
-        <activity android:name=".sign.ui.UserSignActivity" />
-        <activity android:name=".library.ui.LibraryShowActivity" />
-        <activity android:name=".community.ui.EditTopicActivity"/>
+        <activity
+            android:name=".library.ui.LibraryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".community.ui.CommunityActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".community.ui.GroupDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".community.ui.TopicDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".community.ui.ReleaseTopicActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".community.ui.MyItemActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.CertificateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".commonality.ui.MyLibraryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".information.ui.InformationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".dotesting.ui.CommonTestActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".dotesting.ui.AnswerSheetActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".dotesting.ui.CuntActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".dotesting.ui.WjCountActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".sys.CustomCaptureActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".sign.ui.UserSignActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".library.ui.LibraryShowActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".community.ui.EditTopicActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

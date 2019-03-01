@@ -62,6 +62,7 @@
                 android:id="@+id/et_new_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:lineSpacingExtra="5dp"
                 android:gravity="top|left"
                 android:background="@color/white"/>
         </ScrollView>
