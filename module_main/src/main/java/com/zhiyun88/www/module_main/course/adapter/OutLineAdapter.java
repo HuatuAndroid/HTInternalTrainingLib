@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baijia.player.playback.downloader.PlaybackDownloader;
+//import com.baijia.player.playback.downloader.PlaybackDownloader;
 import com.baijiayun.download.DownloadManager;
 import com.baijiayun.download.DownloadTask;
 import com.baijiayun.download.constant.TaskStatus;
@@ -166,7 +166,7 @@ public class OutLineAdapter implements ExpandableListAdapter {
         return  convertView;
     }
     private void setVideoState(ChildViewHolder holder,CourseChildBean courseChildBean){
-        DownloadManager downloadManager= BjyBackPlayDownManager.Instance().getDownloadManager().getManager();
+        DownloadManager downloadManager= BjyBackPlayDownManager.Instance().getDownloadManager();
         List<DownloadTask> downloadTaskLists=downloadManager.getAllTasks();
         boolean isDown=false;
         try {

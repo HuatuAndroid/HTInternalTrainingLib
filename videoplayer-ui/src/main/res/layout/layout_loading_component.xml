@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210dp"
+    android:layout_height="wrap_content"
+    android:minHeight="110dp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@drawable/bjplayer_bg_radius_8"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/bjplayer_center_video_progress_dialog_loading_pb"
+        style="@style/bjplayer_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/loading_tips_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="视频正在加载"
+        style="@style/bjplayer_text_big"
+        />
+
+</LinearLayout>

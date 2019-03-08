@@ -16,9 +16,9 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baijiayun.glide.Glide;
-import com.baijiayun.glide.request.target.SimpleTarget;
-import com.baijiayun.glide.request.transition.Transition;
+//import com.baijiayun.glide.Glide;
+//import com.baijiayun.glide.request.target.SimpleTarget;
+//import com.baijiayun.glide.request.transition.Transition;
 import com.jungan.www.common_dotest.R;
 import com.jungan.www.common_dotest.bean.UserOptionBean;
 import com.jungan.www.common_dotest.call.OptionCall;

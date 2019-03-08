@@ -11,15 +11,15 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.baijiahulian.live.ui.LiveSDKWithUI;
-import com.baijiahulian.livecore.context.LPConstants;
 import com.baijiayun.download.DownloadManager;
 import com.baijiayun.download.DownloadTask;
+import com.baijiayun.livecore.context.LPConstants;
+import com.baijiayun.videoplayer.ui.activity.PBRoomActivity;
+import com.baijiayun.videoplayer.ui.activity.VideoPlayActivity;
 import com.jungan.www.common_down.BjyBackPlayDownManager;
 import com.jungan.www.common_down.BjyPlayDownManager;
 import com.jungan.www.common_down.bean.PlayDownConfig;
 import com.jungan.www.common_down.config.BjyPlayDownConfig;
-import com.jungan.www.module_blackplay.activity.PBRoomActivity;
-import com.jungan.www.module_playvideo.ui.PlayVodActivity;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.fragment.MvpFragment;
 import com.wb.baselib.log.LogTools;
@@ -99,7 +99,7 @@ public class CourseOutFragment extends MvpFragment<BjyTokenPresenter> implements
                     CourseChildBean chapterBean1 = chapterBean.getChild().get(i1);
                     if (isBuy) {
                        boolean isDown=false;
-                        DownloadManager downloadManager= BjyBackPlayDownManager.Instance().getDownloadManager().getManager();
+                        DownloadManager downloadManager= BjyBackPlayDownManager.Instance().getDownloadManager();
                         List<DownloadTask> downloadTaskLists=downloadManager.getAllTasks();
                         DownloadTask downloadTask=null;
                         try {
@@ -121,9 +121,10 @@ public class CourseOutFragment extends MvpFragment<BjyTokenPresenter> implements
                                         //进行中
                                     }else if(chapterBean1.getPlay_type().equals("3")){
                                         //回放
-                                        String sign= downloadTask.getVideoDownloadInfo().targetFolder+"/"+BjyBackPlayDownManager.Instance().getPlayBackSig(downloadTask.getDownloadInfo().roomId,downloadTask.getDownloadInfo().sessionId);
+                                        String sign= downloadTask.getVideoDownloadInfo().targetFolder+"/"+BjyBackPlayDownManager.Instance().getPlayBackSig(downloadTask.getVideoDownloadInfo().roomId,downloadTask.getVideoDownloadInfo().sessionId);
+//                                        Intent intent=new Intent(getActivity(), PBRoomActivity.class);
                                         Intent intent=new Intent(getActivity(), PBRoomActivity.class);
-                                        intent.putExtra("pb_room_id",downloadTask.getDownloadInfo().roomId+"");
+                                        intent.putExtra("pb_room_id",downloadTask.getVideoDownloadInfo().roomId+"");
                                         intent.putExtra("pb_room_video_file_path",downloadTask.getVideoDownloadInfo().targetFolder+"/"+downloadTask.getVideoDownloadInfo().targetName);
                                         intent.putExtra("pb_room_signal_file_path",sign);
                                         startActivity(intent);
@@ -132,18 +133,18 @@ public class CourseOutFragment extends MvpFragment<BjyTokenPresenter> implements
                                     }
                                 }else if(chapterBean1.getCourse_type().equals("2")){
                                     //视频
-                                    Intent intent=new Intent(getActivity(), PlayVodActivity.class);
+                                    Intent intent=new Intent(getActivity(), VideoPlayActivity.class);
                                     intent.putExtra("isOnLine","2");
-                                    intent.putExtra("Filepath",downloadTask.getVideoDownloadInfo().targetFolder+downloadTask.getDownloadInfo().targetName);
-                                    intent.putExtra("Token",downloadTask.getDownloadInfo().targetName);
+                                    intent.putExtra("Filepath",downloadTask.getVideoDownloadInfo().targetFolder+downloadTask.getVideoDownloadInfo().targetName);
+                                    intent.putExtra("Token",downloadTask.getVideoDownloadInfo().targetName);
                                     intent.putExtra("bjyId","33197");
                                     startActivity(intent);
                                 }else if(chapterBean1.getCourse_type().equals("3")){
                                     //音频
-                                    Intent intent=new Intent(getActivity(), PlayVodActivity.class);
+                                    Intent intent=new Intent(getActivity(), VideoPlayActivity.class);
                                     intent.putExtra("isOnLine","2");
-                                    intent.putExtra("Filepath",downloadTask.getVideoDownloadInfo().targetFolder+downloadTask.getDownloadInfo().targetName);
-                                    intent.putExtra("Token",downloadTask.getDownloadInfo().targetName);
+                                    intent.putExtra("Filepath",downloadTask.getVideoDownloadInfo().targetFolder+downloadTask.getVideoDownloadInfo().targetName);
+                                    intent.putExtra("Token",downloadTask.getVideoDownloadInfo().targetName);
                                     intent.putExtra("bjyId","33197");
                                     startActivity(intent);
                                 }else if(chapterBean1.getCourse_type().equals("4")){
@@ -296,31 +297,23 @@ public class CourseOutFragment extends MvpFragment<BjyTokenPresenter> implements
                 LiveSDKWithUI.enterRoom(getActivity(), Long.parseLong(bjyTokenData.getVideo_id()), bjyTokenData.getToken(), liveRoomUserModel, new LiveSDKWithUI.LiveSDKEnterRoomListener() {
                     @Override
                     public void onError(String s) {
-
+                        
                     }
                 });
-//                Intent intent=new Intent(getActivity(), LiveRoomActivity.class);
-//                intent.putExtra("name",bjyTokenData.getName());
-//                intent.putExtra("code",bjyTokenData.getVideo_id());
-//                intent.putExtra("avatar",bjyTokenData.getAvatar());
-//                intent.putExtra("userNum", bjyTokenData.getUser_id());
-//                intent.putExtra("roomId",Long.parseLong(bjyTokenData.getVideo_id()));
-//                intent.putExtra("sign",bjyTokenData.getToken());
-//                startActivity(intent);
             }else if(bjyTokenData.getType().equals("2")){
                 //点播
 //                ARouter.getInstance().build("/backplay/play").with(bundle).navigation();
-                Intent intent=new Intent(getActivity(), PlayVodActivity.class);
+                Intent intent=new Intent(getActivity(), VideoPlayActivity.class);
                 intent.putExtra("videoId",Long.parseLong(bjyTokenData.getVideo_id()));
-                intent.putExtra("token",bjyTokenData.getToken());
+                intent.putExtra("Token",bjyTokenData.getToken());
                 intent.putExtra("isOnLine","1");
                 intent.putExtra("bjyId",bjyTokenData.getUser_id());
                 startActivity(intent);
             }else if(bjyTokenData.getType().equals("3")){
                 //音频
-                Intent intent=new Intent(getActivity(), PlayVodActivity.class);
+                Intent intent=new Intent(getActivity(), VideoPlayActivity.class);
                 intent.putExtra("videoId",Long.parseLong(bjyTokenData.getVideo_id()));
-                intent.putExtra("token",bjyTokenData.getToken());
+                intent.putExtra("Token",bjyTokenData.getToken());
                 intent.putExtra("isOnLine","1");
                 intent.putExtra("bjyId",bjyTokenData.getUser_id());
                 startActivity(intent);

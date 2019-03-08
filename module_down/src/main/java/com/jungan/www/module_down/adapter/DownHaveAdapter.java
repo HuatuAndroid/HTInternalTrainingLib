@@ -85,7 +85,7 @@ public class DownHaveAdapter extends BaseAdapter {
         }else {
             holder.select_rb.setVisibility(View.GONE);
         }
-        holder.fileName_tv.setText(downloadTask.getDownloadInfo().videoName);
+        holder.fileName_tv.setText(downloadTask.getVideoDownloadInfo().videoName);
         holder.video_size_tv.setText("大小"+ TextFormater.getDataSize(downloadTask.getTotalLength()));
 
         holder.video_sc_tv.setText("时长"+formatSecond(downloadTask.getVideoDuration()));

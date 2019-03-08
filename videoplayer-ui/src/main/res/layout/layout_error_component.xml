@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="210dp"
+    android:layout_height="wrap_content"
+    android:minHeight="110dp"
+    android:background="@drawable/bjplayer_bg_radius_8"
+    android:gravity="center"
+    android:visibility="gone"
+    tools:visibility="visible"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/error_msg_tv"
+        style="@style/bjplayer_text_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="网络未连接"
+        />
+
+    <TextView
+        android:id="@+id/error_code_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/bjplayer_text_big"
+        tools:text="[-1]"
+        />
+
+    <TextView
+        android:id="@+id/retry_btn"
+        style="@style/bjplayer_text_normal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:background="@drawable/bjplayer_bg_radius_12"
+        android:text="刷新重试"/>
+
+</LinearLayout>

@@ -3,7 +3,7 @@ package com.zhiyun88.www.module_main.dotesting.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.baijia.player.playback.mocklive.PBRoomImpl;
+//import com.baijia.player.playback.mocklive.PBRoomImpl;
 
 public class SubmitBean implements Parcelable {
     private String type;

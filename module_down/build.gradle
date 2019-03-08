@@ -57,14 +57,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    api deps.base
-//    implementation 'com.github.w513209188:BaseLib:v1.7.4.1'
-//    api deps.cornerlabelview
     api 'com.github.czy1121:cornerlabelview:1.0.3'
-    api project(':module_blackplay')
-    api project(':module_playvideo')
-//    compile project(':common_down')
-//    api deps.cornerlabelview
-//    implementation project(':module_blackplay')
-//    implementation project(':module_playvideo')
+    api project(':videoplayer-ui')
+    api project(':common_base')
+    compile project(path: ':common_down')
 }

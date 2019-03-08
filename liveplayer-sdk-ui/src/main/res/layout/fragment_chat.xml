@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/fragment_chat_private_status_container"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/live_blue"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/fragment_chat_private_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/lp_ppt_white" />
+
+        <ImageView
+            android:id="@+id/fragment_chat_private_end_btn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="11dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/end_private_chat" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_chat_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_live_room_margin"
+        android:paddingLeft="@dimen/activity_live_room_margin" />
+
+</LinearLayout>

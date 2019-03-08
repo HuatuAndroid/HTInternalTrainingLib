@@ -17,7 +17,7 @@ import com.wb.baselib.view.TopBarView;
 import com.wb.rxbus.taskBean.RxBus;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.course.adapter.CoordinatorPagerAdapter;
-import com.jungan.www.module_playvideo.event.BjyPlayTimeEvent;
+//import com.jungan.www.module_playvideo.event.BjyPlayTimeEvent;
 import com.zhiyun88.www.module_main.course.bean.CourseInfoBean;
 import com.zhiyun88.www.module_main.course.fragment.CommentListFrament;
 import com.zhiyun88.www.module_main.course.fragment.CourseOutFragment;
@@ -93,7 +93,7 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
             course_tb.getCenterTextView().setText("课程详情");
         }
 
-        RxBus.getIntanceBus().registerRxBus(BjyPlayTimeEvent.class, new Consumer<BjyPlayTimeEvent>() {
+        /*RxBus.getIntanceBus().registerRxBus(BjyPlayTimeEvent.class, new Consumer<BjyPlayTimeEvent>() {
             @Override
             public void accept(BjyPlayTimeEvent event) throws Exception {
                 try {
@@ -102,7 +102,7 @@ public class CourseInfoActivity extends MvpActivity<CourseInfoPresenter> impleme
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
     }
     private void initFragments(CourseInfoBean courseInfoBean) {
         mFragments.add(WebViewFragment.newInstcace(courseInfoBean.getInfo().getDetails_url()));

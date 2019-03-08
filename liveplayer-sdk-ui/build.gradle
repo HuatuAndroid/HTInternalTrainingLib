@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    implementation 'com.baijia.common:common-networkv2:1.8.2'
+    implementation 'com.baijia.common:common-networkv2-ws:1.8.4'
+
+    //    testCompile 'junit:junit:4.12'
+    api 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.baijia.common:common-image-crop:1.2.9'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    // image crop
+    implementation ('com.afollestad.material-dialogs:commons:0.9.4.5'){
+        exclude group: 'com.android.support'
+    }
+    implementation 'com.google.code.gson:gson:2.8.2'
+    api 'com.baijiayun.live:liveplayer-sdk-core:2.0.0-alpha02'
+}
+android {
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+//repositories {
+//    flatDir {
+//        dirs '/Users/Shubo/Desktop/workspace/liveplayer/liveplayer-android-sdk-core/BJHL-LivePlayer/liveplayer-sdk-core/libs'
+//    }
+//}
+
+//apply from: 'https://raw.github.com/baijia/gradle-mvn-push/master/gradle-mvn-push.gradle'

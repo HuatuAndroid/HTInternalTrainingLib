@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.PBRoomActivity">
+
+
+    <!--播放器和白板-->
+    <com.baijiayun.videoplayer.ui.widget.BJYPlaybackContainer
+        android:id="@+id/fl_pb_container_big"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"/>
+
+    <!--聊天页-->
+    <com.baijiayun.videoplayer.ui.playback.viewsupport.AutoExitDrawerLayout
+        android:id="@+id/dl_pb_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_pb_container_big"
+        android:visibility="gone"
+        >
+
+        <FrameLayout
+            android:id="@+id/fl_pb_chat_content_container"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            >
+        </FrameLayout>
+
+    </com.baijiayun.videoplayer.ui.playback.viewsupport.AutoExitDrawerLayout>
+
+    <!--聊天区的弹出关闭开关，竖屏隐藏-->
+    <ImageView
+        android:id="@+id/iv_pb_chat_switch"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@id/fl_pb_container_big"
+        android:src="@drawable/ic_video_back_sentmsg_no"
+        tools:visibility="visible"
+        android:visibility="gone" />
+
+
+    <!--视频和ppt切换开关-->
+    <ImageView
+        android:id="@+id/switch_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@id/fl_pb_container_big"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_video_back_stopvideo"
+        tools:visibility="visible"
+        android:visibility="gone"/>
+
+    <com.baijiayun.videoplayer.ui.playback.viewsupport.DragFrameLayout
+        android:id="@+id/drag_framelayout"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/fl_pb_container_big"
+        >
+
+        <com.baijiayun.videoplayer.ui.widget.BJYVideoView
+            android:id="@+id/pb_bjy_videoview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:render_type="texture_view"
+            app:aspect_ratio="fill_parent"
+            />
+
+    </com.baijiayun.videoplayer.ui.playback.viewsupport.DragFrameLayout>
+
+</RelativeLayout>

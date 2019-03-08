@@ -10,17 +10,21 @@ import android.widget.TextView;
 
 import com.baijiayun.download.DownloadTask;
 import com.baijiayun.download.constant.DownloadType;
+import com.baijiayun.videoplayer.ui.activity.PBRoomActivity;
+import com.baijiayun.videoplayer.ui.activity.VideoPlayActivity;
 import com.hss01248.dialog.interfaces.MyDialogListener;
+//import com.jungan.www.common_down.BjyBackPlayDownManager;
 import com.jungan.www.common_down.BjyBackPlayDownManager;
 import com.jungan.www.common_down.config.DownVideoMessageTypeConfig;
-import com.jungan.www.module_blackplay.activity.PBRoomActivity;
+//import com.jungan.www.module_blackplay.activity.PBRoomActivity;
 import com.jungan.www.module_down.R;
 import com.jungan.www.module_down.adapter.DownHaveAdapter;
 import com.jungan.www.module_down.call.DownHaveVideoCall;
+import com.jungan.www.module_down.config.DownManagerTypeConfig;
 import com.jungan.www.module_down.config.ToActicvityConfig;
 import com.jungan.www.module_down.mvp.contranct.DownHaveVideoContranct;
 import com.jungan.www.module_down.mvp.presenter.DownHaveVideoPresenter;
-import com.jungan.www.module_playvideo.ui.PlayVodActivity;
+//import com.jungan.www.module_playvideo.ui.PlayVodActivity;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.view.MultipleStatusView;
@@ -158,17 +162,17 @@ public class DownHaveVideoActivity extends MvpActivity<DownHaveVideoPresenter> i
                 DownloadType downloadType=downloadTask.getDownloadType();
                 if(downloadType==DownloadType.Video){
                     //点播
-                    Intent intent=new Intent(DownHaveVideoActivity.this, PlayVodActivity.class);
+                    Intent intent=new Intent(DownHaveVideoActivity.this, VideoPlayActivity.class);
                     intent.putExtra("isOnLine","2");
-                    intent.putExtra("Filepath",downloadTask.getVideoDownloadInfo().targetFolder+downloadTask.getDownloadInfo().targetName);
-                    intent.putExtra("Token",downloadTask.getDownloadInfo().targetName);
+                    intent.putExtra("Filepath",downloadTask.getVideoDownloadInfo().targetFolder+downloadTask.getVideoDownloadInfo().targetName);
+                    intent.putExtra("Token",downloadTask.getVideoDownloadInfo().targetName);
                     intent.putExtra("bjyId","33197");
                     startActivity(intent);
                 }else {
                     //回放
-                    String sign= downloadTask.getVideoDownloadInfo().targetFolder+"/"+BjyBackPlayDownManager.Instance().getPlayBackSig(downloadTask.getDownloadInfo().roomId,downloadTask.getDownloadInfo().sessionId);
+                    String sign= downloadTask.getVideoDownloadInfo().targetFolder+"/"+ BjyBackPlayDownManager.Instance().getPlayBackSig(downloadTask.getVideoDownloadInfo().roomId,downloadTask.getVideoDownloadInfo().sessionId);
                     Intent intent=new Intent(DownHaveVideoActivity.this, PBRoomActivity.class);
-                    intent.putExtra("pb_room_id",downloadTask.getDownloadInfo().roomId+"");
+                    intent.putExtra("pb_room_id",downloadTask.getVideoDownloadInfo().roomId+"");
                     intent.putExtra("pb_room_video_file_path",downloadTask.getVideoDownloadInfo().targetFolder+"/"+downloadTask.getVideoDownloadInfo().targetName);
                     intent.putExtra("pb_room_signal_file_path",sign);
                     startActivity(intent);

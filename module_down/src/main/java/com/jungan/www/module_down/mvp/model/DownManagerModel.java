@@ -79,7 +79,7 @@ public class DownManagerModel implements DownManagerContranct.DownManagerModel {
                 for (DownloadTask task : downloadTaskList) {
                     if (task.getTaskStatus() == Finish) {
                         //下载完成的
-                        DownloadModel downloadModel = task.getDownloadInfo();
+                        DownloadModel downloadModel = task.getVideoDownloadInfo();
                         //获取保存数据 0 用户Id 1 职业 2课程 3章
                         String[] exx = StriTools.convertStrToArray(downloadModel.extraInfo);
                         DownHaveBean downHaveBean = new DownHaveBean();
@@ -88,7 +88,7 @@ public class DownManagerModel implements DownManagerContranct.DownManagerModel {
                         downHaveBean.setOccName(exx[1]);
                         downHaveBean.setSeachName(exx[3]);
 //                        downHaveBean.setVideoCont(downloadTaskList.size());
-                        downHaveBean.setVideoName(task.getFileName());
+                        downHaveBean.setVideoName(task.getVideoFileName());
                         downHaveBean.setUid(exx[0]);
                         downloadHaveTaskList.add(downHaveBean);
                     } else {

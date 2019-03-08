@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.jungan.www.module_blackplay.activity.PBRoomActivity;
-import com.jungan.www.module_playvideo.ui.PlayVodActivity;
+//import com.jungan.www.module_blackplay.activity.PBRoomActivity;
+import com.baijiayun.videoplayer.ui.activity.PBRoomActivity;
+import com.baijiayun.videoplayer.ui.activity.VideoPlayActivity;
+//import com.jungan.www.module_playvideo.ui.PlayVodActivity;
 import com.zhiyun88.www.module_main.R;
 
 public class TestActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class TestActivity extends AppCompatActivity {
         play_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(TestActivity.this, PlayVodActivity.class);
+                Intent intent=new Intent(TestActivity.this, VideoPlayActivity.class);
                 intent.putExtra("videoId",10193855L);
                 intent.putExtra("token","of0OZ9zayew3S3PxCaNttQRZ3VeWzuNKDubaI3DZtppAEox40_tqYA");
                 intent.putExtra("isOnLine","1");

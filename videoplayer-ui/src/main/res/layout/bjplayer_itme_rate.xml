@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_gravity="center_horizontal"
+    >
+
+    <TextView
+        android:id="@+id/bjplayer_layout_rate_btn"
+        style="@style/bjplayer_text_normal"
+        android:layout_width="52dp"
+        android:layout_height="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/bjplayer_bg_radius_12"
+        android:gravity="center"
+        android:layout_gravity="center"
+        tools:text="@string/bjplayer_video_rate_0_7" />
+
+</FrameLayout>
+
+

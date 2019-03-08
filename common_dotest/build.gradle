@@ -33,8 +33,7 @@ dependencies {
     api 'com.github.limedroid:XRichText:v1.0.0'
     api 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.github.w513209188:photolib:v1.0.0'
-//    compile 'com.github.w513209188:BaseLib:v1.7.4.1'
     api 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     implementation 'com.github.wangchenyan:html-text:1.0'
-    api deps.base
+    api project(':common_base')
 }

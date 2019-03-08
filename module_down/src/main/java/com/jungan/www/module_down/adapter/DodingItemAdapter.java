@@ -74,8 +74,8 @@ public class DodingItemAdapter extends BaseAdapter {
     public View getView(int position, View arg1, ViewGroup parent) {
         VideoDoingHolder holder=null;
          final DownloadTask task= (DownloadTask) getItem(position);
-        final DownloadModel model = task.getDownloadInfo();
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        final DownloadModel model = task.getVideoDownloadInfo();
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view==null){
             holder=new VideoDoingHolder();
             view= LayoutInflater.from(mContext).inflate(R.layout.down_doingitem_layout,null);
@@ -86,7 +86,7 @@ public class DodingItemAdapter extends BaseAdapter {
             holder.tvPercent= (TextView) view.findViewById(R.id.tvPercent);
             holder.down_xz_rel=view.findViewById(R.id.down_xz_rel);
             holder.select_cx=view.findViewById(R.id.select_cx);
-            mConvertViews.put(task.getDownloadInfo().url, view);
+            mConvertViews.put(task.getVideoDownloadInfo().url, view);
             view.setTag(holder);
         }else {
             holder= (VideoDoingHolder) view.getTag();
@@ -266,8 +266,10 @@ public class DodingItemAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onDeleted(long l) {
+            public void onDeleted(DownloadTask downloadTask) {
+
             }
+
         });
 
 
@@ -318,9 +320,9 @@ public class DodingItemAdapter extends BaseAdapter {
      * @param task
      */
     public void doing(final DownloadTask task){
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view!=null){
-            DownloadModel model = task.getDownloadInfo();
+            DownloadModel model = task.getVideoDownloadInfo();
             VideoDoingHolder holder= (VideoDoingHolder) view.getTag();
             String downloadLength = Formatter.formatFileSize(mContext, model.downloadLength);
             String totalLength = Formatter.formatFileSize(mContext, model.totalLength);
@@ -344,7 +346,7 @@ public class DodingItemAdapter extends BaseAdapter {
      * @param task
      */
     public void pause(final DownloadTask task){
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view!=null){
             VideoDoingHolder holder= (VideoDoingHolder) view.getTag();
             holder.tvPercent.setText(mContext.getResources().getString(R.string.down_video_go));
@@ -362,7 +364,7 @@ public class DodingItemAdapter extends BaseAdapter {
      * @param task 继续下载
      */
     public void reStar(final DownloadTask task){
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view!=null){
             VideoDoingHolder holder= (VideoDoingHolder) view.getTag();
             holder.tvPercent.setText(mContext.getResources().getString(R.string.down_video_paush));
@@ -380,7 +382,7 @@ public class DodingItemAdapter extends BaseAdapter {
      * @param task
      */
     public void error(final DownloadTask task){
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view!=null){
             VideoDoingHolder holder= (VideoDoingHolder) view.getTag();
             holder.tvPercent.setText(mContext.getResources().getString(R.string.down_video_error));
@@ -398,7 +400,7 @@ public class DodingItemAdapter extends BaseAdapter {
      * @param task
      */
     public void finish(DownloadTask task){
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view!=null){
             VideoDoingHolder holder= (VideoDoingHolder) view.getTag();
             holder.tvPercent.setText(mContext.getResources().getString(R.string.down_video_finish));
@@ -415,7 +417,7 @@ public class DodingItemAdapter extends BaseAdapter {
      * @param task
      */
     public void delete(DownloadTask task){
-        View view=mConvertViews.get(task.getDownloadInfo().url);
+        View view=mConvertViews.get(task.getVideoDownloadInfo().url);
         if(view!=null){
 
         }

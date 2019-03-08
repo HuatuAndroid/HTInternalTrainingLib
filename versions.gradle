@@ -18,6 +18,7 @@ versions.liveplayersdkcoreppt="1.4.2"
 versions.constraintlayout="1.1.0"
 versions.cornerlabelview="1.0.3"
 versions.gson="2.4"
+versions.retrofit="2.1.0"
 ext.deps = deps
 //android必备
 def support = [:]
@@ -42,13 +43,22 @@ baijia.commonimagecrop="com.baijia.common:common-image-crop:$versions.commonimag
 baijia.commonpermission="com.baijia.common:common-permission:$versions.commonpermission"
 deps.baijia = baijia
 //第三方jar
-deps.base="com.github.w513209188:BaseLib:$versions.BaseLib"
+//deps.base="com.github.w513209188:BaseLib:$versions.BaseLib"
 deps.cornerlabelview="com.github.czy1121:cornerlabelview:$versions.cornerlabelview"
 deps.gson="com.google.code.gson:gson:$versions.gson"
 ext.deps = deps
 
+//rxjava
+def retrofit = [:]
+retrofit.retrofit = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.adapter = "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
+retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+retrofit.rxandroid="io.reactivex.rxjava2:rxandroid:2.1.0"
+retrofit.rxjava="io.reactivex.rxjava2:rxjava:2.1.0"
+deps.retrofit = retrofit
+
 def build_versions = [:]
-build_versions.min_sdk = 16
+build_versions.min_sdk = 19
 build_versions.target_sdk = 27
 build_versions.build_tools = "27.0.2"
 ext.build_versions = build_versions

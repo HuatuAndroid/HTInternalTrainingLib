@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.baijiahulian.livecore.models.imodels.IForbidChatModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 import com.wb.baselib.permissions.PerMissionsManager;

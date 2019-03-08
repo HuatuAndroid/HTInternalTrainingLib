@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.baijiahulian.BJVideoPlayerSDK;
+//import com.baijiahulian.BJVideoPlayerSDK;
 import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.appconfig.AppConfigManager;

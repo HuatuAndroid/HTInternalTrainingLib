@@ -6,9 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.baijia.player.playback.downloader.PlaybackDownloader;
-import com.baijiahulian.downloader.download.VideoDownloadManager;
-import com.baijiayun.download.DownloadManager;
 import com.baijiayun.download.DownloadTask;
 import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.jungan.www.common_down.BjyBackPlayDownManager;
@@ -147,7 +144,7 @@ public class DownDoingVideoActivity extends MvpActivity<DownDoingVideoPresenter>
         all_start_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<DownloadTask> tasks=BjyBackPlayDownManager.Instance().getDownloadManager().getManager().getAllTasks();
+                List<DownloadTask> tasks=BjyBackPlayDownManager.Instance().getDownloadManager().getAllTasks();
                 for(DownloadTask downloadTask:tasks){
                     downloadTask.start();
                 }
@@ -156,7 +153,7 @@ public class DownDoingVideoActivity extends MvpActivity<DownDoingVideoPresenter>
         all_pase_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<DownloadTask> tasks=BjyBackPlayDownManager.Instance().getDownloadManager().getManager().getAllTasks();
+                List<DownloadTask> tasks=BjyBackPlayDownManager.Instance().getDownloadManager().getAllTasks();
                 for(DownloadTask downloadTask:tasks){
                     downloadTask.pause();
                 }

@@ -10,7 +10,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.baijiahulian.BJVideoPlayerSDK;
+//import com.baijiahulian.BJVideoPlayerSDK;
+import com.baijiayun.BJYPlayerSDK;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.appconfig.AppConfigManager;
@@ -41,7 +42,10 @@ public class hApp {
         return mApp;
     }
     public void initVideoPlay(Application application){
-        BJVideoPlayerSDK.getInstance().init(application);
+//        BJVideoPlayerSDK.getInstance().init(application);
+        new BJYPlayerSDK.Builder(application)
+                .setDevelopMode(true)
+                .build();
     }
 
     /**

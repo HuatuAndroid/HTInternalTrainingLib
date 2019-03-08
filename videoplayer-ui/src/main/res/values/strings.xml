@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">videoplayerui</string>
+
+    <string name="bjplayer_video_rate_0_7">0.7x</string>
+    <string name="bjplayer_video_rate_1">1x</string>
+    <string name="bjplayer_video_rate_1_2">1.2x</string>
+    <string name="bjplayer_video_rate_1_5">1.5x</string>
+    <string name="bjplayer_video_rate_2">2x</string>
+
+    <array name="bjy_player_definition">
+        <item>纯音频</item>
+        <item>标清</item>
+        <item>高清</item>
+        <item>超清</item>
+        <item>720P</item>
+        <item>1080P</item>
+    </array>
+
+    <string name="bjplayer_play_no_wifi">您正在使用非WiFi网络\n播放将产生流量费</string>
+    <string name="bjplayer_still_play">继续播放</string>
+    <string name="bjplayer_video_player_error_no_network">网络未连接，请检查网络设置</string>
+    <string name="bjplayer_video_reload">重新加载</string>
+
+    <string name="full_screen">全屏</string>
+    <string name="close">关闭</string>
+    <string name="cancel">取消</string>
+
+    <string name="live_image_loading">图片加载中…</string>
+    <string name="live_image_uploading">上传中…</string>
+    <string name="live_image_loading_fail">图片加载失败</string>
+    <string name="live_edit">编辑</string>
+    <string name="live_cancel">取消</string>
+    <string name="live_image_save">保存图片</string>
+
+    <string name="video_is_loading">%s 视频正在加载</string>
+
+    <string name="vdec">vdec</string>
+    <string name="fps">fps</string>
+    <string name="v_cache">v-cache</string>
+    <string name="a_cache">a-cache</string>
+    <string name="load_cost">load-cost</string>
+    <string name="seek_cost">seek_cost</string>
+    <string name="seek_load_cost">seek_load_cost</string>
+    <string name="tcp_speed">tcp_speed</string>
+    <string name="bit_rate">bit_rate</string>
+
+
+</resources>

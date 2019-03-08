@@ -12,8 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.baijiahulian.livecore.context.LPConstants;
-import com.jungan.www.module_blackplay.activity.PBRoomActivity;
+//import com.jungan.www.module_blackplay.activity.PBRoomActivity;
 import com.wb.baselib.permissions.PerMissionsManager;
 import com.wb.baselib.permissions.interfaces.PerMissionCall;
 import com.wb.baselib.view.MyListView;

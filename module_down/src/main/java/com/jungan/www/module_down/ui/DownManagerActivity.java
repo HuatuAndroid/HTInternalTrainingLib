@@ -11,8 +11,9 @@ import android.widget.ListView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.baijiayun.download.DownloadTask;
-import com.jungan.www.common_down.BjyBackPlayDownManager;
-import com.jungan.www.common_down.bean.PlayDownConfig;
+//import com.jungan.www.common_down.BjyBackPlayDownManager;
+//import com.jungan.www.common_down.bean.PlayDownConfig;
+//import com.jungan.www.common_down.config.BjyPlayDownConfig;
 import com.jungan.www.common_down.config.BjyPlayDownConfig;
 import com.jungan.www.common_down.config.DownVideoMessageTypeConfig;
 import com.jungan.www.module_down.R;
@@ -59,12 +60,12 @@ public class DownManagerActivity extends MvpActivity<DownManagerPresenter> imple
         RxBus.getIntanceBus().registerRxBus(Integer.class, new Consumer<Integer>() {
             @Override
             public void accept(Integer s) throws Exception {
-                //监听器
-                        if(s== DownVideoMessageTypeConfig.RESHVIDEO){
-                            mPresenter.getAllDownVideo();
-                        }else if(s==DownVideoMessageTypeConfig.RESHDOING){
-                            mPresenter.getAllDownVideo();
-                        }
+            //监听器
+            if(s== DownVideoMessageTypeConfig.RESHVIDEO){
+                mPresenter.getAllDownVideo();
+            }else if(s==DownVideoMessageTypeConfig.RESHDOING){
+                mPresenter.getAllDownVideo();
+            }
             }
         });
         PerMissionsManager.newInstance().getUserPerMissions(DownManagerActivity.this, new PerMissionCall() {

@@ -8,7 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.solver.Cache;
+//import android.support.constraint.solver.Cache;
 import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
@@ -20,8 +20,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baijiayun.glide.request.target.SimpleTarget;
-import com.baijiayun.glide.request.transition.Transition;
+//import com.baijiayun.glide.request.target.SimpleTarget;
+//import com.baijiayun.glide.request.transition.Transition;
 import com.bumptech.glide.Glide;
 import com.jungan.www.common_dotest.R;
 import com.jungan.www.common_dotest.adapter.CommonQuestionOptionAdapter;
@@ -145,7 +145,7 @@ public class HtmlTextView extends RelativeLayout {
                 .setImageLoader(new HtmlImageLoader() {
                     @Override
                     public void loadImage(String url, final Callback callback) {
-                        com.baijiayun.glide.Glide.with(mContext).asBitmap().load(url).into(new SimpleTarget<Bitmap>() {
+                        /*com.baijiayun.glide.Glide.with(mContext).asBitmap().load(url).into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
 
@@ -165,7 +165,7 @@ public class HtmlTextView extends RelativeLayout {
                                 Bitmap newbm = Bitmap.createBitmap(resource, 0, 0, width, height, matrix, true);
                                 callback.onLoadComplete(newbm);
                             }
-                        });
+                        });*/
                     }
 
                     @Override
