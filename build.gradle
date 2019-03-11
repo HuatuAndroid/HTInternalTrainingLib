@@ -29,6 +29,14 @@ allprojects {
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'minutes'
     }
+
+    repositories {
+        google()
+        jcenter()
+//        maven { url 'https://raw.github.com/baijia/maven/master/' }
+        maven { url 'http://git.baijiashilian.com/open-android/maven/raw/master/' }
+    }
+
 }
 
 
