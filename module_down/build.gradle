@@ -60,5 +60,5 @@ dependencies {
     api 'com.github.czy1121:cornerlabelview:1.0.3'
     api project(':videoplayer-ui')
     api project(':common_base')
-    compile project(path: ':common_down')
+    api project(':common_down')
 }
