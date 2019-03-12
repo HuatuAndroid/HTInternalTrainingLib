@@ -1,14 +1,9 @@
-//if (isModule.toBoolean()) {
-//    apply plugin: 'com.android.application'
-//} else {
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.HuatuAndroid'
-//}
 android {
     compileSdkVersion 27
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
