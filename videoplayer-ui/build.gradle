@@ -53,4 +53,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-apply from: 'https://raw.github.com/baijia/gradle-mvn-push/master/gradle-mvn-push.gradle'
+//apply from: 'https://raw.github.com/baijia/gradle-mvn-push/master/gradle-mvn-push.gradle'
