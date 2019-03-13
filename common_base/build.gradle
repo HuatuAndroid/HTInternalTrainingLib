@@ -56,11 +56,12 @@ dependencies {
     compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-navi:2.0.1'
     compile project(':common_rxbus')
-    implementation project(':refresh-header')
-    implementation project(':refresh-layout')
+    api project(':refresh-header')
+    api project(':refresh-layout')
     implementation 'top.zibin:Luban:1.1.8'
     compile 'com.squareup.picasso:picasso:2.5.2'
     implementation 'me.jessyan:autosize:0.9.5'
-    implementation project(':common_coorinator')
-    implementation project(':common_down')
+    api project(':common_coorinator')
+    api project(':common_down')
+
 }

@@ -69,11 +69,11 @@ dependencies {
 
 //    api 'com.baijia.live:liveplayer-sdk-ui:1.4.6'
     api project(':module_down')
-    api project(':videoplayer-ui')
-    api project(':common_base')
+//    api project(':videoplayer-ui')
+//    api project(':common_base')
     api project(':common_dotest')
-    api project(':refresh-header')
-    api project(':refresh-layout')
-    api project(':common_coorinator')
+//    api project(':refresh-header')
+//    api project(':refresh-layout')
+//    api project(':common_coorinator')
     api project(':liveplayer-sdk-ui')
 }

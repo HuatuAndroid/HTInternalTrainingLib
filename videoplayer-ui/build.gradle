@@ -36,7 +36,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 //    api project(path: ':videoplayer-core')
-    api 'com.baijia.player:VideoplayerCore:2.0.3'
+    implementation 'com.baijia.player:VideoplayerCore:2.0.3'
 
     implementation "com.android.support:appcompat-v7:27.1.1"
     implementation "com.android.support:recyclerview-v7:27.1.1"
