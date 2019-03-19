@@ -76,4 +76,6 @@ dependencies {
 //    api project(':refresh-layout')
 //    api project(':common_coorinator')
     api project(':liveplayer-sdk-ui')
+
+    api project(':module_employees')
 }

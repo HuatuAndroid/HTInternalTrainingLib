@@ -157,7 +157,8 @@ public class hApp {
                                         .setmIsUseCache(HttpManager.newInstance().getHttpConfig().ismIsUseCache())
                                         .setmMapHeader(map1)
                                         .setIsReshConfig(true)
-                                        .setmIsUseLog(HttpManager.newInstance().getHttpConfig().ismIsUseLog());
+                                        .setmIsUseLog(HttpManager.newInstance().getHttpConfig().ismIsUseLog())
+                                        .setEmployeesWorld(true);
                         HttpConfig.newInstanceBuild(httpConfig);
 //                        CommunityActivity.startForResult((Activity) source);
                         Intent intent = new Intent((Activity) source,cls);

@@ -1,7 +1,5 @@
 package com.example.seele.newht;
 
-import android.Manifest;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,18 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 //import com.jungan.www.module_blackplay.activity.PBRoomActivity;
-import com.wb.baselib.permissions.PerMissionsManager;
-import com.wb.baselib.permissions.interfaces.PerMissionCall;
-import com.wb.baselib.view.MyListView;
 import com.zhiyun88.www.module_main.call.LoginStatusCall;
-import com.zhiyun88.www.module_main.community.ui.CommunityActivity;
 import com.zhiyun88.www.module_main.hApp;
-import com.zzhoujay.richtext.RichText;
-
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private Button toact1,toact2,toact3,toact4,toact5;

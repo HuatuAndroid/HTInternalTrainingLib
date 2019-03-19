@@ -28,6 +28,8 @@ public class HttpConfig {
     private int mMaxRetryCount;
     private boolean isUseCustGson;
     private boolean isReshConfig;
+    //是否显示“员工天地"模块  true：显示
+    private boolean showEmployeesWorld;
 
     public static HttpConfig newInstance() {
 
@@ -139,8 +141,8 @@ public class HttpConfig {
                     httpConfig.isReshConfig = httpConfigBuilder.isReshConfig;
                 }
             }
-            if (httpConfigBuilder.mMapHeader == null || httpConfigBuilder.mMapHeader.size() == 0) {
 
+            if (httpConfigBuilder.mMapHeader == null || httpConfigBuilder.mMapHeader.size() == 0) {
             } else {
                 for (Map.Entry<String, String> entry : httpConfigBuilder.mMapHeader.entrySet()) {
                     httpConfig.mMapHeader.put(entry.getKey(), entry.getValue());
@@ -148,6 +150,7 @@ public class HttpConfig {
 
             }
 
+            httpConfig.showEmployeesWorld=httpConfigBuilder.showEmployeesWorld;
         }
         return httpConfig;
     }
@@ -180,6 +183,11 @@ public class HttpConfig {
     public boolean isReshConfig() {
         return isReshConfig;
     }
+
+    public boolean showEmployeesWorld(){
+        return showEmployeesWorld;
+    }
+
 
     public boolean isUseCustGson() {
         return isUseCustGson;
@@ -248,6 +256,12 @@ public class HttpConfig {
         private int mMaxRetryCount;
         private boolean isUseCustGson;
         private boolean isReshConfig;
+        private boolean showEmployeesWorld;
+
+        public HttpConfigBuilder setEmployeesWorld(boolean showEmployeesWorld){
+            this.showEmployeesWorld=showEmployeesWorld;
+            return this;
+        }
 
         public HttpConfigBuilder setIsReshConfig(boolean is) {
             this.isReshConfig = is;

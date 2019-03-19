@@ -14,6 +14,7 @@ public class BasePreaenter<V extends BaseView,M extends BaseModel> {
     protected M mModel;
     protected V mView;
     private CompositeDisposable mCompositeSubscription;
+
     protected void addSubscribe(Disposable subscription){
         if(mCompositeSubscription==null){
             Log.e("mCompositeSubscription","yes");
@@ -23,6 +24,7 @@ public class BasePreaenter<V extends BaseView,M extends BaseModel> {
         }
         mCompositeSubscription.add(subscription);
     }
+
     public void unSubscribe(){
         if(mView!=null){
             mView=null;

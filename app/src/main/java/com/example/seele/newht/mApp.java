@@ -38,7 +38,8 @@ public class mApp extends BaseApplication {
                 new HttpConfig.HttpConfigBuilder()
                         .setUseCustGson(true)
                         .setmBaseUrl(TEXT_URL)
-                .setmIsUseLog(true);
+                        .setEmployeesWorld(true)
+                        .setmIsUseLog(true);
         HttpConfig.newInstanceBuild(httpConfig);
         hApp.newInstance().initVideoPlay(this);
 //        ZXingLibrary.initDisplayOpinion(this);

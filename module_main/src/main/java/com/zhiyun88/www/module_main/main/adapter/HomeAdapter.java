@@ -14,7 +14,9 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.module_employees_world.EmplayeesActivity;
 import com.thefinestartist.finestwebview.FinestWebView;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.phone.PhoneUtils;
 import com.wb.baselib.utils.ToActivityUtil;
 import com.wb.baselib.view.MyListView;
@@ -23,9 +25,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerClickListener;
 import com.zhiyun88.www.module_main.R;
-import com.zhiyun88.www.module_main.community.ui.CommunityActivity;
 import com.zhiyun88.www.module_main.course.ui.CourseMainActivity;
-import com.zhiyun88.www.module_main.information.bean.InformationDataListBean;
 import com.zhiyun88.www.module_main.information.ui.InformationActivity;
 import com.zhiyun88.www.module_main.library.ui.LibraryActivity;
 import com.zhiyun88.www.module_main.main.bean.HomeBean;
@@ -264,7 +264,8 @@ public class HomeAdapter extends BaseAdapter {
             bannerHolder.community.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext,CommunityActivity.class));
+//                    mContext.startActivity(new Intent(mContext,CommunityActivity.class));
+                    mContext.startActivity(new Intent(mContext,EmplayeesActivity.class));
                 }
             });
             bannerHolder.library.setOnClickListener(new View.OnClickListener() {
@@ -274,7 +275,12 @@ public class HomeAdapter extends BaseAdapter {
                 }
             });
             //在内训中隐藏“员工天地”入口
-            bannerHolder.community.setVisibility(View.GONE);
+            if (HttpConfig.newInstance().showEmployeesWorld()){
+                bannerHolder.community.setVisibility(View.VISIBLE);
+            }else {
+                bannerHolder.community.setVisibility(View.GONE);
+            }
+
         }
 
         return convertView;
