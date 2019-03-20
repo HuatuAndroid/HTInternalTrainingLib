@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:id="@+id/comment_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:src="@drawable/user_head"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/comment_image"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/comment_name"
+                android:textSize="14sp"
+                android:textColor="#3D3E43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="李曼青"/>
+
+            <TextView
+                android:id="@+id/comment_part"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999CAA"
+                android:layout_marginLeft="12sp"
+                android:textSize="11sp"
+                android:text="总裁办"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_conmment_del"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/post_comment_del"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="35dp"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--评论文本-->
+            <TextView
+                android:id="@+id/comment_title"
+                android:textSize="14sp"
+                android:textColor="#3D3E43"
+                android:lineSpacingExtra="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="哈哈哈哈哈哈伦裤哈三联几哈发牢骚的开发哪家拉佛爱阿斯顿发"/>
+            <!--评论时间，点赞回复-->
+            <LinearLayout
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:id="@+id/tv_comment_time"
+                    android:textSize="12sp"
+                    android:textColor="#999CAA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="2019-12-12"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_comment_zan"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12sp"
+                    android:text="28"
+                    android:textColor="#999CAA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/post_comment_zan"
+                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="16dp"/>
+
+                <TextView
+                    android:id="@+id/tv_comment_reply"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12sp"
+                    android:text="回复"
+                    android:textColor="#999CAA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/post_comment_info"
+                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DADCE5"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.module_employees_world">
 
-    <application>
-        <activity android:name=".EmplayeesActivity"></activity>
+    <application android:theme="@style/BaseAppTheme">
+        <activity android:name=".ui.EmplayeesActivity" />
+        <activity android:name=".ui.PostsDetailActivity"/>
     </application>
 
 </manifest>

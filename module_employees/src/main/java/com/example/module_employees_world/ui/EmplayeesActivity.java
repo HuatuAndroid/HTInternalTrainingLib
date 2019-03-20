@@ -1,9 +1,10 @@
-package com.example.module_employees_world;
+package com.example.module_employees_world.ui;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.module_employees_world.R;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
 

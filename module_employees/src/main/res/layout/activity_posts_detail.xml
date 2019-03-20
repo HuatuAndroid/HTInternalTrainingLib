@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.module_employees_world.ui.PostsDetailActivity">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/topbarview_post_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBarColor="#007AFF"
+        app:bottomLineColor="#007AFF"
+        app:centerTextColor="#FFFFFF"
+        app:centerTextSize="18sp"
+        app:centerType="textView"
+        app:centerText="帖子详情"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/home_title_left_return"
+        app:leftType="imageButton"
+        app:showBottomLine="true"
+        app:rightType="imageButton"
+        app:rightImageResource="@drawable/post_detail_title_right"
+        app:titleBarHeight="45dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_post_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:background="#F5F5F5">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>
