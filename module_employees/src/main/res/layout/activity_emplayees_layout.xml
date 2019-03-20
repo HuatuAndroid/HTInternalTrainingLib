@@ -5,22 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"/>
+
     <com.wb.baselib.view.TopBarView
         android:id="@+id/topbarview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleBarColor="#007AFF"
         app:bottomLineColor="#007AFF"
-        app:centerTextColor="#333333"
+        app:centerTextColor="#FFFFFF"
         app:centerTextSize="18sp"
         app:centerType="textView"
         app:centerText="员工天地"
         app:fillStatusBar="false"
-        app:leftImageResource="@drawable/main_back"
+        app:leftImageResource="@drawable/home_title_left_return"
         app:leftType="imageButton"
         app:showBottomLine="true"
         app:rightType="customView"
         app:rightCustomView="@layout/main_right_title_layout"
         app:titleBarHeight="45dp" />
+
+
 
 </LinearLayout>
