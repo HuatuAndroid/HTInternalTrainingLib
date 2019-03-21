@@ -3,7 +3,8 @@
     package="com.example.module_employees_world">
 
     <application android:theme="@style/BaseAppTheme">
-        <activity android:name=".ui.EmplayeesActivity" />
+        <activity android:name=".ui.GuideActivity"/>
+        <activity android:name=".ui.home.EmplayeesActivity" />
         <activity android:name=".ui.PostsDetailActivity"/>
     </application>
 
