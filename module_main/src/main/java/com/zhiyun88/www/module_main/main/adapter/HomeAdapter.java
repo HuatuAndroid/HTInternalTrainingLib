@@ -14,7 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.module_employees_world.EmplayeesActivity;
+import com.example.module_employees_world.ui.EmplayeesActivity;
+import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.thefinestartist.finestwebview.FinestWebView;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.phone.PhoneUtils;
@@ -265,7 +266,7 @@ public class HomeAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
 //                    mContext.startActivity(new Intent(mContext,CommunityActivity.class));
-                    mContext.startActivity(new Intent(mContext,EmplayeesActivity.class));
+                    mContext.startActivity(new Intent(mContext,PostsDetailActivity.class));
                 }
             });
             bannerHolder.library.setOnClickListener(new View.OnClickListener() {

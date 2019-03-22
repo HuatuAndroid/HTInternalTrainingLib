@@ -106,6 +106,10 @@
         <attr name="centerSearchBg" format="reference" />
         <!-- 中间自定义布局, 对应centerType_CustomView -->
         <attr name="centerCustomView" format="reference" />
+        <!--中间TextView是否启用跑马灯效果-->
+        <attr name="centerTextViewRoll" format="boolean"/>
+
+
     </declare-styleable>
     <declare-styleable name="JPTabBar">
         <attr name="TabNormalColor" format="reference|color"/>

@@ -9,7 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="#EEEFF4"/>
-    
+
+    <TextView
+        android:id="@+id/tv_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#3D3E43"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -19,7 +28,8 @@
             android:id="@+id/details_head"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/morentouxiang"/>
 
         <LinearLayout
             android:id="@+id/ll_name"
@@ -83,9 +93,76 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textStyle="bold"
-            android:text="薪酬组"/>
+            android:text="【薪酬组】"/>
 
     </RelativeLayout>
+
+    <!--帖子详情  展开-->
+    <LinearLayout
+        android:id="@+id/ll_dev_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:visibility="visible">
+        <RelativeLayout
+            android:id="@+id/rl_details_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
+            <TextView
+                android:id="@+id/tv_details_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:text=""/>
+            <TextView
+                android:id="@+id/tv_details_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/tv_details_text"
+                android:textSize="14sp"
+                android:textColor="#007AFF"
+                android:text="展开"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+    <!--帖子详情  收起-->
+    <LinearLayout
+        android:id="@+id/ll_dev_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="22dp"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_detail_html"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp" />
+        <TextView
+            android:id="@+id/tv_details_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textSize="14sp"
+            android:textColor="#007AFF"
+            android:text="收起"/>
+    </LinearLayout>
+
+
 
     <View
         android:layout_width="match_parent"
