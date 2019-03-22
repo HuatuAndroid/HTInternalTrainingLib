@@ -4,8 +4,12 @@
 
     <application android:theme="@style/BaseAppTheme">
         <activity android:name=".ui.GuideActivity"/>
-        <activity android:name=".ui.home.EmplayeesActivity" />
         <activity android:name=".ui.PostsDetailActivity"/>
+        <activity
+            android:name=".ui.home.CommunityActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

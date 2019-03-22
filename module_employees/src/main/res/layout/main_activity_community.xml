@@ -3,12 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
-
-    <View
-        android:id="@+id/fake_status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="18dp"/>
 
     <com.wb.baselib.view.TopBarView
         android:id="@+id/topbarview"
@@ -26,8 +22,7 @@
         app:showBottomLine="true"
         app:rightType="customView"
         app:rightCustomView="@layout/main_right_title_layout"
-        app:titleBarHeight="45dp" />
+        app:titleBarHeight="47dp" />
 
-
-
+    <include layout="@layout/main_commom_indicator"/>
 </LinearLayout>

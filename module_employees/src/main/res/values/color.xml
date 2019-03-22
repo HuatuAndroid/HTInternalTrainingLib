@@ -3,5 +3,14 @@
 
     <color name="color_FF97BFFC">#97BFFC</color>
     <color name="color_FF96BFFD">#96BFFD</color>
+    <color name="main_bg_grey_f8">#f8f8f8</color>
+    <color name="main_line_ea">#eaeaea</color>
+    <color name="main_text_blue_458">#458bfd</color>
+    <color name="main_text_black_33">#333333</color>
+    <color name="main_text_black_11">#111111</color>
+    <color name="main_text_grey_bf">#bfbfbf</color>
+    <color name="main_bg_grey_87">#878787</color>
+    <color name="main_bg_grey_b8">#b8b8b8</color>
+    <color name="main_title_grey_99">#999999</color>
 
 </resources>

@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.GuideContranct;
 import com.example.module_employees_world.model.GuideModel;
-import com.example.module_employees_world.ui.home.EmplayeesActivity;
+import com.example.module_employees_world.ui.home.CommunityActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +47,7 @@ public class GuidePresenter extends GuideContranct.Presenter {
 
                         if (times - aLong == 0){
 
-                            StartActivityCommon.startActivity(mActivity, EmplayeesActivity.class);
+                            StartActivityCommon.startActivity(mActivity, CommunityActivity.class);
                             mActivity.finish();
 
                         }else{

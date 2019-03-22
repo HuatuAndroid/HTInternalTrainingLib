@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="提示"
+        android:textColor="@color/white"
+        android:background="@drawable/main_dialog_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <TextView
+        android:id="@+id/dialog_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/main_text_black_33"
+        android:layout_width="match_parent"
+        android:layout_height="75dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_line_ea"/>
+    <LinearLayout
+        android:id="@+id/dialog_btn_ll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/main_dialog_bottom_bg"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_yes"
+            android:text="确定"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/main_text_blue_458"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:background="@color/main_line_ea"/>
+        <TextView
+            android:id="@+id/dialog_no"
+            android:text="取消"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/main_title_grey_99"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/dialog_centre_btn"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/main_text_blue_458"
+        android:layout_height="50dp"
+        android:background="@drawable/main_dialog_bottom_bg"/>
+</LinearLayout>
