@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_marginTop="100dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_marginTop="100dp"
+        android:id="@+id/empty_retry_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_empty"
+        />
+
+    <TextView
+        style="@style/MultipleStatusView.Content"
+        android:id="@+id/empty_view_tv"
+        android:layout_below="@id/empty_retry_view"
+        android:text="@string/empty_view_hint"/>
+</RelativeLayout>

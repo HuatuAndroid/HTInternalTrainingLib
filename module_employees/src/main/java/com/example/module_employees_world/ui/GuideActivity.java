@@ -9,7 +9,7 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.GuideContranct;
 import com.example.module_employees_world.presenter.GuidePresenter;
-import com.example.module_employees_world.ui.home.EmplayeesActivity;
+import com.example.module_employees_world.ui.home.CommunityActivity;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
 
@@ -77,7 +77,7 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
 
         } else if (i == R.id.mTvSkip) { //跳过按钮的点击响应
 
-            StartActivityCommon.startActivity(this, EmplayeesActivity.class);
+            StartActivityCommon.startActivity(this, CommunityActivity.class);
 
         } else {
         }
