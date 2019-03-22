@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:toos="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/mImageView"
+        android:src="@drawable/htjy_ygtd_guide_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/mTvSkip"
+        android:layout_width="71dp"
+        android:layout_height="28dp"
+        android:layout_marginRight="31dp"
+        android:layout_marginTop="23dp"
+        android:text="跳过"
+        android:textSize="15sp"
+        android:background="@drawable/shape_border_ff96bffd_r6"
+        android:gravity="center"
+        android:textColor="@color/color_FF97BFFC"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/mTvTime"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:background="@drawable/shape_fill_ff97bffc_r90"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:layout_marginTop="23dp"
+        android:text="3"/>
+
+    <TextView
+        android:id="@+id/mTvBottomData"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:text="评论量：287,087,287,341"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

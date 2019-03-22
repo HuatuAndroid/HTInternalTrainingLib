@@ -1,6 +1,7 @@
 package com.example.module_employees_world.ui;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -73,7 +74,6 @@ public class PostsDetailActivity extends MvpActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
     }
@@ -119,6 +119,17 @@ public class PostsDetailActivity extends MvpActivity {
                 ToastUtils.showToast(PostsDetailActivity.this,"点击看大图");
             }
         }));
+        // TODO: 2019/3/21 数据暂写死
+        setActivityContent("<br\\/><img src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg' width='100%' _src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg'\\/>",tvHtml);
+        postDetailAdapter = new PostDetailAdapter(this);
+        mRvPost.setLayoutManager(new LinearLayoutManager(this));
+        mRvPost.setAdapter(postDetailAdapter);
+        mRvPost.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         //显示“展开全部”条件：文本等于五行或者有图片
         tvDetailText.post(new Runnable() {
@@ -131,36 +142,6 @@ public class PostsDetailActivity extends MvpActivity {
                 }
             }
         });
-
-        // TODO: 2019/3/21 数据暂写死
-        setActivityContent("<br\\/><img src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg' width='100%' _src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg'\\/>",tvHtml);
-
-        postDetailAdapter = new PostDetailAdapter(this);
-        mRvPost.setLayoutManager(new LinearLayoutManager(this));
-        mRvPost.setAdapter(postDetailAdapter);
-        mRvPost.setLayoutManager(new LinearLayoutManager(this){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
-
-        scvPost.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Rect rect = new Rect();
-                boolean cover = tvTitle.getGlobalVisibleRect(rect);
-                if (cover) {
-                    tvTitle.setVisibility(View.VISIBLE);
-                    topBarView.getCenterTextView().setVisibility(View.INVISIBLE);
-                }else {
-                    tvTitle.setVisibility(View.INVISIBLE);
-                    topBarView.getCenterTextView().setVisibility(View.VISIBLE);
-
-                }
-            }
-        });
-
     }
 
     @Override
@@ -215,6 +196,8 @@ public class PostsDetailActivity extends MvpActivity {
             @Override
             public void onClick(View v) {
                 ToastUtils.showToast(PostsDetailActivity.this,"发帖");
+                // TODO: 2019/3/22
+                startActivity(new Intent(PostsDetailActivity.this,CommentDialogActivity.class));
             }
         });
         fabTop.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +212,21 @@ public class PostsDetailActivity extends MvpActivity {
             }
         });
 
+        scvPost.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Rect rect = new Rect();
+                boolean cover = tvTitle.getGlobalVisibleRect(rect);
+                if (cover) {
+                    tvTitle.setVisibility(View.VISIBLE);
+                    topBarView.getCenterTextView().setVisibility(View.INVISIBLE);
+                }else {
+                    tvTitle.setVisibility(View.INVISIBLE);
+                    topBarView.getCenterTextView().setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
     }
 
     @Override

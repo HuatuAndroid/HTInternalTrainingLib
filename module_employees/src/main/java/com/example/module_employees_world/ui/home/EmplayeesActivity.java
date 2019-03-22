@@ -1,8 +1,7 @@
-package com.example.module_employees_world.ui;
+package com.example.module_employees_world.ui.home;
 
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.example.module_employees_world.R;
 import com.wb.baselib.base.activity.MvpActivity;
