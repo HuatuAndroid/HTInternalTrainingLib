@@ -8,6 +8,7 @@
     tools:context="com.example.module_employees_world.ui.CommentDialogActivity">
 
     <LinearLayout
+        android:id="@+id/ll_edit_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
@@ -42,6 +43,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"/>
             <ImageView
+                android:id="@+id/iv_edit_area"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 android:padding="5dp"
@@ -50,8 +52,10 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="10dp"
+            android:gravity="start|top"
             android:hint="认真评论支持一下哦..."
             android:background="@drawable/shape_comment_edit"/>
 

@@ -69,9 +69,7 @@ public class CommunityDiscussPresenter extends CommunityDiscussContranct.Communi
             }
 
             @Override
-            public void onComplete() {
-
-            }
+            public void onComplete() {}
         }, mView.binLifecycle());
     }
 

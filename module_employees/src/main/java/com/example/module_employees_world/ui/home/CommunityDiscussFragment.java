@@ -12,6 +12,7 @@ import com.example.module_employees_world.adapter.CommunityDiscussAdapter;
 import com.example.module_employees_world.bean.DiscussListBean;
 import com.example.module_employees_world.contranct.CommunityDiscussContranct;
 import com.example.module_employees_world.presenter.CommunityDiscussPresenter;
+import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
@@ -156,10 +157,10 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
                 int readCount = Integer.parseInt(discussListBean.getRead_count())+1;
                 discussListBean.setRead_count(readCount+"");
                 discussAdapter.notifyDataSetChanged();
-               /* Intent intent = new Intent(getActivity(), TopicDetailsActivity.class);
+                Intent intent = new Intent(getActivity(), PostsDetailActivity.class);
                 intent.putExtra("question_id", discussListBeans.get(position).getId());
                 intent.putExtra("h5", discussListBeans.get(position).getH5_detail());
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
     }

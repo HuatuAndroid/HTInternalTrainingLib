@@ -29,8 +29,8 @@ public interface CommunityHttpConfig {
     String RELEASETOPIC= "api/app/discuss/createQuestion";
     //公共图片
     String PUBLICIMAGE= "api/app/public/images";
-    //获取评论
-    String COMMENT= "api/app/discuss/comment/question_id={question_id}";
+    //获取评论列表
+    String COMMENT_LIST= "api/app/discuss/comment";
     //发表评论
     String SENDCOMMENT= "api/app/discuss/createComment";
     /**删除帖子*/

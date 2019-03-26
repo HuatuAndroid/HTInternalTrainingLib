@@ -43,16 +43,18 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        initSwipeBackFinish();
-        if(!isAllImage()){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setStatusBarColor(this.getResources().getColor(R.color.statusbar_color),0);
+        if (statusEnable){
+            if(!isAllImage()){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    setStatusBarColor(this.getResources().getColor(R.color.statusbar_color),0);
+                }else {
+                    setStatusBarColor(this.getResources().getColor(R.color.statusbar_color_K),0);
+                }
             }else {
-                setStatusBarColor(this.getResources().getColor(R.color.statusbar_color_K),0);
+                StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
             }
-        }else {
-            StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
+            setStatusBarTextColor();
         }
-        setStatusBarTextColor();
         super.onCreate(savedInstanceState);
         ViewManager.getInstance().addActivity(this);
     }
@@ -373,5 +375,13 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     }
     public boolean isAllImage(){
         return false;
+    }
+
+    /**
+     * 是否设置状态栏，默认设置
+     */
+    private boolean statusEnable=true;
+    public void setStatusBarEnable(boolean statusEnable){
+        this.statusEnable=statusEnable;
     }
 }

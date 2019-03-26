@@ -8,6 +8,7 @@
         <activity android:name=".ui.PostsDetailActivity" />
         <activity
             android:name=".ui.CommentDialogActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/BaseAppTheme.Transparent"/>
         <activity
             android:name=".ui.home.CommunityActivity"
