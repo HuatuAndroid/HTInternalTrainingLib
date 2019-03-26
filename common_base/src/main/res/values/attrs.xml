@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--话题编辑-->
+    <declare-styleable name="ContentEditor">
+        <attr name="ce_text_padding" format="dimension|reference" />
+        <attr name="ce_text_lineSpacingExtra" format="dimension|reference" />
+        <attr name="ce_text_color" format="color|reference" />
+        <attr name="ce_text_size" format="dimension|reference" />
+        <attr name="ce_img_padding" format="dimension|reference" />
+        <attr name="ce_img_txt_spacing" format="dimension|reference" />
+        <attr name="ce_img_img_spacing" format="dimension|reference" />
+        <attr name="ce_hint" format="string|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SkinLayoutPosHelper">
+        <attr name="android:layout_marginLeft"/>
+        <attr name="android:layout_marginTop"/>
+        <attr name="android:layout_centerHorizontal"/>
+    </declare-styleable>
+
+</resources>

@@ -304,4 +304,15 @@ public class AppUtils {
         }
         return result;
     }
+
+    public static int getWindowWidth(){
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+
+    public static int[] getWindowSize(){
+        int[] size = new int[2];
+        size[0] = context.getResources().getDisplayMetrics().widthPixels;
+        size[1] = context.getResources().getDisplayMetrics().heightPixels;
+        return size;
+    }
 }

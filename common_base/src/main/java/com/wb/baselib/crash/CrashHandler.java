@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.thefinestartist.utils.log.LogUtil;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.appconfig.AppConfigManager;
 import com.wb.baselib.bean.AppCarshLogAtBean;
@@ -145,6 +146,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	 * 	@see UncaughtExceptionHandler#uncaughtException(Thread, Throwable)
 	 */
 	public void uncaughtException(Thread paramThread , Throwable paramThrowable) {
+
+		LogUtil.e("paramThrowable ------------ " + paramThrowable.toString());
+
 		if( ! handleException(paramThrowable) && mDefaultHandler != null) {
 			// 如果自定义的没有处理则让系统默认的异常处理器来处理
 			mDefaultHandler.uncaughtException(paramThread , paramThrowable) ;

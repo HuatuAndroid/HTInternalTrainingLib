@@ -65,12 +65,11 @@ dependencies {
     api 'com.github.w513209188:photolib:v1.0.1'
     api 'cn.yipianfengye.android:zxing-library:2.2'
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
-    api files('libs/commons-lang3-3.1.jar')
 
 //    api 'com.baijia.live:liveplayer-sdk-ui:1.4.6'
     api project(':module_down')
 //    api project(':videoplayer-ui')
-//    api project(':common_base')
+    api project(':common_base')
     api project(':common_dotest')
 //    api project(':refresh-header')
 //    api project(':refresh-layout')
