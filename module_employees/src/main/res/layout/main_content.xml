@@ -32,9 +32,23 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="#FFE1E3E9"/>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/ivPost"
+            android:layout_width="102dp"
+            android:layout_height="55dp"
+            android:src="@drawable/img_post"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="38dp"
+            android:layout_marginRight="24dp"/>
+
+    </RelativeLayout>
 </LinearLayout>

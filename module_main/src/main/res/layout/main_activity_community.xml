@@ -22,5 +22,5 @@
         app:rightImageResource="@drawable/topic_list_top"
         app:titleBarHeight="45dp" />
 
-    <include layout="@layout/main_commom_indicator"/>
+    <include layout="@layout/main_content"/>
 </LinearLayout>

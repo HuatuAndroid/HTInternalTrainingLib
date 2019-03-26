@@ -1,16 +1,7 @@
 package com.zhiyun88.www.module_main.community.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.adapter.ListBaseAdapter;
-import com.wb.baselib.image.GlideManager;
-import com.wb.baselib.utils.SpanUtil;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.community.bean.DiscussListBean;
-import com.zhiyun88.www.module_main.main.config.MainConfig;
 import com.zhiyun88.www.module_main.utils.CircleTransform;
 
 import java.util.List;
@@ -44,7 +32,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.main_item_community_discuss, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_main_discuss, null);
             viewHolder.title = convertView.findViewById(R.id.discuss_title);
             viewHolder.read = convertView.findViewById(R.id.discuss_read);
             //  viewHolder.content = convertView.findViewById(R.id.discuss_content);

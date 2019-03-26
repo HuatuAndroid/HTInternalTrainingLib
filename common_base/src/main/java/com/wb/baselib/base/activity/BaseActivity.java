@@ -45,14 +45,14 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 //        initSwipeBackFinish();
         if(!isAllImage()){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setStatusBarColor(this.getResources().getColor(R.color.statusbar_color),0);
+                setStatusBarColor(this.getResources().getColor(R.color.FF007AFF),0);
             }else {
-                setStatusBarColor(this.getResources().getColor(R.color.statusbar_color_K),0);
+                setStatusBarColor(this.getResources().getColor(R.color.FF007AFF),0);
             }
         }else {
             StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
         }
-        setStatusBarTextColor();
+        //setStatusBarTextColor();
         super.onCreate(savedInstanceState);
         ViewManager.getInstance().addActivity(this);
     }

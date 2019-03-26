@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.module_employees_world.R;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -17,8 +17,6 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.base.activity.BaseActivity;
-import com.wb.baselib.utils.ToActivityUtil;
-import com.wb.baselib.view.TopBarView;
 
 import java.util.ArrayList;
 
@@ -27,8 +25,8 @@ import java.util.ArrayList;
  */
 public class CommunityActivity extends BaseActivity {
 
-    private TopBarView topBarView;
     private View view;
+    private ImageView ivBack,ivContacts,ivSearch;
     private ViewPager mViewPager;
     private ScrollIndicatorView scrollIndicatorView;
 
@@ -40,13 +38,14 @@ public class CommunityActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity_community);
-        topBarView = getViewById(R.id.topbarview);
+        setContentView(R.layout.main_new);
+        ivBack = findViewById(R.id.ivBack);
+        ivContacts = findViewById(R.id.ivContactsRight);
+        ivSearch = findViewById(R.id.ivSearch);
         scrollIndicatorView = getViewById(R.id.spring_indicator);
         view = getViewById(R.id.view_line_xi);
         mViewPager = getViewById(R.id.viewpager);
         view.setVisibility(View.VISIBLE);
-        topBarView.getCenterTextView().setText("员工天地");
         initView(savedInstanceState);
         setListener();
     }
@@ -79,16 +78,7 @@ public class CommunityActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
-        topBarView.setListener(new TopBarView.OnTitleBarListener() {
-            @Override
-            public void onClicked(View v, int action, String extra) {
-                if (action == TopBarView.ACTION_LEFT_BUTTON) {
-                    finish();
-                }else if (action == TopBarView.ACTION_RIGHT_BUTTON) {
 
-                }
-            }
-        });
     }
 
     @Override
