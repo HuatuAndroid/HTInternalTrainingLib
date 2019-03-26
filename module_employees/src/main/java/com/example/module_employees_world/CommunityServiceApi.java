@@ -1,7 +1,9 @@
 package com.example.module_employees_world;
 
+import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
+import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.common.config.CommunityHttpConfig;
 import com.wb.baselib.bean.Result;
 import java.util.Map;
