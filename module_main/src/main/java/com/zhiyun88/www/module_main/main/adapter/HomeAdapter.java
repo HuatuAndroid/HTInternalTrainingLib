@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.ui.GuideActivity;
+import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.thefinestartist.finestwebview.FinestWebView;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.phone.PhoneUtils;

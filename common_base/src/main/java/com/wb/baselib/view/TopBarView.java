@@ -85,6 +85,7 @@ public class TopBarView extends RelativeLayout implements View.OnClickListener {
     private int centerSearchBgResource;                 // 搜索框背景图片
     private int centerSearchRightType;                  // 搜索框右边按钮类型  0: voice 1: delete
     private int centerCustomViewRes;                    // 中间自定义布局资源
+    private boolean centerTextViewRollEnable;//中间Textiew是否启用跑马灯效果
 
     private int PADDING_5;
     private int PADDING_12;
@@ -165,6 +166,7 @@ public class TopBarView extends RelativeLayout implements View.OnClickListener {
             centerSubText = array.getString(R.styleable.TopBarView_centerSubText);
             centerSubTextColor = array.getColor(R.styleable.TopBarView_centerSubTextColor, Color.parseColor("#666666"));
             centerSubTextSize = array.getDimension(R.styleable.TopBarView_centerSubTextSize, PhoneUtils.newInstance().dip2px(context, 11));
+            centerTextViewRollEnable=array.getBoolean(R.styleable.TopBarView_centerTextViewRoll,false);
         } else if (centerType == TYPE_CENTER_SEARCHVIEW) {
             centerSearchEdiable = array.getBoolean(R.styleable.TopBarView_centerSearchEditable, true);
             centerSearchBgResource = array.getResourceId(R.styleable.TopBarView_centerSearchBg, R.drawable.comm_titlebar_search_gray_shape);
@@ -385,14 +387,18 @@ public class TopBarView extends RelativeLayout implements View.OnClickListener {
             tvCenter.setTextSize(TypedValue.COMPLEX_UNIT_PX, centerTextSize);
             tvCenter.setGravity(Gravity.CENTER);
             tvCenter.setSingleLine(true);
+            tvCenter.setMaxEms(13);
+            tvCenter.setEllipsize(TextUtils.TruncateAt.END);
             // 设置跑马灯效果
-            tvCenter.setMaxWidth((int) (PhoneUtils.newInstance().getPhoneWidth(context) * 3 / 5.0));
-            tvCenter.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            tvCenter.setMarqueeRepeatLimit(-1);
-            tvCenter.setFocusable(true);
-            tvCenter.setFocusableInTouchMode(true);
-            tvCenter.requestFocus();
-            tvCenter.setSelected(true);
+            if (centerTextViewRollEnable){
+                tvCenter.setMaxWidth((int) (PhoneUtils.newInstance().getPhoneWidth(context) * 3 / 5.0));
+                tvCenter.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                tvCenter.setMarqueeRepeatLimit(-1);
+                tvCenter.setFocusable(true);
+                tvCenter.setFocusableInTouchMode(true);
+                tvCenter.requestFocus();
+                tvCenter.setSelected(true);
+            }
 
             LinearLayout.LayoutParams centerTextParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
             llMainCenter.addView(tvCenter, centerTextParams);

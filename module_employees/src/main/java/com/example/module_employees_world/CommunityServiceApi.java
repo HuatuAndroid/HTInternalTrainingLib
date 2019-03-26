@@ -1,7 +1,9 @@
 package com.example.module_employees_world;
 
+import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
+import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.common.config.CommunityHttpConfig;
 import com.wb.baselib.bean.Result;
 import java.util.Map;
@@ -31,5 +33,24 @@ public interface CommunityServiceApi {
 
     @GET(CommunityHttpConfig.GROUPDETAILSTYPE)
     Observable<Result<CommunityDiscussBean>> getGroupTypeData(@Path("type") String type, @Query("group_id") String group_id, @Query("page") int page);
+
+    @Multipart
+    @POST(CommunityHttpConfig.PUBLICIMAGE)
+    Observable<Result<NImageListsBean>> commitImage(@PartMap Map<String, RequestBody> map);
+
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.EDIT_TOPIC)
+    Observable<Result> editTopic(@Field("id") String id,@Field("title") String title,@Field("content") String content,@Field("is_anonymity") String is_anonymity);
+
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.RELEASETOPIC)
+    Observable<Result> commitTopicData(@FieldMap() Map<String, String> map);
+
+    /**
+     * 帖子詳情
+     */
+    @GET(CommunityHttpConfig.COMMENT_LIST)
+    Observable<Result<CommentListBean>> getCommentList(@Query("question_id") String question_id, @Query("st") String st);
+
 
 }

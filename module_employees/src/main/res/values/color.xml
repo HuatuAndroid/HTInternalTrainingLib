@@ -2,7 +2,10 @@
 <resources>
 
     <color name="color_FF97BFFC">#97BFFC</color>
+    <color name="color_FF4A88FB">#4A88FB</color>
     <color name="color_FF96BFFD">#96BFFD</color>
+    <color name="color_FF999CAA">#999CAA</color>
+    <color name="color_FFEAEBF0">#EAEBF0</color>
     <color name="main_bg_grey_f8">#f8f8f8</color>
     <color name="main_line_ea">#eaeaea</color>
     <color name="main_text_blue_458">#458bfd</color>
