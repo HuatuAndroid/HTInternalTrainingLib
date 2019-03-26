@@ -36,6 +36,10 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.ImgAdapter;
 import com.example.module_employees_world.adapter.PostDetailAdapter;
+import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.contranct.PostsDetailContranct;
+import com.example.module_employees_world.presenter.PostDetailPersenter;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.utils.StatusBarUtil;
@@ -49,9 +53,11 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
+ * author:LIENLIN
+ * date:2019/3/20
  * 帖子详情
  */
-public class PostsDetailActivity extends MvpActivity {
+public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implements PostsDetailContranct.PostsDetailView {
 
     private TopBarView topBarView;
     private RecyclerView mRvPost;
@@ -67,8 +73,8 @@ public class PostsDetailActivity extends MvpActivity {
     private boolean fabEnable;
 
     @Override
-    protected BasePreaenter onCreatePresenter() {
-        return null;
+    protected PostDetailPersenter onCreatePresenter() {
+        return new PostDetailPersenter(this);
     }
 
     @Override
@@ -76,6 +82,8 @@ public class PostsDetailActivity extends MvpActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        // TODO: 2019/3/25  
+        mPresenter.getCommentList("1","1");
     }
 
     @Override
@@ -342,6 +350,57 @@ public class PostsDetailActivity extends MvpActivity {
         outStream.close();
         inStream.close();
         return outStream.toByteArray();
+    }
+
+    @Override
+    public void ShowLoadView() {
+
+    }
+
+    @Override
+    public void NoNetWork() {
+
+    }
+
+    @Override
+    public void NoData() {
+
+    }
+
+    @Override
+    public void ErrorData() {
+
+    }
+
+    @Override
+    public void showErrorMsg(String msg) {
+
+    }
+
+    @Override
+    public void showLoadV(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadV() {
+
+    }
+
+    @Override
+    public void SuccessData(Object o) {
+        CommentListBean commentListBean = (CommentListBean) o;
+
+    }
+
+    @Override
+    public LifecycleTransformer binLifecycle() {
+        return bindToLifecycle();
+    }
+
+    @Override
+    public void getCommentList(CommentListBean commentListBean) {
+
     }
 
     public static class SpringInterpolator implements Interpolator {
