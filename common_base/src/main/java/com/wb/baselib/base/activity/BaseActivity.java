@@ -36,7 +36,7 @@ import java.util.Map;
 //import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 @Keep
 public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener {
-//    protected BGASwipeBackHelper mSwipeBackHelper;
+    //    protected BGASwipeBackHelper mSwipeBackHelper;
     private Dialog mDiaLog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

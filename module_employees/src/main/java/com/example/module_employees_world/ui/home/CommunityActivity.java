@@ -3,13 +3,14 @@ package com.example.module_employees_world.ui.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.module_employees_world.R;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -17,8 +18,7 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.base.activity.BaseActivity;
-import com.wb.baselib.utils.ToActivityUtil;
-import com.wb.baselib.view.TopBarView;
+import com.wb.baselib.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,8 @@ import java.util.ArrayList;
  */
 public class CommunityActivity extends BaseActivity {
 
-    private TopBarView topBarView;
     private View view;
+    private ImageView ivBack, ivContacts, ivSearch;
     private ViewPager mViewPager;
     private ScrollIndicatorView scrollIndicatorView;
 
@@ -40,13 +40,25 @@ public class CommunityActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity_community);
-        topBarView = getViewById(R.id.topbarview);
+        /*if (!isAllImage()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setStatusBarColor(this.getResources().getColor(com.wb.baselib.R.color.FF007AFF), 0);
+            } else {
+                setStatusBarColor(this.getResources().getColor(com.wb.baselib.R.color.FF007AFF), 0);
+            }
+        } else {
+            StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
+        }*/
+        StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        setContentView(R.layout.main_new);
+        ivBack = findViewById(R.id.ivBack);
+        ivContacts = findViewById(R.id.ivContactsRight);
+        ivSearch = findViewById(R.id.ivSearch);
         scrollIndicatorView = getViewById(R.id.spring_indicator);
         view = getViewById(R.id.view_line_xi);
         mViewPager = getViewById(R.id.viewpager);
         view.setVisibility(View.VISIBLE);
-        topBarView.getCenterTextView().setText("员工天地");
         initView(savedInstanceState);
         setListener();
     }
@@ -59,8 +71,8 @@ public class CommunityActivity extends BaseActivity {
         str.add("热门");
         str.add("最新");
         mFragments.add(new CommunityGroupFragment());
-        mFragments.add(CommunityDiscussFragment.newInstance("1","", true));
-        mFragments.add(CommunityDiscussFragment.newInstance("2","", true));
+        mFragments.add(CommunityDiscussFragment.newInstance("1", "", true));
+        mFragments.add(CommunityDiscussFragment.newInstance("2", "", true));
         scrollIndicatorView.setSplitAuto(true);
         scrollIndicatorView.setOnTransitionListener(new OnTransitionTextListener() {
             @Override
@@ -71,7 +83,7 @@ public class CommunityActivity extends BaseActivity {
         ColorBar colorBar = new ColorBar(CommunityActivity.this, getResources().getColor(R.color.main_text_blue_458), 8);
         scrollIndicatorView.setScrollBar(colorBar);
         IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, mViewPager);
-        ViewPageTabAdapter viewPageTabAdapter= new ViewPageTabAdapter(getSupportFragmentManager(), CommunityActivity.this, mFragments, str);
+        ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), CommunityActivity.this, mFragments, str);
         indicatorViewPager.setAdapter(viewPageTabAdapter);
         mViewPager.setOffscreenPageLimit(mFragments.size());
         mViewPager.setCurrentItem(1);
@@ -79,16 +91,7 @@ public class CommunityActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
-        topBarView.setListener(new TopBarView.OnTitleBarListener() {
-            @Override
-            public void onClicked(View v, int action, String extra) {
-                if (action == TopBarView.ACTION_LEFT_BUTTON) {
-                    finish();
-                }else if (action == TopBarView.ACTION_RIGHT_BUTTON) {
 
-                }
-            }
-        });
     }
 
     @Override

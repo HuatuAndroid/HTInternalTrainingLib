@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="dialog_style">
         <!--设置dialog的背景-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -47,5 +46,4 @@
         <!-- 无标题 有的手机设置这行代码-->
         <item name="windowNoTitle">true</item>
     </style>
-
 </resources>

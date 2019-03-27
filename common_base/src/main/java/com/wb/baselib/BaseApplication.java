@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hss01248.dialog.ActivityStackManager;
 import com.hss01248.dialog.StyledDialog;
 import com.wb.baselib.crash.CrashHandler;
@@ -33,6 +34,9 @@ public abstract class BaseApplication extends MultiDexApplication {
         //初始化奔溃日志机制
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
+
+        Fresco.initialize(this);
+
     }
 
     @Override

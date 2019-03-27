@@ -20,9 +20,13 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.wb.baselib.utils.StringUtils;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.UUID;
+
+import static com.thefinestartist.utils.content.ContextUtil.getCacheDir;
+import static com.thefinestartist.utils.content.ContextUtil.getExternalCacheDir;
 
 /**
  * <p>Utils初始化相关 </p>
@@ -303,5 +307,27 @@ public class AppUtils {
             }
         }
         return result;
+    }
+
+    public static int getWindowWidth(){
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+
+    public static int[] getWindowSize(){
+        int[] size = new int[2];
+        size[0] = context.getResources().getDisplayMetrics().widthPixels;
+        size[1] = context.getResources().getDisplayMetrics().heightPixels;
+        return size;
+    }
+
+    public static String getCachePath() {
+        File cacheDir;
+        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+            cacheDir = getExternalCacheDir();
+        else
+            cacheDir = getCacheDir();
+        if (!cacheDir.exists())
+            cacheDir.mkdirs();
+        return cacheDir.getAbsolutePath();
     }
 }

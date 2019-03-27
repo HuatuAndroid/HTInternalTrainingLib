@@ -106,6 +106,6 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/main_commom_indicator"/>
+    <include layout="@layout/main_content"/>
 
 </LinearLayout>
