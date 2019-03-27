@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
@@ -21,8 +23,10 @@ import java.util.List;
  */
 public class CommunityDiscussAdapter extends ListBaseAdapter {
 
-    public CommunityDiscussAdapter(Context context, List<DiscussListBean> discussListBeans) {
-        super(discussListBeans,context);
+    private String type;//1热门 2最新
+    public CommunityDiscussAdapter(Context context, String type, List<DiscussListBean> discussListBeans) {
+        super(discussListBeans, context);
+        this.type = type;
     }
 
 
@@ -32,7 +36,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.main_item_community_discuss, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_main_discuss, null);
             viewHolder.title = convertView.findViewById(R.id.discuss_title);
             viewHolder.read = convertView.findViewById(R.id.discuss_read);
             //  viewHolder.content = convertView.findViewById(R.id.discuss_content);
@@ -44,18 +48,24 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.comment = convertView.findViewById(R.id.discuss_comment);
             viewHolder.partName = convertView.findViewById(R.id.discuss_part);
             viewHolder.tvDing = convertView.findViewById(R.id.discuss_ding);
+            viewHolder.vLine = convertView.findViewById(R.id.vLine);
+            viewHolder.discussDing = convertView.findViewById(R.id.discussDing);
+            viewHolder.discussTitle = convertView.findViewById(R.id.discussTitle);
+            viewHolder.llDing = convertView.findViewById(R.id.llDing);
+            viewHolder.llNoDing = convertView.findViewById(R.id.llNoDing);
+            viewHolder.rlHead = convertView.findViewById(R.id.rlHead);
             convertView.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         if (discussListBean.getIs_anonymity().equals("1")) {
             viewHolder.name.setText("匿名");
-        }else {
+        } else {
             viewHolder.name.setText(discussListBean.getUser_name());
         }
 
-        if (discussListBean.getIs_top().equals("1")) {
+        if (discussListBean.getIs_top().equals("1") && "2".equals(type)) {
             /*SpannableStringBuilder sb = new SpannableStringBuilder();
             String title = discussListBean.getTitle();
             title = "  "+title;
@@ -63,30 +73,44 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             Drawable d = context.getResources().getDrawable(R.drawable.ding);
             d.setBounds(0, 0,d.getMinimumWidth()+8, d.getMinimumHeight()+8);//设置图片大小
             sb.setSpan(new ImageSpan(d,ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);*/
-            viewHolder.tvDing.setVisibility(View.VISIBLE);
+            //viewHolder.tvDing.setVisibility(View.VISIBLE);
             //回复
-            viewHolder.title.setText("     "+discussListBean.getTitle());
-        }else {
-            viewHolder.tvDing.setVisibility(View.GONE);
+            viewHolder.llDing.setVisibility(View.VISIBLE);
+            viewHolder.llNoDing.setVisibility(View.GONE);
+            viewHolder.rlHead.setVisibility(View.GONE);
+            viewHolder.discussTitle.setText(discussListBean.getTitle());
+            if (position+1<=getCount()&&"1".equals(((DiscussListBean) getItem(position+1)).getIs_top())){
+                viewHolder.vLine.setVisibility(View.GONE);
+            }else {
+                viewHolder.vLine.setVisibility(View.VISIBLE);
+            }
+        } else {
+            viewHolder.llDing.setVisibility(View.GONE);
+            viewHolder.llNoDing.setVisibility(View.VISIBLE);
+            viewHolder.rlHead.setVisibility(View.VISIBLE);
             viewHolder.title.setText(discussListBean.getTitle());
-        }
-
-        //头像统一由服务器获取
-        if (!TextUtils.isEmpty(discussListBean.getAvatar()))
-        Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
-        viewHolder.read.setText(discussListBean.getRead_count());
-        //  viewHolder.content.setText(discussListBean.getContent());
+            //头像统一由服务器获取
+            if (!TextUtils.isEmpty(discussListBean.getAvatar()))
+                Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
+            viewHolder.read.setText(discussListBean.getRead_count());
+            //  viewHolder.content.setText(discussListBean.getContent());
 
 //        viewHolder.title.setText(discussListBean.getTitle());
-        viewHolder.like.setText(discussListBean.getLike_count());
-        viewHolder.comment.setText(discussListBean.getComment_count());
-        viewHolder.time.setText(discussListBean.getCreated_at());
-        viewHolder.group.setText("「"+discussListBean.getGroup_name()+"」");
-        viewHolder.partName.setText(discussListBean.getDepartment_name());
+            viewHolder.like.setText(discussListBean.getLike_count());
+            viewHolder.comment.setText(discussListBean.getComment_count());
+            viewHolder.time.setText(discussListBean.getCreated_at());
+            viewHolder.group.setText("「" + discussListBean.getGroup_name() + "」");
+            viewHolder.partName.setText(discussListBean.getDepartment_name());
+        }
+
         return convertView;
     }
-    class ViewHolder{
-        ImageView image,tvDing;
-        TextView title,read,name,like,comment,time,group,partName;
+
+    class ViewHolder {
+        ImageView image, tvDing, discussDing;
+        TextView discussTitle, title, read, name, like, comment, time, group, partName;
+        LinearLayout llDing, llNoDing;
+        View vLine;
+        RelativeLayout rlHead;
     }
 }

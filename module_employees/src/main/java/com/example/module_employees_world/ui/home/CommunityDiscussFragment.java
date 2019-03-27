@@ -80,7 +80,7 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
         discussListBeans = new ArrayList<>();
-        discussAdapter = new CommunityDiscussAdapter(getActivity(),discussListBeans);
+        discussAdapter = new CommunityDiscussAdapter(getActivity(),type,discussListBeans);
         listView.setAdapter(discussAdapter);
         RefreshUtils.getInstance(smartRefreshLayout,getActivity() ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
@@ -159,7 +159,6 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
                 discussAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(getActivity(), PostsDetailActivity.class);
                 intent.putExtra("question_id", discussListBeans.get(position).getId());
-                intent.putExtra("h5", discussListBeans.get(position).getH5_detail());
                 startActivity(intent);
             }
         });

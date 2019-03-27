@@ -3,8 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    
+    <LinearLayout
+        android:id="@+id/llDing"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="32dp">
+            <ImageView
+                android:id="@+id/discussDing"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ding"/>
+            <TextView
+                android:id="@+id/discussTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/main_text_black_33"
+                android:layout_marginRight="12dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="35dp"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/vLine"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#EEEFF4"/>
+
+    </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rlHead"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:paddingRight="15dp">
@@ -51,6 +88,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/llNoDing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -137,7 +175,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#FFE1E3E9" />
+                android:background="#FFE1E3E9"
+                android:layout_marginRight="12dp"/>
         </LinearLayout>
 
     </LinearLayout>
