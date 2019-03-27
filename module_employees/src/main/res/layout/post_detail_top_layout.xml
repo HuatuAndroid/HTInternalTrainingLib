@@ -162,14 +162,13 @@
             android:text="收起"/>
     </LinearLayout>
 
-
-
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="#EEEFF4"/>
     
     <TextView
+        android:id="@+id/tv_comment_num"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -177,6 +176,6 @@
         android:textColor="#3D3E43"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:text="全部评论 10"/>
+        android:text="全部评论 "/>
 
 </LinearLayout>

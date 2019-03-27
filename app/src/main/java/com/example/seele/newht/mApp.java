@@ -17,7 +17,6 @@ public class mApp extends BaseApplication {
     private final String TEXT_URL="http://test-px.huatu.com";
     private final String BATE_URL="http://beta-px.huatu.com";
     private final String ONLINE_URL="http://peixun.huatu.com";
-    private final String URL="http://www.zywx.test";
 
     @Override
     public String getRootPackAge() {

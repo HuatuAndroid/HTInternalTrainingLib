@@ -11,17 +11,24 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.utils.CircleTransform;
+import com.squareup.picasso.Picasso;
+import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.ToastUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -30,6 +37,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * author:LIENLIN
@@ -40,93 +48,59 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
 
     LayoutInflater inflater;
     Activity context;
-    private ArrayList<String> imgList;
+    private List<CommentListBean.ListBean> commentList;
 
-    public PostDetailAdapter(Activity context) {
+    public PostDetailAdapter(Activity context, List<CommentListBean.ListBean> commentList) {
         this.context=context;
+        this.commentList=commentList;
         inflater = LayoutInflater.from(context);
-        imgList = new ArrayList<>();
-        imgList.add("");
-        imgList.add("");
-        imgList.add("");
-        imgList.add("");
-        imgList.add("");
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view;
-        ViewHolder viewHolder = null;
-        /*switch (viewType){
-            case 0:
-                view = inflater.inflate(R.layout.post_detail_top_layout, parent, false);
-                viewHolder = new ViewHolder(view,viewType);
-                break;
-            default:
-                view = inflater.inflate(R.layout.post_comment_item, parent, false);
-                viewHolder = new ViewHolder(view,viewType);
-                break;
-        }*/
-
-        view = inflater.inflate(R.layout.post_comment_item, parent, false);
-        viewHolder = new ViewHolder(view,viewType);
-
-        return viewHolder;
+        View view = inflater.inflate(R.layout.post_comment_item, parent, false);
+        return new ViewHolder(view,viewType);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        /*if (position==0){
-            holder.tvTitle.setText("欢迎搭建来到这个瓶体多提宝贵意见");
-            holder.tvDetailText.setText("        "+"halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见"+"         ");
-            holder.tvImg.setLayoutManager(new GridLayoutManager(context,4));
-            holder.tvImg.setAdapter(new ImgAdapter(context,imgList,imgClickListener));
-            //显示“展开全部”条件：文本等于五行或者有图片
-            holder.tvDetailText.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (holder.tvDetailText.getLineCount()==5||imgList.size()>0){
-                        holder.tvOpen.setVisibility(View.VISIBLE);
-                        holder.rlOpen.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ToastUtils.showToast(context,"展开");
-                                holder.llDev1.setVisibility(View.GONE);
-                                holder.llDev2.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }else {
-                        holder.tvOpen.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
-
-            holder.tvClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.llDev1.setVisibility(View.VISIBLE);
-                    holder.llDev2.setVisibility(View.GONE);
-                    ToastUtils.showToast(context,"收起");
-                }
-            });
-            holder.tvHtml.setText("html");
-            // TODO: 2019/3/21 数据暂写死
-            setActivityContent("<br\\/><img src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg' width='100%' _src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg'\\/>",holder.tvHtml);
-
-
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        CommentListBean.ListBean listBean = commentList.get(position);
+        holder.tvName.setText(listBean.userName);
+        holder.tvPartName.setText(listBean.departmentName);
+        holder.tvCommentTitle.setText(listBean.content);
+        holder.tvCommentTime.setText(listBean.createdAt);
+        holder.tvCommentZan.setText(listBean.likeCount+"");
+        Picasso.with(context).load(listBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
+        if (!TextUtils.isEmpty(listBean.commentPicture)){
+            holder.ivCommentImg.setVisibility(View.VISIBLE);
+            GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , listBean.commentPicture ,false );
         }else {
-            holder.tvName.setText("李恩林");
-        }*/
+            holder.ivCommentImg.setVisibility(View.GONE);
+        }
 
-        holder.tvName.setText("李恩林");
+        holder.ivCommentDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToast(context,"删除："+position);
+            }
+        });
+        holder.tvCommentReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToast(context,"回复："+position);
+            }
+        });
+
+        holder.rvOnerComment.setNestedScrollingEnabled(false);
+        holder.rvOnerComment.setLayoutManager(new LinearLayoutManager(context));
+        holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count));
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return commentList.size();
     }
 
     @Override
@@ -136,44 +110,23 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        private RecyclerView tvImg;
-        private RelativeLayout rlOpen;
-        private TextView tvDetailText,tvName,tvOpen,tvHtml,tvClose,tvTitle;
-        private LinearLayout llDev1,llDev2;
+        private RecyclerView rvOnerComment;
+        private TextView tvPartName,tvName,tvCommentTitle,tvCommentTime,tvCommentZan,tvCommentReply;
+        private ImageView ivAvatar,ivCommentDel,ivCommentImg,ivCommentGif;
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
-            /*if (viewType==0){
-                tvDetailText = itemView.findViewById(R.id.tv_details_text);
-                tvImg = itemView.findViewById(R.id.rv_img);
-                rlOpen = itemView.findViewById(R.id.rl_details_open);
-                tvOpen = itemView.findViewById(R.id.tv_details_open);
-                llDev1 = itemView.findViewById(R.id.ll_dev_1);
-                llDev2 = itemView.findViewById(R.id.ll_dev_2);
-                tvHtml = itemView.findViewById(R.id.tv_detail_html);
-                tvClose = itemView.findViewById(R.id.tv_details_close);
-                tvTitle = itemView.findViewById(R.id.tv_detail_title);
-            }else {
-                tvName = itemView.findViewById(R.id.comment_name);
-            }*/
             tvName = itemView.findViewById(R.id.comment_name);
-        }
-    }
-
-
-    private static class MyHandler extends Handler{
-
-        WeakReference<PostDetailAdapter> adapterWeakReference;
-        public MyHandler(PostDetailAdapter adapter) {
-            adapterWeakReference=new WeakReference<PostDetailAdapter>(adapter);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            PostDetailAdapter postDetailAdapter = adapterWeakReference.get();
-            if (postDetailAdapter!=null){
-            }
+            ivAvatar = itemView.findViewById(R.id.comment_image);
+            tvPartName = itemView.findViewById(R.id.comment_part);
+            ivCommentDel = itemView.findViewById(R.id.iv_conmment_del);
+            tvCommentTitle = itemView.findViewById(R.id.comment_title);
+            ivCommentImg = itemView.findViewById(R.id.iv_comment_img);
+            ivCommentGif = itemView.findViewById(R.id.iv_comment_gif);
+            tvCommentTime = itemView.findViewById(R.id.tv_comment_time);
+            tvCommentZan = itemView.findViewById(R.id.tv_comment_zan);
+            tvCommentReply = itemView.findViewById(R.id.tv_comment_reply);
+            rvOnerComment = itemView.findViewById(R.id.rv_oner_comment);
         }
     }
 }

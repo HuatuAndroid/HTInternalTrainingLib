@@ -159,7 +159,7 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
                 discussAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(getActivity(), PostsDetailActivity.class);
                 intent.putExtra("question_id", discussListBeans.get(position).getId());
-                intent.putExtra("h5", discussListBeans.get(position).getH5_detail());
+//                intent.putExtra("h5", discussListBeans.get(position).getH5_detail());
                 startActivity(intent);
             }
         });
