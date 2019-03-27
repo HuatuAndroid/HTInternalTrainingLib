@@ -1,8 +1,12 @@
 package com.example.module_employees_world.ui.topic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.TopicContentItem;
+import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
 import com.example.module_employees_world.ui.TopicEditView;
@@ -20,6 +25,9 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * @author liuzhe
@@ -44,6 +52,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     private String groupId;
 
+    private File mFileTemp;
+
     @Override
     protected TopicEditPresenter onCreatePresenter() {
         return new TopicEditPresenter(this, this);
@@ -59,6 +69,63 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQUEST_CODE_GETIMAGE_BYCROP:
+                try {
+                    if (LocalImageHelper.getInstance().isResultOk()) {
+                        LocalImageHelper.getInstance().setResultOk(false);
+                        //获取选中的图片
+                        List<LocalImageHelper.LocalFile> files = LocalImageHelper.getInstance().getCheckedItems();
+                        String[] imgs = new String[files.size()];
+                        for (int i = 0; i < files.size(); i++) {
+
+                            String path = getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri()));
+                            imgs[i] = path;
+
+                        }
+
+                        //清空选中的图片
+                        files.clear();
+                        mTopicEditView.addImgs(imgs);
+                    }
+                    //清空选中的图片
+                    LocalImageHelper.getInstance().getCheckedItems().clear();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case REQUEST_CODE_TAKE_PICTURE:
+                if (resultCode == RESULT_OK) {
+
+//                    if (mFileTemp != null)
+//                        mTopicEditView.addImg(Uri.fromFile(mFileTemp).toString());
+                }
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+
+        if (contentUri != null && contentUri.toString().toLowerCase().startsWith("content:")) {
+
+        } else {
+            return contentUri.getPath();
+        }
+
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return Uri.fromFile(new File(res)).getPath();
     }
 
     @Override
@@ -106,6 +173,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             }
         });
         mTopicEditView.addData(0, new TopicContentItem(""));
+
+        //本地图片辅助类初始化
+        LocalImageHelper.init(this);
 
     }
 
@@ -211,7 +281,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else  if (v.getId() == R.id.mIvPicture){
             //点击 照片
-
+            Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
+            intent.putExtra("pic_size", mTopicEditView.getImageCount());
+            startActivityForResult(intent, REQUEST_CODE_GETIMAGE_BYCROP);
 
         } else  if (v.getId() == R.id.mIvFace){
             //点击 表情
@@ -222,6 +294,15 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         }
 
     }
+
+    /** 请求相册 */
+    public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;
+    /** 请求相机 */
+    public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;
+    /** 请求裁剪 */
+    public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
+
+    public static final int REQUEST_CODE_TAKE_PICTURE = 3;
 
     @Override
     protected void processLogic(Bundle bundle) {

@@ -75,23 +75,23 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
     }
 
     public ExtendImageView(Context context, AttributeSet attrs) {
-        super(context, attrs,0);
-        init(context,attrs,0);
+        super(context, attrs, 0);
+        init(context, attrs, 0);
     }
 
     public ExtendImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context,attrs,0);
+        init(context, attrs, 0);
     }
 
 
     public ExtendImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context,attrs,defStyleAttr);
+        init(context, attrs, defStyleAttr);
     }
 
 
-    void init(Context context,AttributeSet attrs,int defStyleAttr){
+    void init(Context context, AttributeSet attrs, int defStyleAttr) {
 
         mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
         mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
@@ -100,55 +100,55 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
         mImageHelper.loadFromAttributes(attrs, defStyleAttr);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GenericDraweeHierarchy, defStyleAttr, 0);
-        try{
-            if(a.hasValue(com.facebook.drawee.R.styleable.GenericDraweeHierarchy_placeholderImage)){
-                this.mPlaceHolderResId = a.getResourceId(com.facebook.drawee.R.styleable.GenericDraweeHierarchy_placeholderImage,0);
+        try {
+            if (a.hasValue(com.facebook.drawee.R.styleable.GenericDraweeHierarchy_placeholderImage)) {
+                this.mPlaceHolderResId = a.getResourceId(com.facebook.drawee.R.styleable.GenericDraweeHierarchy_placeholderImage, 0);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             a.recycle();
         }
-        TypedArray a2 = context.obtainStyledAttributes(attrs,R.styleable.SkinLayoutPosHelper,defStyleAttr,0);
-        try{
-            if (a.hasValue(R.styleable.SkinLayoutPosHelper_android_layout_marginTop)){
+        TypedArray a2 = context.obtainStyledAttributes(attrs, R.styleable.SkinLayoutPosHelper, defStyleAttr, 0);
+        try {
+            if (a.hasValue(R.styleable.SkinLayoutPosHelper_android_layout_marginTop)) {
                 mLayoutMarginTopResId = a.getResourceId(
                         R.styleable.SkinLayoutPosHelper_android_layout_marginTop, INVALID_ID);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             a2.recycle();
         }
         applySkin();
     }
 
-    public void loadUrl(String url, Rgba rgba, @DrawableRes int defaultResId, boolean gifAutoAnim){
+    public void loadUrl(String url, Rgba rgba, @DrawableRes int defaultResId, boolean gifAutoAnim) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
-        if(rgba!=null){
+        if (rgba != null) {
             hierarchy.setPlaceholderImage(new ColorDrawable(rgba.toColor()));
-        }else{
+        } else {
             hierarchy.setPlaceholderImage(defaultResId, ScalingUtils.ScaleType.CENTER_CROP);
         }
-        if(!TextUtils.isEmpty(url)){
-            loadUrl(Uri.parse(url),null,false,gifAutoAnim);
+        if (!TextUtils.isEmpty(url)) {
+            loadUrl(Uri.parse(url), null, false, gifAutoAnim);
         }
     }
 
-    public void loadUrlToSmall(String url,Rgba rgba,@DrawableRes int defaultResId,boolean gifAutoAnim){
+    public void loadUrlToSmall(String url, Rgba rgba, @DrawableRes int defaultResId, boolean gifAutoAnim) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
-        if(rgba!=null){
+        if (rgba != null) {
             hierarchy.setPlaceholderImage(new ColorDrawable(rgba.toColor()));
-        }else{
+        } else {
             hierarchy.setPlaceholderImage(defaultResId, ScalingUtils.ScaleType.CENTER_CROP);
         }
-        if(!TextUtils.isEmpty(url)){
-            int size = AppUtils.getWindowWidth()/3;
-            loadUrl(Uri.parse(url),null,false,gifAutoAnim,false,new int[]{size,size});
+        if (!TextUtils.isEmpty(url)) {
+            int size = AppUtils.getWindowWidth() / 3;
+            loadUrl(Uri.parse(url), null, false, gifAutoAnim, false, new int[]{size, size});
         }
     }
 
-    public void loadDrawable(@DrawableRes int resId){
+    public void loadDrawable(@DrawableRes int resId) {
 //        if(R.drawable.sis_common_head_default == this.mPlaceHolderResId){
 //            GenericDraweeHierarchy hierarchy = getHierarchy();
 //            hierarchy.setPlaceholderImage(SkinCompatResources.getInstance().getDrawable(R.drawable.sis_common_head_default), ScalingUtils.ScaleType.CENTER_CROP);
@@ -159,105 +159,104 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 //        }
     }
 
-    public void loadXmlDrawable(@DrawableRes int resId){
+    public void loadXmlDrawable(@DrawableRes int resId) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
         hierarchy.setPlaceholderImage(resId);
         loadUrl("http://");
     }
 
-    public void loadDrawable(@DrawableRes int resId, ControllerListener listener, boolean useImgRatio){
-        loadUrl(Uri.parse("res:///" + resId),listener,false,true,useImgRatio);
+    public void loadDrawable(@DrawableRes int resId, ControllerListener listener, boolean useImgRatio) {
+        loadUrl(Uri.parse("res:///" + resId), listener, false, true, useImgRatio);
     }
 
-    public void loadUrl(String url){
-        loadUrl(url,null,false);
+    public void loadUrl(String url) {
+        loadUrl(url, null, false);
     }
 
-    public void loadUrl(String url,boolean useImgSize){
-        loadUrl(url,null,useImgSize);
+    public void loadUrl(String url, boolean useImgSize) {
+        loadUrl(url, null, useImgSize);
     }
 
-    public void loadUrl(String url,ControllerListener controllerListener){
-        loadUrl(url,controllerListener,false);
+    public void loadUrl(String url, ControllerListener controllerListener) {
+        loadUrl(url, controllerListener, false);
     }
 
-    public void loadUrl(String url,ControllerListener controllerListener,boolean useImgSize){
-        if(TextUtils.isEmpty(url)){
-            if(mPlaceHolderResId != 0){
+    public void loadUrl(String url, ControllerListener controllerListener, boolean useImgSize) {
+        if (TextUtils.isEmpty(url)) {
+            if (mPlaceHolderResId != 0) {
                 loadDrawable(mPlaceHolderResId);
             }
             return;
         }
-        loadUrl(Uri.parse(url),controllerListener,useImgSize);
+        loadUrl(Uri.parse(url), controllerListener, useImgSize);
     }
 
-    public void loadUrl(Uri url,boolean useImageSize){
-        loadUrl(url,null,useImageSize);
+    public void loadUrl(Uri url, boolean useImageSize) {
+        loadUrl(url, null, useImageSize);
     }
 
-    public void loadUrl(Uri url){
-        loadUrl(url,null,false);
+    public void loadUrl(Uri url) {
+        loadUrl(url, null, false);
     }
 
-    public void loadUrl(Uri uri, ControllerListener controllerListener, final boolean useImgSize){
-        loadUrl(uri,controllerListener,useImgSize,true);
+    public void loadUrl(Uri uri, ControllerListener controllerListener, final boolean useImgSize) {
+        loadUrl(uri, controllerListener, useImgSize, true);
     }
 
-    public void loadUrl(Uri uri, ControllerListener controllerListener, final boolean useImgSize,final boolean gifAutoAnim){
-        loadUrl(uri,controllerListener,useImgSize,gifAutoAnim,false);
+    public void loadUrl(Uri uri, ControllerListener controllerListener, final boolean useImgSize, final boolean gifAutoAnim) {
+        loadUrl(uri, controllerListener, useImgSize, gifAutoAnim, false);
     }
 
     public void loadUrl(Uri uri, final ControllerListener controllerListener,
-                        final boolean useImgSize,boolean _gifAutoAnim,
-                        final boolean useImgRatio){
-        loadUrl(uri,controllerListener,useImgSize,_gifAutoAnim,useImgRatio,null);
+                        final boolean useImgSize, boolean _gifAutoAnim,
+                        final boolean useImgRatio) {
+        loadUrl(uri, controllerListener, useImgSize, _gifAutoAnim, useImgRatio, null);
     }
 
-    public void loadToSmall(String uri,ControllerListener controllerListener){
-        if(TextUtils.isEmpty(uri)){
+    public void loadToSmall(String uri, ControllerListener controllerListener) {
+        if (TextUtils.isEmpty(uri)) {
             return;
         }
-        int size = AppUtils.getWindowWidth()/3;
-        loadUrl(Uri.parse(uri),controllerListener,false,true,false,new int[]{size,size});
+        int size = AppUtils.getWindowWidth() / 3;
+        loadUrl(Uri.parse(uri), controllerListener, false, true, false, new int[]{size, size});
     }
 
-    public void loadToLimitScreenSize(String uri){
-        if(TextUtils.isEmpty(uri)){
+    public void loadToLimitScreenSize(String uri) {
+        if (TextUtils.isEmpty(uri)) {
             return;
         }
-        loadUrl(Uri.parse(uri),null,false,true,false, AppUtils.getWindowSize());
+        loadUrl(Uri.parse(uri), null, false, true, false, AppUtils.getWindowSize());
     }
-
 
 
     public void loadUrl(Uri uri, final ControllerListener controllerListener,
-                        final boolean useImgSize,boolean _gifAutoAnim,
-                        final boolean useImgRatio,int[] resizeSize){
+                        final boolean useImgSize, boolean _gifAutoAnim,
+                        final boolean useImgRatio, int[] resizeSize) {
         try {
-            _loadUrl(uri,controllerListener,useImgSize,_gifAutoAnim,useImgRatio,resizeSize);
+            _loadUrl(uri, controllerListener, useImgSize, _gifAutoAnim, useImgRatio, resizeSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loadWithGlide(Uri uri){
+    public void loadWithGlide(Uri uri) {
         Glide.with(getContext()).load(uri).centerCrop().into(this);
         setController(null);
     }
 
     /**
-     * @param uri 图片uri
+     * @param uri                图片uri
      * @param controllerListener 图片
      * @param useImgSize
      * @param _gifAutoAnim
      * @param
      */
     private void _loadUrl(Uri uri, final ControllerListener controllerListener,
-                          final boolean useImgSize,boolean _gifAutoAnim,
-                          final boolean useImgRatio,int[] resizeSize) throws Exception{
+                          final boolean useImgSize, boolean _gifAutoAnim,
+                          final boolean useImgRatio, int[] resizeSize) throws Exception {
 
         RoundingParams roundingParams = getHierarchy().getRoundingParams();
-        if(roundingParams!=null){
+        if (roundingParams != null) {
             boolean roundAsCircle = roundingParams.getRoundAsCircle();
             _gifAutoAnim = roundAsCircle ? false : _gifAutoAnim;
         }
@@ -266,24 +265,24 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 
         PipelineDraweeControllerBuilder builder = Fresco.newDraweeControllerBuilder();
 
-        builder.setControllerListener(new BaseControllerListener<ImageInfo>(){
+        builder.setControllerListener(new BaseControllerListener<ImageInfo>() {
             @Override
             public void onFailure(String id, Throwable throwable) {
                 super.onFailure(id, throwable);
-                if(controllerListener != null){
-                    controllerListener.onFailure(id,throwable);
+                if (controllerListener != null) {
+                    controllerListener.onFailure(id, throwable);
                 }
             }
 
             @Override
             public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
                 super.onFinalImageSet(id, imageInfo, animatable);
-                if(controllerListener != null){
-                    controllerListener.onFinalImageSet(id,imageInfo,animatable);
+                if (controllerListener != null) {
+                    controllerListener.onFinalImageSet(id, imageInfo, animatable);
                 }
 
                 ViewGroup.LayoutParams lp = getLayoutParams();
-                if(lp != null){
+                if (lp != null) {
                     if (updateMarginLp(lp)) {
                         setLayoutParams(lp);
                     }
@@ -292,17 +291,17 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
                 if (imageInfo != null) {
                     int height = imageInfo.getHeight();
                     int width = imageInfo.getWidth();
-                    if(useImgSize){
+                    if (useImgSize) {
                         ViewGroup.LayoutParams layoutParams = getLayoutParams();
                         layoutParams.width = width;
-                        layoutParams.height =  height;
+                        layoutParams.height = height;
                         setLayoutParams(layoutParams);
-                    }else if(useImgRatio){
-                        setAspectRatio(height == 0 ? 1 : width*1.0f/height);
+                    } else if (useImgRatio) {
+                        setAspectRatio(height == 0 ? 1 : width * 1.0f / height);
                     }
                 }
 
-                if(animatable!=null && gifAutoAnim){
+                if (animatable != null && gifAutoAnim) {
                     try {
 //                        if (animatable instanceof AnimatedDrawable2) {
 //                            AnimatedDrawable2 animatedDrawable = (AnimatedDrawable2) animatable;
@@ -311,7 +310,8 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 
                         try {
                             Field field = AbstractAnimatedDrawable.class.getDeclaredField("mLoopCount");
-                            field.setAccessible(true); field.set(animatable,0);
+                            field.setAccessible(true);
+                            field.set(animatable, 0);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -322,13 +322,13 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
             }
         });
 
-        ImageRequestBuilder requestBuilder =  ImageRequestBuilder.newBuilderWithSource(uri);
+        ImageRequestBuilder requestBuilder = ImageRequestBuilder.newBuilderWithSource(uri);
 
-        if(resizeSize != null && resizeSize.length == 2){
+        if (resizeSize != null && resizeSize.length == 2) {
             int rw = resizeSize[0];
             int rh = resizeSize[1];
-            if(rw > 0 && rh > 0){
-                requestBuilder.setResizeOptions(new ResizeOptions(rw,rh));
+            if (rw > 0 && rh > 0) {
+                requestBuilder.setResizeOptions(new ResizeOptions(rw, rh));
             }
         }
 //        else if(R.drawable.sis_common_head_default == this.mPlaceHolderResId){
@@ -338,8 +338,8 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 //                sCacheAvatarList.add(uri.toString());
 //            }
 //        }
-        else if(getLayoutParams().width > 0 && getLayoutParams().height > 0){
-            requestBuilder.setResizeOptions(new ResizeOptions(getLayoutParams().width,getLayoutParams().height));
+        else if (getLayoutParams().width > 0 && getLayoutParams().height > 0) {
+            requestBuilder.setResizeOptions(new ResizeOptions(getLayoutParams().width, getLayoutParams().height));
         }
 
         builder.setAutoPlayAnimations(gifAutoAnim).setImageRequest(requestBuilder.build());
@@ -356,20 +356,20 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
         return result != null && result;
     }
 
-    public static void sCacheItToMem(Uri uri){
-        Fresco.getImagePipeline().prefetchToBitmapCache(ImageRequest.fromUri(uri),null);
+    public static void sCacheItToMem(Uri uri) {
+        Fresco.getImagePipeline().prefetchToBitmapCache(ImageRequest.fromUri(uri), null);
     }
 
-    public static boolean hasCachedAndNotCacheIt(Uri uri,Runnable run) {
+    public static boolean hasCachedAndNotCacheIt(Uri uri, Runnable run) {
 
         Runnable runnable = () -> {
-            if(run != null){
+            if (run != null) {
                 run.run();
             }
         };
 
         Boolean result = hasCached(uri);
-        if(!result){
+        if (!result) {
             DataSource<Void> voidDataSource = Fresco.getImagePipeline().prefetchToDiskCache(ImageRequest.fromUri(uri), null);
             voidDataSource.subscribe(new DataSubscriber<Void>() {
                 @Override
@@ -396,27 +396,27 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
                 }
             }, CallerThreadExecutor.getInstance());
 
-        }else{
+        } else {
             runnable.run();
         }
         return result;
     }
 
-    public void setAspectRatioBySize(int w,int h) {
-        super.setAspectRatio(h == 0? 1: w*1.0f/h);
+    public void setAspectRatioBySize(int w, int h) {
+        super.setAspectRatio(h == 0 ? 1 : w * 1.0f / h);
     }
 
 
     private boolean mFilterStyle = false;
 
-    public void enableFilterStyle(){
+    public void enableFilterStyle() {
         mFilterStyle = true;
     }
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(mFilterStyle){
+        if (mFilterStyle) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     //在按下事件中设置滤镜
@@ -433,37 +433,39 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
                     break;
             }
             return super.onTouchEvent(event);
-        }else{
+        } else {
             return super.onTouchEvent(event);
         }
     }
 
     /**
-     *   设置滤镜
+     * 设置滤镜
      */
     private void setFilter() {
         //先获取设置的src图片
-        Drawable drawable=getDrawable();
+        Drawable drawable = getDrawable();
         //当src图片为Null，获取背景图片
-        if (drawable==null) {
-            drawable=getBackground();
+        if (drawable == null) {
+            drawable = getBackground();
         }
-        if(drawable!=null){
+        if (drawable != null) {
             //设置滤镜
-            drawable.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);;
+            drawable.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            ;
         }
     }
+
     /**
-     *   清除滤镜
+     * 清除滤镜
      */
     private void removeFilter() {
         //先获取设置的src图片
-        Drawable drawable=getDrawable();
+        Drawable drawable = getDrawable();
         //当src图片为Null，获取背景图片
-        if (drawable==null) {
-            drawable=getBackground();
+        if (drawable == null) {
+            drawable = getBackground();
         }
-        if(drawable!=null){
+        if (drawable != null) {
             //清除滤镜
             drawable.clearColorFilter();
         }
@@ -480,7 +482,7 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 //        }
 
         ViewGroup.LayoutParams lp = getLayoutParams();
-        if(lp != null){
+        if (lp != null) {
             updateMarginLp(lp);
             setLayoutParams(lp);
         }
@@ -497,11 +499,11 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
     private boolean updateMarginLp(ViewGroup.LayoutParams lp) {
         ViewGroup.MarginLayoutParams mlp;
         boolean _needUpdate = false;
-        if(lp != null && lp instanceof ViewGroup.MarginLayoutParams){
+        if (lp != null && lp instanceof ViewGroup.MarginLayoutParams) {
             mlp = (ViewGroup.MarginLayoutParams) lp;
-            if((mLayoutMarginTopResId = checkResourceId(mLayoutMarginTopResId)) != INVALID_ID){
+            if ((mLayoutMarginTopResId = checkResourceId(mLayoutMarginTopResId)) != INVALID_ID) {
                 String typeMarginTopName = getResources().getResourceTypeName(mLayoutMarginTopResId);
-                if(TYPE_DIMEN.equals(typeMarginTopName)){
+                if (TYPE_DIMEN.equals(typeMarginTopName)) {
                     mlp.topMargin = getDimen(mLayoutMarginTopResId);
                     _needUpdate = true;
                 }
@@ -536,7 +538,7 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
     @Override
     public void setImageResource(@DrawableRes int resId) {
 //        // Intercept this call and instead retrieve the Drawable via the image helper
-//        if(resId == R.drawable.sis_common_head_default){
+//        if (resId == R.drawable.sis_common_head_default) {
 //            getHierarchy().setPlaceholderImage(resId, ScalingUtils.ScaleType.CENTER_CROP);
 //            return;
 //        }
@@ -545,12 +547,12 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 //        }
     }
 
-    //    public static class LoopCountModifyingBackend extends AnimationBackendDelegate {
+//    public static class LoopCountModifyingBackend extends AnimationBackendDelegate {
 //
 //        private int mLoopCount;
 //
 //        public LoopCountModifyingBackend(AnimationBackend animationBackend,
-//                int loopCount) {
+//                                         int loopCount) {
 //            super(animationBackend);
 //            mLoopCount = loopCount;
 //        }
@@ -564,6 +566,6 @@ public class ExtendImageView extends SimpleDraweeView implements SkinCompatSuppo
 
     @Override
     public String toString() {
-        return hashCode()+"";
+        return hashCode() + "";
     }
 }

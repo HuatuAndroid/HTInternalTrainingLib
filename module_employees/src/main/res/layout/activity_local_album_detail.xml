@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/mTopBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bottomLineColor="#007AFF"
+        app:centerText="照片"
+        app:centerTextColor="@color/white"
+        app:centerTextSize="18sp"
+        app:centerType="textView"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/home_title_left_return"
+        app:leftType="imageButton"
+        app:rightText="确定(0/9)"
+        app:rightTextColor="@color/white"
+        app:rightTextSize="14sp"
+        app:rightType="textView"
+        app:showBottomLine="true"
+        app:titleBarColor="#007AFF" />
+
+    <RelativeLayout
+        android:id="@+id/mRlBottomView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="#EEEFF4">
+
+        <TextView
+            android:id="@+id/mTvConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:paddingRight="16dp"
+            android:text="完成"
+            android:textColor="@color/color_FF3D3E43"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/mGridView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/mRlBottomView"
+        android:layout_below="@+id/mTopBarView"
+        android:numColumns="4" />
+
+    <RelativeLayout
+        android:id="@+id/mRlLargePic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.wb.baselib.view.TopBarView
+            android:id="@+id/mPicTopBarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bottomLineColor="#007AFF"
+            app:centerText="0/0"
+            app:centerTextColor="@color/white"
+            app:centerTextSize="18sp"
+            app:centerType="textView"
+            app:fillStatusBar="false"
+            app:leftImageResource="@drawable/home_title_left_return"
+            app:leftType="imageButton"
+            app:rightText="确定(0/9)"
+            app:rightTextColor="@color/white"
+            app:rightTextSize="14sp"
+            app:rightType="textView"
+            app:showBottomLine="true"
+            app:titleBarColor="#007AFF" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mViewpager"
+            android:layout_below="@+id/mPicTopBarView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fffcfcfd" />
+
+        <CheckBox
+            android:layout_below="@+id/mPicTopBarView"
+            android:id="@+id/mCheckBox"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selsect_button_pic"
+            android:button="@null"
+            android:checked="false"
+            android:focusable="false" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

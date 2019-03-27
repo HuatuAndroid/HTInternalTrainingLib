@@ -16,6 +16,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.topic.TopicEditActivity"/>
         <activity android:name=".ui.topic.NTopicEditActivity"/>
+        <activity android:name=".ui.topic.LocalAlbumDetailActicity"/>
 
     </application>
 

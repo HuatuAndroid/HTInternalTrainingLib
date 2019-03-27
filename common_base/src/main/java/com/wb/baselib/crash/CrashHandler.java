@@ -149,22 +149,22 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
 		LogUtil.e("paramThrowable ------------ " + paramThrowable.toString());
 
-		if( ! handleException(paramThrowable) && mDefaultHandler != null) {
-			// 如果自定义的没有处理则让系统默认的异常处理器来处理
+//		if( ! handleException(paramThrowable) && mDefaultHandler != null) {
+//			// 如果自定义的没有处理则让系统默认的异常处理器来处理
 			mDefaultHandler.uncaughtException(paramThread , paramThrowable) ;
-		}
-		else {
-			try {
-				// 如果处理了，让程序继续运行1秒再退出，保证文件保存并上传到服务器
-				paramThread.sleep(1000) ;
-			}
-			catch(InterruptedException e) {
-				e.printStackTrace() ;
-			}
-			// 退出程序
-			android.os.Process.killProcess(android.os.Process.myPid()) ;
-			System.exit(1) ;
-		}
+//		}
+//		else {
+//			try {
+//				// 如果处理了，让程序继续运行1秒再退出，保证文件保存并上传到服务器
+//				paramThread.sleep(1000) ;
+//			}
+//			catch(InterruptedException e) {
+//				e.printStackTrace() ;
+//			}
+//			// 退出程序
+//			android.os.Process.killProcess(android.os.Process.myPid()) ;
+//			System.exit(1) ;
+//		}
 	}
 	/**
 	 * 	handleException:{自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.}
