@@ -786,6 +786,27 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
         return index + 2;
     }
 
+    /**
+     * 添加换行
+     */
+    public void AddLineFeed(){
+
+        View view = this.findFocus();
+
+        if (view != null && view instanceof EditText) {
+
+            EditText editText = (EditText) view;
+
+            Editable editable = editText.getText();
+            int index = editText.getSelectionStart();
+
+            editable.insert(index, "\n");
+
+        }
+
+
+
+    }
 
     /**
      * 向外暴露回调

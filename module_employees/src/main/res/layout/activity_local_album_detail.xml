@@ -17,7 +17,7 @@
         app:fillStatusBar="false"
         app:leftImageResource="@drawable/home_title_left_return"
         app:leftType="imageButton"
-        app:rightText="确定(0/9)"
+        app:rightText="取消"
         app:rightTextColor="@color/white"
         app:rightTextSize="14sp"
         app:rightType="textView"

@@ -290,7 +290,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else  if (v.getId() == R.id.mIvLineFeed){
             //点击 换行
-
+            mTopicEditView.AddLineFeed();
         }
 
     }

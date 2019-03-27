@@ -139,6 +139,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点确定时，按键响应
 
+                finish();
 
             }
         });
@@ -152,7 +153,8 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点确定时，按键响应
 
-
+                mRlLargePic.setVisibility(View.GONE);
+                setGrideAdapter(currentFolder);
 
             }
         });
@@ -237,8 +239,12 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
             }
         }
 
-        topBarView.getRightTextView().setText("确定"+checkedItems.size() + "/" + maxicSize);
-        mPicTopBarView.getRightTextView().setText("确定"+checkedItems.size() + "/" + maxicSize);
+        if (checkedItems.size() != 0) {
+            mTvConfirm.setText("确定" + "(" + checkedItems.size() + ")");
+        }else{
+            mTvConfirm.setText("确定");
+        }
+        mPicTopBarView.getRightTextView().setText("确定" + "(" +checkedItems.size() + "/" + maxicSize  + ")");
 
     }
 
