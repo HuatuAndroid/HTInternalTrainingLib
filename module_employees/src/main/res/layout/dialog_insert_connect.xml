@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/shape_fill_ffffffff_r8">
+
+        <RelativeLayout
+            android:id="@+id/rlTop"
+            android:layout_width="match_parent"
+            android:layout_height="164dp">
+
+            <TextView
+                android:id="@+id/mTvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:text="插入超链接"
+                android:textColor="@color/color_FF3D3E43"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/mEtConnect"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:textSize="14dp"
+                android:textColorHint="@color/color_FF999CAA"
+                android:textColor="@color/black"
+                android:layout_below="@+id/mTvTitle"
+                android:layout_margin="16dp"
+                android:background="@drawable/shape_border_ffd1d6de_r4"
+                android:hint="输入链接地址"
+                android:paddingLeft="12dp" />
+
+            <EditText
+                android:id="@+id/mEtConnectContent"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:textSize="14dp"
+                android:textColorHint="@color/color_FF999CAA"
+                android:textColor="@color/black"
+                android:layout_below="@+id/mEtConnect"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shape_border_ffd1d6de_r4"
+                android:hint="输入链接文本（可选）"
+                android:paddingLeft="12dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_FFDADCE5" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_below="@id/rlTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvDialogLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:background="@drawable/selector_dialog_text_left_bg"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/color_FF999CAA"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_FFDADCE5" />
+
+
+            <TextView
+                android:id="@+id/tvDialogRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:background="@drawable/selector_dialog_text_right_bg"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/color_FF3D3E43"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.TopicContentItem;
+import com.example.module_employees_world.common.CommonUtils;
+import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
@@ -24,6 +26,7 @@ import com.example.module_employees_world.presenter.TopicEditPresenter;
 import com.example.module_employees_world.ui.TopicEditView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
+import com.wb.baselib.utils.CommonUtil;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
@@ -289,6 +292,10 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         } else  if (v.getId() == R.id.mIvHyperLink){
             //点击 连接
 
+            CommonUtils.hideSoftInput(this);
+
+            myAlertDialog();
+
         } else  if (v.getId() == R.id.mIvPicture){
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
@@ -394,4 +401,21 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     }
 
+    private InsertConnectAlertDialog myAlertDialog;
+    private void myAlertDialog() {
+
+        if (myAlertDialog == null) {
+            myAlertDialog = new InsertConnectAlertDialog(this);
+        } else {
+            myAlertDialog.show();
+        }
+
+        myAlertDialog.setLeftOnClickListener(view -> myAlertDialog.dismiss());
+
+        myAlertDialog.setRightOnClickListener(view -> {
+
+            myAlertDialog.dismiss();
+        });
+
+    }
 }
