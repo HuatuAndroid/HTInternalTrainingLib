@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <com.wb.baselib.view.TopBarView
+        android:id="@+id/mTopBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bottomLineColor="#007AFF"
+        app:centerText="选择小组"
+        app:centerTextColor="@color/white"
+        app:centerTextSize="18sp"
+        app:centerType="textView"
+        app:fillStatusBar="false"
+        app:leftImageResource="@drawable/home_title_left_return"
+        app:leftType="imageButton"
+        app:rightText=""
+        app:rightTextColor="@color/white"
+        app:rightTextSize="14sp"
+        app:rightType="textView"
+        app:showBottomLine="true"
+        app:titleBarColor="#007AFF" />
+
+    <com.wb.baselib.view.MultipleStatusView
+        android:id="@+id/multiplestatusview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:contentView="@layout/public_resh_listview"
+        app:emptyView="@layout/custom_empty_view"
+        app:errorView="@layout/custom_error_view"
+        app:loadingView="@layout/custom_loading_view"
+        app:noNetworkView="@layout/custom_no_network_view" />
+
+</LinearLayout>

@@ -235,6 +235,12 @@
                 android:src="@drawable/htjy_tipic_line_feed" />
 
         </LinearLayout>
+
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flEmoji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -16,13 +16,21 @@ import android.widget.TextView;
 
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
+import com.example.module_employees_world.common.CommonUtils;
+import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.LocalImageHelper;
+import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
 import com.example.module_employees_world.ui.TopicEditView;
+import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
+import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
+import com.example.module_employees_world.ui.emoji.SoftKeyboardStateHelper;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
+import com.wb.baselib.utils.CommonUtil;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
@@ -35,7 +43,7 @@ import java.util.List;
  *
  * 发帖界面
  */
-public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View {
+public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View, EmojiItemClickListener {
 
     private EditText mEtTopicTitle;
     private LinearLayout llBottom;
@@ -43,6 +51,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
     private ImageView mIvA, mIvPhotograph, mIvHyperLink, mIvPicture, mIvFace, mIvLineFeed;
+
+    private EmojiKeyboardFragment emojiKeyboardFragment;
 
     //退出时，弹框
     private NCommontPopw sureBackPopw;
@@ -101,6 +111,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 //                    if (mFileTemp != null)
 //                        mTopicEditView.addImg(Uri.fromFile(mFileTemp).toString());
                 }
+                break;
+
+            case SELECT_GROUP:
+
+                if (data != null) {
+                    groupId = data.getStringExtra("group_id");
+                }
+
                 break;
 
             default:
@@ -176,6 +194,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         //本地图片辅助类初始化
         LocalImageHelper.init(this);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.flEmoji, emojiKeyboardFragment = EmojiKeyboardFragment.newInstance(this, this)).commit();
 
     }
 
@@ -270,6 +290,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         }else if (v.getId() == R.id.mTvXiaoXu) {
             //点击 选择小组
+            StartActivityCommon.startActivityForResult(this,SelectGroupActivity.class, SELECT_GROUP);
 
         }else if (v.getId() == R.id.mIvA){
             //点击 @
@@ -279,6 +300,10 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         } else  if (v.getId() == R.id.mIvHyperLink){
             //点击 连接
 
+            CommonUtils.hideSoftInput(this);
+
+            myAlertDialog();
+
         } else  if (v.getId() == R.id.mIvPicture){
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
@@ -287,6 +312,11 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else  if (v.getId() == R.id.mIvFace){
             //点击 表情
+            if (emojiKeyboardFragment != null){
+
+
+
+            }
 
         } else  if (v.getId() == R.id.mIvLineFeed){
             //点击 换行
@@ -303,6 +333,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
 
     public static final int REQUEST_CODE_TAKE_PICTURE = 3;
+    /** 选择小组 */
+    public static final int SELECT_GROUP = 4;
 
     @Override
     protected void processLogic(Bundle bundle) {
@@ -382,4 +414,37 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     }
 
+    private InsertConnectAlertDialog myAlertDialog;
+    private void myAlertDialog() {
+
+        if (myAlertDialog == null) {
+            myAlertDialog = new InsertConnectAlertDialog(this);
+        } else {
+            myAlertDialog.show();
+        }
+
+        myAlertDialog.setLeftOnClickListener(view -> myAlertDialog.dismiss());
+
+        myAlertDialog.setRightOnClickListener(view -> {
+
+            myAlertDialog.dismiss();
+        });
+
+    }
+
+    /**
+     * 点击表情传回的数据
+     */
+    @Override
+    public void onItemClick(EmojiconBean emojicon) {
+
+    }
+
+    /**
+     * 点击删除
+     */
+    @Override
+    public void onDeleteClick() {
+
+    }
 }
