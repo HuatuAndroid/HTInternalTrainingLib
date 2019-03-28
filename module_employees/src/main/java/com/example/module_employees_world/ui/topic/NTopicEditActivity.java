@@ -18,6 +18,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.common.LocalImageHelper;
+import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
 import com.example.module_employees_world.ui.TopicEditView;
@@ -101,6 +102,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 //                    if (mFileTemp != null)
 //                        mTopicEditView.addImg(Uri.fromFile(mFileTemp).toString());
                 }
+                break;
+
+            case SELECT_GROUP:
+
+                if (data != null) {
+                    groupId = data.getStringExtra("group_id");
+                }
+
                 break;
 
             default:
@@ -270,6 +279,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         }else if (v.getId() == R.id.mTvXiaoXu) {
             //点击 选择小组
+            StartActivityCommon.startActivityForResult(this,SelectGroupActivity.class, SELECT_GROUP);
 
         }else if (v.getId() == R.id.mIvA){
             //点击 @
@@ -303,6 +313,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
 
     public static final int REQUEST_CODE_TAKE_PICTURE = 3;
+    /** 选择小组 */
+    public static final int SELECT_GROUP = 4;
 
     @Override
     protected void processLogic(Bundle bundle) {

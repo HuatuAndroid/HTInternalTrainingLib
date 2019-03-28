@@ -8,15 +8,30 @@
         <activity android:name=".ui.PostsDetailActivity" />
         <activity
             android:name=".ui.CommentDialogActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/BaseAppTheme.Transparent"/>
+            android:theme="@style/BaseAppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.home.CommunityActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.topic.TopicEditActivity"/>
-        <activity android:name=".ui.topic.NTopicEditActivity"/>
-        <activity android:name=".ui.topic.LocalAlbumDetailActicity"/>
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".ui.topic.TopicEditActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.topic.NTopicEditActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.topic.LocalAlbumDetailActicity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.topic.SelectGroupActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
 
     </application>
 
