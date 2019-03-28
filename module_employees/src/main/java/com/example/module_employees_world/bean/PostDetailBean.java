@@ -21,11 +21,14 @@ public class PostDetailBean implements Parcelable{
 
     @SerializedName("question_info")
     public QuestionInfoBean questionInfo;
+    @SerializedName("solve_comment")
+    public SolveComment solve_comment;
     @SerializedName("recommend_list")
     public List<RecommendListBean> recommendList;
 
     protected PostDetailBean(Parcel in) {
         questionInfo = in.readParcelable(QuestionInfoBean.class.getClassLoader());
+        solve_comment = in.readParcelable(SolveComment.class.getClassLoader());
         recommendList = in.createTypedArrayList(RecommendListBean.CREATOR);
     }
 
@@ -49,8 +52,10 @@ public class PostDetailBean implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(questionInfo, flags);
+        dest.writeParcelable(solve_comment, flags);
         dest.writeTypedList(recommendList);
     }
+
 
     public static class QuestionInfoBean implements Parcelable{
 
@@ -77,7 +82,7 @@ public class PostDetailBean implements Parcelable{
         @SerializedName("is_anonymity")
         public int isAnonymity;
         @SerializedName("type")
-        public int type;
+        public int type;//帖子类型 1交流 2建议 3提问
         @SerializedName("created_id")
         public int createdId;
         @SerializedName("created_at")
@@ -89,7 +94,7 @@ public class PostDetailBean implements Parcelable{
         @SerializedName("delete_at")
         public String deleteAt;
         @SerializedName("solve_status")
-        public int solveStatus;
+        public int solveStatus;//帖子 0 未解决，未采纳 1已解决，已采纳
         @SerializedName("department_name")
         public String departmentName;
         @SerializedName("group_name")
@@ -185,6 +190,131 @@ public class PostDetailBean implements Parcelable{
             dest.writeInt(isCollect);
             dest.writeInt(isLike);
             dest.writeStringList(contentImg);
+        }
+    }
+
+    public static class SolveComment implements Parcelable{
+
+        /**
+         * id : 272
+         * question_id : 147
+         * parent_id : 0
+         * content : sdm q h fcu kb dd pe g fhn kb
+         * comment_rule : /272
+         * like_count : 0
+         * comment_picture : null
+         * comment_face : null
+         * reply_count : 5
+         * is_anonymity : 1
+         * created_id : 30850
+         * created_at : 2018-11-29
+         * is_del : 0
+         * delete_at : null
+         * solve_status : 1
+         * department_name :
+         * user_id : 30850
+         * user_name : 匿名
+         * avatar : http://test-px.huatu.com//uploads/niming.jpeg
+         * allow_del : 0
+         */
+
+        @SerializedName("id")
+        public int id;
+        @SerializedName("question_id")
+        public int questionId;
+        @SerializedName("parent_id")
+        public int parentId;
+        @SerializedName("content")
+        public String content;
+        @SerializedName("comment_rule")
+        public String commentRule;
+        @SerializedName("like_count")
+        public int likeCount;
+        @SerializedName("comment_picture")
+        public String commentPicture;
+        @SerializedName("comment_face")
+        public String commentFace;
+        @SerializedName("reply_count")
+        public int replyCount;
+        @SerializedName("is_anonymity")
+        public int isAnonymity;
+        @SerializedName("created_id")
+        public int createdId;
+        @SerializedName("created_at")
+        public String createdAt;
+        @SerializedName("is_del")
+        public int isDel;
+        @SerializedName("delete_at")
+        public Object deleteAt;
+        @SerializedName("solve_status")
+        public int solveStatus;
+        @SerializedName("department_name")
+        public String departmentName;
+        @SerializedName("user_id")
+        public int userId;
+        @SerializedName("user_name")
+        public String userName;
+        @SerializedName("avatar")
+        public String avatar;
+        @SerializedName("allow_del")
+        public int allowDel;
+
+        protected SolveComment(Parcel in) {
+            id = in.readInt();
+            questionId = in.readInt();
+            parentId = in.readInt();
+            content = in.readString();
+            commentRule = in.readString();
+            likeCount = in.readInt();
+            replyCount = in.readInt();
+            isAnonymity = in.readInt();
+            createdId = in.readInt();
+            createdAt = in.readString();
+            isDel = in.readInt();
+            solveStatus = in.readInt();
+            departmentName = in.readString();
+            userId = in.readInt();
+            userName = in.readString();
+            avatar = in.readString();
+            allowDel = in.readInt();
+        }
+
+        public static final Creator<SolveComment> CREATOR = new Creator<SolveComment>() {
+            @Override
+            public SolveComment createFromParcel(Parcel in) {
+                return new SolveComment(in);
+            }
+
+            @Override
+            public SolveComment[] newArray(int size) {
+                return new SolveComment[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(id);
+            dest.writeInt(questionId);
+            dest.writeInt(parentId);
+            dest.writeString(content);
+            dest.writeString(commentRule);
+            dest.writeInt(likeCount);
+            dest.writeInt(replyCount);
+            dest.writeInt(isAnonymity);
+            dest.writeInt(createdId);
+            dest.writeString(createdAt);
+            dest.writeInt(isDel);
+            dest.writeInt(solveStatus);
+            dest.writeString(departmentName);
+            dest.writeInt(userId);
+            dest.writeString(userName);
+            dest.writeString(avatar);
+            dest.writeInt(allowDel);
         }
     }
 
