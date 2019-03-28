@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.InsertConnectAlertDialog;
@@ -24,6 +25,9 @@ import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
 import com.example.module_employees_world.ui.TopicEditView;
+import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
+import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
+import com.example.module_employees_world.ui.emoji.SoftKeyboardStateHelper;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.utils.CommonUtil;
@@ -39,7 +43,7 @@ import java.util.List;
  *
  * 发帖界面
  */
-public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View {
+public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View, EmojiItemClickListener {
 
     private EditText mEtTopicTitle;
     private LinearLayout llBottom;
@@ -47,6 +51,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
     private ImageView mIvA, mIvPhotograph, mIvHyperLink, mIvPicture, mIvFace, mIvLineFeed;
+
+    private EmojiKeyboardFragment emojiKeyboardFragment;
 
     //退出时，弹框
     private NCommontPopw sureBackPopw;
@@ -189,6 +195,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         //本地图片辅助类初始化
         LocalImageHelper.init(this);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.flEmoji, emojiKeyboardFragment = EmojiKeyboardFragment.newInstance(this, this)).commit();
+
     }
 
     @Override
@@ -304,6 +312,11 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else  if (v.getId() == R.id.mIvFace){
             //点击 表情
+            if (emojiKeyboardFragment != null){
+
+
+
+            }
 
         } else  if (v.getId() == R.id.mIvLineFeed){
             //点击 换行
@@ -416,6 +429,22 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             myAlertDialog.dismiss();
         });
+
+    }
+
+    /**
+     * 点击表情传回的数据
+     */
+    @Override
+    public void onItemClick(EmojiconBean emojicon) {
+
+    }
+
+    /**
+     * 点击删除
+     */
+    @Override
+    public void onDeleteClick() {
 
     }
 }
