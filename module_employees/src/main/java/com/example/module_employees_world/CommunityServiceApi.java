@@ -3,6 +3,7 @@ package com.example.module_employees_world;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
+import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.common.config.CommunityHttpConfig;
 import com.wb.baselib.bean.Result;
@@ -63,9 +64,15 @@ public interface CommunityServiceApi {
     Observable<Result> commitTopicData(@FieldMap() Map<String, String> map);
 
     /**
-     * 帖子詳情
+     * 評論列表
      */
     @GET(CommunityHttpConfig.COMMENT_LIST)
-    Observable<Result<CommentListBean>> getCommentList(@Query("question_id") String question_id, @Query("st") String st);
+    Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st,@Query("page") String page,@Query("limit") String limit);
+
+    /**
+     * 帖子詳情
+     */
+    @GET(CommunityHttpConfig.POST_DETAILS)
+    Observable<Result<PostDetailBean>> getPostDetail(@Path("question_id") String question_id, @Query("st") String st);
 
 }

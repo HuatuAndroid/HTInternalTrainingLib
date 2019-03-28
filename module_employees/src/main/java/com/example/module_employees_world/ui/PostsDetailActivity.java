@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,13 +39,22 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.ImgAdapter;
 import com.example.module_employees_world.adapter.PostDetailAdapter;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.presenter.PostDetailPersenter;
+import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.view.PostsDetailPopw;
+import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
+import com.wangbo.smartrefresh.layout.api.RefreshLayout;
+import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
+import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.utils.ToastUtils;
+import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
 
 import java.io.ByteArrayOutputStream;
@@ -51,6 +62,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * author:LIENLIN
@@ -65,12 +77,21 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     private RecyclerView tvImg;
     private RelativeLayout rlOpen;
-    private TextView tvDetailText,tvName,tvOpen,tvHtml,tvClose,tvTitle;
+    private TextView tvDetailText,tvName,tvOpen,tvHtml,tvClose,tvTitle,tvPartName,tvTime,tvBrowseNum,tvTopicGroup,tvCommentNum
+            ,tvComment,tvPostNum,tvPostZan;
+    private SmartRefreshLayout smartRefreshLayout;
+    private ImageView ivAvatar;
     private LinearLayout llDev1,llDev2,llContainerFab;
-    private ArrayList imgList;
+    private ArrayList<String> imgList = new ArrayList<>();;
     private NestedScrollView scvPost;
     private FloatingActionButton fabAll,fabEdit,fabTop;
     private boolean fabEnable;
+    private MultipleStatusView multipleStatusview;
+    private List<CommentListBean.ListBean> commentList=new ArrayList<>();
+    private int page = 1;
+    private int limit = 1;
+    private ImgAdapter imgAdapter;
+    private String question_id;
 
     @Override
     protected PostDetailPersenter onCreatePresenter() {
@@ -82,14 +103,17 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         super.onCreate(savedInstanceState);
         StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
-        // TODO: 2019/3/25  
-        mPresenter.getCommentList("1","1");
+        question_id = getIntent().getStringExtra("question_id");
+        // TODO: 2019/3/25
+        mPresenter.getPostDetail(question_id,"1");
+        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_posts_detail);
         topBarView = findViewById(R.id.topbarview_post_detail);
+        multipleStatusview = findViewById(R.id.post_multipleStatusview);
         mRvPost = findViewById(R.id.rv_post_detail);
         mRvPost = findViewById(R.id.rv_post_detail);
 
@@ -107,29 +131,30 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         fabAll = findViewById(R.id.fab_all);
         fabEdit = findViewById(R.id.fab_edit);
         fabTop = findViewById(R.id.fab_top);
+        ivAvatar = findViewById(R.id.details_head);
+        tvName = findViewById(R.id.details_name);
+        tvPartName = findViewById(R.id.details_part);
+        tvTime = findViewById(R.id.details_time);
+        tvBrowseNum = findViewById(R.id.details_browse);
+        tvTopicGroup = findViewById(R.id.tv_topic_group);
+        tvCommentNum = findViewById(R.id.tv_comment_num);
+        tvComment = findViewById(R.id.tv_post_comment);
+        tvPostNum = findViewById(R.id.tv_post_num);
+        tvPostZan = findViewById(R.id.tv_post_zan);
+        smartRefreshLayout = findViewById(R.id.rfl_post);
 
-        imgList = new ArrayList<>();
-        imgList.add("");
-        imgList.add("");
-        imgList.add("");
-        imgList.add("");
-        imgList.add("");
-        // TODO: 2019/3/22 数据暂写死
-        topBarView.getCenterTextView().setText("欢迎搭建来到这个瓶体多提宝贵意见");
+        tvCommentNum.setText("全部评论 (" + 0 + ")");
         TextView centerTextView = topBarView.getCenterTextView();
         centerTextView.setVisibility(View.INVISIBLE);
-        tvTitle.setText("欢迎搭建来到这个瓶体多提宝贵意见");
-        tvDetailText.setText("        "+"halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见halsdnfasfnlk哈快递费哈利的法拉发哪里上课积分拉克丝剪短发哪里看法呢时间段内发了看不见"+"         ");
-        tvImg.setLayoutManager(new GridLayoutManager(this,4));
-        tvImg.setAdapter(new ImgAdapter(this,imgList,new View.OnClickListener() {
+        imgAdapter = new ImgAdapter(this, imgList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToastUtils.showToast(PostsDetailActivity.this,"点击看大图");
             }
-        }));
-        // TODO: 2019/3/21 数据暂写死
-        setActivityContent("<br\\/><img src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg' width='100%' _src='http:\\/\\/peixun.huatu.com\\/uploads\\/images\\/20190304\\/1de6158aab21bf817d82da7c59c3f872.jpg'\\/>",tvHtml);
-        postDetailAdapter = new PostDetailAdapter(this);
+        });
+        tvImg.setLayoutManager(new GridLayoutManager(this,4));
+        tvImg.setAdapter(imgAdapter);
+        postDetailAdapter = new PostDetailAdapter(this,commentList);
         mRvPost.setLayoutManager(new LinearLayoutManager(this));
         mRvPost.setAdapter(postDetailAdapter);
         mRvPost.setLayoutManager(new LinearLayoutManager(this){
@@ -139,21 +164,25 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             }
         });
 
-        //显示“展开全部”条件：文本等于五行或者有图片
-        tvDetailText.post(new Runnable() {
-            @Override
-            public void run() {
-                if (tvDetailText.getLineCount()==5||imgList.size()>0){
-                    tvOpen.setVisibility(View.VISIBLE);
-                }else {
-                    tvOpen.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+        RefreshUtils.getInstance(smartRefreshLayout,this ).defaultRefreSh();
+        smartRefreshLayout.setEnableRefresh(false);
+
     }
 
     @Override
     protected void setListener() {
+        topBarView.getLeftImageButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        topBarView.getRightImageButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostsDetailPopw postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this);
+            }
+        });
         rlOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +209,25 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 });
             }
         });
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PostsDetailActivity.this,CommentDialogActivity.class));
+            }
+        });
+        tvPostNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2019/3/27 评论置顶
+            }
+        });
+        tvPostZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2019/3/27 点赞
+            }
+        });
+
 
         fabAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +239,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     AnimationSet animationSet = new AnimationSet(true);
                     animationSet.addAnimation(new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f));
                     animationSet.addAnimation(new AlphaAnimation(0.5f,1.0f));
-                    animationSet.setInterpolator(new SpringInterpolator(0.5f));
+                    animationSet.setInterpolator(new MyInterpolator(0.5f));
                     animationSet.setDuration(200);
                     llContainerFab.setAnimation(animationSet);
                     llContainerFab.setVisibility(View.VISIBLE);
@@ -204,8 +252,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void onClick(View v) {
                 ToastUtils.showToast(PostsDetailActivity.this,"发帖");
-                // TODO: 2019/3/22
-                startActivity(new Intent(PostsDetailActivity.this,CommentDialogActivity.class));
+
             }
         });
         fabTop.setOnClickListener(new View.OnClickListener() {
@@ -233,6 +280,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     topBarView.getCenterTextView().setVisibility(View.VISIBLE);
 
                 }
+            }
+        });
+
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getCommentList(question_id,"1",page+"",limit+"");
             }
         });
     }
@@ -326,7 +380,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
      * @return
      * @throws Exception
      */
-    public  static  Bitmap  getFitSampleBitmap(InputStream  inputStream) throws Exception{
+    public static Bitmap getFitSampleBitmap(InputStream  inputStream) throws Exception{
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPreferredConfig=Bitmap.Config.ALPHA_8;
@@ -354,27 +408,27 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     @Override
     public void ShowLoadView() {
-
+        multipleStatusview.showLoading();
     }
 
     @Override
     public void NoNetWork() {
-
+        multipleStatusview.showNoNetwork();
     }
 
     @Override
     public void NoData() {
-
+        multipleStatusview.showEmpty();
     }
 
     @Override
     public void ErrorData() {
-
+        multipleStatusview.showError();
     }
 
     @Override
     public void showErrorMsg(String msg) {
-
+        showShortToast(msg);
     }
 
     @Override
@@ -389,8 +443,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     @Override
     public void SuccessData(Object o) {
-        CommentListBean commentListBean = (CommentListBean) o;
-
+        List<CommentListBean.ListBean> listBeanList = (List<CommentListBean.ListBean>) o;
+        if (page==1){
+            commentList.clear();
+        }
+        commentList.addAll(listBeanList);
+        postDetailAdapter.notifyDataSetChanged();
+        multipleStatusview.showContent();
+        page++;
     }
 
     @Override
@@ -399,15 +459,51 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     }
 
     @Override
-    public void getCommentList(CommentListBean commentListBean) {
+    public void isLoadMore(boolean moreEnable) {
+        RefreshUtils.getInstance(smartRefreshLayout, this).isLoadData(moreEnable);
+    }
+
+    @Override
+    public void getPostDetail(PostDetailBean postDetailBean) {
+        // TODO: 2019/3/26
+        tvTitle.setText(postDetailBean.questionInfo.title);
+        topBarView.getCenterTextView().setText(postDetailBean.questionInfo.title);
+        Picasso.with(this).load(postDetailBean.questionInfo.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
+        tvName.setText(postDetailBean.questionInfo.userName);
+        tvPartName.setText(postDetailBean.questionInfo.departmentName);
+        tvTime.setText(postDetailBean.questionInfo.createdAt);
+        tvBrowseNum.setText("l  "+postDetailBean.questionInfo.readCount+"人浏览");
+        tvTopicGroup.setText("【"+postDetailBean.questionInfo.groupName+"】");
+        tvCommentNum.setText("全部评论 (" + postDetailBean.questionInfo.commentCount+ ")");
+        tvPostNum.setText(postDetailBean.questionInfo.commentCount+"");
+        tvPostZan.setText(postDetailBean.questionInfo.likeCount+"");
+
+        tvDetailText.setText(postDetailBean.questionInfo.contentText);
+        setActivityContent(postDetailBean.questionInfo.contentText,tvDetailText);
+        //显示“展开全部”条件：文本等于五行或者有图片
+        tvDetailText.post(new Runnable() {
+            @Override
+            public void run() {
+                if (tvDetailText.getLineCount()==5||imgList.size()>0){
+                    tvOpen.setVisibility(View.VISIBLE);
+                }else {
+                    tvOpen.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        setActivityContent(postDetailBean.questionInfo.content,tvHtml);
+
+        imgList.clear();
+        imgList.addAll(postDetailBean.questionInfo.contentImg);
+        imgAdapter.notifyDataSetChanged();
 
     }
 
-    public static class SpringInterpolator implements Interpolator {
+    public static class MyInterpolator implements Interpolator {
 
         private float factor;
 
-        public SpringInterpolator(float factor) {
+        public MyInterpolator(float factor) {
             this.factor = factor;
         }
 
