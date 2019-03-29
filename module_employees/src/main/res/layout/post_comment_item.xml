@@ -122,16 +122,16 @@
 
                 <TextView
                     android:id="@+id/tv_comment_zan"
-                    android:layout_alignParentRight="true"
-                    android:textSize="12sp"
-                    android:text=""
-                    android:textColor="#999CAA"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="16dp"
                     android:drawableLeft="@drawable/post_comment_zan"
                     android:drawablePadding="3dp"
-                    android:layout_marginLeft="16dp"/>
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#999CAA"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_comment_reply"

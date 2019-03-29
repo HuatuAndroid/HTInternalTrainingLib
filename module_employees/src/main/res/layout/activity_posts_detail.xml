@@ -92,7 +92,7 @@
             android:drawableLeft="@drawable/post_bottom_comment"
             android:drawablePadding="8dp"
             android:layout_marginEnd="20dp"
-            android:text="1222"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/tv_post_zan"
@@ -102,7 +102,7 @@
             android:textSize="12sp"
             android:drawableLeft="@drawable/post_bottom_zan"
             android:drawablePadding="8dp"
-            android:text="1222"/>
+            android:text=""/>
 
     </LinearLayout>
 

@@ -19,8 +19,10 @@ public interface CommunityHttpConfig {
     String GROUPDETAILS = "api/app/discuss/group/group_id={group_id}";
     //小组列表详情
     String GROUPDETAILSTYPE = "api/app/discuss/getQuestion/type={type}";
-    //详情话题点赞
+    //帖子点赞
     String DETAILS_LIKE = "api/app/discuss/questionLike/question_id={question_id}";
+    //评论点赞（适用于评论，子评论）
+    String COMMENT_LIKE = "api/app/discuss/commentLike/comment_id={comment_id}";
     //详情话题收藏
     String DETAILS_COLLECT = "api/app/discuss/userCollect";
     //话题详情
@@ -34,7 +36,7 @@ public interface CommunityHttpConfig {
     //发表评论
     String SENDCOMMENT= "api/app/discuss/createComment";
     /**删除帖子*/
-    String DELETE_TOPIC="api/app/discuss/delQuestion";
+    String DELETE_POST="api/app/discuss/delQuestion";
     /**删除评论*/
     String DELETE_COMMENT="api/app/discuss/delComment";
     /**编辑帖子*/

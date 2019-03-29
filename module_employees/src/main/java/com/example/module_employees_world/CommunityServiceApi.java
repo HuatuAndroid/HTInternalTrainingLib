@@ -1,5 +1,6 @@
 package com.example.module_employees_world;
 
+import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
@@ -74,5 +75,31 @@ public interface CommunityServiceApi {
      */
     @GET(CommunityHttpConfig.POST_DETAILS)
     Observable<Result<PostDetailBean>> getPostDetail(@Path("question_id") String question_id, @Query("st") String st);
+
+    /**
+     * 评论点赞（适用于评论，子评论）
+     */
+    @GET(CommunityHttpConfig.COMMENT_LIKE)
+    Observable<Result<CommentLikeBean>> commentLike(@Path("comment_id") String comment_id);
+
+    /**
+     * 帖子点赞
+     */
+    @GET(CommunityHttpConfig.DETAILS_LIKE)
+    Observable<Result<CommentLikeBean>> postsLike(@Path("question_id") String question_id);
+
+    /**
+     * 删除帖子
+     */
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.DELETE_POST)
+    Observable<Result> deletePost(@Field("id") String id);
+
+    /**
+     * 删除评论及子评论
+     */
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.DELETE_COMMENT)
+    Observable<Result> deleteComment(@Field("id") String id);
 
 }

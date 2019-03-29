@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
@@ -50,10 +51,10 @@ import java.util.List;
 public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.ViewHolder>{
 
     LayoutInflater inflater;
-    Activity context;
+    PostsDetailActivity context;
     private List<CommentListBean.ListBean> commentList;
 
-    public PostDetailAdapter(Activity context, List<CommentListBean.ListBean> commentList) {
+    public PostDetailAdapter(PostsDetailActivity context, List<CommentListBean.ListBean> commentList) {
         this.context=context;
         this.commentList=commentList;
         inflater = LayoutInflater.from(context);
@@ -81,6 +82,9 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         }else {
             holder.ivCommentImg.setVisibility(View.GONE);
         }
+        // TODO: 2019/3/29 点赞状态
+//        if (listBean.is)
+
         //删除权限  0：无权限   1：有权限
         if (listBean.allowDel==0){
             holder.ivCommentDel.setVisibility(View.GONE);
@@ -90,7 +94,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         holder.ivCommentDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_101,listBean));
+                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_101,listBean.id+"",position));
             }
         });
 
@@ -117,10 +121,16 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
                 ToastUtils.showToast(context,"回复："+position);
             }
         });
+        holder.tvCommentZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_106,holder.tvCommentZan,listBean.id));
+            }
+        });
 
         holder.rvOnerComment.setNestedScrollingEnabled(false);
         holder.rvOnerComment.setLayoutManager(new LinearLayoutManager(context));
-        holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count));
+        holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count,position));
 
     }
 

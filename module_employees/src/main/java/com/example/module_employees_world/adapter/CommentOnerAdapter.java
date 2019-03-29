@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.ui.CommentDetailctivity;
 import com.example.module_employees_world.ui.CommentDialogActivity;
 import com.example.module_employees_world.utils.CircleTransform;
@@ -34,13 +35,15 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
     LayoutInflater inflater;
     Activity context;
     int count;
+    int partenPosition;
     private final int FLAG_IS_LAST=0;
     private final int FLAG_NOT_LAST=1;
-    List<CommentListBean.ListBean.ParentBean> parentBeanList;
+    List<ParentBean> parentBeanList;
 
-    public CommentOnerAdapter(Activity context, List<CommentListBean.ListBean.ParentBean> parentBeanList, int count) {
+    public CommentOnerAdapter(Activity context, List<ParentBean> parentBeanList, int count,int partenPosition) {
         this.context=context;
         this.count=count;
+        this.partenPosition=partenPosition;
         this.parentBeanList=parentBeanList;
         inflater = LayoutInflater.from(context);
     }
@@ -72,7 +75,7 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
                 }
             });
         }else {
-            final CommentListBean.ListBean.ParentBean parentBean = parentBeanList.get(position);
+            final ParentBean parentBean = parentBeanList.get(position);
             if (!TextUtils.isEmpty(parentBean.avatar))
             Picasso.with(context).load(parentBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
             holder.tvName.setText(parentBean.userName);
@@ -98,7 +101,7 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
             holder.ivDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_102,parentBean));
+                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_102,parentBean.id,partenPosition,position));
                 }
             });
             holder.tvReply.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +113,7 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
             holder.tvZan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.showToast(context,"点赞："+parentBean.userName);
+                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_106,holder.tvZan,parentBean.id));
                 }
             });
         }

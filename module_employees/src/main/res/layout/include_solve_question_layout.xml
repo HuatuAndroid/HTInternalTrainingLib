@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="visible">
+    android:visibility="gone">
     <RelativeLayout
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -119,7 +119,8 @@
                     android:gravity="center"
                     android:drawableLeft="@drawable/post_comment_zan"
                     android:drawablePadding="3dp"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    android:visibility="invisible"/>
 
                 <TextView
                     android:id="@+id/tv_solve_reply"
@@ -132,19 +133,10 @@
                     android:gravity="center"
                     android:drawableLeft="@drawable/post_comment_info"
                     android:drawablePadding="3dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DADCE5"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_solve_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
     </LinearLayout>
