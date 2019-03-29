@@ -54,7 +54,7 @@ import rx.schedulers.Schedulers;
  * @author liuzhe
  * @date 2019/3/26
  */
-public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener {
+public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener ,EditText.OnClickListener, EditText.OnFocusChangeListener{
 
     public static final String TAG = "ContentEditor";
     public static int maxTextureWidth = 0;
@@ -226,6 +226,8 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
                 if (editable) {    //文本可编辑
                     //参加文本控件，初始化相关属性
                     final EditText editText = new EditText(getContext());
+                    editText.setOnFocusChangeListener(this);
+                    editText.setOnClickListener(this);
                     editText.setText(bean.content);
                     editText.setBackground(null);
                     editText.addTextChangedListener(new MyTextWatch(bean, editText));
@@ -804,8 +806,25 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
         }
 
+    }
 
-
+    /**
+     * 点击会隐藏表情视图
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        mContentWatch.hideEmojiKeyboard();
+    }
+    /**
+     * 点击会隐藏表情视图
+     * @param v
+     */
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            mContentWatch.hideEmojiKeyboard();
+        }
     }
 
     /**
@@ -815,6 +834,8 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
         void onEmpty(boolean empty);
 
         void onTypedCount(float count);
+
+        void hideEmojiKeyboard();
     }
 
     ContentWatch mContentWatch;

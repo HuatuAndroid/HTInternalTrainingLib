@@ -1,6 +1,5 @@
 package com.example.module_employees_world.ui.emoji;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.EmojiPagerAdapter;
@@ -26,13 +25,13 @@ public class EmojiKeyboardFragment extends Fragment implements SoftKeyboardState
     public static final String TAG = "EmojiKeyboardFragment";
 
     View mRootView;
+    LinearLayout flEmojiContent;
     ViewPager vp;
     ExCirclePageIndicator cpi;
     SoftKeyboardStateHelper mKeyboardHelper;
     View.OnClickListener onClickListener;
 
     public boolean softkeyBoardOpen = false;
-    public boolean emojiKeyboardOpen = false;
 
     public static EmojiKeyboardFragment newInstance(EmojiItemClickListener itemClickListener, View.OnClickListener onClickListener) {
         EmojiKeyboardFragment f = new EmojiKeyboardFragment();
@@ -50,6 +49,7 @@ public class EmojiKeyboardFragment extends Fragment implements SoftKeyboardState
         mRootView = inflater.inflate(R.layout.fragment_frag_keyboard, container, false);
         cpi = mRootView.findViewById(R.id.cpi);
         vp = mRootView.findViewById(R.id.jsvp);
+        flEmojiContent = mRootView.findViewById(R.id.flEmojiContent);
         vp.setAdapter(new EmojiPagerAdapter(getFragmentManager(), itemClickListener));
         cpi.setViewPager(vp);
 
@@ -61,16 +61,19 @@ public class EmojiKeyboardFragment extends Fragment implements SoftKeyboardState
     }
 
     /**
-     * 隐藏软键盘
+     * 表情视图 隐藏/显示
+     * @param emojiKeyboardOpen
      */
-    public void hideSoftKeyboard() {
-        ((InputMethodManager) getActivity().getSystemService(
-                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                vp.getWindowToken(), 0);
+    public void setflEmojiContentShow(boolean emojiKeyboardOpen){
+        if (flEmojiContent == null) return;
+        if (emojiKeyboardOpen){
+            flEmojiContent.setVisibility(View.VISIBLE);
+        }else{
+            flEmojiContent.setVisibility(View.GONE);
+        }
     }
 
     EmojiItemClickListener itemClickListener;
-
     @Override
     public void onSoftKeyboardOpened(int keyboardHeightInPx) {
 
