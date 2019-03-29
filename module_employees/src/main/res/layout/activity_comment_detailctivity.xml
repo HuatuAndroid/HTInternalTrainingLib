@@ -24,6 +24,7 @@
         app:centerTextViewRoll="false"/>
 
     <com.wangbo.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/topbar_comment_detail"
@@ -44,7 +45,7 @@
                 android:layout_height="55dp">
 
                 <ImageView
-                    android:id="@+id/comment_image"
+                    android:id="@+id/comment_detail_avatar"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:scaleType="fitXY"
@@ -54,13 +55,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/comment_image"
+                    android:layout_toRightOf="@id/comment_detail_avatar"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true">
 
                     <TextView
-                        android:id="@+id/comment_name"
+                        android:id="@+id/tv_comment_detail_name"
                         android:textSize="14sp"
                         android:textColor="#3D3E43"
                         android:layout_width="wrap_content"
@@ -68,7 +69,7 @@
                         android:text="李曼青"/>
 
                     <TextView
-                        android:id="@+id/comment_part"
+                        android:id="@+id/tv_comment_detail_part"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#999CAA"
@@ -79,7 +80,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/iv_conmment_del"
+                    android:id="@+id/iv_comment_detail_del"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:paddingLeft="10dp"
@@ -103,7 +104,7 @@
                     android:orientation="vertical">
                     <!--评论文本-->
                     <TextView
-                        android:id="@+id/comment_title"
+                        android:id="@+id/tv_comment_detail_title"
                         android:textSize="14sp"
                         android:textColor="#3D3E43"
                         android:lineSpacingExtra="5dp"
@@ -112,13 +113,13 @@
                         android:layout_marginRight="10dp"
                         android:text=""/>
                     <ImageView
-                        android:id="@+id/iv_comment_img"
+                        android:id="@+id/iv_comment_detail_img"
                         android:layout_width="match_parent"
                         android:layout_height="164dp"
                         android:layout_margin="10dp"
                         android:visibility="gone"/>
                     <ImageView
-                        android:id="@+id/iv_comment_gif"
+                        android:id="@+id/iv_comment_detail_gif"
                         android:layout_width="match_parent"
                         android:layout_height="164dp"
                         android:layout_margin="10dp"
@@ -130,7 +131,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp">
                         <TextView
-                            android:id="@+id/tv_comment_time"
+                            android:id="@+id/tv_comment_detail_time"
                             android:textSize="12sp"
                             android:textColor="#999CAA"
                             android:layout_width="wrap_content"
@@ -144,7 +145,7 @@
                             android:layout_weight="1"/>
 
                         <TextView
-                            android:id="@+id/tv_comment_zan"
+                            android:id="@+id/tv_comment_detail_zan"
                             android:layout_alignParentRight="true"
                             android:textSize="12sp"
                             android:text=""
@@ -157,7 +158,7 @@
                             android:layout_marginLeft="16dp"/>
 
                         <TextView
-                            android:id="@+id/tv_comment_reply"
+                            android:id="@+id/tv_comment_detail_reply"
                             android:layout_alignParentRight="true"
                             android:textSize="12sp"
                             android:text="回复"
@@ -186,7 +187,7 @@
                 android:background="#EEEFF4"/>
 
             <TextView
-                android:id="@+id/tv_comment_num"
+                android:id="@+id/tv_comment_detail_num"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -220,7 +221,7 @@
         android:paddingEnd="16dp"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/tv_comment_bottom_reply"
+            android:id="@+id/tv_comment_detail_bottom_reply"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -231,7 +232,7 @@
             android:background="@drawable/shape_post_bottom"
             android:text="回复***"/>
         <TextView
-            android:id="@+id/tv_send"
+            android:id="@+id/tv_comment_detail_send"
             android:layout_width="56dp"
             android:layout_height="30dp"
             android:textColor="#ffffff"

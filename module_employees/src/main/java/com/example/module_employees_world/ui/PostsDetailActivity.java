@@ -19,6 +19,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +44,7 @@ import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.presenter.PostDetailPersenter;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.view.PostsDetailPopw;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -51,11 +53,14 @@ import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
+import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
+import com.wb.rxbus.taskBean.RxBus;
+import com.wb.rxbus.taskBean.RxMessageBean;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -63,6 +68,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * author:LIENLIN
@@ -75,13 +82,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     private RecyclerView mRvPost;
     private PostDetailAdapter postDetailAdapter;
 
-    private RecyclerView tvImg;
+    private RecyclerView tvImg,rvSolve;
     private RelativeLayout rlOpen;
-    private TextView tvDetailText,tvName,tvOpen,tvHtml,tvClose,tvTitle,tvPartName,tvTime,tvBrowseNum,tvTopicGroup,tvCommentNum
-            ,tvComment,tvPostNum,tvPostZan;
+    private TextView tvDetailText,tvName,tvOpen,tvHtml,tvClose,tvTitle,tvPartName,tvPostType,tvTime,tvBrowseNum,tvTopicGroup,tvCommentNum
+            ,tvComment,tvPostNum,tvPostZan,tvSoleName,tvSolePartName,tvSoleTitle,tvSoleTime,tvSoleZan,tvSoleReply;
     private SmartRefreshLayout smartRefreshLayout;
-    private ImageView ivAvatar;
-    private LinearLayout llDev1,llDev2,llContainerFab;
+    private ImageView ivAvatar,ivBgUser,ivSoleAvatar,ivSoleImg,ivSolegif;
+    private LinearLayout llDev1,llDev2,llContainerFab,ll_solve_root;
     private ArrayList<String> imgList = new ArrayList<>();;
     private NestedScrollView scvPost;
     private FloatingActionButton fabAll,fabEdit,fabTop;
@@ -89,7 +96,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     private MultipleStatusView multipleStatusview;
     private List<CommentListBean.ListBean> commentList=new ArrayList<>();
     private int page = 1;
-    private int limit = 1;
+    private int limit = 6;
     private ImgAdapter imgAdapter;
     private String question_id;
 
@@ -107,6 +114,12 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         // TODO: 2019/3/25
         mPresenter.getPostDetail(question_id,"1");
         mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getIntanceBus().unSubscribe(this);
     }
 
     @Override
@@ -134,6 +147,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         ivAvatar = findViewById(R.id.details_head);
         tvName = findViewById(R.id.details_name);
         tvPartName = findViewById(R.id.details_part);
+        tvPostType = findViewById(R.id.tv_post_type);
         tvTime = findViewById(R.id.details_time);
         tvBrowseNum = findViewById(R.id.details_browse);
         tvTopicGroup = findViewById(R.id.tv_topic_group);
@@ -141,7 +155,20 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvComment = findViewById(R.id.tv_post_comment);
         tvPostNum = findViewById(R.id.tv_post_num);
         tvPostZan = findViewById(R.id.tv_post_zan);
+        ivBgUser = findViewById(R.id.iv_post_type_user);
         smartRefreshLayout = findViewById(R.id.rfl_post);
+        //已采纳布局
+        rvSolve = findViewById(R.id.rv_solve_comment);
+        ivSoleAvatar = findViewById(R.id.iv_solve_avatar);
+        ivSoleImg = findViewById(R.id.iv_solve_img);
+        ivSolegif = findViewById(R.id.iv_solve_gif);
+        tvSoleName=findViewById(R.id.tv_solve_name);
+        tvSolePartName=findViewById(R.id.tv_solve_part);
+        tvSoleTitle=findViewById(R.id.tv_solve_title);
+        tvSoleTime=findViewById(R.id.tv_solve_time);
+        tvSoleZan=findViewById(R.id.tv_solve_zan);
+        tvSoleReply=findViewById(R.id.tv_solve_reply);
+        ll_solve_root=findViewById(R.id.ll_solve_root);
 
         tvCommentNum.setText("全部评论 (" + 0 + ")");
         TextView centerTextView = topBarView.getCenterTextView();
@@ -287,6 +314,22 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+            }
+        });
+
+        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
+            @Override
+            public void accept(RxBusMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.POST_101) {
+                    CommentListBean.ListBean listBean= (CommentListBean.ListBean) rxMessageBean.getMessage();
+                    ToastUtils.showToast(PostsDetailActivity.this,"删除："+listBean.userName);
+                }else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.POST_102){
+                    CommentListBean.ListBean.ParentBean parentBean= (CommentListBean.ListBean.ParentBean) rxMessageBean.getMessage();
+                    ToastUtils.showToast(PostsDetailActivity.this,"删除："+parentBean.userName);
+                }else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.POST_103){
+                    CommentListBean.ListBean listBean= (CommentListBean.ListBean) rxMessageBean.getMessage();
+                    ToastUtils.showToast(PostsDetailActivity.this,"采纳："+listBean.userName);
+                }
             }
         });
     }
@@ -477,9 +520,52 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvCommentNum.setText("全部评论 (" + postDetailBean.questionInfo.commentCount+ ")");
         tvPostNum.setText(postDetailBean.questionInfo.commentCount+"");
         tvPostZan.setText(postDetailBean.questionInfo.likeCount+"");
-
         tvDetailText.setText(postDetailBean.questionInfo.contentText);
         setActivityContent(postDetailBean.questionInfo.contentText,tvDetailText);
+        //帖子类型 1交流 2建议 3提问
+        if (postDetailBean.questionInfo.type==1){
+            tvPostType.setVisibility(View.INVISIBLE);
+        }else if (postDetailBean.questionInfo.type==2){
+            tvPostType.setVisibility(View.VISIBLE);
+            if (postDetailBean.questionInfo.solveStatus==0){
+                tvPostType.setText("未采纳");
+            }else {
+                tvPostType.setVisibility(View.INVISIBLE);
+                ivBgUser.setVisibility(View.VISIBLE);
+            }
+        }else if (postDetailBean.questionInfo.type==3){
+            tvPostType.setVisibility(View.VISIBLE);
+            if (postDetailBean.questionInfo.solveStatus==0){
+                tvPostType.setText("未解决");
+                ll_solve_root.setVisibility(View.GONE);
+            }else {
+                tvPostType.setText("已解决");
+                ll_solve_root.setVisibility(View.VISIBLE);
+
+
+                Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
+                if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentPicture)){
+                    ivSoleImg.setVisibility(View.VISIBLE);
+                    GlideManager.getInstance().setCommonPhoto(ivSoleImg, R.drawable.course_image ,this , postDetailBean.solve_comment.commentPicture ,false );
+                }else {
+                    ivSoleImg.setVisibility(View.GONE);
+                }
+                tvSoleName.setText(postDetailBean.solve_comment.userName);
+                tvSolePartName.setText(postDetailBean.solve_comment.departmentName);
+                tvSoleTitle.setText(postDetailBean.solve_comment.content);
+                tvSoleTime.setText(postDetailBean.solve_comment.createdAt);
+                tvSoleZan.setText(postDetailBean.solve_comment.likeCount+"");
+
+                tvSoleReply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtils.showToast(PostsDetailActivity.this,"评论");
+                    }
+                });
+
+            }
+        }
+
         //显示“展开全部”条件：文本等于五行或者有图片
         tvDetailText.post(new Runnable() {
             @Override

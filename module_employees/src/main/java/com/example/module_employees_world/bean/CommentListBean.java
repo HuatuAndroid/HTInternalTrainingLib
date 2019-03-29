@@ -113,7 +113,9 @@ public class CommentListBean implements Parcelable{
         @SerializedName("avatar")
         public String avatar;
         @SerializedName("allow_del")
-        public int allowDel;
+        public int allowDel;//1 可以删除 0不可以
+        @SerializedName("type")
+        public int type;
         @SerializedName("count")
         public int count;
         @SerializedName("parent")
@@ -126,6 +128,8 @@ public class CommentListBean implements Parcelable{
             content = in.readString();
             commentRule = in.readString();
             likeCount = in.readInt();
+            commentPicture = in.readString();
+            commentFace = in.readString();
             replyCount = in.readInt();
             isAnonymity = in.readInt();
             createdId = in.readInt();
@@ -137,7 +141,9 @@ public class CommentListBean implements Parcelable{
             userName = in.readString();
             avatar = in.readString();
             allowDel = in.readInt();
+            type = in.readInt();
             count = in.readInt();
+            parent = in.createTypedArrayList(ParentBean.CREATOR);
         }
 
         public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
@@ -165,6 +171,8 @@ public class CommentListBean implements Parcelable{
             dest.writeString(content);
             dest.writeString(commentRule);
             dest.writeInt(likeCount);
+            dest.writeString(commentPicture);
+            dest.writeString(commentFace);
             dest.writeInt(replyCount);
             dest.writeInt(isAnonymity);
             dest.writeInt(createdId);
@@ -176,8 +184,11 @@ public class CommentListBean implements Parcelable{
             dest.writeString(userName);
             dest.writeString(avatar);
             dest.writeInt(allowDel);
+            dest.writeInt(type);
             dest.writeInt(count);
+            dest.writeTypedList(parent);
         }
+
 
         public static class ParentBean implements Parcelable{
             /**
@@ -240,6 +251,11 @@ public class CommentListBean implements Parcelable{
             public String userName;
             @SerializedName("avatar")
             public String avatar;
+            @SerializedName("parent_name")
+            public String parent_name;
+            @SerializedName("allow_del")
+            public int allowDel;//1 可以删除
+
 
             protected ParentBean(Parcel in) {
                 id = in.readInt();
@@ -248,6 +264,8 @@ public class CommentListBean implements Parcelable{
                 content = in.readString();
                 commentRule = in.readString();
                 likeCount = in.readInt();
+                commentPicture = in.readString();
+                commentFace = in.readString();
                 replyCount = in.readInt();
                 isAnonymity = in.readInt();
                 createdId = in.readInt();
@@ -258,6 +276,8 @@ public class CommentListBean implements Parcelable{
                 userId = in.readInt();
                 userName = in.readString();
                 avatar = in.readString();
+                parent_name = in.readString();
+                allowDel = in.readInt();
             }
 
             public static final Creator<ParentBean> CREATOR = new Creator<ParentBean>() {
@@ -285,6 +305,8 @@ public class CommentListBean implements Parcelable{
                 dest.writeString(content);
                 dest.writeString(commentRule);
                 dest.writeInt(likeCount);
+                dest.writeString(commentPicture);
+                dest.writeString(commentFace);
                 dest.writeInt(replyCount);
                 dest.writeInt(isAnonymity);
                 dest.writeInt(createdId);
@@ -295,6 +317,8 @@ public class CommentListBean implements Parcelable{
                 dest.writeInt(userId);
                 dest.writeString(userName);
                 dest.writeString(avatar);
+                dest.writeString(parent_name);
+                dest.writeInt(allowDel);
             }
         }
     }

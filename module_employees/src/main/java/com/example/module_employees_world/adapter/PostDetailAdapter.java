@@ -27,9 +27,12 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.ToastUtils;
+import com.wb.rxbus.taskBean.RxBus;
+import com.wb.rxbus.taskBean.RxMessageBean;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -78,11 +81,34 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         }else {
             holder.ivCommentImg.setVisibility(View.GONE);
         }
-
+        //删除权限  0：无权限   1：有权限
+        if (listBean.allowDel==0){
+            holder.ivCommentDel.setVisibility(View.GONE);
+        }else {
+            holder.ivCommentDel.setVisibility(View.VISIBLE);
+        }
         holder.ivCommentDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.showToast(context,"删除："+position);
+                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_101,listBean));
+            }
+        });
+
+        //帖子类型 1交流 2建议 3提问
+        if (listBean.type==1||listBean.type==3){
+            holder.ivChecked.setVisibility(View.GONE);
+        }else if (listBean.type==2){
+            // 0 未解决，未采纳 1已解决，已采纳
+            if (listBean.solveStatus==0){
+                holder.ivChecked.setVisibility(View.VISIBLE);
+            }else {
+                holder.ivChecked.setVisibility(View.GONE);
+            }
+        }
+        holder.ivChecked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_103,listBean));
             }
         });
         holder.tvCommentReply.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +138,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
 
         private RecyclerView rvOnerComment;
         private TextView tvPartName,tvName,tvCommentTitle,tvCommentTime,tvCommentZan,tvCommentReply;
-        private ImageView ivAvatar,ivCommentDel,ivCommentImg,ivCommentGif;
+        private ImageView ivAvatar,ivCommentDel,ivCommentImg,ivCommentGif,ivChecked;
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -127,6 +153,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
             tvCommentZan = itemView.findViewById(R.id.tv_comment_zan);
             tvCommentReply = itemView.findViewById(R.id.tv_comment_reply);
             rvOnerComment = itemView.findViewById(R.id.rv_oner_comment);
+            ivChecked = itemView.findViewById(R.id.iv_conmment_check);
         }
     }
 }
