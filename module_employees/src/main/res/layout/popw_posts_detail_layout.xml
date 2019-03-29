@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#EEEFF4">
+
+    <TextView
+        android:id="@+id/tv_update_type"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="#3D3E43"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:text="修改类型"/>
+
+    <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="#3D3E43"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_marginTop="1dp"
+        android:text="编辑"/>
+
+    <TextView
+        android:id="@+id/tv_del"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="#FF4936"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_marginTop="1dp"
+        android:text="删除"/>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="#999CAA"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:text="取消"/>
+
+</LinearLayout>

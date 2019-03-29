@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.utils.ImgUtils;
 import com.example.module_employees_world.utils.Rgba;
@@ -54,7 +55,7 @@ import rx.schedulers.Schedulers;
  * @author liuzhe
  * @date 2019/3/26
  */
-public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener {
+public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener ,EditText.OnClickListener, EditText.OnFocusChangeListener{
 
     public static final String TAG = "ContentEditor";
     public static int maxTextureWidth = 0;
@@ -226,6 +227,8 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
                 if (editable) {    //文本可编辑
                     //参加文本控件，初始化相关属性
                     final EditText editText = new EditText(getContext());
+                    editText.setOnFocusChangeListener(this);
+                    editText.setOnClickListener(this);
                     editText.setText(bean.content);
                     editText.setBackground(null);
                     editText.addTextChangedListener(new MyTextWatch(bean, editText));
@@ -786,6 +789,49 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
         return index + 2;
     }
 
+    /**
+     * 添加换行
+     * @param state 0:插入换行  1：插入表情
+     */
+    public void AddLineFeed(int state, EmojiconBean emojicon){
+
+        View view = this.findFocus();
+
+        if (view != null && view instanceof EditText) {
+
+            EditText editText = (EditText) view;
+
+            Editable editable = editText.getText();
+            int index = editText.getSelectionStart();
+
+            if (state == 0) {
+                editable.insert(index, "\n");
+            }else if (state == 1){
+                editable.insert(index, emojicon.emojiChart);
+            }
+
+        }
+
+    }
+
+    /**
+     * 点击会隐藏表情视图
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        mContentWatch.hideEmojiKeyboard();
+    }
+    /**
+     * 点击会隐藏表情视图
+     * @param v
+     */
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            mContentWatch.hideEmojiKeyboard();
+        }
+    }
 
     /**
      * 向外暴露回调
@@ -794,6 +840,8 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
         void onEmpty(boolean empty);
 
         void onTypedCount(float count);
+
+        void hideEmojiKeyboard();
     }
 
     ContentWatch mContentWatch;

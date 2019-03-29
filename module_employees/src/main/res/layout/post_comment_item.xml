@@ -44,13 +44,24 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_conmment_del"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:paddingLeft="10dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/post_comment_del"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:id="@+id/iv_conmment_check"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingLeft="10dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/post_item_checked_bg"/>
+            <ImageView
+                android:id="@+id/iv_conmment_del"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingLeft="10dp"
+                android:src="@drawable/post_comment_del"/>
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -76,7 +87,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="哈哈哈哈哈哈伦裤哈三联几哈发牢骚的开发哪家拉佛爱阿斯顿发"/>
+                android:text=""/>
+            <ImageView
+                android:id="@+id/iv_comment_img"
+                android:layout_width="match_parent"
+                android:layout_height="164dp"
+                android:layout_margin="10dp"
+                android:visibility="gone"/>
+            <ImageView
+                android:id="@+id/iv_comment_gif"
+                android:layout_width="match_parent"
+                android:layout_height="164dp"
+                android:layout_margin="10dp"
+                android:visibility="gone"/>
+
             <!--评论时间，点赞回复-->
             <LinearLayout
                 android:paddingRight="10dp"
@@ -89,7 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="2019-12-12"/>
+                    android:text=""/>
 
                 <View
                     android:layout_width="0dp"
@@ -100,7 +124,7 @@
                     android:id="@+id/tv_comment_zan"
                     android:layout_alignParentRight="true"
                     android:textSize="12sp"
-                    android:text="28"
+                    android:text=""
                     android:textColor="#999CAA"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -128,6 +152,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#DADCE5"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_oner_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
         </LinearLayout>
 
     </LinearLayout>

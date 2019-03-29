@@ -24,13 +24,13 @@ public interface CommunityHttpConfig {
     //详情话题收藏
     String DETAILS_COLLECT = "api/app/discuss/userCollect";
     //话题详情
-    String COMMUNITY_DETAILS = "api/app/discuss/question/question_id={question_id}";
+    String POST_DETAILS= "api/app/discuss/question/question_id={question_id}";
     //发布话题
     String RELEASETOPIC = "api/app/discuss/createQuestion";
     //公共图片
     String PUBLICIMAGE = "api/app/public/images";
     //获取评论列表
-    String COMMENT_LIST = "api/app/discuss/comment";
+    String COMMENT_LIST= "api/app/discuss/appComment/question_id={question_id}";
     //发表评论
     String SENDCOMMENT = "api/app/discuss/createComment";
     /**

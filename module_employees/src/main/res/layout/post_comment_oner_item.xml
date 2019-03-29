@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_oner_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:src="@drawable/user_head"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_oner_image"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_oner_name"
+                android:textSize="14sp"
+                android:textColor="#3D3E43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="李曼青"/>
+
+            <TextView
+                android:id="@+id/tv_oner_part"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999CAA"
+                android:layout_marginLeft="12sp"
+                android:textSize="11sp"
+                android:text="总裁办"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_oner_del"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:paddingLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/post_comment_del"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--评论文本-->
+        <TextView
+            android:id="@+id/tv_oner_title"
+            android:textSize="14sp"
+            android:textColor="#3D3E43"
+            android:lineSpacingExtra="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+        <ImageView
+            android:id="@+id/iv_oner_img"
+            android:layout_width="match_parent"
+            android:layout_height="164dp"
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/iv_oner_gif"
+            android:layout_width="match_parent"
+            android:layout_height="164dp"
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+
+        <!--评论时间，点赞回复-->
+        <LinearLayout
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/tv_oner_time"
+                android:textSize="12sp"
+                android:textColor="#999CAA"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=""/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_oner_zan"
+                android:layout_alignParentRight="true"
+                android:textSize="12sp"
+                android:text=""
+                android:textColor="#999CAA"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableLeft="@drawable/post_comment_zan"
+                android:drawablePadding="3dp"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_oner_reply"
+                android:layout_alignParentRight="true"
+                android:textSize="12sp"
+                android:text="回复"
+                android:textColor="#999CAA"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableLeft="@drawable/post_comment_info"
+                android:drawablePadding="3dp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DADCE5"/>
+
+    </LinearLayout>
+
+</LinearLayout>

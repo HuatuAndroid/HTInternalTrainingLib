@@ -4,8 +4,11 @@
 
     <application android:theme="@style/BaseAppTheme">
         <activity android:name=".ui.search.SearchActivity"></activity>
-        <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.EmplayeesActivity" /> -->
-        <activity android:name=".ui.PostsDetailActivity" />
+        <activity android:name=".ui.GuideActivity" />
+        <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
+        <activity android:name=".ui.PostsDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.CommentDialogActivity"
             android:theme="@style/BaseAppTheme.Transparent"
@@ -14,8 +17,29 @@
             android:name=".ui.home.CommunityActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.topic.TopicEditActivity" />
-        <activity android:name=".ui.topic.NTopicEditActivity" />
+
+        <activity android:name=".ui.CommentDetailctivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".ui.topic.TopicEditActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.topic.NTopicEditActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.topic.LocalAlbumDetailActicity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.topic.SelectGroupActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

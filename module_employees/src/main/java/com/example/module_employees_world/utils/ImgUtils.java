@@ -137,13 +137,7 @@ public class ImgUtils {
 ////                tmpFile = decodeSampledBitmapFromResource(inputPath,reqWidth);
 //                }
 //            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return tmpFile;
