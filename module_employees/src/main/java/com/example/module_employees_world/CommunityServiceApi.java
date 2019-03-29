@@ -4,9 +4,14 @@ import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.NImageListsBean;
+import com.example.module_employees_world.bean.SearchCommenBean;
+import com.example.module_employees_world.bean.SearchPostBean;
 import com.example.module_employees_world.common.config.CommunityHttpConfig;
 import com.wb.baselib.bean.Result;
+
+import java.util.List;
 import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
@@ -40,7 +45,7 @@ public interface CommunityServiceApi {
 
     @FormUrlEncoded
     @POST(CommunityHttpConfig.EDIT_TOPIC)
-    Observable<Result> editTopic(@Field("id") String id,@Field("title") String title,@Field("content") String content,@Field("is_anonymity") String is_anonymity);
+    Observable<Result> editTopic(@Field("id") String id, @Field("title") String title, @Field("content") String content, @Field("is_anonymity") String is_anonymity);
 
     @FormUrlEncoded
     @POST(CommunityHttpConfig.RELEASETOPIC)
@@ -51,6 +56,18 @@ public interface CommunityServiceApi {
      */
     @GET(CommunityHttpConfig.COMMENT_LIST)
     Observable<Result<CommentListBean>> getCommentList(@Query("question_id") String question_id, @Query("st") String st);
+
+    /**
+     * 搜索帖子
+     */
+    @GET(CommunityHttpConfig.SEARCH)
+    Observable<Result<List<SearchPostBean>>> getSearchPost(@Path("type") String type, @Query("keyword") String keyword, @Query("page") int page);
+
+    /**
+     * 搜索评论
+     */
+    @GET(CommunityHttpConfig.SEARCH)
+    Observable<Result<List<SearchCommenBean>>> getSearchComment(@Path("type") String type, @Query("keyword") String keyword, @Query("page") int page);
 
 
 }

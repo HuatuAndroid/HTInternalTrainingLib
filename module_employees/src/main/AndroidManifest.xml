@@ -3,21 +3,19 @@
     package="com.example.module_employees_world">
 
     <application android:theme="@style/BaseAppTheme">
-        <activity android:name=".ui.GuideActivity" />
-        <!--<activity android:name=".ui.EmplayeesActivity" />-->
+        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.EmplayeesActivity" /> -->
         <activity android:name=".ui.PostsDetailActivity" />
         <activity
             android:name=".ui.CommentDialogActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/BaseAppTheme.Transparent"/>
+            android:theme="@style/BaseAppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.home.CommunityActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.topic.TopicEditActivity"/>
-        <activity android:name=".ui.topic.NTopicEditActivity"/>
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.topic.TopicEditActivity" />
+        <activity android:name=".ui.topic.NTopicEditActivity" />
     </application>
-
 
 </manifest>
