@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.utils.ImgUtils;
 import com.example.module_employees_world.utils.Rgba;
@@ -790,8 +791,9 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
     /**
      * 添加换行
+     * @param state 0:插入换行  1：插入表情
      */
-    public void AddLineFeed(){
+    public void AddLineFeed(int state, EmojiconBean emojicon){
 
         View view = this.findFocus();
 
@@ -802,7 +804,11 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
             Editable editable = editText.getText();
             int index = editText.getSelectionStart();
 
-            editable.insert(index, "\n");
+            if (state == 0) {
+                editable.insert(index, "\n");
+            }else if (state == 1){
+                editable.insert(index, emojicon.emojiChart);
+            }
 
         }
 

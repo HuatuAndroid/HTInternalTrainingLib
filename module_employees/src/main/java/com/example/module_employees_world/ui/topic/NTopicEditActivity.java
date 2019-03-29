@@ -361,7 +361,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else  if (v.getId() == R.id.mIvLineFeed){
             //点击 换行
-            mTopicEditView.AddLineFeed();
+            mTopicEditView.AddLineFeed(0, null);
         }
 
     }
@@ -489,7 +489,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
      */
     @Override
     public void onItemClick(EmojiconBean emojicon) {
-
+        mTopicEditView.AddLineFeed(1, emojicon);
     }
 
     /**
@@ -497,6 +497,18 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
      */
     @Override
     public void onDeleteClick() {
+
+        View focusedChild = mTopicEditView.getFocusedChild();
+        if (focusedChild instanceof EditText) {
+            EditText editText = (EditText) focusedChild;
+
+            if (editText == null) {
+                return;
+            }
+            KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0,
+                    0, KeyEvent.KEYCODE_ENDCALL);
+            editText.dispatchKeyEvent(event);
+        }
 
     }
 }
