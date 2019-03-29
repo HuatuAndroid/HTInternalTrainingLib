@@ -190,6 +190,7 @@
                 android:id="@+id/mIvA"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:padding="10sp"
                 android:src="@drawable/htjy_tipic_a" />
@@ -198,6 +199,7 @@
                 android:id="@+id/mIvPhotograph"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:padding="10sp"
                 android:src="@drawable/htjy_tipic_photograph" />

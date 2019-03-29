@@ -90,7 +90,7 @@ public class EmojiGridAdapter  extends BaseAdapter {
             holder.tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
             holder.tv.setText(getItem(position).emojiChart+"");
         }
-//        holder.tv.setBackgroundResource(R.drawable.bg_select_rectangle);
+        holder.tv.setBackgroundResource(R.drawable.bg_select_rectangle);
         return convertView;
     }
 }

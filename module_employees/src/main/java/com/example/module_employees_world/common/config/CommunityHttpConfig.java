@@ -28,9 +28,9 @@ public interface CommunityHttpConfig {
     //话题详情
     String POST_DETAILS= "api/app/discuss/question/question_id={question_id}";
     //发布话题
-    String RELEASETOPIC= "api/app/discuss/createQuestion";
+    String RELEASETOPIC = "api/app/discuss/createQuestion";
     //公共图片
-    String PUBLICIMAGE= "api/app/public/images";
+    String PUBLICIMAGE = "api/app/public/images";
     //获取评论列表
     String COMMENT_LIST= "api/app/discuss/appComment/question_id={question_id}";
     //发表评论
@@ -41,4 +41,6 @@ public interface CommunityHttpConfig {
     String DELETE_COMMENT="api/app/discuss/delComment";
     /**编辑帖子*/
     String EDIT_TOPIC="api/app/discuss/editQuestion";
+    /** 搜索*/
+    String SEARCH = "api/app/discuss/search/type={type}";
 }

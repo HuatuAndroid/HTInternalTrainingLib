@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/ivHead"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/user_head" />
+
+        <TextView
+            android:id="@+id/tvPostName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/ivHead"
+            android:text="李曼青"
+            android:textColor="#999CAA"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvPart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15sp"
+            android:layout_toRightOf="@+id/tvPostName"
+            android:textColor="#999CAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="「员工关怀」"
+            android:textColor="#999CAA"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="8dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:text="帖子标题帖子标题帖子标题帖子标题子标题帖子标题帖子标题帖子标题帖子标题子标题帖子标题帖子标题帖子标题帖子标题子标题帖子标题帖子标题帖子标题帖子标题子标题"
+        android:textColor="#3D3E43"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="8dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="#3D3E43"
+        android:textSize="13sp"
+        android:layout_marginTop="13dp"
+        android:text="帖子标题帖子标题帖子标题帖子标题子标题帖子标题帖子标题帖子标题帖子标题子标题"
+        android:textStyle="bold" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="12dp"
+        android:background="#FFE1E3E9" />
+
+</LinearLayout>

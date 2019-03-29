@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="#007AFF">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/home_title_left_return"
+            android:scaleType="centerInside"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@drawable/shape_fill_fff"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="44dp"
+            android:layout_marginRight="67dp">
+
+            <com.example.module_employees_world.customview.ClearEditText
+                android:id="@+id/etcSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="搜索员工天地内容"
+                android:textColorHint="#CCCDD4"
+                android:textSize="13sp"
+                android:textColor="#404145"
+                android:drawablePadding="7dp"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                android:drawableRight="@drawable/icon_clear"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="61dp"
+            android:layout_height="match_parent"
+            android:text="取消"
+            android:textColor="#ffffffff"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <com.shizhefei.view.indicator.ScrollIndicatorView
+            android:id="@+id/scorllIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#FFE1E3E9"/>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

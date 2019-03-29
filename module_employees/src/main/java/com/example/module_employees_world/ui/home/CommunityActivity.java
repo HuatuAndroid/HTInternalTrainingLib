@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.ui.search.SearchActivity;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -87,11 +88,18 @@ public class CommunityActivity extends BaseActivity {
         indicatorViewPager.setAdapter(viewPageTabAdapter);
         mViewPager.setOffscreenPageLimit(mFragments.size());
         mViewPager.setCurrentItem(1);
+
     }
 
     @Override
     protected void setListener() {
-
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CommunityActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
