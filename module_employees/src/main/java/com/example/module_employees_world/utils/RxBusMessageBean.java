@@ -17,6 +17,11 @@ public class RxBusMessageBean implements Parcelable{
         public final static int POST_105=105;
         public final static int POST_106=106;
         public final static int POST_107=107;
+        public final static int POST_108=108;
+        public final static int POST_109=109;
+        public final static int POST_110=110;
+        public final static int POST_111=111;
+        public final static int POST_112=112;
     }
 
 

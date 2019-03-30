@@ -158,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="100dp"
             android:layout_marginBottom="10dp"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
     </LinearLayout>
     <!--帖子详情  收起-->
     <LinearLayout

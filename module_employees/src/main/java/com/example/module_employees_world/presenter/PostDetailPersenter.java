@@ -122,7 +122,7 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
 
             @Override
             public void onSuccess(Result<CommentLikeBean> commentLikeBeanResult) {
-                if (commentLikeBeanResult.getData()!=null){
+                if (commentLikeBeanResult.getData()!=null&& mView!=null){
                     mView.commentLike(commentLikeBeanResult.getData(),tvZan);
                 }
             }

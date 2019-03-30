@@ -29,185 +29,191 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/topbar_comment_detail"
         android:layout_above="@+id/ll_comment_detail_bottom">
-        <View
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scv_comment"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="#EEEFF4"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="55dp">
-
-                <ImageView
-                    android:id="@+id/comment_detail_avatar"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:scaleType="fitXY"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/user_head"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/comment_detail_avatar"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:layout_centerVertical="true">
-
-                    <TextView
-                        android:id="@+id/tv_comment_detail_name"
-                        android:textSize="14sp"
-                        android:textColor="#3D3E43"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="李曼青"/>
-
-                    <TextView
-                        android:id="@+id/tv_comment_detail_part"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#999CAA"
-                        android:layout_marginLeft="12sp"
-                        android:textSize="11sp"
-                        android:text="总裁办"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_comment_detail_del"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:paddingLeft="10dp"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/post_comment_del"/>
-
-            </RelativeLayout>
-
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="match_parent"
+                android:orientation="vertical">
                 <View
-                    android:layout_width="35dp"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#EEEFF4"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <!--评论文本-->
-                    <TextView
-                        android:id="@+id/tv_comment_detail_title"
-                        android:textSize="14sp"
-                        android:textColor="#3D3E43"
-                        android:lineSpacingExtra="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text=""/>
-                    <ImageView
-                        android:id="@+id/iv_comment_detail_img"
-                        android:layout_width="match_parent"
-                        android:layout_height="164dp"
-                        android:layout_margin="10dp"
-                        android:visibility="gone"/>
-                    <ImageView
-                        android:id="@+id/iv_comment_detail_gif"
-                        android:layout_width="match_parent"
-                        android:layout_height="164dp"
-                        android:layout_margin="10dp"
-                        android:visibility="gone"/>
 
-                    <!--评论时间，点赞回复-->
-                    <LinearLayout
-                        android:paddingRight="10dp"
+                    <RelativeLayout
+                        android:padding="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp">
-                        <TextView
-                            android:id="@+id/tv_comment_detail_time"
-                            android:textSize="12sp"
-                            android:textColor="#999CAA"
+                        android:layout_height="55dp">
+
+                        <ImageView
+                            android:id="@+id/comment_detail_avatar"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:scaleType="fitXY"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/user_head"/>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text=""/>
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/comment_detail_avatar"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:layout_centerVertical="true">
+
+                            <TextView
+                                android:id="@+id/tv_comment_detail_name"
+                                android:textSize="14sp"
+                                android:textColor="#3D3E43"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="李曼青"/>
+
+                            <TextView
+                                android:id="@+id/tv_comment_detail_part"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#999CAA"
+                                android:layout_marginLeft="12sp"
+                                android:textSize="11sp"
+                                android:text="总裁办"/>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_comment_detail_del"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:paddingLeft="10dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/post_comment_del"
+                            android:visibility="invisible"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"/>
+                            android:layout_width="35dp"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"/>
 
-                        <TextView
-                            android:id="@+id/tv_comment_detail_zan"
-                            android:layout_alignParentRight="true"
-                            android:textSize="12sp"
-                            android:text=""
-                            android:textColor="#999CAA"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:drawableLeft="@drawable/post_comment_zan"
-                            android:drawablePadding="3dp"
-                            android:layout_marginLeft="16dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <!--评论文本-->
+                            <TextView
+                                android:id="@+id/tv_comment_detail_title"
+                                android:textSize="14sp"
+                                android:textColor="#3D3E43"
+                                android:lineSpacingExtra="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:text=""/>
+                            <ImageView
+                                android:id="@+id/iv_comment_detail_img"
+                                android:layout_width="match_parent"
+                                android:layout_height="164dp"
+                                android:layout_margin="10dp"
+                                android:visibility="gone"/>
+                            <ImageView
+                                android:id="@+id/iv_comment_detail_gif"
+                                android:layout_width="match_parent"
+                                android:layout_height="164dp"
+                                android:layout_margin="10dp"
+                                android:visibility="gone"/>
 
-                        <TextView
-                            android:id="@+id/tv_comment_detail_reply"
-                            android:layout_alignParentRight="true"
-                            android:textSize="12sp"
-                            android:text="回复"
-                            android:textColor="#999CAA"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:drawableLeft="@drawable/post_comment_info"
-                            android:drawablePadding="3dp"
-                            android:layout_marginLeft="10dp"/>
+                            <!--评论时间，点赞回复-->
+                            <LinearLayout
+                                android:paddingRight="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+                                <TextView
+                                    android:id="@+id/tv_comment_detail_time"
+                                    android:textSize="12sp"
+                                    android:textColor="#999CAA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text=""/>
 
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:id="@+id/tv_comment_detail_zan"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="12sp"
+                                    android:text=""
+                                    android:textColor="#999CAA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:drawableLeft="@drawable/post_comment_zan"
+                                    android:drawablePadding="3dp"
+                                    android:layout_marginLeft="16dp"/>
+
+                                <TextView
+                                    android:id="@+id/tv_comment_detail_reply"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="12sp"
+                                    android:text="回复"
+                                    android:textColor="#999CAA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:drawableLeft="@drawable/post_comment_info"
+                                    android:drawablePadding="3dp"
+                                    android:layout_marginLeft="10dp"/>
+                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#DADCE5"/>
+                        android:layout_height="8dp"
+                        android:background="#EEEFF4"/>
+
+                    <TextView
+                        android:id="@+id/tv_comment_detail_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="16dp"
+                        android:textColor="#3D3E43"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:text="2条回复 "/>
+
+                    <com.wb.baselib.view.MultipleStatusView
+                        android:id="@+id/comment_multipleStatusview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:contentView="@layout/post_recycerview_layout"
+                        app:emptyView="@layout/main_custom_empty_view"
+                        app:errorView="@layout/custom_error_view"
+                        app:loadingView="@layout/main_custom_loading_view"
+                        app:noNetworkView="@layout/custom_no_network_view"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="#EEEFF4"/>
-
-            <TextView
-                android:id="@+id/tv_comment_detail_num"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="16dp"
-                android:textColor="#3D3E43"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:text="2条回复 "/>
-
-            <com.wb.baselib.view.MultipleStatusView
-                android:id="@+id/post_multipleStatusview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentView="@layout/post_recycerview_layout"
-                app:emptyView="@layout/main_custom_empty_view"
-                app:errorView="@layout/custom_error_view"
-                app:loadingView="@layout/main_custom_loading_view"
-                app:noNetworkView="@layout/custom_no_network_view"/>
-
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
     </com.wangbo.smartrefresh.layout.SmartRefreshLayout>
 
     <LinearLayout

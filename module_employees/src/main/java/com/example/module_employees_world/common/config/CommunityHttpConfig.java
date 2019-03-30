@@ -43,4 +43,8 @@ public interface CommunityHttpConfig {
     String EDIT_TOPIC="api/app/discuss/editQuestion";
     /** 搜索*/
     String SEARCH = "api/app/discuss/search/type={type}";
+    /** 评论详情*/
+    String COMMENT_INFO = "api/app/discuss/appCommentInfo/comment_id={comment_id}";
+    /**评论子列表*/
+    String COMMENT_CHILDREN_LIST = "api/app/discuss/appCommentSonInfo/comment_id={comment_id}";
 }

@@ -1,5 +1,7 @@
 package com.example.module_employees_world;
 
+import com.example.module_employees_world.bean.CommentChildrenBean;
+import com.example.module_employees_world.bean.CommentDetailBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
@@ -119,5 +121,18 @@ public interface CommunityServiceApi {
     @FormUrlEncoded
     @POST(CommunityHttpConfig.DELETE_COMMENT)
     Observable<Result> deleteComment(@Field("id") String id);
+
+    /**
+     * 评论详情
+     */
+    @GET(CommunityHttpConfig.COMMENT_INFO)
+    Observable<Result<CommentDetailBean>> comment_detail(@Path("comment_id") int comment_id);
+
+    /**
+     * 评论子列表
+     */
+    @GET(CommunityHttpConfig.COMMENT_CHILDREN_LIST)
+    Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id,@Query("page") int page,@Query("limit") int limit,@Query("st") int st);
+
 
 }
