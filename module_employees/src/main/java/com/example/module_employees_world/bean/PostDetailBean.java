@@ -195,6 +195,7 @@ public class PostDetailBean implements Parcelable{
 
     public static class SolveComment implements Parcelable{
 
+
         /**
          * id : 272
          * question_id : 147
@@ -204,7 +205,7 @@ public class PostDetailBean implements Parcelable{
          * like_count : 0
          * comment_picture : null
          * comment_face : null
-         * reply_count : 5
+         * reply_count : 18
          * is_anonymity : 1
          * created_id : 30850
          * created_at : 2018-11-29
@@ -216,6 +217,8 @@ public class PostDetailBean implements Parcelable{
          * user_name : 匿名
          * avatar : http://test-px.huatu.com//uploads/niming.jpeg
          * allow_del : 0
+         * count : 18
+         * parent : [{"id":462,"question_id":147,"parent_id":272,"content":"回复一下试试效果","comment_rule":"/272/462","like_count":0,"comment_picture":null,"comment_face":null,"reply_count":0,"is_anonymity":1,"created_id":30860,"created_at":"2小时前","is_del":0,"delete_at":null,"solve_status":0,"parent_name":"张兵","department_name":"","user_id":30860,"user_name":"匿名","avatar":"http://test-px.huatu.com//uploads/niming.jpeg"},{"id":461,"question_id":147,"parent_id":272,"content":"回复一下试试效果","comment_rule":"/272/461","like_count":0,"comment_picture":null,"comment_face":null,"reply_count":0,"is_anonymity":1,"created_id":30860,"created_at":"2小时前","is_del":0,"delete_at":null,"solve_status":0,"parent_name":"张兵","department_name":"","user_id":30860,"user_name":"匿名","avatar":"http://test-px.huatu.com//uploads/niming.jpeg"}]
          */
 
         @SerializedName("id")
@@ -258,6 +261,10 @@ public class PostDetailBean implements Parcelable{
         public String avatar;
         @SerializedName("allow_del")
         public int allowDel;
+        @SerializedName("count")
+        public int count;
+        @SerializedName("parent")
+        public List<ParentBean> parent;
 
         protected SolveComment(Parcel in) {
             id = in.readInt();
@@ -266,6 +273,8 @@ public class PostDetailBean implements Parcelable{
             content = in.readString();
             commentRule = in.readString();
             likeCount = in.readInt();
+            commentPicture = in.readString();
+            commentFace = in.readString();
             replyCount = in.readInt();
             isAnonymity = in.readInt();
             createdId = in.readInt();
@@ -277,6 +286,36 @@ public class PostDetailBean implements Parcelable{
             userName = in.readString();
             avatar = in.readString();
             allowDel = in.readInt();
+            count = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(id);
+            dest.writeInt(questionId);
+            dest.writeInt(parentId);
+            dest.writeString(content);
+            dest.writeString(commentRule);
+            dest.writeInt(likeCount);
+            dest.writeString(commentPicture);
+            dest.writeString(commentFace);
+            dest.writeInt(replyCount);
+            dest.writeInt(isAnonymity);
+            dest.writeInt(createdId);
+            dest.writeString(createdAt);
+            dest.writeInt(isDel);
+            dest.writeInt(solveStatus);
+            dest.writeString(departmentName);
+            dest.writeInt(userId);
+            dest.writeString(userName);
+            dest.writeString(avatar);
+            dest.writeInt(allowDel);
+            dest.writeInt(count);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
         }
 
         public static final Creator<SolveComment> CREATOR = new Creator<SolveComment>() {
@@ -290,32 +329,6 @@ public class PostDetailBean implements Parcelable{
                 return new SolveComment[size];
             }
         };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-            dest.writeInt(questionId);
-            dest.writeInt(parentId);
-            dest.writeString(content);
-            dest.writeString(commentRule);
-            dest.writeInt(likeCount);
-            dest.writeInt(replyCount);
-            dest.writeInt(isAnonymity);
-            dest.writeInt(createdId);
-            dest.writeString(createdAt);
-            dest.writeInt(isDel);
-            dest.writeInt(solveStatus);
-            dest.writeString(departmentName);
-            dest.writeInt(userId);
-            dest.writeString(userName);
-            dest.writeString(avatar);
-            dest.writeInt(allowDel);
-        }
     }
 
     public static class RecommendListBean implements Parcelable{

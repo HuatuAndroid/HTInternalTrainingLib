@@ -2,6 +2,7 @@ package com.example.module_employees_world.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.ui.CommentDetailctivity;
 import com.example.module_employees_world.ui.CommentDialogActivity;
+import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
@@ -32,16 +35,20 @@ import java.util.List;
 public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.ViewHolder> {
 
     LayoutInflater inflater;
-    Activity context;
+    PostsDetailActivity context;
     int count;
+    int partenPosition;
     private final int FLAG_IS_LAST=0;
     private final int FLAG_NOT_LAST=1;
-    List<CommentListBean.ListBean.ParentBean> parentBeanList;
+    List<ParentBean> parentBeanList;
+    PostsDetailActivity.MyHandler myHandler;
 
-    public CommentOnerAdapter(Activity context, List<CommentListBean.ListBean.ParentBean> parentBeanList, int count) {
+    public CommentOnerAdapter(PostsDetailActivity context, List<ParentBean> parentBeanList, int count, int partenPosition, PostsDetailActivity.MyHandler myHandler) {
         this.context=context;
         this.count=count;
+        this.partenPosition=partenPosition;
         this.parentBeanList=parentBeanList;
+        this.myHandler=myHandler;
         inflater = LayoutInflater.from(context);
     }
 
@@ -64,15 +71,18 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         if (position>1){
+            ParentBean parentBean = parentBeanList.get(0);
             holder.tvLast.setText("查看全部"+count+"条回复");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, CommentDetailctivity.class));
+                    Intent intent = new Intent(context, CommentDetailctivity.class);
+                    intent.putExtra(CommentDetailctivity.TAG_JUMP,parentBean.parentId);
+                    context.startActivity(intent);
                 }
             });
         }else {
-            final CommentListBean.ListBean.ParentBean parentBean = parentBeanList.get(position);
+            final ParentBean parentBean = parentBeanList.get(position);
             if (!TextUtils.isEmpty(parentBean.avatar))
             Picasso.with(context).load(parentBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
             holder.tvName.setText(parentBean.userName);
@@ -98,19 +108,33 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
             holder.ivDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_102,parentBean));
+                    Message message = new Message();
+                    message.what=RxBusMessageBean.MessageType.POST_102;
+                    message.obj=parentBean.id;
+                    message.arg1=partenPosition;
+                    message.arg1=position;
+                    myHandler.handleMessage(message);
+//                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_102,parentBean.id,partenPosition,position));
                 }
             });
             holder.tvReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.showToast(context,"回复："+parentBean.userName);
+                    Message message = new Message();
+                    message.what=RxBusMessageBean.MessageType.POST_109;
+                    message.arg1=parentBean.id;
+                    myHandler.handleMessage(message);
                 }
             });
             holder.tvZan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.showToast(context,"点赞："+parentBean.userName);
+                    Message message = new Message();
+                    message.what=RxBusMessageBean.MessageType.POST_108;
+                    message.obj=holder.tvZan;
+                    message.arg1=parentBean.id;
+                    myHandler.handleMessage(message);
+//                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_108,holder.tvZan,parentBean.id));
                 }
             });
         }

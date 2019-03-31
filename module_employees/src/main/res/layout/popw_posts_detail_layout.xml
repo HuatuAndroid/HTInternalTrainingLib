@@ -17,6 +17,45 @@
         android:text="修改类型"/>
 
     <TextView
+        android:id="@+id/tv_adopt"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="#3D3E43"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_marginTop="1dp"
+        android:text="采纳"/>
+    <!--<RelativeLayout
+        android:id="@+id/rl_adopt_checked"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:textColor="#007AFF"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:drawableRight="@drawable/posts_adopt_checked"
+            android:drawablePadding="10dp"
+            android:text="采纳"/>
+    </RelativeLayout>-->
+
+    <TextView
+        android:id="@+id/tv_invite"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="#3D3E43"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_marginTop="1dp"
+        android:text="邀请回答"/>
+
+    <TextView
         android:id="@+id/tv_edit"
         android:layout_width="match_parent"
         android:layout_height="44dp"
