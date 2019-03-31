@@ -3,38 +3,106 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:background="#f6f6f6"
     android:clickable="true"
-    android:background="#f6f6f6">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/flEmojiContent"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <com.example.module_employees_world.view.JSViewPager
-            android:id="@+id/jsvp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="14dp" />
+            android:layout_height="wrap_content">
 
-        <com.example.module_employees_world.view.ExCirclePageIndicator
-            android:id="@+id/cpi"
-            android:layout_height="26pt"
+        <LinearLayout
+            android:id="@+id/mViewTu"
+            android:background="#f6f6f6"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.example.module_employees_world.view.JSViewPager
+                android:id="@+id/mViewpager_tu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="14dp" />
+
+            <com.example.module_employees_world.view.ExCirclePageIndicator
+                android:id="@+id/mExCirclePageIndicator_tu"
+                android:layout_width="match_parent"
+                android:layout_height="16pt"
+                android:layout_marginBottom="3dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                app:fillColor="#FF888888"
+                app:fillRadius="5dp"
+                app:pageColor="#FFCCCCCC"
+                app:radius="4dp"
+                app:space="5dp"
+                app:strokeColor="#FF888888"
+                app:strokeWidth="-3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mViewEmoji"
+            android:orientation="vertical"
+            android:background="#f6f6f6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.example.module_employees_world.view.JSViewPager
+                android:id="@+id/mViewpager_Emoji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="14dp" />
+
+            <com.example.module_employees_world.view.ExCirclePageIndicator
+                android:id="@+id/mExCirclePageIndicator_Emoji"
+                android:layout_width="match_parent"
+                android:layout_height="16pt"
+                android:layout_marginBottom="3dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                app:fillColor="#FF888888"
+                app:fillRadius="5dp"
+                app:pageColor="#FFCCCCCC"
+                app:radius="4dp"
+                app:space="5dp"
+                app:strokeColor="#FF888888"
+                app:strokeWidth="-3dp" />
+        </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:paddingBottom="3dp"
-            android:layout_marginBottom="3dp"
-            android:paddingTop="3dp"
-            app:radius="4dp"
-            app:fillColor="#FF888888"
-            app:pageColor="#FFCCCCCC"
-            app:strokeWidth="-3dp"
-            app:strokeColor="#FF888888"
-            app:space="5dp"
-            app:fillRadius="5dp"
-            />
+            android:layout_height="40dp"
+            android:layout_below="@+id/jsvp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mIvEmoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:background="@color/color_FFf6f6f6"
+                android:padding="12dp"
+                android:src="@drawable/htzx_emoji_button" />
+
+            <ImageView
+                android:id="@+id/mIvTutu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:background="@color/white"
+                android:src="@drawable/htzx_tutu_button" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

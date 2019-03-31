@@ -1,6 +1,7 @@
 package com.example.module_employees_world.ui.emoji;
 
 import com.example.module_employees_world.bean.EmojiconBean;
+import com.example.module_employees_world.bean.TutuIconBean;
 
 /**
  * @author liuzhe
@@ -14,4 +15,7 @@ public interface EmojiItemClickListener {
 
     void onDeleteClick();
 
+    void onItemClick(TutuIconBean tutuIconBean);
+
+    void onDeleteTutuClick();
 }

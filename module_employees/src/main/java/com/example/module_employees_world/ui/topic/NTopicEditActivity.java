@@ -20,6 +20,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
+import com.example.module_employees_world.bean.TutuIconBean;
 import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.LocalImageHelper;
@@ -485,7 +486,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     }
 
     /**
-     * 点击表情传回的数据
+     * emoji点击表情传回的数据
      */
     @Override
     public void onItemClick(EmojiconBean emojicon) {
@@ -493,7 +494,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     }
 
     /**
-     * 点击删除
+     * emoji点击删除
      */
     @Override
     public void onDeleteClick() {
@@ -509,6 +510,23 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     0, KeyEvent.KEYCODE_ENDCALL);
             editText.dispatchKeyEvent(event);
         }
+
+    }
+
+    /**
+     * 兔兔表情点击传回的数据
+     * @param tutuIconBean
+     */
+    @Override
+    public void onItemClick(TutuIconBean tutuIconBean) {
+
+    }
+
+    /**
+     * emoji点击删除
+     */
+    @Override
+    public void onDeleteTutuClick() {
 
     }
 }
