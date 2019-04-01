@@ -3,6 +3,7 @@ package com.example.module_employees_world.presenter;
 import android.app.Activity;
 
 import com.example.module_employees_world.bean.NImageListsBean;
+import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.model.TopicEditModel;
 import com.wb.baselib.app.AppUtils;
@@ -11,6 +12,8 @@ import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
@@ -113,4 +116,16 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
             }
         }, mView.binLifecycle());
     }
+
+
+    public void disposeImages(TopicContentItem[] topicContentItems){
+
+        Map<String, File> map = new HashMap<>();
+        for (int i = 0; i < topicContentItems.length; i++) {
+            File file = new File(topicContentItems[i].localUrl);
+            map.put("file" + i, file);
+        }
+
+    }
+
 }

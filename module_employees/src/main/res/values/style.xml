@@ -46,4 +46,12 @@
         <!-- 无标题 有的手机设置这行代码-->
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="MDialogNoPadding" parent="@android:style/Theme.Holo.DialogWhenLarge">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>

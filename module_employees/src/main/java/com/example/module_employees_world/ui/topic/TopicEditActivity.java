@@ -1,6 +1,8 @@
 package com.example.module_employees_world.ui.topic;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +21,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -29,9 +32,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
+import com.example.module_employees_world.bean.TutuIconBean;
+import com.example.module_employees_world.common.InsertConnectAlertDialog;
+import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
+import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
+import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
+import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
@@ -70,10 +80,12 @@ import okhttp3.RequestBody;
  *
  * 原来  发帖界面
  */
-public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View {
+public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View, EmojiItemClickListener, EditText.OnFocusChangeListener{
 
     public final int TAG_1 = 100;
     public final int TAG_ACTIVTY_RESULT_CODE = 200;
+    /** 选择小组 */
+    public static final int SELECT_GROUP = 400;
 
     private EditText et_new_content;
     private EditText et_update_topic_title;
@@ -83,17 +95,24 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
     private ImageView mIvA, mIvPhotograph, mIvHyperLink, mIvPicture, mIvFace, mIvLineFeed;
 
+    private EmojiKeyboardFragment emojiKeyboardFragment;
+
+    //退出时，弹框
+    private NCommontPopw sureBackPopw;
+
     private List<String> result;
     private MyHandle myHandle;
 
     private int picWidth;
     //已上传图片个数
     private int counter = 0;
-    private NCommontPopw sureBackPopw;
 
     private String groupId;
     //1交流 2建议 3提问
     private int type = 1;
+
+    //判断键盘是否显示/隐藏
+    private boolean emojiKeyboardOpen = false;
 
     @Override
     protected TopicEditPresenter onCreatePresenter() {
@@ -125,6 +144,11 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
                 mPresenter.commitImage(bodyMap);
                 showLoadDiaLog("");
             }
+        }else if (requestCode == SELECT_GROUP){
+
+                if (data != null) {
+                    groupId = data.getStringExtra("group_id");
+                }
         }
     }
 
@@ -163,6 +187,11 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
         mTvJianYi= findViewById(R.id.mTvJianYi);
         mTvTiWen= findViewById(R.id.mTvTiWen);
         mTvXiaoXu= findViewById(R.id.mTvXiaoXu);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.flEmoji,
+                emojiKeyboardFragment = EmojiKeyboardFragment.newInstance(this, this)).commit();
+
+        et_update_topic_title.postDelayed(() -> SoftKeyboardUtils.showORhideSoftKeyboard(TopicEditActivity.this), 1500);
 
     }
 
@@ -367,12 +396,20 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
                 llBottom.setLayoutParams(layoutParams);
             }
         });
+
+        et_update_topic_title.setOnClickListener(this);
+        et_update_topic_title.setOnFocusChangeListener(this);
+        et_new_content.setOnClickListener(this);
+        et_new_content.setOnFocusChangeListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.mTvJiaoLiu) {
+        if (v.getId() == R.id.et_new_content || v.getId() == R.id.et_update_topic_title){
+            hideEmojiKeyboardFragment();
+        }else if (v.getId() == R.id.mTvJiaoLiu) {
             //点击 交流
             type = 1;
             setUpdataUi_Type(mTvJiaoLiu, mTvJianYi, mTvTiWen);
@@ -388,6 +425,7 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
 
         }else if (v.getId() == R.id.mTvXiaoXu) {
             //点击 选择小组
+            StartActivityCommon.startActivityForResult(this,SelectGroupActivity.class, SELECT_GROUP);
 
         }else if (v.getId() == R.id.mIvA){
             //点击 @
@@ -396,7 +434,14 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
 
         } else  if (v.getId() == R.id.mIvHyperLink){
             //点击 连接
+            if (emojiKeyboardOpen) {
+                //隐藏软键盘
+                SoftKeyboardUtils.hideSystemSoftKeyboard(this);
+                //隐藏表情视图
+                hideEmojiKeyboardFragment();
+            }
 
+            myAlertDialog();
         } else  if (v.getId() == R.id.mIvPicture){
             //点击 照片
             counter = 0;
@@ -407,10 +452,25 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
             showAlbue(9 - imgNum);
         } else  if (v.getId() == R.id.mIvFace){
             //点击 表情
+            if (emojiKeyboardFragment != null){
+                emojiKeyboardOpen = !emojiKeyboardOpen;
+                if (emojiKeyboardOpen) {
+                    //隐藏软键盘
+                    SoftKeyboardUtils.hideSoftKeyboard(this);
+                    //是否显示表情视图
+                    emojiKeyboardFragment.setflEmojiContentShow(true);
+                }else{
 
+                    //是否显示表情视图
+                    emojiKeyboardFragment.setflEmojiContentShow(false);
+                    //显示软键盘
+                    SoftKeyboardUtils.showSoftKeyboard(this);
+                }
+
+            }
         } else  if (v.getId() == R.id.mIvLineFeed){
             //点击 换行
-
+            setmIvLineFeed();
         }
 
     }
@@ -613,6 +673,105 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
             public void onClick(View widget) {
                 LogUtil.e("onClick ----- " + "onClick");
             }
+        }
+    }
+
+    /**
+     * 表情视图隐藏
+     */
+    public void hideEmojiKeyboardFragment(){
+        if (emojiKeyboardFragment !=null) {
+            emojiKeyboardOpen = false;
+            //隐藏表情视图
+            emojiKeyboardFragment.setflEmojiContentShow(false);
+        }
+    }
+
+    /**
+     * 超链接编辑弹框
+     */
+    private InsertConnectAlertDialog myAlertDialog;
+    private void myAlertDialog() {
+
+        Dialog dialog = new Dialog(this, R.style.MDialogNoPadding);
+        // 设置它的ContentView
+        dialog.setContentView(R.layout.dialog_insert_connect);
+
+        EditText mEtConnect = dialog.findViewById(R.id.mEtConnect);
+        EditText mEtConnectContent = dialog.findViewById(R.id.mEtConnectContent);
+        TextView tvDialogLeft = dialog.findViewById(R.id.tvDialogLeft);
+        TextView tvDialogRight = dialog.findViewById(R.id.tvDialogRight);
+
+        tvDialogLeft.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        tvDialogRight.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+
+        if (!isFinishing()) {
+            dialog.show();
+        }
+    }
+
+    /**
+     * 换行
+     */
+    public void setmIvLineFeed(){
+
+        Editable editable = et_new_content.getText();
+        int index = et_new_content.getSelectionStart();
+        editable.insert(index, "\n");
+    }
+
+    /**
+     * emoji点击表情传回的数据
+     */
+    @Override
+    public void onItemClick(EmojiconBean emojicon) {
+
+        Editable editable = et_new_content.getText();
+        int index = et_new_content.getSelectionStart();
+        editable.insert(index, emojicon.emojiChart);
+    }
+    /**
+     * emoji点击删除
+     */
+    @Override
+    public void onDeleteClick() {
+
+        KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0,
+                0, KeyEvent.KEYCODE_ENDCALL);
+        et_new_content.dispatchKeyEvent(event);
+    }
+
+    /**
+     * 兔兔表情点击传回的数据
+     * @param tutuIconBean
+     */
+    @Override
+    public void onItemClick(TutuIconBean tutuIconBean) {
+
+    }
+    /**
+     * emoji点击删除
+     */
+    @Override
+    public void onDeleteTutuClick() {
+
+    }
+
+    /**
+     * 点击edittext, 触发此响应，解决隐藏表情视图
+     * @param v
+     * @param hasFocus
+     */
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            hideEmojiKeyboardFragment();
         }
     }
 

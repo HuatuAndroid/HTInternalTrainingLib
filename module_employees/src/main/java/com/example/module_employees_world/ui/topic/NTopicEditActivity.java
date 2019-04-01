@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,20 +20,18 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.bean.TutuIconBean;
-import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
-import com.example.module_employees_world.ui.TopicEditView;
+import com.example.module_employees_world.view.TopicEditView;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
-import com.example.module_employees_world.ui.emoji.SoftKeyboardStateHelper;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
+import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
-import com.wb.baselib.utils.CommonUtil;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
@@ -243,6 +240,10 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                 });
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
+
+
+                mTopicEditView.getImageItems();
+
 //                String title = et_update_topic_title.getText().toString();
 //                String content = et_new_content.getText().toString();
 //                if (TextUtils.isEmpty(title)) {
@@ -519,7 +520,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
      */
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-
+        LogUtil.e("onItemClick");
     }
 
     /**

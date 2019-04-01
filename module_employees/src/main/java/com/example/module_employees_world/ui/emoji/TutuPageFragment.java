@@ -14,7 +14,6 @@ import android.widget.GridView;
 import com.example.module_employees_world.adapter.TutuGridAdapter;
 import com.example.module_employees_world.bean.TutuIconBean;
 import com.example.module_employees_world.common.TutuPicInit;
-import com.example.module_employees_world.common.config.EmojiConfig;
 
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class TutuPageFragment extends Fragment {
 
         sGrid.setOnItemClickListener((parent, view, position, id) -> {
             if (itemClickListener != null) {
-                itemClickListener.onDeleteClick();
+                itemClickListener.onItemClick(datas.get(position));
             }
         });
         sGrid.setSelector(new ColorDrawable(Color.WHITE));
