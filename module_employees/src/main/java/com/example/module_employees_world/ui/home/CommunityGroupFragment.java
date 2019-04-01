@@ -60,7 +60,7 @@ public class CommunityGroupFragment extends MvpFragment<CommunityGroupPresenter>
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_information);
+        setContentView(R.layout.fragment_group);
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);

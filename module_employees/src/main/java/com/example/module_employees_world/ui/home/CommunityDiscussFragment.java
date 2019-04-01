@@ -13,6 +13,7 @@ import com.example.module_employees_world.bean.DiscussListBean;
 import com.example.module_employees_world.contranct.CommunityDiscussContranct;
 import com.example.module_employees_world.presenter.CommunityDiscussPresenter;
 import com.example.module_employees_world.ui.PostsDetailActivity;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
@@ -23,7 +24,6 @@ import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.MyListView;
 import com.wb.rxbus.taskBean.RxBus;
-import com.wb.rxbus.taskBean.RxMessageBean;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,37 +72,41 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_community);
+        setContentView(R.layout.fragment_discuss);
         type = getArguments().getString("type");
-        groupId = getArguments().getString("groupId","");
+        groupId = getArguments().getString("groupId", "");
         isRefresh = getArguments().getBoolean("isRefresh");
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
         discussListBeans = new ArrayList<>();
-        discussAdapter = new CommunityDiscussAdapter(getActivity(),type,discussListBeans);
+        discussAdapter = new CommunityDiscussAdapter(getActivity(), type, discussListBeans);
         listView.setAdapter(discussAdapter);
-        RefreshUtils.getInstance(smartRefreshLayout,getActivity() ).defaultRefreSh();
+        RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
         smartRefreshLayout.setEnableLoadMore(true);
         multipleStatusView.showLoading();
         if ("".equals(groupId)) {
-            mPresenter.getDiscussData(type,page);
-        }else {
-            mPresenter.getGroupTypeData(type,groupId,page);
+            mPresenter.getDiscussData(type, page);
+        } else {
+            mPresenter.getGroupTypeData(type, groupId, page);
         }
-        RxBus.getIntanceBus().registerRxBus(RxMessageBean.class, new Consumer<RxMessageBean>() {
+        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
-            public void accept(RxMessageBean rxMessageBean) throws Exception {
-                if (rxMessageBean.getMessageType() == 852) {
+            public void accept(RxBusMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
                     page = 1;
-                    mPresenter.getGroupTypeData(type,groupId,page);
-                }else if (rxMessageBean.getMessageType() == 486) {
-                    String total = rxMessageBean.getMessage();
+                    if ("".equals(groupId)) {
+                        mPresenter.getDiscussData(type, page);
+                    } else {
+                        mPresenter.getGroupTypeData(type, groupId, page);
+                    }
+                } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
+                    String total = (String) rxMessageBean.getMessage();
                     discussListBeans.get(index).setComment_count(total);
                     discussAdapter.notifyDataSetChanged();
-                }else if (rxMessageBean.getMessageType() == 487) {
-                    String likeCount = rxMessageBean.getMessage();
+                } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_LIKE) {
+                    String likeCount = (String) rxMessageBean.getMessage();
                     discussListBeans.get(index).setLike_count(likeCount);
                     discussAdapter.notifyDataSetChanged();
                 }
@@ -120,9 +124,9 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
                 multipleStatusView.showLoading();
                 page = 1;
                 if ("".equals(groupId)) {
-                    mPresenter.getDiscussData(type,page);
-                }else {
-                    mPresenter.getGroupTypeData(type,groupId,page);
+                    mPresenter.getDiscussData(type, page);
+                } else {
+                    mPresenter.getGroupTypeData(type, groupId, page);
                 }
 
             }
@@ -132,9 +136,9 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
                 if ("".equals(groupId)) {
-                    mPresenter.getDiscussData(type,page);
-                }else {
-                    mPresenter.getGroupTypeData(type,groupId,page);
+                    mPresenter.getDiscussData(type, page);
+                } else {
+                    mPresenter.getGroupTypeData(type, groupId, page);
                 }
             }
         });
@@ -142,9 +146,9 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if ("".equals(groupId)) {
-                    mPresenter.getDiscussData(type,page);
-                }else {
-                    mPresenter.getGroupTypeData(type,groupId,page);
+                    mPresenter.getDiscussData(type, page);
+                } else {
+                    mPresenter.getGroupTypeData(type, groupId, page);
                 }
             }
         });
@@ -154,8 +158,8 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
                 index = position;
                 //社区详情
                 DiscussListBean discussListBean = discussListBeans.get(position);
-                int readCount = Integer.parseInt(discussListBean.getRead_count())+1;
-                discussListBean.setRead_count(readCount+"");
+                int readCount = Integer.parseInt(discussListBean.getRead_count()) + 1;
+                discussListBean.setRead_count(readCount + "");
                 discussAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(getActivity(), PostsDetailActivity.class);
                 intent.putExtra("question_id", discussListBeans.get(position).getId());

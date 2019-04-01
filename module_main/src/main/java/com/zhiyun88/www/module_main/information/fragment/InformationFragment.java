@@ -18,8 +18,6 @@ import com.wb.baselib.base.fragment.MvpFragment;
 import com.wb.baselib.phone.PhoneUtils;
 import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.view.MultipleStatusView;
-import com.wb.rxbus.taskBean.RxBus;
-import com.wb.rxbus.taskBean.RxMessageBean;
 import com.zhiyun88.www.module_main.R;
 import com.zhiyun88.www.module_main.information.adapter.InformationListAdapter;
 import com.zhiyun88.www.module_main.information.bean.InformationDataListBean;
@@ -29,8 +27,6 @@ import com.zhiyun88.www.module_main.information.mvp.presenter.InformationFragmen
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import io.reactivex.functions.Consumer;
 
 
 public class InformationFragment extends MvpFragment<InformationFragmentPresenter> implements InformationFragmentContranct.InformationFragmentView{
@@ -65,7 +61,7 @@ public class InformationFragment extends MvpFragment<InformationFragmentPresente
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_information);
+        setContentView(R.layout.fragment_group);
         classify_id = getArguments().getString("classify_id");
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);

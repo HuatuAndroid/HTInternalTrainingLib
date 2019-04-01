@@ -15,6 +15,8 @@ import com.example.module_employees_world.bean.GroupInfoBean;
 import com.example.module_employees_world.contranct.GroupDetailsContranct;
 import com.example.module_employees_world.presenter.GroupDetailsPresenter;
 import com.example.module_employees_world.ui.home.CommunityDiscussFragment;
+import com.example.module_employees_world.ui.search.SearchActivity;
+import com.example.module_employees_world.ui.topic.TopicEditActivity;
 import com.example.module_employees_world.utils.DialogUtils;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -24,15 +26,15 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.image.GlideManager;
-import com.wb.baselib.view.TopBarView;
+import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.rxbus.taskBean.RxBus;
 import com.wb.rxbus.taskBean.RxMessageBean;
+
 import java.util.ArrayList;
 
-public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> implements GroupDetailsContranct.GroupDetailsView{
+public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> implements GroupDetailsContranct.GroupDetailsView {
 
-    private TopBarView topBarView;
-    private ImageView imageView;
+    private ImageView ivPost, imageView, ivBack, ivSearch;
     private TextView title;
     private TextView num;
     private TextView join;
@@ -50,52 +52,64 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.main_activity_groupdetails);
+        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        setContentView(R.layout.activity_group_detail);
         groupId = getIntent().getStringExtra("groupId");
-        topBarView = getViewById(R.id.topbarview);
         if (TextUtils.isEmpty(groupId)) {
             return;
         }
+        ivBack = getViewById(R.id.ivBack);
+        ivSearch = getViewById(R.id.ivSearch);
         imageView = getViewById(R.id.group_image);
+        ivPost = getViewById(R.id.ivPost);
         title = getViewById(R.id.group_title);
         num = getViewById(R.id.group_num);
         join = getViewById(R.id.group_join);
         content = getViewById(R.id.group_content);
         scrollIndicatorView = getViewById(R.id.spring_indicator);
         mViewPager = getViewById(R.id.viewpager);
-        mPresenter.getGroupDetails(groupId,"1" );
+        mPresenter.getGroupDetails(groupId, "1");
         initFragment();
     }
 
     @Override
     protected void setListener() {
-        topBarView.setListener(new TopBarView.OnTitleBarListener() {
+        ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClicked(View v, int action, String extra) {
-                if (action == TopBarView.ACTION_LEFT_BUTTON) {
-                    finish();
-                }
-                if (action == TopBarView.ACTION_RIGHT_TEXT) {
-                    if (groupInfoBean == null)return;
-                    if (groupInfoBean.getIs_group().equals("1")) {
-                        //发帖
-                       /* Intent intent = new Intent(GroupDetailsActivity.this,ReleaseTopicActivity.class);
-                        intent.putExtra("groupId", groupId);
-                        startActivity(intent);*/
-                    }else {
-                        DialogUtils dialogUtils = new DialogUtils(GroupDetailsActivity.this);
-                        dialogUtils.setTitle("提示")
-                                .setContent("请先加入小组")
-                                .hitBtn(true)
-                                .setbtncentre("确定")
-                                .setOnCentreClickListenter(new DialogUtils.OnCentreClickListenter() {
-                                    @Override
-                                    public void setCentreClickListener() {
+            public void onClick(View v) {
+                if (groupInfoBean.getIs_group().equals("1")) {
+                    //发帖
+                    Intent intent = new Intent(GroupDetailsActivity.this, TopicEditActivity.class);
+                    intent.putExtra("groupId", groupId);
+                    startActivity(intent);
 
-                                    }
-                                });
-                    }
+                } else {
+                    DialogUtils dialogUtils = new DialogUtils(GroupDetailsActivity.this);
+                    dialogUtils.setTitle("提示")
+                            .setContent("请先加入小组")
+                            .hitBtn(true)
+                            .setbtncentre("确定")
+                            .setOnCentreClickListenter(new DialogUtils.OnCentreClickListenter() {
+                                @Override
+                                public void setCentreClickListener() {
+
+                                }
+                            });
                 }
+            }
+        });
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupDetailsActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         join.setOnClickListener(new View.OnClickListener() {
@@ -149,14 +163,14 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     @Override
     public void SuccessData(Object o) {
         groupInfoBean = (GroupInfoBean) o;
-        GlideManager.getInstance().setRoundPhoto(imageView, R.drawable.course_image ,this , groupInfoBean.getImg() ,4 );
+        GlideManager.getInstance().setRoundPhoto(imageView, R.drawable.course_image, this, groupInfoBean.getImg(), 4);
         title.setText(groupInfoBean.getName());
-        num.setText("成员: "+ groupInfoBean.getUser_count()+"人");
+        num.setText("成员: " + groupInfoBean.getUser_count() + "人");
         content.setText(groupInfoBean.getIntroduce());
-        if (groupInfoBean.getIs_group().equals("0")){
+        if (groupInfoBean.getIs_group().equals("0")) {
             join.setText("加入小组");
             join.setSelected(false);
-        }else {
+        } else {
             join.setText("退出小组");
             join.setSelected(true);
         }
@@ -167,8 +181,8 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ArrayList<Fragment> mFragments = new ArrayList<>();
         str.add("热门");
         str.add("最新");
-        mFragments.add(CommunityDiscussFragment.newInstance("1",groupId,true));
-        mFragments.add(CommunityDiscussFragment.newInstance("2",groupId,true));
+        mFragments.add(CommunityDiscussFragment.newInstance("1", groupId, true));
+        mFragments.add(CommunityDiscussFragment.newInstance("2", groupId, true));
         scrollIndicatorView.setSplitAuto(true);
         scrollIndicatorView.setOnTransitionListener(new OnTransitionTextListener() {
             @Override
@@ -179,7 +193,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ColorBar colorBar = new ColorBar(this, getResources().getColor(R.color.main_text_blue_458), 4);
         scrollIndicatorView.setScrollBar(colorBar);
         IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, mViewPager);
-        ViewPageTabAdapter viewPageTabAdapter= new ViewPageTabAdapter(getSupportFragmentManager(), this, mFragments, str);
+        ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), this, mFragments, str);
         indicatorViewPager.setAdapter(viewPageTabAdapter);
         mViewPager.setOffscreenPageLimit(mFragments.size());
     }
@@ -192,23 +206,23 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     @Override
     public void joinGroup() {
         String is_group;
-        if (groupInfoBean.getIs_group().equals("0")){
+        if (groupInfoBean.getIs_group().equals("0")) {
             join.setText("退出小组");
             join.setSelected(true);
             groupInfoBean.setIs_group("1");
             int userCount = Integer.parseInt(groupInfoBean.getUser_count()) + 1;
-            groupInfoBean.setUser_count(userCount+"");
+            groupInfoBean.setUser_count(userCount + "");
             is_group = "1";
-        }else {
+        } else {
             join.setText("加入小组");
             join.setSelected(false);
             groupInfoBean.setIs_group("0");
             int userCount = Integer.parseInt(groupInfoBean.getUser_count()) - 1;
-            groupInfoBean.setUser_count(userCount+"");
+            groupInfoBean.setUser_count(userCount + "");
             is_group = "0";
         }
-        num.setText("成员: "+ groupInfoBean.getUser_count()+"人");
-        RxBus.getIntanceBus().post(new RxMessageBean(592,groupInfoBean.getId(),is_group));
+        num.setText("成员: " + groupInfoBean.getUser_count() + "人");
+        RxBus.getIntanceBus().post(new RxMessageBean(592, groupInfoBean.getId(), is_group));
         join.setEnabled(true);
     }
 

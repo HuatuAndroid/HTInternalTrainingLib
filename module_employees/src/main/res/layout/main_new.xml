@@ -6,29 +6,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-   <!-- <com.wb.baselib.view.TopBarView
-        android:id="@+id/topbarview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleBarColor="#007AFF"
-        app:bottomLineColor="#007AFF"
-        app:centerTextColor="#FFFFFF"
-        app:centerTextSize="18sp"
-        app:centerType="textView"
-        app:centerText="员工天地"
-        app:fillStatusBar="false"
-        app:leftImageResource="@drawable/home_title_left_return"
-        app:leftType="imageButton"
-        app:showBottomLine="true"
-        app:rightType="customView"
-        app:rightCustomView="@layout/main_right_title_layout"
-        app:titleBarHeight="47dp" />-->
-
-    <!--<View
-        android:layout_width="match_parent"
-        android:layout_height="19dp"
-        android:background="#007AFF"/>
--->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="47dp"
@@ -49,7 +26,7 @@
             android:layout_centerInParent="true"/>
 
         <ImageView
-            android:id="@+id/ivContactsRight"
+            android:id="@+id/ivContacts"
             android:layout_width="44dp"
             android:layout_height="match_parent"
             android:src="@drawable/icon_contacts"
@@ -61,7 +38,7 @@
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:layout_toLeftOf="@+id/ivContactsRight"
+            android:layout_toLeftOf="@+id/ivContacts"
             android:src="@drawable/icon_search"/>
 
     </RelativeLayout>

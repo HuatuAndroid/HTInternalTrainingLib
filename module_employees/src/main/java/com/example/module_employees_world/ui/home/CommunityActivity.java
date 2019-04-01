@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.ui.search.SearchActivity;
+import com.example.module_employees_world.ui.topic.TopicEditActivity;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class CommunityActivity extends BaseActivity {
 
     private View view;
-    private ImageView ivBack, ivContacts, ivSearch;
+    private ImageView ivPost,ivBack, ivContacts, ivSearch;
     private ViewPager mViewPager;
     private ScrollIndicatorView scrollIndicatorView;
 
@@ -41,24 +42,16 @@ public class CommunityActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (!isAllImage()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setStatusBarColor(this.getResources().getColor(com.wb.baselib.R.color.FF007AFF), 0);
-            } else {
-                setStatusBarColor(this.getResources().getColor(com.wb.baselib.R.color.FF007AFF), 0);
-            }
-        } else {
-            StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
-        }*/
         StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.main_new);
         ivBack = findViewById(R.id.ivBack);
-        ivContacts = findViewById(R.id.ivContactsRight);
+        ivContacts = findViewById(R.id.ivContacts);
         ivSearch = findViewById(R.id.ivSearch);
         scrollIndicatorView = getViewById(R.id.spring_indicator);
         view = getViewById(R.id.view_line_xi);
         mViewPager = getViewById(R.id.viewpager);
+        ivPost = getViewById(R.id.ivPost);
         view.setVisibility(View.VISIBLE);
         initView(savedInstanceState);
         setListener();
@@ -104,6 +97,13 @@ public class CommunityActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        ivPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CommunityActivity.this, TopicEditActivity.class);
+                startActivity(intent);
             }
         });
     }

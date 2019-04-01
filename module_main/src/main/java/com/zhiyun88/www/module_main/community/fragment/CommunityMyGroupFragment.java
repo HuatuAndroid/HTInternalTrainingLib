@@ -27,7 +27,6 @@ import com.zhiyun88.www.module_main.community.config.CommunityConfig;
 import com.zhiyun88.www.module_main.community.mvp.contranct.CommunityMyGroupContranct;
 import com.zhiyun88.www.module_main.community.mvp.presenter.CommunityMyGroupPresenter;
 import com.zhiyun88.www.module_main.community.ui.GroupDetailsActivity;
-import com.zhiyun88.www.module_main.dotesting.ui.CommonTestActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +60,7 @@ public class CommunityMyGroupFragment extends MvpFragment<CommunityMyGroupPresen
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_information);
+        setContentView(R.layout.fragment_group);
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
