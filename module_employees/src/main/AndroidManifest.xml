@@ -25,6 +25,7 @@
 
         <activity
             android:name=".ui.topic.TopicEditActivity"
+            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait" />
         <activity

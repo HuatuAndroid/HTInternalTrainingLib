@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.example.module_employees_world.ui.TopicEditView
+                <com.example.module_employees_world.view.TopicEditView
                     android:id="@+id/mTopicEditView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

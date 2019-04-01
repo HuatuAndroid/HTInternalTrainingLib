@@ -7,15 +7,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.utils.SoftKeyboardUtils;
 
 /**
  * @author liuzhe
  * @date 2019/3/28
- *
+ * <p>
  * 插入超链接的dialog
  */
 public class InsertConnectAlertDialog {
@@ -28,7 +30,7 @@ public class InsertConnectAlertDialog {
 
     private AlertDialog alertDialog;
 
-    public  InsertConnectAlertDialog(Activity activity) {
+    public InsertConnectAlertDialog(Activity activity) {
         try {
             this.activity = activity;
             alertDialog = new AlertDialog.Builder(activity).create();
@@ -38,45 +40,65 @@ public class InsertConnectAlertDialog {
         }
     }
 
-    public void show(){
+    public void show() {
         alertDialog.show();
     }
 
-    private void initDlg(){
+    private void initDlg() {
         show();
-        Window window = alertDialog.getWindow();
-        window.setContentView(R.layout.dialog_insert_connect);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Window mWindow = alertDialog.getWindow();
+        mWindow.setContentView(R.layout.dialog_insert_connect);
+        mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         CommonUtils.showSoftInput(activity);
 
-        mEtConnect = window.findViewById(R.id.mEtConnect);
-        mEtConnectContent = window.findViewById(R.id.mEtConnectContent);
-        tvDialogLeft = window.findViewById(R.id.tvDialogLeft);
-        tvDialogRight = window.findViewById(R.id.tvDialogRight);
+        mEtConnect = mWindow.findViewById(R.id.mEtConnect);
+        mEtConnectContent = mWindow.findViewById(R.id.mEtConnectContent);
+        tvDialogLeft = mWindow.findViewById(R.id.tvDialogLeft);
+        tvDialogRight = mWindow.findViewById(R.id.tvDialogRight);
+
+        mEtConnect.setOnClickListener(v -> showSoftKeyboard(mEtConnect));
+
+        mEtConnect.setOnFocusChangeListener((v, hasFocus) -> showSoftKeyboard(mEtConnect));
+
+        mEtConnectContent.setOnClickListener(v -> showSoftKeyboard(mEtConnectContent));
+
+        mEtConnectContent.setOnFocusChangeListener((v, hasFocus) -> showSoftKeyboard(mEtConnectContent));
     }
 
-    public void setCancelable(boolean isCancelable){
+    public void setCancelable(boolean isCancelable) {
         alertDialog.setCancelable(isCancelable);
     }
 
-    public void setRightOnClickListener(View.OnClickListener okOnClickListener){
+    public void setRightOnClickListener(View.OnClickListener okOnClickListener) {
         tvDialogRight.setOnClickListener(okOnClickListener);
     }
 
-    public void setLeftOnClickListener(View.OnClickListener cancelOnClickListener){
+    public void setLeftOnClickListener(View.OnClickListener cancelOnClickListener) {
         tvDialogLeft.setOnClickListener(cancelOnClickListener);
     }
 
-    public String getmEtConnectContentString(){
+    public void showSoftKeyboard(EditText mEditText) {
+
+        if (mEditText != null) {
+            //调用系统输入法
+//            SoftKeyboardUtils.showSoftKeyboard(alertDialog.getWindow().getContext(), alertDialog.getWindow());
+            InputMethodManager inputManager = (InputMethodManager) mEditText
+                    .getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.showSoftInput(mEditText, 0);
+        }
+
+    }
+
+    public String getmEtConnectContentString() {
         return mEtConnectContent.getText().toString();
     }
 
-    public String getmEtConnectString(){
+    public String getmEtConnectString() {
         return mEtConnect.getText().toString();
     }
 
-    public void dismiss(){
+    public void dismiss() {
         try {
             alertDialog.dismiss();
         } catch (Exception e) {
@@ -84,8 +106,8 @@ public class InsertConnectAlertDialog {
         }
     }
 
-    public boolean isShowing(){
-        if (alertDialog.isShowing()){
+    public boolean isShowing() {
+        if (alertDialog.isShowing()) {
             return true;
         }
         return false;

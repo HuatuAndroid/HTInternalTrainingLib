@@ -1,5 +1,8 @@
 package com.example.module_employees_world.presenter;
 
+import android.widget.TextView;
+
+import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
@@ -9,8 +12,6 @@ import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
-
-import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
@@ -97,6 +98,107 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
                 if (postDetailBeanResult.getData()!=null){
                     mView.getPostDetail(postDetailBeanResult.getData());
                 }
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void commentLike(String comment_id, TextView tvZan) {
+        HttpManager.newInstance().commonRequest(mModel.commentLike(comment_id), new BaseObserver<Result<CommentLikeBean>>(AppUtils.getContext()) {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {}
+
+
+            @Override
+            public void onSuccess(Result<CommentLikeBean> commentLikeBeanResult) {
+                if (commentLikeBeanResult.getData()!=null&& mView!=null){
+                    mView.commentLike(commentLikeBeanResult.getData(),tvZan);
+                }
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void postsLike(String question_id) {
+        HttpManager.newInstance().commonRequest(mModel.postsLike(question_id), new BaseObserver<Result<CommentLikeBean>>(AppUtils.getContext()) {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onSuccess(Result<CommentLikeBean> commentLikeBeanResult) {
+                if (commentLikeBeanResult.getData()!=null){
+                    mView.postsLike(commentLikeBeanResult.getData());
+                }
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void deletePost(String postId) {
+        HttpManager.newInstance().commonRequest(mModel.deletePost(postId), new BaseObserver<Result>(AppUtils.getContext()) {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.deletePost();
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void deleteComment(String deleteComment, int position, int partenPosition) {
+        HttpManager.newInstance().commonRequest(mModel.deleteComment(deleteComment), new BaseObserver<Result>(AppUtils.getContext()) {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.deleteComment(position,partenPosition);
             }
 
             @Override

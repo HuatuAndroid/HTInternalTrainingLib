@@ -84,18 +84,18 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
-                if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
                     page = 1;
                     mPresenter.getSerachPost(type, keyword, page);
-                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
+                } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
                     String total = (String) rxMessageBean.getMessage();
                     searchPostBeans.get(index).setComment_count(new Integer(total));
                     searchPostAdapter.notifyDataSetChanged();
-                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_LIKE) {
+                } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_LIKE) {
                     String likeCount = (String) rxMessageBean.getMessage();
                     searchPostBeans.get(index).setLike_count(new Integer(likeCount));
                     searchPostAdapter.notifyDataSetChanged();
-                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
+                } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
                     page = 1;
                     keyword = (String) rxMessageBean.getMessage();
                     mPresenter.getSerachPost(type, keyword, page);

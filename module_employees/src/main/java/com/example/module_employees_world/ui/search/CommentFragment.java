@@ -82,10 +82,10 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
-                if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
                     page = 1;
                     mPresenter.getSearchCommnet(type, keyword, page);
-                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
+                } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
                     page = 1;
                     keyword = (String) rxMessageBean.getMessage();
                     mPresenter.getSearchCommnet(type, keyword, page);

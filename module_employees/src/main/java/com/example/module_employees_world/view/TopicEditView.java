@@ -1,4 +1,4 @@
-package com.example.module_employees_world.ui;
+package com.example.module_employees_world.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +29,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
+import com.example.module_employees_world.ui.ExtendImageView;
 import com.example.module_employees_world.utils.ImgUtils;
 import com.example.module_employees_world.utils.Rgba;
 import com.facebook.common.executors.CallerThreadExecutor;
@@ -54,6 +55,7 @@ import rx.schedulers.Schedulers;
 /**
  * @author liuzhe
  * @date 2019/3/26
+ *
  */
 public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener ,EditText.OnClickListener, EditText.OnFocusChangeListener{
 
