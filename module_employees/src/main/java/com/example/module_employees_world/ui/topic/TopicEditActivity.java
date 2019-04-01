@@ -505,6 +505,11 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
     }
 
     @Override
+    public void commitTopicData(String content) {
+
+    }
+
+    @Override
     public void showErrorMsg(String s) {
         showShortToast(s);
 //        hidLoadDiaLog();

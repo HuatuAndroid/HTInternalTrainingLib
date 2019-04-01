@@ -78,6 +78,7 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
         } else if (i == R.id.mTvSkip) { //跳过按钮的点击响应
 
             StartActivityCommon.startActivity(this, CommunityActivity.class);
+            finish();
 
         } else {
         }

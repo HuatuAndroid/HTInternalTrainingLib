@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.view.TopicEditView;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
@@ -37,12 +39,15 @@ import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author liuzhe
  * @date 2019/3/22
- *
+ * <p>
  * 发帖界面
  */
 public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View, EmojiItemClickListener {
@@ -173,10 +178,10 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         mIvFace = findViewById(R.id.mIvFace);
         mIvLineFeed = findViewById(R.id.mIvLineFeed);
 
-        mTvJiaoLiu= findViewById(R.id.mTvJiaoLiu);
-        mTvJianYi= findViewById(R.id.mTvJianYi);
-        mTvTiWen= findViewById(R.id.mTvTiWen);
-        mTvXiaoXu= findViewById(R.id.mTvXiaoXu);
+        mTvJiaoLiu = findViewById(R.id.mTvJiaoLiu);
+        mTvJianYi = findViewById(R.id.mTvJianYi);
+        mTvTiWen = findViewById(R.id.mTvTiWen);
+        mTvXiaoXu = findViewById(R.id.mTvXiaoXu);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.flEmoji,
                 emojiKeyboardFragment = EmojiKeyboardFragment.newInstance(this, this)).commit();
@@ -242,26 +247,24 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
-
-//                mPresenter.disposeData(mTopicEditView.getImageItems());
-
-//                String title = et_update_topic_title.getText().toString();
-//                String content = et_new_content.getText().toString();
-//                if (TextUtils.isEmpty(title)) {
+                String title = mEtTopicTitle.getText().toString();
+                List<TopicContentItem> datas = mTopicEditView.getDatas();
+                if (TextUtils.isEmpty(title)) {
                     showShortToast("标题不能为空");
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(content)) {
-//                    showShortToast("内容不能为空");
-//                    return;
-//                }
-//
-//                String toHtml = Html.toHtml(et_new_content.getText()).replace(" dir=\"ltr\"", "").replace("\n", "<br>");
-//                toHtml = StringEscapeUtils.unescapeHtml4(toHtml);
-//                String newTitle = et_update_topic_title.getText().toString();
-//                // TODO: 2019/2/22 封装富文本，上传服务器
-////                    mPresenter.sendUpdateTopic(topicId,newTitle,toHtml,topicAnonymity);
-//                mPresenter.commitTopicData(groupId, title, content, newTitle, "");
+                    return;
+                }
+                if (datas == null || datas.size() == 0) {
+                    showShortToast("内容不能为空");
+                    return;
+                }
+
+                TopicContentItem[] imageItems = mTopicEditView.getImageItems();
+
+                if (imageItems != null && imageItems.length != 0) {
+                    mPresenter.processImage(imageItems);
+                }else{
+                    mPresenter.processData(getData());
+                }
 
             }
         });
@@ -292,7 +295,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         });
 
         mEtTopicTitle.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
+            if (hasFocus) {
                 //隐藏表情视图
                 hideEmojiKeyboardFragment();
             }
@@ -307,26 +310,26 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             //点击 交流
             type = 1;
             setUpdataUi_Type(mTvJiaoLiu, mTvJianYi, mTvTiWen);
-        }else if (v.getId() == R.id.mTvJianYi) {
+        } else if (v.getId() == R.id.mTvJianYi) {
             //点击 建议
             type = 2;
             setUpdataUi_Type(mTvJianYi, mTvJiaoLiu, mTvTiWen);
 
-        }else if (v.getId() == R.id.mTvTiWen) {
+        } else if (v.getId() == R.id.mTvTiWen) {
             //点击 提问
             type = 3;
             setUpdataUi_Type(mTvTiWen, mTvJiaoLiu, mTvJianYi);
 
-        }else if (v.getId() == R.id.mTvXiaoXu) {
+        } else if (v.getId() == R.id.mTvXiaoXu) {
             //点击 选择小组
-            StartActivityCommon.startActivityForResult(this,SelectGroupActivity.class, SELECT_GROUP);
+            StartActivityCommon.startActivityForResult(this, SelectGroupActivity.class, SELECT_GROUP);
 
-        }else if (v.getId() == R.id.mIvA){
+        } else if (v.getId() == R.id.mIvA) {
             //点击 @
-        } else  if (v.getId() == R.id.mIvPhotograph){
+        } else if (v.getId() == R.id.mIvPhotograph) {
             //点击 拍照
 
-        } else  if (v.getId() == R.id.mIvHyperLink){
+        } else if (v.getId() == R.id.mIvHyperLink) {
             //点击 连接
             if (emojiKeyboardOpen) {
                 //隐藏软键盘
@@ -337,22 +340,22 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             myAlertDialog();
 
-        } else  if (v.getId() == R.id.mIvPicture){
+        } else if (v.getId() == R.id.mIvPicture) {
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
             intent.putExtra("pic_size", mTopicEditView.getImageCount());
             startActivityForResult(intent, REQUEST_CODE_GETIMAGE_BYCROP);
 
-        } else  if (v.getId() == R.id.mIvFace){
+        } else if (v.getId() == R.id.mIvFace) {
             //点击 表情
-            if (emojiKeyboardFragment != null){
+            if (emojiKeyboardFragment != null) {
                 emojiKeyboardOpen = !emojiKeyboardOpen;
                 if (emojiKeyboardOpen) {
                     //隐藏软键盘
                     SoftKeyboardUtils.hideSoftKeyboard(this);
                     //是否显示表情视图
                     emojiKeyboardFragment.setflEmojiContentShow(true);
-                }else{
+                } else {
 
                     //是否显示表情视图
                     emojiKeyboardFragment.setflEmojiContentShow(false);
@@ -362,7 +365,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             }
 
-        } else  if (v.getId() == R.id.mIvLineFeed){
+        } else if (v.getId() == R.id.mIvLineFeed) {
             //点击 换行
             mTopicEditView.AddLineFeed(0, null);
         }
@@ -372,23 +375,31 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     /**
      * 表情视图隐藏
      */
-    public void hideEmojiKeyboardFragment(){
-        if (emojiKeyboardFragment !=null) {
+    public void hideEmojiKeyboardFragment() {
+        if (emojiKeyboardFragment != null) {
             emojiKeyboardOpen = false;
             //隐藏表情视图
             emojiKeyboardFragment.setflEmojiContentShow(false);
         }
     }
 
-    /** 请求相册 */
+    /**
+     * 请求相册
+     */
     public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;
-    /** 请求相机 */
+    /**
+     * 请求相机
+     */
     public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;
-    /** 请求裁剪 */
+    /**
+     * 请求裁剪
+     */
     public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
 
     public static final int REQUEST_CODE_TAKE_PICTURE = 3;
-    /** 选择小组 */
+    /**
+     * 选择小组
+     */
     public static final int SELECT_GROUP = 4;
 
     @Override
@@ -452,11 +463,12 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     /**
      * 点击类型，修改ui
+     *
      * @param mTextView1
      * @param mTextView2
      * @param mTextView3
      */
-    public void setUpdataUi_Type(TextView mTextView1, TextView mTextView2, TextView mTextView3){
+    public void setUpdataUi_Type(TextView mTextView1, TextView mTextView2, TextView mTextView3) {
 
         mTextView1.setTextColor(this.getResources().getColor(R.color.white));
         mTextView1.setBackground(this.getResources().getDrawable(R.drawable.shape_fill_ff4a88fb_r90));
@@ -525,6 +537,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     /**
      * 兔兔表情点击传回的数据
+     *
      * @param tutuIconBean
      */
     @Override
@@ -541,7 +554,26 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     }
 
     @Override
-    public List<TopicContentItem> getData(){
+    public List<TopicContentItem> getData() {
+
         return mTopicEditView.getDatas();
     }
+
+    @Override
+    public void commitTopicData(String content){
+
+        try {
+            String encode = EmojiUtils.getString(content);
+
+            LogUtil.e("commitTopicData = " + encode + "");
+
+            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1+"", type+"");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 }

@@ -25,6 +25,7 @@ public interface TopicEditContranct {
         void updateTopicSuccess(String msg);
 
         List<TopicContentItem> getData();
+        void commitTopicData(String content);
     }
 
     interface Model extends BaseModel {
