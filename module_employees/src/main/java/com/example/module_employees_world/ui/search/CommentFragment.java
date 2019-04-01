@@ -18,6 +18,7 @@ import com.example.module_employees_world.bean.SearchPostBean;
 import com.example.module_employees_world.contranct.SearchContranct;
 import com.example.module_employees_world.presenter.SearchPresenter;
 import com.example.module_employees_world.ui.PostsDetailActivity;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
@@ -71,13 +72,26 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
         searchCommenBeans = new ArrayList<>();
-        searchCommentAdapter = new SearchCommentAdapter(getActivity(),searchCommenBeans);
+        searchCommentAdapter = new SearchCommentAdapter(getActivity(),keyword,searchCommenBeans);
         listView.setAdapter(searchCommentAdapter);
         RefreshUtils.getInstance(smartRefreshLayout,getActivity() ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
         smartRefreshLayout.setEnableLoadMore(true);
         multipleStatusView.showLoading();
         mPresenter.getSearchCommnet(type,keyword,page);
+        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
+            @Override
+            public void accept(RxBusMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
+                    page = 1;
+                    mPresenter.getSearchCommnet(type, keyword, page);
+                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
+                    page = 1;
+                    keyword = (String) rxMessageBean.getMessage();
+                    mPresenter.getSearchCommnet(type, keyword, page);
+                }
+            }
+        });
         setListener();
     }
 
@@ -176,6 +190,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
             searchCommenBeans.clear();
         }
         searchCommenBeans.addAll((Collection<? extends SearchCommenBean>) o);
+        searchCommentAdapter.setKeyword(keyword);
         searchCommentAdapter.notifyDataSetChanged();
         multipleStatusView.showContent();
         page++;

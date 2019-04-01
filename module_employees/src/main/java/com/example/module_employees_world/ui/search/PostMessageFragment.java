@@ -19,6 +19,7 @@ import com.example.module_employees_world.presenter.CommunityDiscussPresenter;
 import com.example.module_employees_world.presenter.SearchPresenter;
 import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.ui.home.CommunityDiscussFragment;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
@@ -73,27 +74,31 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
         searchPostBeans = new ArrayList<>();
-        searchPostAdapter = new SearchPostAdapter(getActivity(),searchPostBeans);
+        searchPostAdapter = new SearchPostAdapter(getActivity(),keyword, searchPostBeans);
         listView.setAdapter(searchPostAdapter);
-        RefreshUtils.getInstance(smartRefreshLayout,getActivity() ).defaultRefreSh();
+        RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
         smartRefreshLayout.setEnableLoadMore(true);
         multipleStatusView.showLoading();
-        mPresenter.getSerachPost(type,keyword,page);
-        RxBus.getIntanceBus().registerRxBus(RxMessageBean.class, new Consumer<RxMessageBean>() {
+        mPresenter.getSerachPost(type, keyword, page);
+        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
-            public void accept(RxMessageBean rxMessageBean) throws Exception {
-                if (rxMessageBean.getMessageType() == 852) {
+            public void accept(RxBusMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
                     page = 1;
-                    mPresenter.getSerachPost(type,keyword,page);
-                }else if (rxMessageBean.getMessageType() == 486) {
-                    String total = rxMessageBean.getMessage();
+                    mPresenter.getSerachPost(type, keyword, page);
+                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
+                    String total = (String) rxMessageBean.getMessage();
                     searchPostBeans.get(index).setComment_count(new Integer(total));
                     searchPostAdapter.notifyDataSetChanged();
-                }else if (rxMessageBean.getMessageType() == 487) {
-                    String likeCount = rxMessageBean.getMessage();
+                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_POST_LIKE) {
+                    String likeCount = (String) rxMessageBean.getMessage();
                     searchPostBeans.get(index).setLike_count(new Integer(likeCount));
                     searchPostAdapter.notifyDataSetChanged();
+                } else if (rxMessageBean.getMessageType() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
+                    page = 1;
+                    keyword = (String) rxMessageBean.getMessage();
+                    mPresenter.getSerachPost(type, keyword, page);
                 }
             }
         });
@@ -199,6 +204,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
             searchPostBeans.clear();
         }
         searchPostBeans.addAll((Collection<? extends SearchPostBean>) o);
+        searchPostAdapter.setKeyword(keyword);
         searchPostAdapter.notifyDataSetChanged();
         multipleStatusView.showContent();
         page++;

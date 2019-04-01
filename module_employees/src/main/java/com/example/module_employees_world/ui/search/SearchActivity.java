@@ -16,6 +16,7 @@ import com.example.module_employees_world.customview.ClearEditText;
 import com.example.module_employees_world.ui.home.CommunityActivity;
 import com.example.module_employees_world.ui.home.CommunityDiscussFragment;
 import com.example.module_employees_world.ui.home.CommunityGroupFragment;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -23,6 +24,7 @@ import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.base.activity.BaseActivity;
 import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.rxbus.taskBean.RxBus;
 
 import java.util.ArrayList;
 
@@ -84,7 +86,7 @@ public class SearchActivity extends BaseActivity {
                     viewpager.setOffscreenPageLimit(mFragments.size());
                     viewpager.setCurrentItem(0);
                 }else {
-
+                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD,v.getText().toString()));
                 }
                 return true;
             }
