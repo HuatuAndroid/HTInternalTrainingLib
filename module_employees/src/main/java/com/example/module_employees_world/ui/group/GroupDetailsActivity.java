@@ -16,7 +16,7 @@ import com.example.module_employees_world.contranct.GroupDetailsContranct;
 import com.example.module_employees_world.presenter.GroupDetailsPresenter;
 import com.example.module_employees_world.ui.home.CommunityDiscussFragment;
 import com.example.module_employees_world.ui.search.SearchActivity;
-import com.example.module_employees_world.ui.topic.TopicEditActivity;
+import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.DialogUtils;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -80,7 +80,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
             public void onClick(View v) {
                 if (groupInfoBean.getIs_group().equals("1")) {
                     //发帖
-                    Intent intent = new Intent(GroupDetailsActivity.this, TopicEditActivity.class);
+                    Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
                     intent.putExtra("groupId", groupId);
                     startActivity(intent);
 

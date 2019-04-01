@@ -44,8 +44,8 @@
 
     </RelativeLayout>
 
-    <GridView
-        android:id="@+id/mGridView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/mRlBottomView"
@@ -57,6 +57,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mViewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fffcfcfd" />
+
+        <CheckBox
+            android:layout_below="@+id/mPicTopBarView"
+            android:id="@+id/mCheckBox"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selsect_button_pic"
+            android:button="@null"
+            android:checked="false"
+            android:focusable="false" />
 
         <com.wb.baselib.view.TopBarView
             android:id="@+id/mPicTopBarView"
@@ -76,25 +94,6 @@
             app:rightType="textView"
             app:showBottomLine="true"
             app:titleBarColor="#007AFF" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/mViewpager"
-            android:layout_below="@+id/mPicTopBarView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="#fffcfcfd" />
-
-        <CheckBox
-            android:layout_below="@+id/mPicTopBarView"
-            android:id="@+id/mCheckBox"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_margin="10dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/selsect_button_pic"
-            android:button="@null"
-            android:checked="false"
-            android:focusable="false" />
 
     </RelativeLayout>
 
