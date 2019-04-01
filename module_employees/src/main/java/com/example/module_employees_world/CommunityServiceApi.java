@@ -6,6 +6,7 @@ import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
+import com.example.module_employees_world.bean.GroupDetailsBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
@@ -134,5 +135,10 @@ public interface CommunityServiceApi {
     @GET(CommunityHttpConfig.COMMENT_CHILDREN_LIST)
     Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id,@Query("page") int page,@Query("limit") int limit,@Query("st") int st);
 
+    /**
+     * 小组详情
+     */
+    @GET(CommunityHttpConfig.GROUPDETAILS)
+    Observable<Result<GroupDetailsBean>> getGroupDetails(@Path("group_id") String group_id, @Query("st") String st);
 
 }

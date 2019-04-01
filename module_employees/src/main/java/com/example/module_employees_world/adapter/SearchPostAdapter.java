@@ -1,6 +1,7 @@
 package com.example.module_employees_world.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +24,19 @@ import java.util.List;
  * 员工天地-搜索结果-帖子列表
  */
 public class SearchPostAdapter extends ListBaseAdapter {
+    private String keyword;
 
-    public SearchPostAdapter(Context context, List<SearchPostBean> searchPostBeans) {
+    public SearchPostAdapter(Context context,String keyword, List<SearchPostBean> searchPostBeans) {
         super(searchPostBeans, context);
+        this.keyword = keyword;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     @Override
@@ -55,8 +66,6 @@ public class SearchPostAdapter extends ListBaseAdapter {
         } else {
             viewHolder.tvPostName.setText(searchPostBean.getUser_name()+"");
         }
-        viewHolder.tvPostTitle.setText(searchPostBean.getTitle());
-        viewHolder.tvPostContent.setText(searchPostBean.getContent());
         //头像统一由服务器获取
         if (!TextUtils.isEmpty(searchPostBean.getAvatar()))
             Picasso.with(context).load(searchPostBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.ivHead);
@@ -70,6 +79,54 @@ public class SearchPostAdapter extends ListBaseAdapter {
         viewHolder.tvime.setText(searchPostBean.getCreated_at() + " | " + status);
         viewHolder.tvPostGroup.setText("「" + searchPostBean.getGroup_name() + "」");
         viewHolder.tvPart.setText(searchPostBean.getDepartment_name());
+
+        String start = "<font color='#FF4429'>";
+        String end = "</font>";
+        String content = searchPostBean.getContent();
+        String title = searchPostBean.getTitle();
+        if (title.indexOf(keyword)==-1){
+            viewHolder.tvPostTitle.setText(title);
+        }else {
+            int lengthKeyword = keyword.length();
+            String htmlTitle = "";
+           int lastPosition = 0;
+            int lengthTitle = title.length();
+            while (lastPosition < lengthTitle){
+                int subPosition = title.indexOf(keyword, lastPosition);
+                if (subPosition < 0) {
+                    if (lastPosition < lengthTitle){
+                        htmlTitle = htmlTitle+title.substring(lastPosition);
+                    }
+                    break;
+                } else {
+                    htmlTitle = htmlTitle + title.substring(lastPosition,subPosition) + start + keyword + end;
+                    lastPosition = subPosition + lengthKeyword;
+                }
+            }
+            viewHolder.tvPostTitle.setText(Html.fromHtml(htmlTitle));
+        }
+        if (content.indexOf(keyword)==-1){
+            viewHolder.tvPostContent.setText(content);
+        }else {
+            int lengthKeyword = keyword.length();
+            String htmlTitle = "";
+            int lastPosition = 0;
+            int lengthTitle = content.length();
+            while (lastPosition < lengthTitle){
+                int subPosition = content.indexOf(keyword, lastPosition);
+                if (subPosition < 0) {
+                    if (lastPosition < lengthTitle){
+                        htmlTitle = htmlTitle+content.substring(lastPosition);
+                    }
+                    break;
+                } else {
+                    htmlTitle = htmlTitle + content.substring(lastPosition,subPosition) + start + keyword + end;
+                    lastPosition = subPosition + lengthKeyword;
+                }
+            }
+            viewHolder.tvPostContent.setText(Html.fromHtml(htmlTitle));
+        }
+
         return convertView;
     }
 

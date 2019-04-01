@@ -40,6 +40,10 @@
             android:name=".ui.topic.SelectGroupActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.group.GroupDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
 
     </application>
 

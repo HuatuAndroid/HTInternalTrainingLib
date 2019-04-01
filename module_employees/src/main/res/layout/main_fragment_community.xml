@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:contentView="@layout/main_resh_scroll"
-    app:emptyView="@layout/main_custom_empty_view"
-    app:errorView="@layout/custom_error_view"
+    app:emptyView="@layout/layout_null_data_other"
+    app:errorView="@layout/layout_erro_net"
     app:loadingView="@layout/main_custom_loading_view"
-    app:noNetworkView="@layout/custom_no_network_view" />
+    app:noNetworkView="@layout/layout_erro_net" />
