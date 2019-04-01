@@ -7,6 +7,6 @@
     android:orientation="vertical"
     app:contentView="@layout/main_resh_scroll"
     app:emptyView="@layout/layout_null_data_other"
-    app:errorView="@layout/custom_error_view"
+    app:errorView="@layout/layout_erro_net"
     app:loadingView="@layout/main_custom_loading_view"
     app:noNetworkView="@layout/layout_erro_net" />

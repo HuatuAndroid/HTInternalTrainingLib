@@ -91,6 +91,18 @@ public class SearchActivity extends BaseActivity {
                 return true;
             }
         });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
