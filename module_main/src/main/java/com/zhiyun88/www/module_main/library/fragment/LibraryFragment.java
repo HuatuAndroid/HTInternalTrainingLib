@@ -2,22 +2,18 @@ package com.zhiyun88.www.module_main.library.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.thefinestartist.finestwebview.FinestWebView;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wangbo.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.fragment.MvpFragment;
-import com.wb.baselib.phone.PhoneUtils;
 import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
@@ -70,7 +66,7 @@ public class LibraryFragment extends MvpFragment<LibraryFragmentPresenter> imple
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_information);
+        setContentView(R.layout.fragment_group);
         classify_id = getArguments().getString("classify_id");
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
