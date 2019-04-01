@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
+import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.bean.TutuIconBean;
 import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.StartActivityCommon;
@@ -319,7 +320,7 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
                                 .rememberSelected(false)
                                 .maxNum(picNum)
                                 .needCamera(true)
-                                // .backResId()
+//                                 .backResId()
                                 .build();
                         ISNav.getInstance().toListActivity(TopicEditActivity.this, config, TAG_ACTIVTY_RESULT_CODE);
                     } else {
@@ -370,10 +371,10 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
 
                 String toHtml = Html.toHtml(et_new_content.getText()).replace(" dir=\"ltr\"", "").replace("\n", "<br>");
                 toHtml = StringEscapeUtils.unescapeHtml4(toHtml);
-                String newTitle = et_update_topic_title.getText().toString();
+//                String newTitle = et_update_topic_title.getText().toString();
                 // TODO: 2019/2/22 封装富文本，上传服务器
 //                    mPresenter.sendUpdateTopic(topicId,newTitle,toHtml,topicAnonymity);
-                mPresenter.commitTopicData(groupId, title, content, newTitle, "");
+                mPresenter.commitTopicData(groupId, title, toHtml, "1", type+"");
 
             }
         });
@@ -499,6 +500,11 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
     }
 
     @Override
+    public List<TopicContentItem> getData() {
+        return null;
+    }
+
+    @Override
     public void showErrorMsg(String s) {
         showShortToast(s);
 //        hidLoadDiaLog();
@@ -514,7 +520,7 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
 
     @Override
     public void SuccessData(Object o) {
-//        hidLoadDiaLog();
+        hidLoadDiaLog();
         List<NImageBean> imageBeans = (List<NImageBean>) o;
         for (int i = 0; i < imageBeans.size(); i++) {
             // TODO: 2019/2/22 图片等待添加到光标处
@@ -690,7 +696,6 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
     /**
      * 超链接编辑弹框
      */
-    private InsertConnectAlertDialog myAlertDialog;
     private void myAlertDialog() {
 
         Dialog dialog = new Dialog(this, R.style.MDialogNoPadding);

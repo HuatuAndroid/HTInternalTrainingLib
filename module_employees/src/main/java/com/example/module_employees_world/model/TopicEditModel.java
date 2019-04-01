@@ -30,13 +30,7 @@ public class TopicEditModel implements TopicEditContranct.Model {
     }
 
     @Override
-    public Observable<Result> commitTopicData(String group_id, String title, String content, String is_anonymity, String path) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("group_id",group_id );
-        map.put("title", title);
-        map.put("content", content);
-        map.put("is_anonymity", is_anonymity);
-        map.put("content_picture", path);
-        return HttpManager.newInstance().getService(CommunityServiceApi.class).commitTopicData(map);
+    public Observable<Result> commitTopicData(String group_id, String title, String content, String is_anonymity, String type) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).commitTopicData(group_id, title, content, is_anonymity, type);
     }
 }
