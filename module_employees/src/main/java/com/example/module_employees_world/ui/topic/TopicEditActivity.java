@@ -371,10 +371,10 @@ public class TopicEditActivity extends MvpActivity<TopicEditPresenter> implement
 
                 String toHtml = Html.toHtml(et_new_content.getText()).replace(" dir=\"ltr\"", "").replace("\n", "<br>");
                 toHtml = StringEscapeUtils.unescapeHtml4(toHtml);
-                String newTitle = et_update_topic_title.getText().toString();
+//                String newTitle = et_update_topic_title.getText().toString();
                 // TODO: 2019/2/22 封装富文本，上传服务器
 //                    mPresenter.sendUpdateTopic(topicId,newTitle,toHtml,topicAnonymity);
-                mPresenter.commitTopicData(groupId, title, content, "1", type+"");
+                mPresenter.commitTopicData(groupId, title, toHtml, "1", type+"");
 
             }
         });
