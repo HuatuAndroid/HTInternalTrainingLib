@@ -1,5 +1,6 @@
 package com.example.module_employees_world.ui.topic;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -242,12 +243,12 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
 
-                mTopicEditView.getImageItems();
+//                mPresenter.disposeData(mTopicEditView.getImageItems());
 
 //                String title = et_update_topic_title.getText().toString();
 //                String content = et_new_content.getText().toString();
 //                if (TextUtils.isEmpty(title)) {
-//                    showShortToast("标题不能为空");
+                    showShortToast("标题不能为空");
 //                    return;
 //                }
 //                if (TextUtils.isEmpty(content)) {
@@ -468,21 +469,29 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     }
 
-    private InsertConnectAlertDialog myAlertDialog;
     private void myAlertDialog() {
 
-        if (myAlertDialog == null) {
-            myAlertDialog = new InsertConnectAlertDialog(this);
-        } else {
-            myAlertDialog.show();
-        }
+        Dialog dialog = new Dialog(this, R.style.MDialogNoPadding);
+        // 设置它的ContentView
+        dialog.setContentView(R.layout.dialog_insert_connect);
 
-        myAlertDialog.setLeftOnClickListener(view -> myAlertDialog.dismiss());
+        EditText mEtConnect = dialog.findViewById(R.id.mEtConnect);
+        EditText mEtConnectContent = dialog.findViewById(R.id.mEtConnectContent);
+        TextView tvDialogLeft = dialog.findViewById(R.id.tvDialogLeft);
+        TextView tvDialogRight = dialog.findViewById(R.id.tvDialogRight);
 
-        myAlertDialog.setRightOnClickListener(view -> {
-
-            myAlertDialog.dismiss();
+        tvDialogLeft.setOnClickListener(v -> {
+            dialog.dismiss();
         });
+
+        tvDialogRight.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+
+        if (!isFinishing()) {
+            dialog.show();
+        }
 
     }
 
@@ -529,5 +538,10 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     public void onDeleteTutuClick() {
 
+    }
+
+    @Override
+    public List<TopicContentItem> getData(){
+        return mTopicEditView.getDatas();
     }
 }

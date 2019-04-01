@@ -64,12 +64,12 @@ public interface CommunityServiceApi {
 
     /**
      * 发布帖子
-     * @param map
      * @return
      */
     @FormUrlEncoded
     @POST(CommunityHttpConfig.RELEASETOPIC)
-    Observable<Result> commitTopicData(@FieldMap() Map<String, String> map);
+    Observable<Result> commitTopicData(@Field("group_id") String id, @Field("title") String title, @Field("content") String content,
+                                       @Field("is_anonymity") String is_anonymity, @Field("type") String type);
 
     /**
      * 評論列表
