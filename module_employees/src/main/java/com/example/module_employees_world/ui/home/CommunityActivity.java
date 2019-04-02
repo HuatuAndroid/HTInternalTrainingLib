@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.ui.group.MyItemActivity;
 import com.example.module_employees_world.ui.search.SearchActivity;
 import com.example.module_employees_world.ui.topic.TopicEditActivity;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -103,6 +104,13 @@ public class CommunityActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CommunityActivity.this, TopicEditActivity.class);
+                startActivity(intent);
+             }
+        });
+        ivContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CommunityActivity.this, MyItemActivity.class);
                 startActivity(intent);
             }
         });

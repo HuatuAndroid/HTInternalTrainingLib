@@ -8,6 +8,8 @@ import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.GroupDetailsBean;
 import com.example.module_employees_world.bean.GuideBean;
+import com.example.module_employees_world.bean.MyItemBean;
+import com.example.module_employees_world.bean.MyPartBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
@@ -41,6 +43,12 @@ public interface CommunityServiceApi {
     @GET(CommunityHttpConfig.GROUPLIST)
     Observable<Result<CommunityGroupBean>> getGroupList(@Query("page") int page);
 
+    /**
+     * 加入或退出小组
+     * @param groupId
+     * @param states
+     * @return
+     */
     @FormUrlEncoded
     @POST(CommunityHttpConfig.JOINGROUP)
     Observable<Result> setGroup(@Field("group_id") String groupId, @Field("states") String states);
@@ -159,5 +167,17 @@ public interface CommunityServiceApi {
      */
     @GET(CommunityHttpConfig.GUIDE)
     Observable<Result<GuideBean>> getGuide();
+
+    /**
+     * 我的小组
+     */
+    @GET(CommunityHttpConfig.MYGROUP)
+    Observable<Result<MyItemBean>> getMyGroupData(@Query("page") int page);
+
+    /**
+     * 我的参与
+     */
+    @GET(CommunityHttpConfig.MYPART)
+    Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page);
 
 }

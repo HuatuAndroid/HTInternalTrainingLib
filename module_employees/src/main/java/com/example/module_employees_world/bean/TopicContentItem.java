@@ -2,6 +2,7 @@ package com.example.module_employees_world.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Editable;
 
 import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.utils.Rgba;
@@ -24,6 +25,8 @@ public class TopicContentItem implements Parcelable {
     public int w;
     public int h;
     public Rgba color;
+
+    public Editable mEditable;
 
     public enum ContentType{
 

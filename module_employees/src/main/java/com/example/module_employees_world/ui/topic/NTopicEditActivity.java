@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.URLSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -497,31 +499,29 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         tvDialogRight.setOnClickListener(v -> {
 
-            String html = "";
-
             String mEtConnectString = mEtConnect.getText().toString();
 
             String mEtConnectContentString = mEtConnectContent.getText().toString();
 
-            if (TextUtils.isEmpty(mEtConnectString)) {
+//            if (TextUtils.isEmpty(mEtConnectString)) {
+//
+//                if (!TextUtils.isEmpty(mEtConnectContentString)) {
+//                    html = mEtConnectContentString;
+//                }
+//
+//            } else {
+//
+//                if (!TextUtils.isEmpty(mEtConnectContentString)) {
+//                    html = "<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
+//                } else {
+//                    html = "<a href= >" + mEtConnectString + "</a >" + " ";
+//                }
+//
+//            }
 
-                if (!TextUtils.isEmpty(mEtConnectContentString)) {
-                    html = mEtConnectContentString;
-                }
+//            Spanned spanned = Html.fromHtml(html);
 
-            } else {
-
-                if (!TextUtils.isEmpty(mEtConnectContentString)) {
-                    html = "<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
-                } else {
-                    html = "<a href= >" + mEtConnectString + "</a >" + " ";
-                }
-
-            }
-
-            Spanned spanned = Html.fromHtml(html);
-
-            mTopicEditView.AddConnect(spanned);
+            mTopicEditView.AddConnect(mEtConnectString,mEtConnectContentString);
 
             dialog.dismiss();
         });
@@ -568,7 +568,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
      */
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-        LogUtil.e("onItemClick");
+        LogUtil.e("onItemClick -- " +tutuIconBean.type + " --- " + tutuIconBean.key);
+
+        mTopicEditView.addTutuImg(tutuIconBean.TutuId, tutuIconBean.key);
     }
 
     /**
@@ -593,7 +595,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             LogUtil.e("commitTopicData = " + encode + "");
 
-            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1 + "", type + "");
+//            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1 + "", type + "");
         } catch (Exception e) {
             e.printStackTrace();
         }

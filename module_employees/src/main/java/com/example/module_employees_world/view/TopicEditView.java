@@ -7,14 +7,20 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
+import android.text.style.URLSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -46,6 +52,8 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.thefinestartist.utils.log.LogUtil;
+import com.wb.baselib.utils.VerticalImageSpan;
 import com.wb.baselib.view.NCommontPopw;
 
 import java.io.File;
@@ -59,9 +67,8 @@ import rx.schedulers.Schedulers;
 /**
  * @author liuzhe
  * @date 2019/3/26
- *
  */
-public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener ,EditText.OnClickListener, EditText.OnFocusChangeListener{
+public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener, EditText.OnClickListener, EditText.OnFocusChangeListener {
 
     public static final String TAG = "ContentEditor";
     public static int maxTextureWidth = 0;
@@ -482,10 +489,18 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
          */
         @Override
         public void afterTextChanged(Editable editable) {
-            String content =Html.toHtml(editText.getText()).replace("<p dir=\"ltr\">", "")
-                    .replace("\n", "").replace("</p>", "");
-//            String content = editText.getText().toString();
+//            String content = Html.toHtml(editText.getText()).replace("<p dir=\"ltr\">", "")
+//                    .replace("\n", "").replace("</p>", "");
+//
+//            LogUtil.e("addTutuImg -- " + editText.getText());
+//
+//            LogUtil.e("addTutuImg -- " + editText.getText().toString());
+//
+//            LogUtil.e("addTutuImg -- " + content);
+
+            String content = editText.getText().toString();
             bean.content = content;
+            bean.mEditable = editText.getText();
             long tmpCount = getTxtCount();
             if (maxTxtCount > 0 && tmpCount > maxTxtCount) {
 
@@ -622,7 +637,9 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
     public interface ItemClickListener {
         void onItemClick(View view, int index);
     }
+
     ItemClickListener mItemClickListener;
+
     public void setItemClickListener(ItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
@@ -767,9 +784,10 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
     /**
      * 添加换行
+     *
      * @param state 0:插入换行  1：插入表情
      */
-    public void AddLineFeed(int state, EmojiconBean emojicon){
+    public void AddLineFeed(int state, EmojiconBean emojicon) {
 
         View view = this.findFocus();
 
@@ -782,7 +800,7 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
             if (state == 0) {
                 editable.insert(index, "\n");
-            }else if (state == 1){
+            } else if (state == 1) {
                 editable.insert(index, emojicon.emojiChart);
             }
 
@@ -792,7 +810,27 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
     /**
      * 添加超链接
      */
-    public void AddConnect(Spanned spanned){
+    public void AddConnect(String mEtConnectString, String mEtConnectContentString) {
+
+        SpannableString spannableString;
+
+        if (TextUtils.isEmpty(mEtConnectString)) {
+
+            spannableString = new SpannableString(mEtConnectContentString);
+
+        }else{
+
+            if (TextUtils.isEmpty(mEtConnectContentString)){
+
+                mEtConnectContentString = mEtConnectString;
+
+            }
+
+            spannableString = new SpannableString(mEtConnectContentString);
+
+            spannableString.setSpan(new URLSpan(mEtConnectString), 0, mEtConnectString.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
 
         View view = this.findFocus();
 
@@ -803,7 +841,9 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
             Editable editable = editText.getText();
             int index = editText.getSelectionStart();
 
-            editable.insert(index, spanned);
+            editable.insert(index, spannableString);
+
+//            editText.setMovementMethod(LinkMovementMethod.getInstance());
 
         }
 
@@ -811,14 +851,17 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
     /**
      * 点击会隐藏表情视图
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
         mContentWatch.hideEmojiKeyboard();
     }
+
     /**
      * 点击会隐藏表情视图
+     *
      * @param v
      */
     @Override
@@ -845,6 +888,31 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
     public void setContentWatch(ContentWatch mContentWatch) {
         this.mContentWatch = mContentWatch;
+    }
+
+    public void addTutuImg(int res, String name) {
+
+        View view = this.findFocus();
+
+        if (view != null && view instanceof EditText) {
+
+            EditText editText = (EditText) view;
+
+            Editable editable = editText.getText();
+            int index = editText.getSelectionStart();
+
+            Drawable drawable = getContext().getResources().getDrawable(res);
+
+//            LogUtil.e("addTutuImg -- " + drawable.getIntrinsicWidth() + " --- " + drawable.getIntrinsicHeight());
+
+            drawable.setBounds(0, 0, 200, 200);
+            SpannableString spannable = new SpannableString(name);
+            VerticalImageSpan span = new VerticalImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+            spannable.setSpan(span, 0, name.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            editable.insert(index, spannable);
+
+        }
     }
 
 }

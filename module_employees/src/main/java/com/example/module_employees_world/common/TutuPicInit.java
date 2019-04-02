@@ -39,15 +39,48 @@ public class TutuPicInit {
 
         try {
 
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_01, "[爱情]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_02, "[比心]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_03, "[爱情]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_04, "[额]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_05, "[哼]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_06, "[惊讶]", 0));
+
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_07, "[萌]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_08, "[你好]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_09, "[投降]", 0));
+
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_10, "[晚安]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_11, "[委屈]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_12, "[压力]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_13, "[疑问]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_14, "[可怜]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_15, "[重要通知]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_16, "[佛系]", 0));
+
             for (int i = 0; i < pics.length; i++){
-                String key = "[pic1_0" + i + "]";
-                TutuIconBean tutuIconBean = new TutuIconBean(pics[i], key, i/10);
-                EMOJICONS.add(tutuIconBean);
+                EMOJICONS.get(i).type = i/10;
             }
 
         } catch (Exception e) {
             LogUtil.e(e.toString());
         }
+    }
+
+    /**
+     * 所有key的集合
+     * @return
+     */
+    public String getToStringNames(){
+
+         String names = "";
+
+         for (TutuIconBean tutuIconBean : EMOJICONS){
+             names += tutuIconBean.key;
+         }
+
+         return names;
+
     }
 
     public static List<TutuIconBean> getData(int type){
