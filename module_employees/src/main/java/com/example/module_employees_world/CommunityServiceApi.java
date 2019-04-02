@@ -72,13 +72,12 @@ public interface CommunityServiceApi {
     Observable<Result> commitTopicData(@FieldMap() Map<String, String> map);
 
     /**
-     * 評論列表
+     * 评论列表
      */
     @GET(CommunityHttpConfig.COMMENT_LIST)
     Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st,@Query("page") String page,@Query("limit") String limit);
 
     /**
-<<<<<<< HEAD
      * 搜索帖子
      */
     @GET(CommunityHttpConfig.SEARCH)
@@ -134,5 +133,10 @@ public interface CommunityServiceApi {
     @GET(CommunityHttpConfig.COMMENT_CHILDREN_LIST)
     Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id,@Query("page") int page,@Query("limit") int limit,@Query("st") int st);
 
-
+    /**
+     * 发布评论
+     */
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.COMMENT_SEND)
+    Observable<Result> commentSend(@FieldMap() Map<String, String> map);
 }

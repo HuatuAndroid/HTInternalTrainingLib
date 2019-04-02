@@ -111,6 +111,12 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         question_id = getIntent().getStringExtra("question_id");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPresenter.getPostDetail(question_id,"1");
         mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
@@ -243,7 +249,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PostsDetailActivity.this,CommentDialogActivity.class));
+                if (postDetailBean!=null){
+                    Intent intent = new Intent(PostsDetailActivity.this, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,postDetailBean.questionInfo.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,"0");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,postDetailBean.questionInfo.userName);
+                    startActivity(intent);
+                }
+
             }
         });
         tvPostNum.setOnClickListener(new View.OnClickListener() {

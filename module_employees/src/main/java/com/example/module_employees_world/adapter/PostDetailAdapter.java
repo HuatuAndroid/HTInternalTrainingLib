@@ -30,6 +30,7 @@ import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.rxbus.taskBean.RxBus;
@@ -80,7 +81,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         Picasso.with(context).load(listBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
         if (!TextUtils.isEmpty(listBean.commentPicture)){
             holder.ivCommentImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , listBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , HttpConfig.newInstance().getmBaseUrl()+"/"+ listBean.commentPicture ,false );
         }else {
             holder.ivCommentImg.setVisibility(View.GONE);
         }

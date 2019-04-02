@@ -46,5 +46,8 @@ public interface CommunityHttpConfig {
     /** 评论详情*/
     String COMMENT_INFO = "api/app/discuss/appCommentInfo/comment_id={comment_id}";
     /**评论子列表*/
+    /**发布评论*/
     String COMMENT_CHILDREN_LIST = "api/app/discuss/appCommentSonInfo/comment_id={comment_id}";
+    /**评论发布*/
+    String COMMENT_SEND = "api/app/discuss/createComment";
 }

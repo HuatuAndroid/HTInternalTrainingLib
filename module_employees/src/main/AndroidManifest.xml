@@ -12,7 +12,7 @@
         <activity
             android:name=".ui.CommentDialogActivity"
             android:theme="@style/BaseAppTheme.Transparent"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateVisible" />
         <activity
             android:name=".ui.home.CommunityActivity"
             android:launchMode="singleTask"
