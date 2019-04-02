@@ -1,13 +1,19 @@
 package com.example.module_employees_world.ui.topic;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +32,13 @@ import android.widget.Toast;
 import com.baijiayun.glide.Glide;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.ViewPagerAdapter;
+import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.view.TopBarView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -45,8 +53,6 @@ import java.util.Map;
  */
 public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClickListener
         , CompoundButton.OnCheckedChangeListener {
-
-    public static final String LOCAL_FOLDER_NAME = "local_folder_name";//跳转到相册页的文件夹名称
 
     private TopBarView topBarView;
 
@@ -68,6 +74,8 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
     private int pic_size = 0;
     //插入图片的最大数量
     private final int maxicSize = 9;
+
+    private File mFileTemp;
 
     @Override
     protected BasePreaenter onCreatePresenter() {
@@ -96,7 +104,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
         mRecyclerView.setLayoutManager(layoutManager);
 
         Intent intent = getIntent();
-        folder = intent.getStringExtra(LOCAL_FOLDER_NAME);
+        folder = intent.getStringExtra(CommonUtils.LOCAL_FOLDER_NAME);
         pic_size = intent.getIntExtra("pic_size", 0);
 
         if (folder == null) {
@@ -354,11 +362,16 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
             }
 
-            holder.imageView.setOnClickListener(view -> {
+            holder.mIvCamera.setOnClickListener(view -> {
 
                 if (position == 0) {
+                    photoEven();
+                }
+            });
 
-                } else {
+            holder.imageView.setOnClickListener(view -> {
+
+                if (position != 0) {
                     showViewPager(nposition);
                 }
             });
@@ -384,4 +397,77 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
         }
     }
 
+    public void photoEven() {
+        pictureInIt();
+        takePicture();
+    }
+
+    public void pictureInIt() {
+
+        // 创建项目所需文件夹
+        CommonUtils.createFile();
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            mFileTemp = new File(CommonUtils.cache_path, getLinPhotokName());
+        } else {
+            mFileTemp = new File(getFilesDir(), getLinPhotokName());
+        }
+
+    }
+
+    public void takePicture() {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            Uri mImageCaptureUri = null;
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+
+                if (Build.VERSION.SDK_INT >= 24) {
+                    mImageCaptureUri = FileProvider.getUriForFile(this, "com.ekao123.manmachine.fileprovider", mFileTemp);
+                } else {
+                    mImageCaptureUri = Uri.fromFile(mFileTemp);
+                }
+            } else {
+                /*
+                 * The solution is taken from here:
+                 * http://stackoverflow.com/questions
+                 * /10042695/how-to-get-camera-result-as-a-uri-in-data-folder
+                 */
+                mImageCaptureUri = Uri.parse("content://eu.janmuller.android.simplecropimage.example/");;
+            }
+            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+                    mImageCaptureUri);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
+
+        } catch (ActivityNotFoundException e) {
+
+        }
+
+    }
+
+    private String getLinPhotokName() {
+        return "htjy_photo" + CommonUtils.getTime() + ".jpg";
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        switch (requestCode) {
+            case CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP:
+
+                Log.i("onActivityResult", "-----" + mFileTemp.getPath());
+
+                Intent intent1 = new Intent();
+                intent1.putExtra("mFileTemp", mFileTemp.getPath());
+                setResult(CommonUtils.REQUEST_CODE_GETIMAGE_BYCAMERA, intent1);
+                finish();
+                break;
+            default:
+                break;
+
+        }
+    }
 }

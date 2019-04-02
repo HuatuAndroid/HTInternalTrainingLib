@@ -53,10 +53,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
+            android:scrollbars="none"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true"
-            android:scrollbars="vertical">
+            android:fillViewport="true">
 
             <RelativeLayout
                 android:id="@+id/mScrollView"
@@ -72,7 +72,7 @@
                     android:paddingBottom="17dp"
                     app:ce_hint="输入内容"
                     app:ce_img_img_spacing="10dp"
-                    app:ce_img_padding="33dp"
+                    app:ce_img_padding="1dp"
                     app:ce_img_txt_spacing="14dp"
                     app:ce_text_color="#585858"
                     app:ce_text_lineSpacingExtra="3.4dp"

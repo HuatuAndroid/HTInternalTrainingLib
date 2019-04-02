@@ -5,17 +5,70 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Environment;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author liuzhe
  * @date 2019/3/22
  */
 public class CommonUtils {
+
+    public static final String BASE_PATH = Environment
+            .getExternalStorageDirectory().getAbsolutePath();
+
+    /**
+     * 请求相册
+     */
+    public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;
+
+    public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;
+    /**
+     * 请求相机
+     */
+    public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
+
+    public static final int REQUEST_CODE_TAKE_PICTURE = 3;
+    /**
+     * 选择小组
+     */
+    public static final int SELECT_GROUP = 4;
+
+    public static final String LOCAL_FOLDER_NAME = "local_folder_name";//跳转到相册页的文件夹名称
+
+    public final static String base_path = BASE_PATH + "/dt";
+    public final static String cache_path = BASE_PATH + "/cache_dt";
+
+    public static void createFile() {
+        if (CommonUtils.isExitsSdcard()) {
+            File file = new File(CommonUtils.base_path);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+
+            File file2 = new File(CommonUtils.cache_path);
+            if (!file2.exists()) {
+                file2.mkdir();
+            }
+        } else {
+
+        }
+    }
+
+    public static boolean isExitsSdcard() {
+        if (android.os.Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED))
+            return true;
+        else
+            return false;
+    }
 
     public static boolean compareStr(String str1, String str2) {
         if (str1 != null) {
@@ -120,6 +173,22 @@ public class CommonUtils {
         }
 
         return sbar;
+    }
+
+    public static String getTime() {
+
+        StringBuffer time = new StringBuffer();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+        String time2 = format.format(new Date());
+
+        String[] spit = time2.split("\\-| |:");
+
+        for (int i = 0; i < spit.length; i++) {
+            time.append(spit[i]);
+        }
+        return time.toString();
     }
 
 }
