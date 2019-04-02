@@ -39,6 +39,7 @@
             android:id="@+id/et_update_topic_title"
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:singleLine="true"
             android:background="@color/white"
             android:hint="输入标题（1~50字）"
             android:textColorHint="@color/color_FF999CAA"
@@ -210,5 +211,10 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flEmoji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

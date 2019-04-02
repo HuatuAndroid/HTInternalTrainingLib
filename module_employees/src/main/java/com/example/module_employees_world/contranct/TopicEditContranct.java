@@ -1,11 +1,13 @@
 package com.example.module_employees_world.contranct;
 
 import com.example.module_employees_world.bean.NImageListsBean;
+import com.example.module_employees_world.bean.TopicContentItem;
 import com.wb.baselib.base.mvp.BaseModel;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.base.mvp.BaseView;
 import com.wb.baselib.bean.Result;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -21,6 +23,9 @@ public interface TopicEditContranct {
 
         void commitSuccess(String msg);
         void updateTopicSuccess(String msg);
+
+        List<TopicContentItem> getData();
+        void commitTopicData(String content);
     }
 
     interface Model extends BaseModel {

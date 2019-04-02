@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
+import com.example.module_employees_world.bean.TutuIconBean;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
 import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
@@ -90,6 +93,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     private int heightDifference;
     private int viewHeight;
     private View view;
+    private StringBuffer editTextSB=new StringBuffer();
 
 
     @Override
@@ -217,9 +221,8 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 // TODO: 2019/4/1 发布评论
-                String content = etContent.getText().toString();
-                if (!TextUtils.isEmpty(content)||!TextUtils.isEmpty(commentPicture)||!TextUtils.isEmpty(commentFace)){
-                    mPresenter.sendComment(question_id,content,commentPicture,commentFace,isAnonymity,comment_id);
+                if (!TextUtils.isEmpty(editTextSB.toString())||!TextUtils.isEmpty(commentPicture)||!TextUtils.isEmpty(commentFace)){
+                    mPresenter.sendComment(question_id,editTextSB.toString(),commentPicture,commentFace,isAnonymity,comment_id);
                     showLoadDiaLog("");
                 }else {
                     showShortToast("评论不能为空");
@@ -257,7 +260,8 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 // TODO: 2019/4/1 换行
-                startActivity(new Intent(CommentDialogActivity.this, NTopicEditActivity.class));
+                editTextSB.append("\n");
+                etContent.setText(editTextSB);
             }
         });
 
@@ -265,6 +269,17 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 hideEmojiKeyboardFragment();
+            }
+        });
+        etContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                editTextSB.delete(0,editTextSB.length());
+                editTextSB.append(s.toString());
             }
         });
 
@@ -358,12 +373,24 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
 
     @Override
     public void onItemClick(EmojiconBean emojicon) {
-        ToastUtils.showToast(this,emojicon.emojiChart);
-        etContent.setText(emojicon.emojiChart);
+        editTextSB.append(emojicon.emojiChart);
+        etContent.setText(editTextSB.toString());
+        etContent.setSelection(etContent.getText().length());
     }
 
     @Override
     public void onDeleteClick() {
+
+    }
+
+    @Override
+    public void onItemClick(TutuIconBean tutuIconBean) {
+        editTextSB.append(tutuIconBean.key);
+        etContent.setText(editTextSB.toString());
+    }
+
+    @Override
+    public void onDeleteTutuClick() {
 
     }
 

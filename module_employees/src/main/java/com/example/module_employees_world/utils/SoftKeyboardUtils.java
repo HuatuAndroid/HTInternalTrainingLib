@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -32,6 +33,14 @@ public class SoftKeyboardUtils {
     public static void showSoftKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(activity.getWindow().getDecorView(), InputMethodManager.SHOW_FORCED);
+    }
+
+    /**
+     * 强制显示软键盘
+     */
+    public static void showSoftKeyboard(Context mContext, Window window) {
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(window.getDecorView(), InputMethodManager.SHOW_FORCED);
     }
 
     /**

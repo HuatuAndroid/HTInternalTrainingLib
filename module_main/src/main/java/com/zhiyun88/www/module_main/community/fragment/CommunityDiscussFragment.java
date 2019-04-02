@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -74,7 +72,7 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_community);
+        setContentView(R.layout.fragment_discuss);
         type = getArguments().getString("type");
         groupId = getArguments().getString("groupId","");
         isRefresh = getArguments().getBoolean("isRefresh");

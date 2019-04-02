@@ -15,6 +15,7 @@ public class TopicContentItem implements Parcelable {
     public transient static final String TYPE_TXT = "text";
     public transient static final String TYPE_IMG = "image";
 
+    public int index;
     public ContentType type;
     public String content;
     public String localUrl;

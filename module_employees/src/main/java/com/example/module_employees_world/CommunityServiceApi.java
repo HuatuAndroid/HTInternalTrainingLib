@@ -6,6 +6,7 @@ import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
+import com.example.module_employees_world.bean.GroupDetailsBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
@@ -64,12 +65,12 @@ public interface CommunityServiceApi {
 
     /**
      * 发布帖子
-     * @param map
      * @return
      */
     @FormUrlEncoded
     @POST(CommunityHttpConfig.RELEASETOPIC)
-    Observable<Result> commitTopicData(@FieldMap() Map<String, String> map);
+    Observable<Result> commitTopicData(@Field("group_id") String id, @Field("title") String title, @Field("content") String content,
+                                       @Field("is_anonymity") String is_anonymity, @Field("type") String type);
 
     /**
      * 评论列表
@@ -139,4 +140,11 @@ public interface CommunityServiceApi {
     @FormUrlEncoded
     @POST(CommunityHttpConfig.COMMENT_SEND)
     Observable<Result> commentSend(@FieldMap() Map<String, String> map);
+
+    /*
+     * 小组详情
+     */
+    @GET(CommunityHttpConfig.GROUPDETAILS)
+    Observable<Result<GroupDetailsBean>> getGroupDetails(@Path("group_id") String group_id, @Query("st") String st);
+
 }

@@ -14,6 +14,7 @@ import com.example.module_employees_world.bean.ListBean;
 import com.example.module_employees_world.common.config.CommunityConfig;
 import com.example.module_employees_world.contranct.CommunityGroupContranct;
 import com.example.module_employees_world.presenter.CommunityGroupPresenter;
+import com.example.module_employees_world.ui.group.GroupDetailsActivity;
 import com.example.module_employees_world.utils.DialogUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
@@ -59,7 +60,7 @@ public class CommunityGroupFragment extends MvpFragment<CommunityGroupPresenter>
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.main_fragment_information);
+        setContentView(R.layout.fragment_group);
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
@@ -128,10 +129,10 @@ public class CommunityGroupFragment extends MvpFragment<CommunityGroupPresenter>
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                   /* //小组详情
+                    //小组详情
                     Intent intent = new Intent(getActivity(), GroupDetailsActivity.class);
                     intent.putExtra("groupId", listBeans.get(position).getId());
-                    startActivityForResult(intent, 555);*/
+                    startActivityForResult(intent, 555);
                 }
             });
             communityGroupAdapter.setOnItemJoinListener(new CommunityConfig.OnItemJoinListener() {

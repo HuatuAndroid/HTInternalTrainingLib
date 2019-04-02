@@ -1,10 +1,19 @@
 package com.example.module_employees_world.ui.topic;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +32,13 @@ import android.widget.Toast;
 import com.baijiayun.glide.Glide;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.ViewPagerAdapter;
+import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.view.TopBarView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -43,11 +54,9 @@ import java.util.Map;
 public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClickListener
         , CompoundButton.OnCheckedChangeListener {
 
-    public static final String LOCAL_FOLDER_NAME = "local_folder_name";//跳转到相册页的文件夹名称
-
     private TopBarView topBarView;
 
-    private GridView mGridView;
+    private RecyclerView mRecyclerView;
     private TextView mTvConfirm;
 
     private RelativeLayout mRlLargePic;
@@ -59,12 +68,14 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
     private LocalImageHelper helper = LocalImageHelper.getInstance();
     private List<LocalImageHelper.LocalFile> checkedItems;
 
-    private GrideAdapter adapter;
+    private CameraAdapter adapter;
     private String folder;
     //前面传的参数：插入图片的个数
     private int pic_size = 0;
     //插入图片的最大数量
     private final int maxicSize = 9;
+
+    private File mFileTemp;
 
     @Override
     protected BasePreaenter onCreatePresenter() {
@@ -81,7 +92,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
         }
 
         topBarView = findViewById(R.id.mTopBarView);
-        mGridView = findViewById(R.id.mGridView);
+        mRecyclerView = findViewById(R.id.mRecyclerView);
         mTvConfirm = findViewById(R.id.mTvConfirm);
 
         mRlLargePic = findViewById(R.id.mRlLargePic);
@@ -89,8 +100,11 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
         mViewpager = findViewById(R.id.mViewpager);
         mCheckBox = findViewById(R.id.mCheckBox);
 
+        GridLayoutManager layoutManager = new GridLayoutManager(this,4);
+        mRecyclerView.setLayoutManager(layoutManager);
+
         Intent intent = getIntent();
-        folder = intent.getStringExtra(LOCAL_FOLDER_NAME);
+        folder = intent.getStringExtra(CommonUtils.LOCAL_FOLDER_NAME);
         pic_size = intent.getIntExtra("pic_size", 0);
 
         if (folder == null) {
@@ -112,14 +126,14 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
     }
 
-    public void setGrideAdapter(List<LocalImageHelper.LocalFile> currentFolder){
+    public void setGrideAdapter(List<LocalImageHelper.LocalFile> currentFolder) {
 
         runOnUiThread(() -> {
             if (currentFolder != null) {
                 this.currentFolder = currentFolder;
                 if (adapter == null) {
-                    adapter = new GrideAdapter(LocalAlbumDetailActicity.this, currentFolder);
-                    mGridView.setAdapter(adapter);
+                    adapter = new CameraAdapter(LocalAlbumDetailActicity.this, currentFolder);
+                    mRecyclerView.setAdapter(adapter);
                 } else {
                     adapter.notifyDataSetChanged();
                 }
@@ -241,72 +255,11 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
         if (checkedItems.size() != 0) {
             mTvConfirm.setText("确定" + "(" + checkedItems.size() + ")");
-        }else{
+        } else {
             mTvConfirm.setText("确定");
         }
-        mPicTopBarView.getRightTextView().setText("确定" + "(" +checkedItems.size() + "/" + maxicSize  + ")");
+        mPicTopBarView.getRightTextView().setText("确定" + "(" + checkedItems.size() + "/" + maxicSize + ")");
 
-    }
-
-    public class GrideAdapter extends BaseAdapter {
-        private Context m_context;
-        private LayoutInflater miInflater;
-        List<LocalImageHelper.LocalFile> paths;
-
-        public GrideAdapter(Context context, List<LocalImageHelper.LocalFile> paths) {
-            m_context = context;
-            this.paths = paths;
-        }
-
-        @Override
-        public int getCount() {
-            return paths.size();
-        }
-
-        @Override
-        public LocalImageHelper.LocalFile getItem(int i) {
-            return paths.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup viewGroup) {
-            GrideAdapter.ViewHolder viewHolder;
-
-            if (convertView == null || convertView.getTag() == null) {
-                viewHolder = new GrideAdapter.ViewHolder();
-                convertView = View.inflate(m_context, R.layout.item_gride_pic, null);
-                viewHolder.imageView = convertView.findViewById(R.id.imageView);
-                viewHolder.checkBox = convertView.findViewById(R.id.checkbox);
-                viewHolder.checkBox.setOnCheckedChangeListener(LocalAlbumDetailActicity.this);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (GrideAdapter.ViewHolder) convertView.getTag();
-            }
-
-            LocalImageHelper.LocalFile localFile = paths.get(position);
-
-            Glide.with(m_context).asBitmap().load(localFile.getThumbnailUri()).into(viewHolder.imageView);
-
-            viewHolder.checkBox.setTag(localFile);
-            viewHolder.checkBox.setChecked(checkedItems.contains(localFile));
-            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showViewPager(position);
-                }
-            });
-            return convertView;
-        }
-
-        private class ViewHolder {
-            ImageView imageView;
-            CheckBox checkBox;
-        }
     }
 
     private void showViewPager(int index) {
@@ -343,7 +296,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
             mCheckBox.setTag(currentFolder.get(position));
             mCheckBox.setChecked(checkedItems.contains(currentFolder.get(position)));
 
-            mPicTopBarView.getCenterTextView().setText(position+1 + "/" + currentFolder.size());
+            mPicTopBarView.getCenterTextView().setText(position + 1 + "/" + currentFolder.size());
 
         }
 
@@ -360,4 +313,161 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
         }
     };
 
+    class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.ViewHolder> {
+
+        LayoutInflater inflater;
+        Context mContext;
+        List<LocalImageHelper.LocalFile> localFiles;
+
+        public CameraAdapter(Context mContext, List<LocalImageHelper.LocalFile> localFiles) {
+            this.mContext = mContext;
+            inflater = LayoutInflater.from(mContext);
+            this.localFiles = localFiles;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = inflater.inflate(R.layout.item_gride_pic, parent, false);
+            return new CameraAdapter.ViewHolder(view, viewType);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+           final int nposition;
+
+            if (position == 0){
+
+                nposition = 0;
+                holder.mIvCamera.setVisibility(View.VISIBLE);
+                holder.imageView.setVisibility(View.GONE);
+                holder.checkbox.setVisibility(View.GONE);
+
+            }else {
+
+                holder.mIvCamera.setVisibility(View.GONE);
+                holder.imageView.setVisibility(View.VISIBLE);
+                holder.checkbox.setVisibility(View.VISIBLE);
+
+                holder.checkbox.setOnCheckedChangeListener(LocalAlbumDetailActicity.this);
+
+                nposition = position - 1;
+
+                LocalImageHelper.LocalFile localFile = localFiles.get(nposition);
+
+                Glide.with(mContext).asBitmap().load(localFile.getThumbnailUri()).into(holder.imageView);
+                holder.checkbox.setTag(localFile);
+                holder.checkbox.setChecked(checkedItems.contains(localFile));
+
+            }
+
+            holder.mIvCamera.setOnClickListener(view -> {
+
+                if (position == 0) {
+                    photoEven();
+                }
+            });
+
+            holder.imageView.setOnClickListener(view -> {
+
+                if (position != 0) {
+                    showViewPager(nposition);
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return localFiles.size() + 1;
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            private CheckBox checkbox;
+            private ImageView imageView, mIvCamera;
+
+            public ViewHolder(View itemView, int viewType) {
+                super(itemView);
+                imageView = itemView.findViewById(R.id.imageView);
+                mIvCamera = itemView.findViewById(R.id.mIvCamera);
+                checkbox = itemView.findViewById(R.id.checkbox);
+            }
+        }
+    }
+
+    public void photoEven() {
+        pictureInIt();
+        takePicture();
+    }
+
+    public void pictureInIt() {
+
+        // 创建项目所需文件夹
+        CommonUtils.createFile();
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            mFileTemp = new File(CommonUtils.cache_path, getLinPhotokName());
+        } else {
+            mFileTemp = new File(getFilesDir(), getLinPhotokName());
+        }
+
+    }
+
+    public void takePicture() {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            Uri mImageCaptureUri = null;
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+
+                if (Build.VERSION.SDK_INT >= 24) {
+                    mImageCaptureUri = FileProvider.getUriForFile(this, "com.ekao123.manmachine.fileprovider", mFileTemp);
+                } else {
+                    mImageCaptureUri = Uri.fromFile(mFileTemp);
+                }
+            } else {
+                /*
+                 * The solution is taken from here:
+                 * http://stackoverflow.com/questions
+                 * /10042695/how-to-get-camera-result-as-a-uri-in-data-folder
+                 */
+                mImageCaptureUri = Uri.parse("content://eu.janmuller.android.simplecropimage.example/");;
+            }
+            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+                    mImageCaptureUri);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
+
+        } catch (ActivityNotFoundException e) {
+
+        }
+
+    }
+
+    private String getLinPhotokName() {
+        return "htjy_photo" + CommonUtils.getTime() + ".jpg";
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        switch (requestCode) {
+            case CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP:
+
+                Log.i("onActivityResult", "-----" + mFileTemp.getPath());
+
+                Intent intent1 = new Intent();
+                intent1.putExtra("mFileTemp", mFileTemp.getPath());
+                setResult(CommonUtils.REQUEST_CODE_GETIMAGE_BYCAMERA, intent1);
+                finish();
+                break;
+            default:
+                break;
+
+        }
+    }
 }
