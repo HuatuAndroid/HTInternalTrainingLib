@@ -18,8 +18,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
@@ -30,6 +32,7 @@ import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.ui.topic.TopicEditActivity;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.app.AppUtils;
@@ -61,7 +64,7 @@ import okhttp3.RequestBody;
 public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresenter> implements CommentSendDialogContranct.ICommentSendDialogView, EmojiItemClickListener {
 
     public final int TAG_ACTIVTY_RESULT_CODE = 200;
-    private ImageView ivEditArea,ivReplyOval,ivReplyPic,ivReplyret,ivReplyimg;
+    private ImageView ivEditArea,ivReplyOval,ivReplyPic,ivReplyret,ivReplyimg,ivReplyGif,ivDelGif,ivDelImg;
     private TextView tvParentName,tvReplySend;
     private LinearLayout llRoot,llBottom;
     private EditText etContent;
@@ -86,7 +89,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     //相册选择照片集合
     private List<String> result;
     //允许上传图片个数
-    private final int picNum=1;
+    private int picNum=1;
     //判断键盘是否显示/隐藏
     private boolean emojiKeyboardOpen = false;
     private EmojiKeyboardFragment emojiKeyboardFragment;
@@ -94,6 +97,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     private int viewHeight;
     private View view;
     private StringBuffer editTextSB=new StringBuffer();
+    private RelativeLayout rlImg,rlGif;
 
 
     @Override
@@ -128,8 +132,8 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                     map.put("file" + i, file);
                 }
                 Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
-                mPresenter.commitImage(bodyMap);
                 showLoadDiaLog("");
+                mPresenter.commitImage(bodyMap);
             }
         }
     }
@@ -142,11 +146,16 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         ivReplyPic = findViewById(R.id.iv_reply_pic);
         ivReplyret = findViewById(R.id.iv_reply_ret);
         ivReplyimg = findViewById(R.id.iv_peply_img);
+        ivReplyGif = findViewById(R.id.iv_peply_gif);
+        ivDelImg = findViewById(R.id.iv_del_img);
+        ivDelGif = findViewById(R.id.iv_del_gif);
         tvReplySend = findViewById(R.id.tv_reply_send);
         tvParentName = findViewById(R.id.tv_parent_name);
         etContent = findViewById(R.id.et_comment_text);
         llRoot = findViewById(R.id.ll_edit_root);
         llBottom = findViewById(R.id.ll_comment_bottom);
+        rlImg = findViewById(R.id.rl_reply_img);
+        rlGif = findViewById(R.id.rl_reply_gif);
         view = findViewById(R.id.tv_view);
 
         tvParentName.setText(comment_name+"（作者）");
@@ -220,9 +229,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         tvReplySend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/4/1 发布评论
-                if (!TextUtils.isEmpty(editTextSB.toString())||!TextUtils.isEmpty(commentPicture)||!TextUtils.isEmpty(commentFace)){
-                    mPresenter.sendComment(question_id,editTextSB.toString(),commentPicture,commentFace,isAnonymity,comment_id);
+                String encode = EmojiUtils.getString(editTextSB.toString());
+                if (!TextUtils.isEmpty(encode)||!TextUtils.isEmpty(commentPicture)||!TextUtils.isEmpty(commentFace)){
+                    mPresenter.sendComment(question_id,encode,commentPicture,commentFace,isAnonymity,comment_id);
                     showLoadDiaLog("");
                 }else {
                     showShortToast("评论不能为空");
@@ -259,12 +268,27 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         ivReplyret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/4/1 换行
                 editTextSB.append("\n");
                 etContent.setText(editTextSB);
             }
         });
-
+        //删除图片
+        ivDelImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentPicture="";
+                picNum=1;
+                rlImg.setVisibility(View.GONE);
+            }
+        });
+        //删除表情包
+        ivDelGif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentFace="";
+                rlGif.setVisibility(View.GONE);
+            }
+        });
         etContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -338,8 +362,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     public void commitImage(List<NImageBean> pathList) {
         hidLoadDiaLog();
         if (pathList.size()>0){
+            picNum=0;
+            rlImg.setVisibility(View.VISIBLE);
             commentPicture=pathList.get(0).getPath();
-            ivReplyimg.setVisibility(View.VISIBLE);
             GlideManager.getInstance().setCommonPhoto(ivReplyimg, R.drawable.course_image ,this , HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(0).getPath() ,false );
         }
 
@@ -385,8 +410,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
 
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-        editTextSB.append(tutuIconBean.key);
-        etContent.setText(editTextSB.toString());
+        commentFace=tutuIconBean.key;
+        rlGif.setVisibility(View.VISIBLE);
+        Glide.with(this).load(tutuIconBean.TutuId).asGif().into(ivReplyGif);
     }
 
     @Override

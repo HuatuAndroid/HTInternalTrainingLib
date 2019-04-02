@@ -8,6 +8,7 @@ import android.widget.ImageView;
 //import com.bumptech.glide.request.animation.GlideAnimation;
 //import com.bumptech.glide.request.target.SimpleTarget;
 //import com.baijiayun.glide.Glide;
+import com.baijiayun.glide.Glide;
 import com.squareup.picasso.Picasso;
 //import com.wb.baselib.cache.GlideCatchUtil;
 import com.wb.baselib.interfaces.GlideBitmapCall;
@@ -43,7 +44,6 @@ public class GlideManager {
         }
 
     }
-
 
     public void setGlideRoundTransImage(ImageView imageViewm, int res, Context mContext, String path){
         Picasso.with(mContext).load(path).error(res).placeholder(res).into(imageViewm);

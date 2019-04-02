@@ -24,8 +24,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="#FFFFFF"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:paddingTop="13dp"
             android:orientation="vertical"
             android:layout_alignParentBottom="true">
@@ -34,7 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,6 +68,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="vertical">
                 <EditText
                     android:id="@+id/et_comment_text"
@@ -79,12 +81,45 @@
                     android:hint="认真评论支持一下哦..."
                     android:background="@drawable/shape_comment_edit"/>
 
-                <ImageView
-                    android:id="@+id/iv_peply_img"
+                <RelativeLayout
+                    android:id="@+id/rl_reply_img"
                     android:layout_width="276dp"
-                    android:layout_height="182dp"
+                    android:layout_height="128dp"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone">
+                    <ImageView
+                        android:id="@+id/iv_peply_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"/>
+                    <ImageView
+                        android:id="@+id/iv_del_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:padding="10dp"
+                        android:src="@drawable/profile_btn_delete"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_reply_gif"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+                    <ImageView
+                        android:id="@+id/iv_peply_gif"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"/>
+                    <ImageView
+                        android:id="@+id/iv_del_gif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:padding="10dp"
+                        android:src="@drawable/profile_btn_delete"/>
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -93,6 +128,8 @@
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:paddingBottom="13dp">
                 <ImageView
                     android:id="@+id/iv_reply_oval"

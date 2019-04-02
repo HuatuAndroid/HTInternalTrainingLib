@@ -7,6 +7,7 @@ import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.GroupDetailsBean;
+import com.example.module_employees_world.bean.GuideBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
@@ -52,6 +53,7 @@ public interface CommunityServiceApi {
 
     /**
      * 上传图片
+     *
      * @param map
      * @return
      */
@@ -65,6 +67,7 @@ public interface CommunityServiceApi {
 
     /**
      * 发布帖子
+     *
      * @return
      */
     @FormUrlEncoded
@@ -76,9 +79,13 @@ public interface CommunityServiceApi {
      * 评论列表
      */
     @GET(CommunityHttpConfig.COMMENT_LIST)
-    Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st,@Query("page") String page,@Query("limit") String limit);
+    Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st, @Query("page") String page, @Query("limit") String limit);
 
     /**
+<<<<<<< HEAD
+=======
+     * <<<<<<< HEAD
+>>>>>>> 0a5a0d05d339fa3c4cfeb73c4e061fbce6647a29
      * 搜索帖子
      */
     @GET(CommunityHttpConfig.SEARCH)
@@ -132,7 +139,7 @@ public interface CommunityServiceApi {
      * 评论子列表
      */
     @GET(CommunityHttpConfig.COMMENT_CHILDREN_LIST)
-    Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id,@Query("page") int page,@Query("limit") int limit,@Query("st") int st);
+    Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id, @Query("page") int page, @Query("limit") int limit, @Query("st") int st);
 
     /**
      * 发布评论
@@ -146,5 +153,11 @@ public interface CommunityServiceApi {
      */
     @GET(CommunityHttpConfig.GROUPDETAILS)
     Observable<Result<GroupDetailsBean>> getGroupDetails(@Path("group_id") String group_id, @Query("st") String st);
+
+    /**
+     * 广告
+     */
+    @GET(CommunityHttpConfig.GUIDE)
+    Observable<Result<GuideBean>> getGuide();
 
 }

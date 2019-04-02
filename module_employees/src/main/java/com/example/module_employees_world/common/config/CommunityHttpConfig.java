@@ -50,4 +50,6 @@ public interface CommunityHttpConfig {
     String COMMENT_CHILDREN_LIST = "api/app/discuss/appCommentSonInfo/comment_id={comment_id}";
     /**评论发布*/
     String COMMENT_SEND = "api/app/discuss/createComment";
+    /** 广告*/
+    String GUIDE = "api/app/discuss/getBanner";
 }
