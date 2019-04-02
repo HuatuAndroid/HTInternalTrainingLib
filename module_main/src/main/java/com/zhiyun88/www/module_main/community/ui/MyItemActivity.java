@@ -34,7 +34,7 @@ public class MyItemActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_new);
+        setContentView(R.layout.main_activity_community);
         topBarView = getViewById(R.id.topbarview);
         scrollIndicatorView = getViewById(R.id.spring_indicator);
         view = getViewById(R.id.view_line_xi);
