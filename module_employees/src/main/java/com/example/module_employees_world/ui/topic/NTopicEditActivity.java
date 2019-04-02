@@ -207,6 +207,16 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             public void hideEmojiKeyboard() {
                 hideEmojiKeyboardFragment();
             }
+
+            @Override
+            public void deletePic(View view) {
+                sureBackPopw = new NCommontPopw(NTopicEditActivity.this, "确定删除图片吗?", v1 -> {
+
+                    mTopicEditView.delete(view);
+                    sureBackPopw.myDismiss();
+
+                });
+            }
         });
         mTopicEditView.addData(0, new TopicContentItem(""));
 

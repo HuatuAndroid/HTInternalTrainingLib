@@ -30,6 +30,7 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.ui.ExtendImageView;
+import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.ImgUtils;
 import com.example.module_employees_world.utils.Rgba;
 import com.facebook.common.executors.CallerThreadExecutor;
@@ -43,6 +44,7 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.wb.baselib.view.NCommontPopw;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,6 +77,9 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
     private int ce_img_img_spacing;
     private int windowWidth;
     private int windowHeight;
+
+    //删除照片，弹框
+    private NCommontPopw sureBackPopw;
 
     public int getMaxImgCount() {
         return maxImgCount;
@@ -314,6 +319,7 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
                         scaleImageView.setImage(ImageSource.uri(bean.localUrl));
                         iv = scaleImageView;
                     }
+
                 } else {    //网络图片， 不可编辑，点击放大
 
                     ExtendImageView imageView = new ExtendImageView(getContext());
@@ -332,15 +338,12 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
                 }
 
-                iv.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onItemClick(iv, datas.indexOf(bean));
-                        } else if (!editable) {
-                            if (!TextUtils.isEmpty(url)) {
-                                navToPhotoView(bean);
-                            }
+                iv.setOnClickListener(view -> {
+                    if (mItemClickListener != null) {
+                        mContentWatch.deletePic(iv);
+                    } else if (!editable) {
+                        if (!TextUtils.isEmpty(url)) {
+                            navToPhotoView(bean);
                         }
                     }
                 });
@@ -378,39 +381,6 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
      */
     public void navToPhotoView(TopicContentItem item) {
 
-//        List<TopicContentItem> imgs = getImgItems();
-//
-//        PhotoViewActivity.UrlsWithRect[] urlsWithRects = new PhotoViewActivity.UrlsWithRect[imgs.size()];
-//
-//        for (int i = 0; i < imgs.size(); i++) {
-//            TopicContentItem imgItem = imgs.get(i);
-//            Rect rect;
-//
-//            int indexOfViews = datas.indexOf(imgItem);
-//            if(indexOfViews<0){
-//                rect = null;
-//            }else{
-//                View v = getChildAt(indexOfViews);
-//                if(v == null){
-//                    rect = null;
-//                }else{
-//                    int[] loc = new int[2];
-//                    v.getLocationInWindow(loc);
-//                    rect = new Rect(loc[0],loc[1],loc[0]+v.getWidth(),loc[1]+v.getHeight());
-//                }
-//            }
-//            LogUtil.d(TAG,i+"ce:rect:"+rect+"--->"+rect.height()+"--->"+stateBarHeight);
-//            PhotoViewActivity.UrlsWithRect urlsWithRect = new PhotoViewActivity.UrlsWithRect(editable?imgItem.localUrl:imgItem.remoteUrl,rect);
-//            urlsWithRects[i] = urlsWithRect;
-//        }
-//
-//        Intent intent = new Intent(getContext(),PhotoViewActivity.class);
-//        intent.putExtra(PhotoViewActivity.KEY_EXTRA_ISANIM_NAV,true);
-//        intent.putExtra(PhotoViewActivity.KEY_EXTRA_IMGS_URLS_CURRENT_INDEX,getIndexFromImages(item));
-//        intent.putExtra(PhotoViewActivity.KEY_EXTRA_IMGS_WITH_RECT,urlsWithRects);
-//        intent.putExtra(PhotoViewActivity.KEY_EXTRA_CONTENT_ITEMS,getImageItems());
-//        intent.putExtra("state", state);
-//        getContext().startActivity(intent);
     }
 
     public static int state = 0;
@@ -844,6 +814,8 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
         void onTypedCount(float count);
 
         void hideEmojiKeyboard();
+
+        void deletePic(View view);
     }
 
     ContentWatch mContentWatch;
