@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.text.Editable;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -781,6 +782,25 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
             }else if (state == 1){
                 editable.insert(index, emojicon.emojiChart);
             }
+
+        }
+    }
+
+    /**
+     * 添加超链接
+     */
+    public void AddConnect(Spanned spanned){
+
+        View view = this.findFocus();
+
+        if (view != null && view instanceof EditText) {
+
+            EditText editText = (EditText) view;
+
+            Editable editable = editText.getText();
+            int index = editText.getSelectionStart();
+
+            editable.insert(index, spanned);
 
         }
 

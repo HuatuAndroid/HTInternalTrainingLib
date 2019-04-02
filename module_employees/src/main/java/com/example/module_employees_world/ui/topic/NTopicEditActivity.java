@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -489,6 +491,34 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         });
 
         tvDialogRight.setOnClickListener(v -> {
+
+            String html = "";
+
+            String mEtConnectString = mEtConnect.getText().toString();
+
+            String mEtConnectContentString = mEtConnectContent.getText().toString();
+
+            if (TextUtils.isEmpty(mEtConnectString)){
+
+                if (!TextUtils.isEmpty(mEtConnectContentString)){
+                    html = mEtConnectContentString;
+                }
+
+            }else{
+
+                if (!TextUtils.isEmpty(mEtConnectContentString)){
+                    html ="<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
+                }else{
+                    html ="<a href= >" + mEtConnectString +"</a >" + " ";
+                }
+
+            }
+
+
+            Spanned spanned = Html.fromHtml(html);
+
+            mTopicEditView.AddConnect(spanned);
+
             dialog.dismiss();
         });
 
