@@ -113,10 +113,12 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
      */
     @Override
     public void commitTopicData(String group_id, String title, String content, String is_anonymity, String type) {
+
         HttpManager.newInstance().commonRequest(mModel.commitTopicData(group_id, title, content, is_anonymity, type), new BaseObserver<Result>(AppUtils.getContext()) {
 
             @Override
             public void onSuccess(Result result) {
+                mView.closeLoadV();
                 mView.commitSuccess(result.getMsg());
             }
 
@@ -164,6 +166,7 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
 
             @Override
             public void onFail(ApiException e) {
+                mView.closeLoadV();
                 mView.showErrorMsg(e.getMessage());
             }
 
@@ -180,6 +183,8 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
     }
 
     public void processImage(List<NImageBean> nImageBeans){
+
+        mView.showLoadV("提交中....");
 
         List<TopicContentItem> topicContentItems = mView.getData();
 
@@ -205,6 +210,8 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
     }
 
     public void processData(List<TopicContentItem> topicContentItems){
+
+        mView.showLoadV("提交中....");
 
         String stringContent = "";
 

@@ -35,6 +35,7 @@ import com.example.module_employees_world.view.TopicEditView;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
+import com.hss01248.dialog.StyledDialog;
 import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
@@ -76,6 +77,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     //判断键盘是否显示/隐藏
     private boolean emojiKeyboardOpen = false;
+
+    private Dialog mDiaLog;
 
     @Override
     protected TopicEditPresenter onCreatePresenter() {
@@ -426,11 +429,17 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     }
 
     @Override
-    public void showLoadV(String s) {
+    public void showLoadV(String msg) {
+        mDiaLog = StyledDialog.buildLoading(msg).show();
     }
 
     @Override
     public void closeLoadV() {
+        if (mDiaLog == null)
+            return;
+        if (mDiaLog.isShowing()) {
+            mDiaLog.dismiss();
+        }
     }
 
     @Override
