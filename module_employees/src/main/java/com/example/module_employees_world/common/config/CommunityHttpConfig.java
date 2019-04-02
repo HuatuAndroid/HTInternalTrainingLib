@@ -47,4 +47,7 @@ public interface CommunityHttpConfig {
     String COMMENT_INFO = "api/app/discuss/appCommentInfo/comment_id={comment_id}";
     /**评论子列表*/
     String COMMENT_CHILDREN_LIST = "api/app/discuss/appCommentSonInfo/comment_id={comment_id}";
+    /** 广告*/
+    String GUIDE = "api/app/discuss/getBanner";
+
 }

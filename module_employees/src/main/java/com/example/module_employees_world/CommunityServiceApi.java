@@ -7,6 +7,9 @@ import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.GroupDetailsBean;
+import com.example.module_employees_world.bean.GuideBean;
+import com.example.module_employees_world.bean.MyItemBean;
+import com.example.module_employees_world.bean.MyPartBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
@@ -40,6 +43,12 @@ public interface CommunityServiceApi {
     @GET(CommunityHttpConfig.GROUPLIST)
     Observable<Result<CommunityGroupBean>> getGroupList(@Query("page") int page);
 
+    /**
+     * 加入或退出小组
+     * @param groupId
+     * @param states
+     * @return
+     */
     @FormUrlEncoded
     @POST(CommunityHttpConfig.JOINGROUP)
     Observable<Result> setGroup(@Field("group_id") String groupId, @Field("states") String states);
@@ -52,6 +61,7 @@ public interface CommunityServiceApi {
 
     /**
      * 上传图片
+     *
      * @param map
      * @return
      */
@@ -65,6 +75,7 @@ public interface CommunityServiceApi {
 
     /**
      * 发布帖子
+     *
      * @return
      */
     @FormUrlEncoded
@@ -76,10 +87,10 @@ public interface CommunityServiceApi {
      * 評論列表
      */
     @GET(CommunityHttpConfig.COMMENT_LIST)
-    Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st,@Query("page") String page,@Query("limit") String limit);
+    Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st, @Query("page") String page, @Query("limit") String limit);
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
      * 搜索帖子
      */
     @GET(CommunityHttpConfig.SEARCH)
@@ -133,12 +144,30 @@ public interface CommunityServiceApi {
      * 评论子列表
      */
     @GET(CommunityHttpConfig.COMMENT_CHILDREN_LIST)
-    Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id,@Query("page") int page,@Query("limit") int limit,@Query("st") int st);
+    Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id, @Query("page") int page, @Query("limit") int limit, @Query("st") int st);
 
     /**
      * 小组详情
      */
     @GET(CommunityHttpConfig.GROUPDETAILS)
     Observable<Result<GroupDetailsBean>> getGroupDetails(@Path("group_id") String group_id, @Query("st") String st);
+
+    /**
+     * 广告
+     */
+    @GET(CommunityHttpConfig.GUIDE)
+    Observable<Result<GuideBean>> getGuide();
+
+    /**
+     * 我的小组
+     */
+    @GET(CommunityHttpConfig.MYGROUP)
+    Observable<Result<MyItemBean>> getMyGroupData(@Query("page") int page);
+
+    /**
+     * 我的参与
+     */
+    @GET(CommunityHttpConfig.MYPART)
+    Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page);
 
 }
