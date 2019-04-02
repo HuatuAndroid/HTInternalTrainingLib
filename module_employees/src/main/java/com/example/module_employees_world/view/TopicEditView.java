@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.text.Editable;
+import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -481,7 +482,9 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
          */
         @Override
         public void afterTextChanged(Editable editable) {
-            String content = editText.getText().toString();
+            String content =Html.toHtml(editText.getText()).replace("<p dir=\"ltr\">", "")
+                    .replace("\n", "").replace("</p>", "");
+//            String content = editText.getText().toString();
             bean.content = content;
             long tmpCount = getTxtCount();
             if (maxTxtCount > 0 && tmpCount > maxTxtCount) {
