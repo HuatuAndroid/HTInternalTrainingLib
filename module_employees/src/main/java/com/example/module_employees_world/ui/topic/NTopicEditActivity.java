@@ -22,6 +22,7 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.bean.TutuIconBean;
+import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.StartActivityCommon;
@@ -91,7 +92,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case REQUEST_CODE_GETIMAGE_BYCROP:
+            case CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP:
                 try {
                     if (LocalImageHelper.getInstance().isResultOk()) {
                         LocalImageHelper.getInstance().setResultOk(false);
@@ -108,6 +109,12 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                         //清空选中的图片
                         files.clear();
                         mTopicEditView.addImgs(imgs);
+                    }else{
+                        if (data != null) {
+                            String path = data.getStringExtra("mFileTemp");
+                            String ints[] = {path};
+                            mTopicEditView.addImgs(ints);
+                        }
                     }
                     //清空选中的图片
                     LocalImageHelper.getInstance().getCheckedItems().clear();
@@ -115,15 +122,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     e.printStackTrace();
                 }
                 break;
-            case REQUEST_CODE_TAKE_PICTURE:
-                if (resultCode == RESULT_OK) {
 
-//                    if (mFileTemp != null)
-//                        mTopicEditView.addImg(Uri.fromFile(mFileTemp).toString());
-                }
-                break;
-
-            case SELECT_GROUP:
+            case CommonUtils.SELECT_GROUP:
 
                 if (data != null) {
                     groupId = data.getStringExtra("group_id");
@@ -322,7 +322,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else if (v.getId() == R.id.mTvXiaoXu) {
             //点击 选择小组
-            StartActivityCommon.startActivityForResult(this, SelectGroupActivity.class, SELECT_GROUP);
+            StartActivityCommon.startActivityForResult(this, SelectGroupActivity.class, CommonUtils.SELECT_GROUP);
 
         } else if (v.getId() == R.id.mIvA) {
             //点击 @
@@ -344,7 +344,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
             intent.putExtra("pic_size", mTopicEditView.getImageCount());
-            startActivityForResult(intent, REQUEST_CODE_GETIMAGE_BYCROP);
+            startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
 
         } else if (v.getId() == R.id.mIvFace) {
             //点击 表情
@@ -383,24 +383,6 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         }
     }
 
-    /**
-     * 请求相册
-     */
-    public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0;
-    /**
-     * 请求相机
-     */
-    public static final int REQUEST_CODE_GETIMAGE_BYCAMERA = 1;
-    /**
-     * 请求裁剪
-     */
-    public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
-
-    public static final int REQUEST_CODE_TAKE_PICTURE = 3;
-    /**
-     * 选择小组
-     */
-    public static final int SELECT_GROUP = 4;
 
     @Override
     protected void processLogic(Bundle bundle) {

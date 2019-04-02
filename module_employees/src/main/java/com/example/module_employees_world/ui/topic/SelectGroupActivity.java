@@ -11,6 +11,7 @@ import com.example.module_employees_world.adapter.CommunityGroupAdapter;
 import com.example.module_employees_world.adapter.SelectGroupAdapter;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.ListBean;
+import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.contranct.CommunityGroupContranct;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
@@ -207,7 +208,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
         Intent intent = new Intent();
         intent.putExtra("group_id", listBean.getId());
-        this.setResult(NTopicEditActivity.SELECT_GROUP, intent);
+        this.setResult(CommonUtils.SELECT_GROUP, intent);
 
         finish();
 
