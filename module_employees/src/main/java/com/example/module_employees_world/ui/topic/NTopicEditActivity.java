@@ -25,7 +25,6 @@ import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.bean.TutuIconBean;
 import com.example.module_employees_world.common.CommonUtils;
-import com.example.module_employees_world.common.InsertConnectAlertDialog;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
@@ -43,9 +42,6 @@ import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +110,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                         //清空选中的图片
                         files.clear();
                         mTopicEditView.addImgs(imgs);
-                    }else{
+                    } else {
                         if (data != null) {
                             String path = data.getStringExtra("mFileTemp");
                             String ints[] = {path};
@@ -277,7 +273,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
                 if (imageItems != null && imageItems.length != 0) {
                     mPresenter.processImage(imageItems);
-                }else{
+                } else {
                     mPresenter.processData(getData());
                 }
 
@@ -507,22 +503,21 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             String mEtConnectContentString = mEtConnectContent.getText().toString();
 
-            if (TextUtils.isEmpty(mEtConnectString)){
+            if (TextUtils.isEmpty(mEtConnectString)) {
 
-                if (!TextUtils.isEmpty(mEtConnectContentString)){
+                if (!TextUtils.isEmpty(mEtConnectContentString)) {
                     html = mEtConnectContentString;
                 }
 
-            }else{
+            } else {
 
-                if (!TextUtils.isEmpty(mEtConnectContentString)){
-                    html ="<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
-                }else{
+                if (!TextUtils.isEmpty(mEtConnectContentString)) {
+                    html = "<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
+                } else {
                     html = "<a href= >" + mEtConnectString + "</a >" + " ";
                 }
 
             }
-
 
             Spanned spanned = Html.fromHtml(html);
 
@@ -591,20 +586,19 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     }
 
     @Override
-    public void commitTopicData(String content){
+    public void commitTopicData(String content) {
 
         try {
             String encode = EmojiUtils.getString(content);
 
             LogUtil.e("commitTopicData = " + encode + "");
 
-            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1+"", type+"");
+            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1 + "", type + "");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
 
 
 }
