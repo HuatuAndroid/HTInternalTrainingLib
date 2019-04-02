@@ -509,7 +509,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                 if (!TextUtils.isEmpty(mEtConnectContentString)){
                     html ="<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
                 }else{
-                    html ="<a href= >" + mEtConnectString +"</a >" + " ";
+                    html = "<a href= >" + mEtConnectString + "</a >" + " ";
                 }
 
             }
