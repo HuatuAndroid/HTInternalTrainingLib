@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/mImageView"
-        android:src="@drawable/htjy_ygtd_guide_1"
+        android:src="@drawable/default_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

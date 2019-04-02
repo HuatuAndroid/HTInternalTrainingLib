@@ -3,7 +3,8 @@
     package="com.example.module_employees_world">
 
     <application android:theme="@style/BaseAppTheme">
-        <activity android:name=".ui.PictuirePreviewActivity"></activity>
+        <activity android:name=".GuideH5Activity"></activity>
+        <activity android:name=".ui.PictuirePreviewActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
         <activity
