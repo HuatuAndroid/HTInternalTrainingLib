@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.module_employees_world.view.CustomLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -50,6 +50,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="输入标题（1~50字）"
+                android:maxLength="50"
                 android:textColorHint="@color/color_FF999CAA"
                 android:textSize="15sp" />
 
@@ -185,68 +186,90 @@
                 android:layout_height="1dp"
                 android:background="@color/color_FFEAEBF0" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_gravity="right"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="6dp"
-                android:paddingRight="16dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
 
-                <ImageView
-                    android:id="@+id/mIvA"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                <RelativeLayout
+                    android:id="@+id/mHideView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:padding="10sp"
-                    android:src="@drawable/htjy_tipic_a"
-                    android:visibility="gone" />
+                    android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/mIvPhotograph"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10sp"
-                    android:src="@drawable/htjy_tipic_photograph"
-                    android:visibility="gone" />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/htbj_open" />
 
-                <ImageView
-                    android:id="@+id/mIvHyperLink"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10sp"
-                    android:src="@drawable/htjy_tipic_hyperlink" />
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/mIvPicture"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10sp"
-                    android:src="@drawable/htjy_tipic_picture" />
+                <LinearLayout
+                    android:id="@+id/mViewInputField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="16dp"
+                    android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/mIvFace"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10sp"
-                    android:src="@drawable/htjy_tipic_face" />
+                    <ImageView
+                        android:id="@+id/mIvA"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10sp"
+                        android:src="@drawable/htjy_tipic_a"
+                        android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/mIvLineFeed"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10sp"
-                    android:src="@drawable/htjy_tipic_line_feed" />
+                    <ImageView
+                        android:id="@+id/mIvPhotograph"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10sp"
+                        android:src="@drawable/htjy_tipic_photograph"
+                        android:visibility="gone" />
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/mIvHyperLink"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10sp"
+                        android:src="@drawable/htjy_tipic_hyperlink" />
 
+                    <ImageView
+                        android:id="@+id/mIvPicture"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10sp"
+                        android:src="@drawable/htjy_tipic_picture" />
+
+                    <ImageView
+                        android:id="@+id/mIvFace"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10sp"
+                        android:src="@drawable/htjy_tipic_face" />
+
+                    <ImageView
+                        android:id="@+id/mIvLineFeed"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10sp"
+                        android:src="@drawable/htjy_tipic_line_feed" />
+
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
         <FrameLayout
@@ -256,4 +279,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</com.example.module_employees_world.view.CustomLinearLayout>
