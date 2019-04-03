@@ -2,6 +2,7 @@ package com.example.module_employees_world.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -105,6 +106,17 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
             }else {
                 holder.ivDel.setVisibility(View.VISIBLE);
             }
+
+            if (parentBean.comment_like==0){
+                Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                holder.tvZan.setCompoundDrawables(drawable,null,null,null);
+            }else {
+                Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan_able);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                holder.tvZan.setCompoundDrawables(drawable,null,null,null);
+            }
+
             holder.ivDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

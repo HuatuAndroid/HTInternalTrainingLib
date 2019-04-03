@@ -85,8 +85,16 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         }else {
             holder.ivCommentImg.setVisibility(View.GONE);
         }
-        // TODO: 2019/3/29 点赞状态
-//        if (listBean.is)
+        //  2019/3/29 1已经点赞 0没有点赞
+        if (listBean.comment_like==0){
+            Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            holder.tvCommentZan.setCompoundDrawables(drawable,null,null,null);
+        }else {
+            Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan_able);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            holder.tvCommentZan.setCompoundDrawables(drawable,null,null,null);
+        }
 
         //删除权限  0：无权限   1：有权限
         if (listBean.allowDel==0){

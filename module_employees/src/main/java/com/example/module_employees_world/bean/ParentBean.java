@@ -72,6 +72,8 @@ public class ParentBean implements Parcelable {
     public String avatar;
     @SerializedName("parent_name")
     public String parent_name;
+    @SerializedName("comment_like")
+    public int comment_like;
     @SerializedName("allow_del")
     public int allowDel;//1 可以删除
 
@@ -96,6 +98,7 @@ public class ParentBean implements Parcelable {
         userName = in.readString();
         avatar = in.readString();
         parent_name = in.readString();
+        comment_like = in.readInt();
         allowDel = in.readInt();
     }
 
@@ -137,6 +140,7 @@ public class ParentBean implements Parcelable {
         dest.writeString(userName);
         dest.writeString(avatar);
         dest.writeString(parent_name);
+        dest.writeInt(comment_like);
         dest.writeInt(allowDel);
     }
 }

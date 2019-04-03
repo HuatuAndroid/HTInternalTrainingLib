@@ -118,6 +118,8 @@ public class CommentListBean implements Parcelable{
         public int type;
         @SerializedName("count")
         public int count;
+        @SerializedName("comment_like")
+        public int comment_like;
         @SerializedName("parent")
         public List<ParentBean> parent;
 
@@ -141,6 +143,7 @@ public class CommentListBean implements Parcelable{
             userName = in.readString();
             avatar = in.readString();
             allowDel = in.readInt();
+            comment_like = in.readInt();
             type = in.readInt();
             count = in.readInt();
             parent = in.createTypedArrayList(ParentBean.CREATOR);
@@ -184,6 +187,7 @@ public class CommentListBean implements Parcelable{
             dest.writeString(userName);
             dest.writeString(avatar);
             dest.writeInt(allowDel);
+            dest.writeInt(comment_like);
             dest.writeInt(type);
             dest.writeInt(count);
             dest.writeTypedList(parent);

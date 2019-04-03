@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
@@ -412,7 +413,8 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     public void onItemClick(TutuIconBean tutuIconBean) {
         commentFace=tutuIconBean.key;
         rlGif.setVisibility(View.VISIBLE);
-        Glide.with(this).load(tutuIconBean.TutuId).asGif().into(ivReplyGif);
+//        Glide.with(this).load(tutuIconBean.TutuId).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivReplyGif);
+        Glide.with(this).load(tutuIconBean.TutuId).into(ivReplyGif);
     }
 
     @Override
