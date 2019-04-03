@@ -41,7 +41,7 @@ public class TutuPicInit {
 
             EMOJICONS.add(new TutuIconBean(R.drawable.pic1_01, "[爱情]", 0));
             EMOJICONS.add(new TutuIconBean(R.drawable.pic1_02, "[比心]", 0));
-            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_03, "[爱情]", 0));
+            EMOJICONS.add(new TutuIconBean(R.drawable.pic1_03, "[点赞]", 0));
             EMOJICONS.add(new TutuIconBean(R.drawable.pic1_04, "[额]", 0));
             EMOJICONS.add(new TutuIconBean(R.drawable.pic1_05, "[哼]", 0));
             EMOJICONS.add(new TutuIconBean(R.drawable.pic1_06, "[惊讶]", 0));

@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.text.style.URLSpan;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -295,24 +296,25 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             }
         });
 
-        mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Rect r = new Rect();
-            //获取当前界面可视部分
-            NTopicEditActivity.this.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
-            //获取屏幕的高度
-            int screenHeight = NTopicEditActivity.this.getWindow().getDecorView().getRootView().getHeight();
-            //获取键盘的高度，在键盘没有弹出的时候 此高度为0 键盘弹出的时候为一个正数
-            int heightDifference = screenHeight - r.bottom;
-            if (heightDifference > 0) {
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
-                layoutParams.setMargins(0, 0, 0, heightDifference);
-                llBottom.setLayoutParams(layoutParams);
-            } else {
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
-                layoutParams.setMargins(0, 0, 0, 0);
-                llBottom.setLayoutParams(layoutParams);
-            }
-        });
+//        mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+//            Rect r = new Rect();
+//            //获取当前界面可视部分
+//            NTopicEditActivity.this.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+//            //获取屏幕的高度
+//            int screenHeight = NTopicEditActivity.this.getWindow().getDecorView().getRootView().getHeight();
+//            //获取键盘的高度，在键盘没有弹出的时候 此高度为0 键盘弹出的时候为一个正数
+//            int heightDifference = screenHeight - r.bottom;
+//            if (heightDifference > 0) {
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
+//                int height = llBottom.getHeight();
+//                layoutParams.setMargins(0, 0, 0, heightDifference);
+//                llBottom.setLayoutParams(layoutParams);
+//            } else {
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
+//                layoutParams.setMargins(0, 0, 0, 0);
+//                llBottom.setLayoutParams(layoutParams);
+//            }
+//        });
 
         mEtTopicTitle.setOnClickListener((v) -> {
             //隐藏表情视图
@@ -383,10 +385,22 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     emojiKeyboardFragment.setflEmojiContentShow(true);
                 } else {
 
+                    View focusedChild = mTopicEditView.getFocusedChild();
+                    EditText editText = null;
+                    if (focusedChild instanceof EditText) {
+                        editText = (EditText) focusedChild;
+                    }
+
+                    if (editText != null){
+                        SoftKeyboardUtils.showSoftKeyboard(editText);
+                    }else{
+                        //显示软键盘
+                        SoftKeyboardUtils.showSoftKeyboard(mEtTopicTitle);
+                    }
+
                     //是否显示表情视图
                     emojiKeyboardFragment.setflEmojiContentShow(false);
-                    //显示软键盘
-                    SoftKeyboardUtils.showSoftKeyboard(this);
+
                 }
 
             }
