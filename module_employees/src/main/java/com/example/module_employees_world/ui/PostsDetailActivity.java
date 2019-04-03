@@ -34,13 +34,16 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.CommentOnerAdapter;
 import com.example.module_employees_world.adapter.ImgAdapter;
 import com.example.module_employees_world.adapter.PostDetailAdapter;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.presenter.PostDetailPersenter;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.MyInterpolator;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.view.CommontPopw;
@@ -111,14 +114,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         question_id = getIntent().getStringExtra("question_id");
-
+        mPresenter.getPostDetail(question_id,"1");
+        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getPostDetail(question_id,"1");
-        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
 
     @Override
@@ -343,15 +345,21 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
-                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_107){
-                    mPresenter.deletePost(question_id);
-                    showLoadDiaLog("");
-                }else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_104){
-                    // TODO: 2019/3/29  采纳接口掉用
-                    ToastUtils.showToast(PostsDetailActivity.this,"采纳接口掉用");
-                }else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_105){
-                    // TODO: 2019/3/29  邀请回答
-                    ToastUtils.showToast(PostsDetailActivity.this,"邀请回答");
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114){
+                    CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
+                    String comment_id = (String) rxMessageBean.getMessage1();
+                    if ("0".equals(comment_id)){
+                        //一级评论
+                        commentList.add(insertBean.first);
+                    }else {
+                        //二级评论 todo
+                        for (int i = 0; i < commentList.size(); i++) {
+                            if (comment_id.equals(commentList.get(i).id+"")){
+                                commentList.get(i).parent.add(insertBean.second);
+                            }
+                        }
+                    }
+                    postDetailAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -366,7 +374,18 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
      * @param tvHtml
      */
     private void setActivityContent(final String activityContent, final TextView tvHtml) {
+        //表情解码
+        String decodeContent = new String(EmojiUtils.decode(activityContent.trim()));
+        for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
+            String key = TutuPicInit.EMOJICONS.get(i).key;
+            if (decodeContent.contains(key)){
+                String content="<\\br><img src=\"date:res="+TutuPicInit.EMOJICONS.get(i).TutuId+"\"><\\br>";
+                decodeContent=decodeContent.replace(key,content);
+            }
+        }
+
         final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
+        String finalDecodeContent = decodeContent;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -374,24 +393,42 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     @Override
                     public Drawable getDrawable(String source) {
                         Drawable drawable;
+                        int resType;
                         //临时解决方案，介于目前前端上传图片没base64编码，web端有base64编码，判断是否通过base64编码临时解决
                         if (source.startsWith("data:image/")){
                             drawable = getBase64ImageNetwork(source);
+                            resType=0;
+                        }else if (source.startsWith("date:res")){
+                            String resId = source.substring(source.indexOf("=")+1, source.length());
+                            drawable = getResources().getDrawable(Integer.valueOf(resId));
+                            resType=1;
                         }else {
                             drawable = getImageNetwork(source);
+                            resType=2;
                         }
 
                         if (drawable == null) {
                             drawable = getResources().getDrawable(R.drawable.image_failure);
+                            resType=0;
                         }
-                        int minimumWidth = drawable.getMinimumWidth();
-                        int minimumHeight = drawable.getMinimumHeight();
-                        int height = (int) (((float)screenWidth / minimumWidth) * minimumHeight);
-                        drawable.setBounds(0, 0,screenWidth ,height);
+                        switch (resType){
+                            case 0:
+                            case 2:
+                                int minimumWidth = drawable.getMinimumWidth();
+                                int minimumHeight = drawable.getMinimumHeight();
+                                int height = (int) (((float)screenWidth / minimumWidth) * minimumHeight);
+                                drawable.setBounds(0, 0,screenWidth ,height);
+                                break;
+                            case 1:
+                                //GIF大小暂写死
+                                drawable.setBounds(0, 0,360 ,360);
+                                break;
+                        }
+
                         return drawable;
                     }
                 };
-                final CharSequence charSequence = Html.fromHtml(activityContent.trim(), imageGetter, null);
+                final CharSequence charSequence = Html.fromHtml(finalDecodeContent, imageGetter, null);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -611,7 +648,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         imgList.addAll(postDetailBean.questionInfo.contentImg);
         imgAdapter.notifyDataSetChanged();
 
-        postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this,postDetailBean.questionInfo.type,postDetailBean.questionInfo.solveStatus);
+        postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this,postDetailBean.questionInfo.type,postDetailBean.questionInfo.solveStatus,myHandler);
 
     }
 
@@ -674,6 +711,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         postDetailAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void editQuestion() {
+        hidLoadDiaLog();
+        //刷新数据
+        mPresenter.getPostDetail(question_id,"1");
+    }
+
     public static class MyHandler extends Handler{
 
         private final WeakReference<PostsDetailActivity> weakReference;
@@ -689,7 +733,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             PostsDetailActivity activity = weakReference.get();
             switch (what){
                 case RxBusMessageBean.MessageType.POST_101:
-                    // TODO: 2019/3/29 删除评论接口
+                    // : 2019/3/29 删除评论接口
                     commentId = msg.arg1;
                     int commentPosition = msg.arg2;
                     activity.commontPopw = new CommontPopw(activity, "删除评论后，评论下所有回复都会被删除。", new View.OnClickListener() {
@@ -702,7 +746,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     });
                     break;
                 case RxBusMessageBean.MessageType.POST_102:
-                    // TODO: 2019/3/29 删除子评论接口
+                    // : 2019/3/29 删除子评论接口
                     commentId=(int)msg.obj;
                     int position = msg.arg1;
                     int partenPosition = msg.arg2;
@@ -713,11 +757,24 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     // TODO: 2019/3/29 采纳确认弹窗
                     ToastUtils.showToast(activity,"采纳："+listBean.userName);
                     break;
+                case RxBusMessageBean.MessageType.POST_104:
+                    // TODO: 2019/3/29  采纳接口掉用
+                    ToastUtils.showToast(activity,"采纳接口掉用");
+                    break;
+                case RxBusMessageBean.MessageType.POST_105:
+                    // TODO: 2019/3/29  邀请回答
+                    ToastUtils.showToast(activity,"邀请回答");
+                    break;
                 case RxBusMessageBean.MessageType.POST_106:
                     // : 2019/3/29  评论点赞
                     TextView tvZan= (TextView) msg.obj;
                     commentId=msg.arg1;
                     activity.mPresenter.commentLike(commentId+"",tvZan);
+                    activity.showLoadDiaLog("");
+                    break;
+                case RxBusMessageBean.MessageType.POST_107:
+                    // TODO: 2019/4/3 删除帖子
+                    activity.mPresenter.deletePost(activity.question_id);
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_108:
@@ -736,6 +793,12 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentId+"");
                     intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,userName);
                     activity.startActivity(intent);
+                    break;
+                case RxBusMessageBean.MessageType.POST_113:
+                    //todo 修改帖子类型
+                    String type = msg.arg1+"";
+                    activity.showLoadDiaLog("");
+                    activity.mPresenter.editQuestion(type,activity.question_id);
                     break;
             }
         }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.ui.group.MyItemActivity;
 import com.example.module_employees_world.ui.search.SearchActivity;
-import com.example.module_employees_world.ui.topic.TopicEditActivity;
+import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -103,7 +103,7 @@ public class CommunityActivity extends BaseActivity {
         ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CommunityActivity.this, TopicEditActivity.class);
+                Intent intent = new Intent(CommunityActivity.this, NTopicEditActivity.class);
                 startActivity(intent);
              }
         });

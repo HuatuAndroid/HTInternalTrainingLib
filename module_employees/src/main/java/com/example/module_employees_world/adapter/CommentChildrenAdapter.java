@@ -36,10 +36,10 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
 
     LayoutInflater inflater;
     CommentDetailctivity context;
-    List<CommentChildrenBean> parentBeanList;
+    List<ParentBean> parentBeanList;
     CommentDetailctivity.MyHandler myHandler;
 
-    public CommentChildrenAdapter(CommentDetailctivity context, List<CommentChildrenBean> parentBeanList, CommentDetailctivity.MyHandler myHandler) {
+    public CommentChildrenAdapter(CommentDetailctivity context, List<ParentBean> parentBeanList, CommentDetailctivity.MyHandler myHandler) {
         this.context=context;
         this.parentBeanList=parentBeanList;
         this.myHandler=myHandler;
@@ -56,14 +56,14 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        final CommentChildrenBean parentBean = parentBeanList.get(position);
+        final ParentBean parentBean = parentBeanList.get(position);
         if (!TextUtils.isEmpty(parentBean.avatar))
         Picasso.with(context).load(parentBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
         holder.tvName.setText(parentBean.userName);
         holder.tvPartName.setText(parentBean.departmentName);
         holder.tvTime.setText(parentBean.createdAt);
         holder.tvZan.setText(parentBean.likeCount+"");
-        String content = "回复<font color=\"#007AFF\">" + "@"+parentBean.parentName + "</font>";
+        String content = "回复<font color=\"#007AFF\">" + "@"+parentBean.parent_name + "</font>";
         holder.tvTitle.setText(Html.fromHtml(content+ EmojiUtils.decode(parentBean.content)));
 
         if (!TextUtils.isEmpty(parentBean.commentPicture)){
@@ -86,7 +86,7 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
             holder.ivDel.setVisibility(View.VISIBLE);
         }
         //1已经点赞 0没有点赞
-        if (parentBean.commentLike==0){
+        if (parentBean.comment_like==0){
             Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan);
             drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
             holder.tvZan.setCompoundDrawables(drawable,null,null,null);

@@ -1,5 +1,6 @@
 package com.example.module_employees_world.contranct;
 
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.wb.baselib.base.mvp.BaseModel;
@@ -20,12 +21,12 @@ import okhttp3.RequestBody;
 public interface CommentSendDialogContranct {
 
     interface ICommentSendDialogView extends MvpView{
-        void sendCommment();
+        void sendCommment(CommentInsertBean insertBean);
         void commitImage(List<NImageBean> pathList);
     }
     interface ICommentSendDialogModel extends BaseModel{
         Observable<Result<NImageListsBean>> commitImage(Map<String, RequestBody> map);
-        Observable<Result> sendComment(String question_id,String content,String comment_picture,String comment_face ,String is_anonymity,String comment_id	);
+        Observable<Result<CommentInsertBean>> sendComment(String question_id, String content, String comment_picture, String comment_face , String is_anonymity, String comment_id	);
     }
     abstract class CommentSendDialogPresenter extends BasePreaenter<ICommentSendDialogView,ICommentSendDialogModel>{
         public abstract void commitImage(Map<String, RequestBody> map);

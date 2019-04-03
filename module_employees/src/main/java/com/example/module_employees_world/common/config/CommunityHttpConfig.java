@@ -52,4 +52,6 @@ public interface CommunityHttpConfig {
     String COMMENT_SEND = "api/app/discuss/createComment";
     /** 广告*/
     String GUIDE = "api/app/discuss/getBanner";
+    /**修改帖子类型*/
+    String editQuestion = "api/app/discuss/editQuestionType";
 }

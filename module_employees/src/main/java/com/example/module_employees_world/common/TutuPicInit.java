@@ -70,7 +70,7 @@ public class TutuPicInit {
      * 所有key的集合
      * @return
      */
-    public String getToStringNames(){
+    public static String getToStringNames(){
 
          String names = "";
 

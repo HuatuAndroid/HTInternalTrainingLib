@@ -27,6 +27,7 @@ public interface PostsDetailContranct {
         void postsLike(CommentLikeBean commentLikeBean);
         void deletePost();
         void deleteComment(int position,int partenPosition);
+        void editQuestion();
     }
 
     interface PostsDetailModel extends BaseModel{
@@ -36,6 +37,7 @@ public interface PostsDetailContranct {
         Observable<Result<CommentLikeBean>> postsLike(String question_id);
         Observable<Result> deletePost(String postId);
         Observable<Result> deleteComment(String commentId);
+        Observable<Result> editQuestion(String type,String id);
     }
 
     abstract class PostDetailPresenter extends BasePreaenter<PostsDetailView,PostsDetailModel>{
@@ -45,6 +47,7 @@ public interface PostsDetailContranct {
         public abstract void postsLike(String question_id);
         public abstract void deletePost(String postId);
         public abstract void deleteComment(String deleteComment,int position,int partenPosition);
+        public abstract void editQuestion(String type,String id);
     }
 
 }

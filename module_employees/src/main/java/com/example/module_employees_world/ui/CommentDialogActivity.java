@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.TutuIconBean;
@@ -33,8 +34,8 @@ import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
-import com.example.module_employees_world.ui.topic.TopicEditActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.app.AppUtils;
@@ -47,6 +48,8 @@ import com.wb.baselib.permissions.PerMissionsManager;
 import com.wb.baselib.permissions.interfaces.PerMissionCall;
 import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.utils.ToastUtils;
+import com.wb.rxbus.taskBean.RxBus;
+import com.wb.rxbus.taskBean.RxMessageBean;
 import com.wngbo.www.common_postphoto.ISNav;
 import com.wngbo.www.common_postphoto.config.ISListConfig;
 
@@ -133,6 +136,12 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                 mPresenter.commitImage(bodyMap);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getIntanceBus().unSubscribe(this);
     }
 
     @Override
@@ -351,8 +360,11 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     }
 
     @Override
-    public void sendCommment() {
+    public void sendCommment(CommentInsertBean insertBean) {
+        // TODO: 2019/4/3
         hidLoadDiaLog();
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_114, insertBean, comment_id));
+
         showShortToast("评论成功");
         finish();
     }

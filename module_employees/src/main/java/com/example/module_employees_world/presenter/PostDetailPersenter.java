@@ -104,7 +104,7 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
             public void onFail(ApiException e) {
                 mView.showErrorMsg(e.getMessage());
             }
-        });
+        }, mView.binLifecycle());
     }
 
     @Override
@@ -131,7 +131,7 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
             public void onFail(ApiException e) {
                 mView.showErrorMsg(e.getMessage());
             }
-        });
+        }, mView.binLifecycle());
     }
 
     @Override
@@ -157,7 +157,7 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
             public void onFail(ApiException e) {
                 mView.showErrorMsg(e.getMessage());
             }
-        });
+        }, mView.binLifecycle());
     }
 
     @Override
@@ -181,7 +181,7 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
             public void onFail(ApiException e) {
                 mView.showErrorMsg(e.getMessage());
             }
-        });
+        }, mView.binLifecycle());
     }
 
     @Override
@@ -205,6 +205,30 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
             public void onFail(ApiException e) {
                 mView.showErrorMsg(e.getMessage());
             }
-        });
+        }, mView.binLifecycle());
+    }
+
+    @Override
+    public void editQuestion(String type, String id) {
+        HttpManager.newInstance().commonRequest(mModel.editQuestion(type,id), new BaseObserver<Result>(AppUtils.getContext()) {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.editQuestion();
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+        }, mView.binLifecycle());
     }
 }

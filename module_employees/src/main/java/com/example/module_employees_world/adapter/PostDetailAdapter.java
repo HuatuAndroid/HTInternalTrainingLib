@@ -166,10 +166,11 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
             }
         });
 
-        holder.rvOnerComment.setNestedScrollingEnabled(false);
-        holder.rvOnerComment.setLayoutManager(new LinearLayoutManager(context));
-        holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count,position,myHandler));
-
+        if (listBean.parent!=null){
+            holder.rvOnerComment.setNestedScrollingEnabled(false);
+            holder.rvOnerComment.setLayoutManager(new LinearLayoutManager(context));
+            holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count,position,myHandler));
+        }
     }
 
     @Override

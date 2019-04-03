@@ -1,5 +1,6 @@
 package com.example.module_employees_world.presenter;
 
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
@@ -59,11 +60,13 @@ public class CommentSendDialogPresenter extends CommentSendDialogContranct.Comme
 
     @Override
     public void sendComment(String question_id, String content, String comment_picture, String comment_face, String is_anonymity, String comment_id) {
-        HttpManager.newInstance().commonRequest(mModel.sendComment(question_id, content, comment_picture, comment_face, is_anonymity, comment_id), new BaseObserver<Result>(AppUtils.getContext()) {
+        HttpManager.newInstance().commonRequest(mModel.sendComment(question_id, content, comment_picture, comment_face, is_anonymity, comment_id), new BaseObserver<Result<CommentInsertBean>>(AppUtils.getContext()) {
 
             @Override
-            public void onSuccess(Result result) {
-                mView.sendCommment();
+            public void onSuccess(Result<CommentInsertBean> commentInsertBeanResult) {
+                if (commentInsertBeanResult.getData()!=null){
+                    mView.sendCommment(commentInsertBeanResult.getData());
+                }
             }
 
             @Override

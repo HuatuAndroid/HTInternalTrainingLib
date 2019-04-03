@@ -4,6 +4,7 @@ import com.example.module_employees_world.CommunityServiceApi;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.contranct.CommentDetailContranct;
 import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpManager;
@@ -23,7 +24,7 @@ public class CommentDetailodel implements CommentDetailContranct.CommentDetailMo
     }
 
     @Override
-    public Observable<Result<List<CommentChildrenBean>>> commentChildrenList(int commentId, int page, int limit, int st) {
+    public Observable<Result<List<ParentBean>>> commentChildrenList(int commentId, int page, int limit, int st) {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).commentChildrenList(commentId,page,limit,st);
     }
 

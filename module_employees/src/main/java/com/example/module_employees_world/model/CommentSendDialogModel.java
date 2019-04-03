@@ -1,6 +1,7 @@
 package com.example.module_employees_world.model;
 
 import com.example.module_employees_world.CommunityServiceApi;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
 import com.wb.baselib.bean.Result;
@@ -23,7 +24,7 @@ public class CommentSendDialogModel implements CommentSendDialogContranct.IComme
     }
 
     @Override
-    public Observable<Result> sendComment(String question_id, String content, String comment_picture, String comment_face, String is_anonymity, String comment_id) {
+    public Observable<Result<CommentInsertBean>> sendComment(String question_id, String content, String comment_picture, String comment_face, String is_anonymity, String comment_id) {
         HashMap<String, String> map = new HashMap<>();
         map.put("question_id",question_id);
         map.put("content",content);

@@ -21,7 +21,9 @@ import com.example.module_employees_world.adapter.CommentChildrenAdapter;
 import com.example.module_employees_world.adapter.CommentOnerAdapter;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentDetailContranct;
 import com.example.module_employees_world.presenter.CommentDetailPresenter;
@@ -43,10 +45,13 @@ import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
+import com.wb.rxbus.taskBean.RxBus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * author:LIENLIN
@@ -74,7 +79,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     private TextView tvBottomSend;
     private MultipleStatusView multiplsStatusView;
     private RecyclerView rvCommentDetail;
-    private List<CommentChildrenBean> commentChildrenList = new ArrayList<>();
+    private List<ParentBean> commentChildrenList = new ArrayList<>();
     private int page = 1;
     private int limit = 6;
     private MyHandler myHandler;
@@ -194,6 +199,23 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                 showLoadDiaLog("");
             }
         });
+
+        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
+            @Override
+            public void accept(RxBusMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114){
+                    CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
+                    String comment_id = (String) rxMessageBean.getMessage1();
+                    if ("0".equals(comment_id)){
+                        //一级评论
+                    }else {
+                        //二级评论 todo
+                        commentChildrenList.add(insertBean.second);
+                    }
+                    commentChildrenAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
@@ -276,7 +298,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     }
 
     @Override
-    public void commentChildrenList(List<CommentChildrenBean> childrenBeans) {
+    public void commentChildrenList(List<ParentBean> childrenBeans) {
         if (page==1){
             commentChildrenList.clear();
         }
@@ -348,7 +370,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     break;
                 case RxBusMessageBean.MessageType.POST_111:
                     // TODO: 2019/3/30 回复子评论
-                    CommentChildrenBean parentBean= (CommentChildrenBean) msg.obj;
+                    ParentBean parentBean= (ParentBean) msg.obj;
                     Intent intent = new Intent(activity, CommentDialogActivity.class);
                     intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,parentBean.questionId+"");
                     intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,parentBean.id+"");

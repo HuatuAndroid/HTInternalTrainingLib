@@ -3,6 +3,7 @@ package com.example.module_employees_world.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.ui.PostsDetailActivity;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 
 /**
  * author:LIENLIN
@@ -21,12 +24,16 @@ public class PostsTypePopw extends PopupWindow implements View.OnClickListener {
 
     private View mMenuView;
     private Activity context;
+    private PostsDetailActivity.MyHandler myHandler;
+
     /**
      * @param context
+     * @param myHandler
      */
-    public PostsTypePopw(final Activity context) {
+    public PostsTypePopw(final Activity context, PostsDetailActivity.MyHandler myHandler) {
         super(context);
         this.context=context;
+        this.myHandler=myHandler;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popw_posts_type_layout, null);
         initView(mMenuView);
@@ -80,10 +87,22 @@ public class PostsTypePopw extends PopupWindow implements View.OnClickListener {
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.tv_communication) {
+            Message message = new Message();
+            message.what= RxBusMessageBean.MessageType.POST_113;
+            message.arg1=1;
+            myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_answers){
+            Message message = new Message();
+            message.what= RxBusMessageBean.MessageType.POST_113;
+            message.arg1=2;
+            myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_question){
+            Message message = new Message();
+            message.what= RxBusMessageBean.MessageType.POST_113;
+            message.arg1=3;
+            myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_cancel){
             myDismiss();

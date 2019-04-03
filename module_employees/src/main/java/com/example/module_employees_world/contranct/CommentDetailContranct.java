@@ -5,6 +5,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.wb.baselib.base.mvp.BaseModel;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.base.mvp.MvpView;
@@ -21,7 +22,7 @@ import io.reactivex.Observable;
 public interface CommentDetailContranct {
 
     interface CommentDetialView extends MvpView{
-        void commentChildrenList(List<CommentChildrenBean> childrenBeans);
+        void commentChildrenList(List<ParentBean> childrenBeans);
         void commentLike(CommentLikeBean commentLikeBean, TextView tvZan);
         void deleteComment(int position);
         void isLoadMore(boolean isLoadMore);
@@ -29,7 +30,7 @@ public interface CommentDetailContranct {
 
     interface CommentDetailModel extends BaseModel{
         Observable<Result<CommentDetailBean>> commentDetail(int commentId);
-        Observable<Result<List<CommentChildrenBean>>> commentChildrenList(int commentId,int page,int limit,int st);
+        Observable<Result<List<ParentBean>>> commentChildrenList(int commentId,int page,int limit,int st);
         Observable<Result<CommentLikeBean>> commentLike(String comment_id);
         Observable<Result> deleteComment(String commentId);
     }
