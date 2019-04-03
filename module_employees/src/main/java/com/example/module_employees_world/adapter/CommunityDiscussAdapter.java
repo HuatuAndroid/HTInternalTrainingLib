@@ -24,6 +24,7 @@ import java.util.List;
 public class CommunityDiscussAdapter extends ListBaseAdapter {
 
     private String type;//1热门 2最新
+
     public CommunityDiscussAdapter(Context context, String type, List<DiscussListBean> discussListBeans) {
         super(discussListBeans, context);
         this.type = type;
@@ -79,9 +80,9 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.llNoDing.setVisibility(View.GONE);
             viewHolder.rlHead.setVisibility(View.GONE);
             viewHolder.discussTitle.setText(discussListBean.getTitle());
-            if (position+1<=getCount()&&"1".equals(((DiscussListBean) getItem(position+1)).getIs_top())){
+            if (position + 1 < getCount() && "1".equals(((DiscussListBean) getItem(position + 1)).getIs_top())) {
                 viewHolder.vLine.setVisibility(View.GONE);
-            }else {
+            } else {
                 viewHolder.vLine.setVisibility(View.VISIBLE);
             }
         } else {

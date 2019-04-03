@@ -84,13 +84,16 @@ public interface CommunityServiceApi {
                                        @Field("is_anonymity") String is_anonymity, @Field("type") String type);
 
     /**
-     * 評論列表
+     * 评论列表
      */
     @GET(CommunityHttpConfig.COMMENT_LIST)
     Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st, @Query("page") String page, @Query("limit") String limit);
 
     /**
+<<<<<<< HEAD
+=======
      * <<<<<<< HEAD
+>>>>>>> 0a5a0d05d339fa3c4cfeb73c4e061fbce6647a29
      * 搜索帖子
      */
     @GET(CommunityHttpConfig.SEARCH)
@@ -147,6 +150,13 @@ public interface CommunityServiceApi {
     Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id, @Query("page") int page, @Query("limit") int limit, @Query("st") int st);
 
     /**
+     * 发布评论
+     */
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.COMMENT_SEND)
+    Observable<Result> commentSend(@FieldMap() Map<String, String> map);
+
+    /*
      * 小组详情
      */
     @GET(CommunityHttpConfig.GROUPDETAILS)

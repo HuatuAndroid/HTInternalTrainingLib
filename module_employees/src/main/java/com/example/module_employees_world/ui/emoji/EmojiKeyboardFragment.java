@@ -143,4 +143,8 @@ public class EmojiKeyboardFragment extends Fragment implements SoftKeyboardState
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
+
+    public View getmRootView(){
+        return mRootView;
+    }
 }
