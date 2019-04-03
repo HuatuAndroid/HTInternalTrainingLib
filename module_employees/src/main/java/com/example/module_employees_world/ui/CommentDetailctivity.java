@@ -1,5 +1,6 @@
 package com.example.module_employees_world.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -76,6 +77,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     private MyHandler myHandler;
     private CommentChildrenAdapter commentChildrenAdapter;
     private NestedScrollView svComment;
+    private CommentDetailBean commentDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,12 +140,36 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 删除评论
+                mPresenter.deleteComment(commentId+"",-1);
+                showLoadDiaLog("");
             }
         });
         tvReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 评论回复
+                if (commentDetailBean!=null){
+                    Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
+                    startActivity(intent);
+                }
+
+            }
+        });
+        tvBottomReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2019/3/30 评论回复
+                if (commentDetailBean!=null){
+                    Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
+                    startActivity(intent);
+                }
+
             }
         });
         tvBottomSend.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +182,13 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.commentChildrenList(commentId,page,limit,1);
+            }
+        });
+        tvZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.commentLike(commentId+"",tvZan);
+                showLoadDiaLog("");
             }
         });
     }
@@ -203,7 +236,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     @Override
     public void SuccessData(Object o) {
         //评论详情
-        CommentDetailBean commentDetailBean = (CommentDetailBean)o;
+        commentDetailBean = (CommentDetailBean)o;
         Picasso.with(this).load(commentDetailBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
         tvName.setText(commentDetailBean.userName);
         tvPartName.setText(commentDetailBean.departmentName);
@@ -221,7 +254,16 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
         }else {
             ivImg.setVisibility(View.GONE);
         }
-
+        //1已经点赞 0没有点赞
+        if (commentDetailBean.commentLike==0){
+            Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            tvZan.setCompoundDrawables(drawable,null,null,null);
+        }else {
+            Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan_able);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            tvZan.setCompoundDrawables(drawable,null,null,null);
+        }
     }
 
     @Override
@@ -258,8 +300,15 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     @Override
     public void deleteComment(int position) {
         hidLoadDiaLog();
-        commentChildrenList.remove(position);
-        commentChildrenAdapter.notifyDataSetChanged();
+        if (position==-1){
+            //删除该评论
+            finish();
+        }else {
+            //删除子评论
+            commentChildrenList.remove(position);
+            commentChildrenAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
@@ -290,8 +339,12 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     break;
                 case RxBusMessageBean.MessageType.POST_111:
                     // TODO: 2019/3/30 回复子评论
-                    commentId= msg.arg1;
-                    ToastUtils.showToast(activity,"回复评论"+commentId);
+                    CommentChildrenBean parentBean= (CommentChildrenBean) msg.obj;
+                    Intent intent = new Intent(activity, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,parentBean.questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,parentBean.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,parentBean.userName);
+                    activity.startActivity(intent);
                     break;
                 case RxBusMessageBean.MessageType.POST_112:
                     // : 2019/3/30 子评论点赞

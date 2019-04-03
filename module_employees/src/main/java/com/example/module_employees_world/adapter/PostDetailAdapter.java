@@ -26,8 +26,10 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.http.HttpConfig;
@@ -75,7 +77,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         CommentListBean.ListBean listBean = commentList.get(position);
         holder.tvName.setText(listBean.userName);
         holder.tvPartName.setText(listBean.departmentName);
-        holder.tvCommentTitle.setText(listBean.content);
+        holder.tvCommentTitle.setText(EmojiUtils.decode(listBean.content));
         holder.tvCommentTime.setText(listBean.createdAt);
         holder.tvCommentZan.setText(listBean.likeCount+"");
         Picasso.with(context).load(listBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
@@ -84,6 +86,12 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
             GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , HttpConfig.newInstance().getmBaseUrl()+"/"+ listBean.commentPicture ,false );
         }else {
             holder.ivCommentImg.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(listBean.commentFace)){
+            holder.ivCommentGif.setVisibility(View.VISIBLE);
+            GlideManager.getInstance().setGlideResourceImage(holder.ivCommentGif, TutuPicInit.getResFromEmojicList(listBean.commentFace),R.drawable.image_failure, R.drawable.course_image ,context);
+        }else {
+            holder.ivCommentGif.setVisibility(View.GONE);
         }
         //  2019/3/29 1已经点赞 0没有点赞
         if (listBean.comment_like==0){
@@ -102,15 +110,15 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         }else {
             holder.ivCommentDel.setVisibility(View.VISIBLE);
         }
+        //删除评论
         holder.ivCommentDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Message message = new Message();
                 message.what=RxBusMessageBean.MessageType.POST_101;
                 message.arg1=listBean.id;
-                message.arg1=position;
+                message.arg2=position;
                 myHandler.handleMessage(message);
-//                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_101,listBean.id+"",position));
             }
         });
 
@@ -132,18 +140,21 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
                 message.what=RxBusMessageBean.MessageType.POST_103;
                 message.obj=listBean;
                 myHandler.handleMessage(message);
-//                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_103,listBean));
             }
         });
+        //回复
         holder.tvCommentReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Message message = new Message();
                 message.what=RxBusMessageBean.MessageType.POST_109;
-                message.arg1=listBean.id;
+                message.arg1=listBean.questionId;
+                message.arg2=listBean.id;
+                message.obj=listBean.userName;
                 myHandler.handleMessage(message);
             }
         });
+        //点赞
         holder.tvCommentZan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +163,6 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
                 message.obj=holder.tvCommentZan;
                 message.arg1=listBean.id;
                 myHandler.handleMessage(message);
-//                RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_106,holder.tvCommentZan,listBean.id));
             }
         });
 

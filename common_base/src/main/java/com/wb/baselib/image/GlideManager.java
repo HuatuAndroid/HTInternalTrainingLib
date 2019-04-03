@@ -49,6 +49,10 @@ public class GlideManager {
         Picasso.with(mContext).load(path).error(res).placeholder(res).into(imageViewm);
     }
 
+    public void setGlideResourceImage(ImageView imageViewm, int res,int errorRes,int placeholderRes, Context mContext){
+        Picasso.with(mContext).load(res).error(errorRes).placeholder(placeholderRes).into(imageViewm);
+    }
+
     /**
      * 实现圆角图片
      * @param imageViewm

@@ -75,11 +75,12 @@
             android:layout_width="match_parent"
             android:layout_height="164dp"
             android:layout_margin="10dp"
+            android:scaleType="fitXY"
             android:visibility="gone"/>
         <ImageView
             android:id="@+id/iv_oner_gif"
-            android:layout_width="match_parent"
-            android:layout_height="164dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_margin="10dp"
             android:visibility="gone"/>
 

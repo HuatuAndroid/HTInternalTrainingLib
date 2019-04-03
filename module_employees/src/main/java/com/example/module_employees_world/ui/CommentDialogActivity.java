@@ -27,6 +27,7 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.TutuIconBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
 import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
@@ -113,11 +114,6 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         super.onCreate(savedInstanceState);
         StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
-        question_id = getIntent().getStringExtra(TAG_QUESTION_ID);
-        comment_id = getIntent().getStringExtra(TAG_COMMENT_ID);
-        comment_name = getIntent().getStringExtra(TAG_COMMENT_NAME);
-
-
     }
 
     @Override
@@ -142,6 +138,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_comment_dialog);
+        question_id = getIntent().getStringExtra(TAG_QUESTION_ID);
+        comment_id = getIntent().getStringExtra(TAG_COMMENT_ID);
+        comment_name = getIntent().getStringExtra(TAG_COMMENT_NAME);
         ivEditArea = findViewById(R.id.iv_edit_area);
         ivReplyOval = findViewById(R.id.iv_reply_oval);
         ivReplyPic = findViewById(R.id.iv_reply_pic);
@@ -167,7 +166,6 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             public void run() {
                 initHeight = llRoot.getHeight();
                 screenHeight = CommentDialogActivity.this.getWindow().getDecorView().getRootView().getHeight();
-
             }
         });
 
@@ -414,7 +412,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         commentFace=tutuIconBean.key;
         rlGif.setVisibility(View.VISIBLE);
 //        Glide.with(this).load(tutuIconBean.TutuId).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivReplyGif);
-        Glide.with(this).load(tutuIconBean.TutuId).into(ivReplyGif);
+//        Glide.with(this).load(tutuIconBean.TutuId).into(ivReplyGif);
+        GlideManager.getInstance().setGlideResourceImage(ivReplyGif,tutuIconBean.TutuId,R.drawable.image_failure, R.drawable.course_image ,this);
+
     }
 
     @Override

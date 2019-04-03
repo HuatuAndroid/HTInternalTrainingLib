@@ -246,6 +246,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 });
             }
         });
+        //发布评论
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -511,12 +512,15 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         postDetailAdapter.notifyDataSetChanged();
         multipleStatusview.showContent();
         page++;
-        scvPost.post(new Runnable() {
-            @Override
-            public void run() {
-                scvPost.scrollTo(0,0);
-            }
-        });
+        if (page==1){
+            scvPost.post(new Runnable() {
+                @Override
+                public void run() {
+                    scvPost.scrollTo(0,0);
+                }
+            });
+        }
+
     }
 
     @Override
@@ -547,11 +551,11 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvDetailText.setText(postDetailBean.questionInfo.contentText);
         setActivityContent(postDetailBean.questionInfo.contentText,tvDetailText);
         //1=已点赞 0 未点赞
-        if (postDetailBean.questionInfo.likeCount==0){
+        if (postDetailBean.questionInfo.isLike==0){
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan);
             drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
             tvPostZan.setCompoundDrawables(drawable,null,null,null);
-        }else if (postDetailBean.questionInfo.likeCount==1){
+        }else{
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan_able);
             drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
             tvPostZan.setCompoundDrawables(drawable,null,null,null);
@@ -575,7 +579,6 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             }else {
                 tvPostType.setText("已解决");
                 ll_solve_root.setVisibility(View.VISIBLE);
-
 
                 Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
                 if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentPicture)){
@@ -711,25 +714,29 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     ToastUtils.showToast(activity,"采纳："+listBean.userName);
                     break;
                 case RxBusMessageBean.MessageType.POST_106:
-                    // TODO: 2019/3/29  评论点赞
+                    // : 2019/3/29  评论点赞
                     TextView tvZan= (TextView) msg.obj;
                     commentId=msg.arg1;
                     activity.mPresenter.commentLike(commentId+"",tvZan);
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_108:
-                    // TODO: 2019/3/29  子评论点赞
+                    // : 2019/3/29  子评论点赞
                     TextView tvChildrenZan= (TextView) msg.obj;
                     commentId=msg.arg1;
                     activity.mPresenter.commentLike(commentId+"",tvChildrenZan);
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_109:
-                    commentId = msg.arg1;
-                    ToastUtils.showToast(activity,"回复评论"+commentId);
+                    String userName= (String) msg.obj;
+                    int questionId = msg.arg1;
+                    commentId = msg.arg2;
+                    Intent intent = new Intent(activity, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,userName);
+                    activity.startActivity(intent);
                     break;
-
-
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.module_employees_world.adapter;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +76,17 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
         }else {
             holder.ivDel.setVisibility(View.VISIBLE);
         }
+        //1已经点赞 0没有点赞
+        if (parentBean.commentLike==0){
+            Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            holder.tvZan.setCompoundDrawables(drawable,null,null,null);
+        }else {
+            Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan_able);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            holder.tvZan.setCompoundDrawables(drawable,null,null,null);
+        }
+
         holder.ivDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,9 +100,10 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
         holder.tvReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: 2019/4/3
                 Message message = new Message();
                 message.what=RxBusMessageBean.MessageType.POST_111;
-                message.arg1=parentBean.id;
+                message.obj=parentBean;
                 myHandler.handleMessage(message);
             }
         });
