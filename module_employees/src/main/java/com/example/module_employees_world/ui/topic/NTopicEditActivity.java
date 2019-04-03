@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,9 +17,11 @@ import android.text.TextUtils;
 import android.text.style.URLSpan;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -40,6 +43,8 @@ import com.hss01248.dialog.StyledDialog;
 import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.base.activity.MvpActivity;
+import com.wb.baselib.http.HttpConfig;
+import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
@@ -55,7 +60,8 @@ import java.util.List;
 public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View, EmojiItemClickListener {
 
     private EditText mEtTopicTitle;
-    private LinearLayout llBottom;
+    private LinearLayout llBottom, mLinearLayout, mViewInputField;
+    private RelativeLayout mHideView;
     private TopicEditView mTopicEditView;
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
@@ -86,6 +92,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         initView(savedInstanceState);
         setListener();
     }
@@ -174,6 +182,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
         mTopicEditView = findViewById(R.id.mTopicEditView);
         llBottom = findViewById(R.id.ll_bottom);
+        mLinearLayout = findViewById(R.id.mLinearLayout);
         mIvA = findViewById(R.id.mIvA);
         mIvPhotograph = findViewById(R.id.mIvPhotograph);
         mIvHyperLink = findViewById(R.id.mIvHyperLink);
@@ -185,7 +194,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         mTvJianYi = findViewById(R.id.mTvJianYi);
         mTvTiWen = findViewById(R.id.mTvTiWen);
         mTvXiaoXu = findViewById(R.id.mTvXiaoXu);
-
+        mHideView = findViewById(R.id.mHideView);
+        mViewInputField = findViewById(R.id.mViewInputField);
         getSupportFragmentManager().beginTransaction().replace(R.id.flEmoji,
                 emojiKeyboardFragment = EmojiKeyboardFragment.newInstance(this, this)).commit();
 
@@ -208,6 +218,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             @Override
             public void hideEmojiKeyboard() {
+                mHideView(false);
                 hideEmojiKeyboardFragment();
             }
 
@@ -226,6 +237,18 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         //本地图片辅助类初始化
         LocalImageHelper.init(this);
 
+        mEtTopicTitle.setFocusable(true);
+        mEtTopicTitle.setFocusableInTouchMode(true);
+        mEtTopicTitle.requestFocus();
+
+//        mEtTopicTitle.postDelayed(() -> SoftKeyboardUtils.showORhideSoftKeyboard(NTopicEditActivity.this), 1000);
+
+        mHideView(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -235,6 +258,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         mTvJianYi.setOnClickListener(this);
         mTvTiWen.setOnClickListener(this);
         mTvXiaoXu.setOnClickListener(this);
+        mHideView.setOnClickListener(this);
 
         mIvA.setOnClickListener(this);
         mIvPhotograph.setOnClickListener(this);
@@ -253,12 +277,40 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         topBarView.setListener((v, action, extra) -> {
             //点击back键退出时，按键响应
             if (action == TopBarView.ACTION_LEFT_BUTTON) {
+
+                boolean isEmpty = false;
+
+                List<TopicContentItem> topicContentItems = mTopicEditView.getDatas();
+
+                for (TopicContentItem topicContentItem : topicContentItems){
+                    if (TopicContentItem.TYPE_IMG.equals(topicContentItem.type.toString())) {
+
+                        if (!"".equals(topicContentItem.localUrl)){
+                            isEmpty = true;
+                        }
+
+                    } else if (TopicContentItem.TYPE_TXT.equals(topicContentItem.type.toString())) {
+
+                        if (!"".equals(topicContentItem.content)){
+                            isEmpty = true;
+                        }
+                    }
+                }
+
+                if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty){
+
+                    finish();
+
+                }
+
                 sureBackPopw = new NCommontPopw(NTopicEditActivity.this, "确定放弃编辑吗?", v1 -> {
                     sureBackPopw.myDismiss();
                     NTopicEditActivity.this.finish();
                 });
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
+
+                showLoadV("提交中....");
 
                 String title = mEtTopicTitle.getText().toString();
                 List<TopicContentItem> datas = mTopicEditView.getDatas();
@@ -268,6 +320,11 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                 }
                 if (datas == null || datas.size() == 0) {
                     showShortToast("内容不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
+                    showShortToast("请选择小组");
                     return;
                 }
 
@@ -282,26 +339,28 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             }
         });
 
-        mEtTopicTitle.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Rect r = new Rect();
-            //获取当前界面可视部分
-            NTopicEditActivity.this.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
-            //获取屏幕的高度
-            int screenHeight = NTopicEditActivity.this.getWindow().getDecorView().getRootView().getHeight();
-            //获取键盘的高度，在键盘没有弹出的时候 此高度为0 键盘弹出的时候为一个正数
-            int heightDifference = screenHeight - r.bottom;
-            if (heightDifference > 0) {
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
-                layoutParams.setMargins(0, 0, 0, heightDifference);
-                llBottom.setLayoutParams(layoutParams);
-            } else {
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
-                layoutParams.setMargins(0, 0, 0, 0);
-                llBottom.setLayoutParams(layoutParams);
-            }
-        });
+//        mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+//            Rect r = new Rect();
+//            //获取当前界面可视部分
+//            NTopicEditActivity.this.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+//            //获取屏幕的高度
+//            int screenHeight = NTopicEditActivity.this.getWindow().getDecorView().getRootView().getHeight();
+//            //获取键盘的高度，在键盘没有弹出的时候 此高度为0 键盘弹出的时候为一个正数
+//            int heightDifference = screenHeight - r.bottom;
+//            if (heightDifference > 0) {
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
+//                int height = llBottom.getHeight();
+//                layoutParams.setMargins(0, 0, 0, heightDifference);
+//                llBottom.setLayoutParams(layoutParams);
+//            } else {
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llBottom.getLayoutParams();
+//                layoutParams.setMargins(0, 0, 0, 0);
+//                llBottom.setLayoutParams(layoutParams);
+//            }
+//        });
 
         mEtTopicTitle.setOnClickListener((v) -> {
+            mHideView(true);
             //隐藏表情视图
             hideEmojiKeyboardFragment();
 
@@ -309,6 +368,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         mEtTopicTitle.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
+                mHideView(true);
                 //隐藏表情视图
                 hideEmojiKeyboardFragment();
             }
@@ -370,10 +430,22 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     emojiKeyboardFragment.setflEmojiContentShow(true);
                 } else {
 
+                    View focusedChild = mTopicEditView.getFocusedChild();
+                    EditText editText = null;
+                    if (focusedChild instanceof EditText) {
+                        editText = (EditText) focusedChild;
+                    }
+
+                    if (editText != null){
+                        SoftKeyboardUtils.showSoftKeyboard(editText);
+                    }else{
+                        //显示软键盘
+                        SoftKeyboardUtils.showSoftKeyboard(mEtTopicTitle);
+                    }
+
                     //是否显示表情视图
                     emojiKeyboardFragment.setflEmojiContentShow(false);
-                    //显示软键盘
-                    SoftKeyboardUtils.showSoftKeyboard(this);
+
                 }
 
             }
@@ -381,6 +453,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         } else if (v.getId() == R.id.mIvLineFeed) {
             //点击 换行
             mTopicEditView.AddLineFeed(0, null);
+        }else if (v.getId() == R.id.mHideView){
+            hideEmojiKeyboardFragment();
+            SoftKeyboardUtils.hideSoftKeyboard(this);
         }
 
     }
@@ -606,5 +681,18 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     }
 
+    /**
+     * 显示/隐藏输入按钮， ： 表情、换行...
+     * @param boo
+     */
+    public void mHideView(boolean boo){
+
+        if (boo) {
+            mViewInputField.setVisibility(View.GONE);
+        }else{
+            mViewInputField.setVisibility(View.VISIBLE);
+        }
+
+    }
 
 }

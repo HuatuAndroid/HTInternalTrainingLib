@@ -8,6 +8,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 /**
  * @author liuzhe
@@ -38,9 +39,9 @@ public class SoftKeyboardUtils {
     /**
      * 强制显示软键盘
      */
-    public static void showSoftKeyboard(Context mContext, Window window) {
-        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(window.getDecorView(), InputMethodManager.SHOW_FORCED);
+    public static void showSoftKeyboard(EditText mEditText) {
+        InputMethodManager inputManager =(InputMethodManager) mEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(mEditText, 0);
     }
 
     /**
