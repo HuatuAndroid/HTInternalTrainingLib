@@ -31,7 +31,6 @@ import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
-import com.example.module_employees_world.ui.topic.TopicEditActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;

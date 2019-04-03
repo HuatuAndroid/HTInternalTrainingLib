@@ -1,5 +1,12 @@
 package com.example.module_employees_world.utils;
 
+import com.example.module_employees_world.common.TutuPicInit;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author liuzhe
  * @date 2019/4/1
@@ -42,6 +49,5 @@ public class EmojiUtils {
                 || ((codePoint >= 0x20) && (codePoint <= 0xD7FF))
                 || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF)));
     }
-
 
 }

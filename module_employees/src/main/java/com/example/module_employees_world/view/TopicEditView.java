@@ -489,14 +489,6 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
          */
         @Override
         public void afterTextChanged(Editable editable) {
-//            String content = Html.toHtml(editText.getText()).replace("<p dir=\"ltr\">", "")
-//                    .replace("\n", "").replace("</p>", "");
-//
-//            LogUtil.e("addTutuImg -- " + editText.getText());
-//
-//            LogUtil.e("addTutuImg -- " + editText.getText().toString());
-//
-//            LogUtil.e("addTutuImg -- " + content);
 
             String content = editText.getText().toString();
             bean.content = content;
