@@ -22,9 +22,11 @@ import com.example.module_employees_world.adapter.CommentOnerAdapter;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentDetailContranct;
 import com.example.module_employees_world.presenter.CommentDetailPresenter;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.view.CommontPopw;
 import com.squareup.picasso.Picasso;
@@ -34,6 +36,7 @@ import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.utils.StatusBarUtil;
@@ -240,7 +243,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
         Picasso.with(this).load(commentDetailBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
         tvName.setText(commentDetailBean.userName);
         tvPartName.setText(commentDetailBean.departmentName);
-        tvContent.setText(commentDetailBean.content);
+        tvContent.setText(EmojiUtils.decode(commentDetailBean.content));
         tvTime.setText(commentDetailBean.createdAt);
         tvZan.setText(commentDetailBean.likeCount+"");
         tvChildrenNum.setText(commentDetailBean.count+"条回复");
@@ -250,9 +253,15 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
         }
         if (!TextUtils.isEmpty(commentDetailBean.commentPicture)){
             ivImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(ivImg, R.drawable.course_image ,this , commentDetailBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(ivImg, R.drawable.course_image ,this ,  HttpConfig.newInstance().getmBaseUrl()+"/"+ commentDetailBean.commentPicture ,false );
         }else {
             ivImg.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(commentDetailBean.commentFace)){
+            ivGif.setVisibility(View.VISIBLE);
+            GlideManager.getInstance().setGlideResourceImage(ivGif, TutuPicInit.getResFromEmojicList(commentDetailBean.commentFace),R.drawable.image_failure, R.drawable.course_image ,this);
+        }else {
+            ivGif.setVisibility(View.GONE);
         }
         //1已经点赞 0没有点赞
         if (commentDetailBean.commentLike==0){

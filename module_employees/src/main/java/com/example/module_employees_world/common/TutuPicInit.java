@@ -1,7 +1,6 @@
 package com.example.module_employees_world.common;
 
 import com.example.module_employees_world.R;
-import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TutuIconBean;
 import com.thefinestartist.utils.log.LogUtil;
 

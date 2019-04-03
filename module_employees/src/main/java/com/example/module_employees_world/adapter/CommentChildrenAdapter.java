@@ -16,11 +16,14 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.ParentBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.ui.CommentDetailctivity;
 import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 
 import java.util.List;
@@ -61,13 +64,19 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
         holder.tvTime.setText(parentBean.createdAt);
         holder.tvZan.setText(parentBean.likeCount+"");
         String content = "回复<font color=\"#007AFF\">" + "@"+parentBean.parentName + "</font>";
-        holder.tvTitle.setText(Html.fromHtml(content+parentBean.content));
+        holder.tvTitle.setText(Html.fromHtml(content+ EmojiUtils.decode(parentBean.content)));
 
         if (!TextUtils.isEmpty(parentBean.commentPicture)){
             holder.ivImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context , parentBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context ,  HttpConfig.newInstance().getmBaseUrl()+"/"+ parentBean.commentPicture ,false );
         }else {
             holder.ivImg.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(parentBean.commentPicture)){
+            holder.ivGif.setVisibility(View.VISIBLE);
+            GlideManager.getInstance().setGlideResourceImage(holder.ivGif, TutuPicInit.getResFromEmojicList(parentBean.commentFace),R.drawable.image_failure, R.drawable.course_image ,context);
+        }else {
+            holder.ivGif.setVisibility(View.GONE);
         }
 
         //删除权限  0：无权限   1：有权限
