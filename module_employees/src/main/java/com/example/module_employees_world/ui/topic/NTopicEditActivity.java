@@ -55,7 +55,7 @@ import java.util.List;
 public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implements TopicEditContranct.View, EmojiItemClickListener {
 
     private EditText mEtTopicTitle;
-    private LinearLayout llBottom;
+    private LinearLayout llBottom, mLinearLayout;
     private TopicEditView mTopicEditView;
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
@@ -174,6 +174,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
         mTopicEditView = findViewById(R.id.mTopicEditView);
         llBottom = findViewById(R.id.ll_bottom);
+        mLinearLayout = findViewById(R.id.mLinearLayout);
         mIvA = findViewById(R.id.mIvA);
         mIvPhotograph = findViewById(R.id.mIvPhotograph);
         mIvHyperLink = findViewById(R.id.mIvHyperLink);
@@ -226,6 +227,16 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         //本地图片辅助类初始化
         LocalImageHelper.init(this);
 
+        mEtTopicTitle.setFocusable(true);
+        mEtTopicTitle.setFocusableInTouchMode(true);
+        mEtTopicTitle.requestFocus();
+
+        mEtTopicTitle.postDelayed(() -> SoftKeyboardUtils.showORhideSoftKeyboard(NTopicEditActivity.this), 1000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -260,6 +271,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
+                showLoadV("提交中....");
+
                 String title = mEtTopicTitle.getText().toString();
                 List<TopicContentItem> datas = mTopicEditView.getDatas();
                 if (TextUtils.isEmpty(title)) {
@@ -282,7 +295,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             }
         });
 
-        mEtTopicTitle.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+        mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             Rect r = new Rect();
             //获取当前界面可视部分
             NTopicEditActivity.this.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);

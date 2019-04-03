@@ -216,8 +216,6 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
 
     public void processData(List<TopicContentItem> topicContentItems) {
 
-        mView.showLoadV("提交中....");
-
         List<TopicContentItem> newtopicContentItems = new ArrayList<>();
         for (TopicContentItem topicContentItem : topicContentItems) {
 
