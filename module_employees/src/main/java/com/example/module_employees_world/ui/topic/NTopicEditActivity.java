@@ -592,10 +592,12 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         try {
 
-            //emoji表情转码
+            LogUtil.e("commitTopicData = " + content + "");
+
             String encode = EmojiUtils.getString(content);
 
-            //发帖请求
+            LogUtil.e("commitTopicData = " + encode + "");
+
             mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1 + "", type + "");
 
         } catch (Exception e) {

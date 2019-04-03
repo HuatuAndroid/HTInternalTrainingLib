@@ -19,6 +19,8 @@ import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -254,7 +256,7 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
 
         LogUtil.e("addTutuImg -- " + stringContent);
 
-        mView.commitTopicData(stringContent);
+        mView.commitTopicData(StringEscapeUtils.unescapeHtml4(stringContent));
 
     }
 
