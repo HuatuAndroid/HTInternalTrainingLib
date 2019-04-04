@@ -49,6 +49,9 @@ public class SearchCommenBean {
     private String user_id;
     private String user_name;
     private String avatar;
+    private String content_text;
+    private String content_img;
+    private String text_img;
     private int allow_del;
 
     public String getQuestion_title() {
