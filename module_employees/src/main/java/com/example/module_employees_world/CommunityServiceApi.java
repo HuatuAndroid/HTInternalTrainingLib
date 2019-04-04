@@ -2,6 +2,7 @@ package com.example.module_employees_world;
 
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.CommunityDiscussBean;
@@ -10,6 +11,7 @@ import com.example.module_employees_world.bean.GroupDetailsBean;
 import com.example.module_employees_world.bean.GuideBean;
 import com.example.module_employees_world.bean.MyItemBean;
 import com.example.module_employees_world.bean.MyPartBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.bean.NImageListsBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
@@ -147,14 +149,14 @@ public interface CommunityServiceApi {
      * 评论子列表
      */
     @GET(CommunityHttpConfig.COMMENT_CHILDREN_LIST)
-    Observable<Result<List<CommentChildrenBean>>> commentChildrenList(@Path("comment_id") int comment_id, @Query("page") int page, @Query("limit") int limit, @Query("st") int st);
+    Observable<Result<List<ParentBean>>> commentChildrenList(@Path("comment_id") int comment_id, @Query("page") int page, @Query("limit") int limit, @Query("st") int st);
 
     /**
      * 发布评论
      */
     @FormUrlEncoded
     @POST(CommunityHttpConfig.COMMENT_SEND)
-    Observable<Result> commentSend(@FieldMap() Map<String, String> map);
+    Observable<Result<CommentInsertBean>> commentSend(@FieldMap() Map<String, String> map);
 
     /*
      * 小组详情
@@ -180,4 +182,7 @@ public interface CommunityServiceApi {
     @GET(CommunityHttpConfig.MYPART)
     Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page);
 
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.editQuestion)
+    Observable<Result> editQuestion(@Field("type") String type, @Field("id") String id);
 }

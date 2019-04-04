@@ -1,7 +1,6 @@
 package com.example.module_employees_world.utils;
 
 import com.example.module_employees_world.common.TutuPicInit;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -50,4 +49,19 @@ public class EmojiUtils {
                 || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF)));
     }
 
+    /**
+     * 对文本内容携带表情解码
+     * lienlin
+     */
+    public static String decode(String content) {
+        final Pattern reUnicode = Pattern.compile("\\\\u([0-9a-zA-Z]{4})");
+        Matcher sMatcher = reUnicode.matcher(content);
+        StringBuffer sb = new StringBuffer(content.length());
+        while (sMatcher.find()) {
+            sMatcher.appendReplacement(sb,
+                    Character.toString((char) Integer.parseInt(sMatcher.group(1), 16)));
+        }
+        sMatcher.appendTail(sb);
+        return sb.toString();
+    }
 }

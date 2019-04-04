@@ -1,6 +1,7 @@
 package com.example.module_employees_world.adapter;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +16,14 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.ParentBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.ui.CommentDetailctivity;
 import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.squareup.picasso.Picasso;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 
 import java.util.List;
@@ -32,10 +36,10 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
 
     LayoutInflater inflater;
     CommentDetailctivity context;
-    List<CommentChildrenBean> parentBeanList;
+    List<ParentBean> parentBeanList;
     CommentDetailctivity.MyHandler myHandler;
 
-    public CommentChildrenAdapter(CommentDetailctivity context, List<CommentChildrenBean> parentBeanList, CommentDetailctivity.MyHandler myHandler) {
+    public CommentChildrenAdapter(CommentDetailctivity context, List<ParentBean> parentBeanList, CommentDetailctivity.MyHandler myHandler) {
         this.context=context;
         this.parentBeanList=parentBeanList;
         this.myHandler=myHandler;
@@ -52,21 +56,27 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        final CommentChildrenBean parentBean = parentBeanList.get(position);
+        final ParentBean parentBean = parentBeanList.get(position);
         if (!TextUtils.isEmpty(parentBean.avatar))
         Picasso.with(context).load(parentBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
         holder.tvName.setText(parentBean.userName);
         holder.tvPartName.setText(parentBean.departmentName);
         holder.tvTime.setText(parentBean.createdAt);
         holder.tvZan.setText(parentBean.likeCount+"");
-        String content = "回复<font color=\"#007AFF\">" + "@"+parentBean.parentName + "</font>";
-        holder.tvTitle.setText(Html.fromHtml(content+parentBean.content));
+        String content = "回复<font color=\"#007AFF\">" + "@"+parentBean.parent_name + "</font>";
+        holder.tvTitle.setText(Html.fromHtml(content+ EmojiUtils.decode(parentBean.content)));
 
         if (!TextUtils.isEmpty(parentBean.commentPicture)){
             holder.ivImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context , parentBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context ,  HttpConfig.newInstance().getmBaseUrl()+"/"+ parentBean.commentPicture ,false );
         }else {
             holder.ivImg.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(parentBean.commentPicture)){
+            holder.ivGif.setVisibility(View.VISIBLE);
+            GlideManager.getInstance().setGlideResourceImage(holder.ivGif, TutuPicInit.getResFromEmojicList(parentBean.commentFace),R.drawable.image_failure, R.drawable.course_image ,context);
+        }else {
+            holder.ivGif.setVisibility(View.GONE);
         }
 
         //删除权限  0：无权限   1：有权限
@@ -75,6 +85,17 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
         }else {
             holder.ivDel.setVisibility(View.VISIBLE);
         }
+        //1已经点赞 0没有点赞
+        if (parentBean.comment_like==0){
+            Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            holder.tvZan.setCompoundDrawables(drawable,null,null,null);
+        }else {
+            Drawable drawable = context.getResources().getDrawable(R.drawable.post_comment_zan_able);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            holder.tvZan.setCompoundDrawables(drawable,null,null,null);
+        }
+
         holder.ivDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,9 +109,10 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
         holder.tvReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: 2019/4/3
                 Message message = new Message();
                 message.what=RxBusMessageBean.MessageType.POST_111;
-                message.arg1=parentBean.id;
+                message.obj=parentBean;
                 myHandler.handleMessage(message);
             }
         });

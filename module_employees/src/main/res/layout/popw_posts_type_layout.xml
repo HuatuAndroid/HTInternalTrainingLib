@@ -35,7 +35,7 @@
         android:gravity="center"
         android:background="#FFFFFF"
         android:layout_marginTop="1dp"
-        android:text="问答"/>
+        android:text="建议"/>
 
     <TextView
         android:id="@+id/tv_question"

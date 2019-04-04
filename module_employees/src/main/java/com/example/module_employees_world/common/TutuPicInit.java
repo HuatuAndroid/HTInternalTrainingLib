@@ -1,7 +1,6 @@
 package com.example.module_employees_world.common;
 
 import com.example.module_employees_world.R;
-import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TutuIconBean;
 import com.thefinestartist.utils.log.LogUtil;
 
@@ -91,5 +90,14 @@ public class TutuPicInit {
                 .filter(emojicon -> type == emojicon.type).subscribe(emojicon -> tutuIconBeans.add(emojicon));
 
         return tutuIconBeans;
+    }
+
+    public static int getResFromEmojicList(String key){
+        for (int i = 0; i < EMOJICONS.size(); i++) {
+            if (EMOJICONS.get(i).key.equals(key)){
+                return EMOJICONS.get(i).TutuId;
+            }
+        }
+        return 0;
     }
 }

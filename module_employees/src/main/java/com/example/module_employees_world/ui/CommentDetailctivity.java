@@ -1,5 +1,6 @@
 package com.example.module_employees_world.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -20,10 +21,14 @@ import com.example.module_employees_world.adapter.CommentChildrenAdapter;
 import com.example.module_employees_world.adapter.CommentOnerAdapter;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
+import com.example.module_employees_world.bean.ParentBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentDetailContranct;
 import com.example.module_employees_world.presenter.CommentDetailPresenter;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.view.CommontPopw;
 import com.squareup.picasso.Picasso;
@@ -33,16 +38,20 @@ import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
+import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.RefreshUtils;
 import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
+import com.wb.rxbus.taskBean.RxBus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * author:LIENLIN
@@ -70,12 +79,13 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     private TextView tvBottomSend;
     private MultipleStatusView multiplsStatusView;
     private RecyclerView rvCommentDetail;
-    private List<CommentChildrenBean> commentChildrenList = new ArrayList<>();
+    private List<ParentBean> commentChildrenList = new ArrayList<>();
     private int page = 1;
     private int limit = 6;
     private MyHandler myHandler;
     private CommentChildrenAdapter commentChildrenAdapter;
     private NestedScrollView svComment;
+    private CommentDetailBean commentDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,12 +148,36 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 删除评论
+                mPresenter.deleteComment(commentId+"",-1);
+                showLoadDiaLog("");
             }
         });
         tvReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 评论回复
+                if (commentDetailBean!=null){
+                    Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
+                    startActivity(intent);
+                }
+
+            }
+        });
+        tvBottomReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2019/3/30 评论回复
+                if (commentDetailBean!=null){
+                    Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
+                    startActivity(intent);
+                }
+
             }
         });
         tvBottomSend.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +190,30 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.commentChildrenList(commentId,page,limit,1);
+            }
+        });
+        tvZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.commentLike(commentId+"",tvZan);
+                showLoadDiaLog("");
+            }
+        });
+
+        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
+            @Override
+            public void accept(RxBusMessageBean rxMessageBean) throws Exception {
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114){
+                    CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
+                    String comment_id = (String) rxMessageBean.getMessage1();
+                    if ("0".equals(comment_id)){
+                        //一级评论
+                    }else {
+                        //二级评论 todo
+                        commentChildrenList.add(insertBean.second);
+                    }
+                    commentChildrenAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -203,11 +261,11 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     @Override
     public void SuccessData(Object o) {
         //评论详情
-        CommentDetailBean commentDetailBean = (CommentDetailBean)o;
+        commentDetailBean = (CommentDetailBean)o;
         Picasso.with(this).load(commentDetailBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
         tvName.setText(commentDetailBean.userName);
         tvPartName.setText(commentDetailBean.departmentName);
-        tvContent.setText(commentDetailBean.content);
+        tvContent.setText(EmojiUtils.decode(commentDetailBean.content));
         tvTime.setText(commentDetailBean.createdAt);
         tvZan.setText(commentDetailBean.likeCount+"");
         tvChildrenNum.setText(commentDetailBean.count+"条回复");
@@ -217,15 +275,30 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
         }
         if (!TextUtils.isEmpty(commentDetailBean.commentPicture)){
             ivImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(ivImg, R.drawable.course_image ,this , commentDetailBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(ivImg, R.drawable.course_image ,this ,  HttpConfig.newInstance().getmBaseUrl()+"/"+ commentDetailBean.commentPicture ,false );
         }else {
             ivImg.setVisibility(View.GONE);
         }
-
+        if (!TextUtils.isEmpty(commentDetailBean.commentFace)){
+            ivGif.setVisibility(View.VISIBLE);
+            GlideManager.getInstance().setGlideResourceImage(ivGif, TutuPicInit.getResFromEmojicList(commentDetailBean.commentFace),R.drawable.image_failure, R.drawable.course_image ,this);
+        }else {
+            ivGif.setVisibility(View.GONE);
+        }
+        //1已经点赞 0没有点赞
+        if (commentDetailBean.commentLike==0){
+            Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            tvZan.setCompoundDrawables(drawable,null,null,null);
+        }else {
+            Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan_able);
+            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            tvZan.setCompoundDrawables(drawable,null,null,null);
+        }
     }
 
     @Override
-    public void commentChildrenList(List<CommentChildrenBean> childrenBeans) {
+    public void commentChildrenList(List<ParentBean> childrenBeans) {
         if (page==1){
             commentChildrenList.clear();
         }
@@ -258,8 +331,15 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     @Override
     public void deleteComment(int position) {
         hidLoadDiaLog();
-        commentChildrenList.remove(position);
-        commentChildrenAdapter.notifyDataSetChanged();
+        if (position==-1){
+            //删除该评论
+            finish();
+        }else {
+            //删除子评论
+            commentChildrenList.remove(position);
+            commentChildrenAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
@@ -290,8 +370,12 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     break;
                 case RxBusMessageBean.MessageType.POST_111:
                     // TODO: 2019/3/30 回复子评论
-                    commentId= msg.arg1;
-                    ToastUtils.showToast(activity,"回复评论"+commentId);
+                    ParentBean parentBean= (ParentBean) msg.obj;
+                    Intent intent = new Intent(activity, CommentDialogActivity.class);
+                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,parentBean.questionId+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,parentBean.id+"");
+                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,parentBean.userName);
+                    activity.startActivity(intent);
                     break;
                 case RxBusMessageBean.MessageType.POST_112:
                     // : 2019/3/30 子评论点赞

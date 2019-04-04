@@ -22,16 +22,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.TutuIconBean;
+import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
 import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
+import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.app.AppUtils;
@@ -44,6 +48,8 @@ import com.wb.baselib.permissions.PerMissionsManager;
 import com.wb.baselib.permissions.interfaces.PerMissionCall;
 import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.utils.ToastUtils;
+import com.wb.rxbus.taskBean.RxBus;
+import com.wb.rxbus.taskBean.RxMessageBean;
 import com.wngbo.www.common_postphoto.ISNav;
 import com.wngbo.www.common_postphoto.config.ISListConfig;
 
@@ -111,11 +117,6 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         super.onCreate(savedInstanceState);
         StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
-        question_id = getIntent().getStringExtra(TAG_QUESTION_ID);
-        comment_id = getIntent().getStringExtra(TAG_COMMENT_ID);
-        comment_name = getIntent().getStringExtra(TAG_COMMENT_NAME);
-
-
     }
 
     @Override
@@ -138,8 +139,17 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getIntanceBus().unSubscribe(this);
+    }
+
+    @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_comment_dialog);
+        question_id = getIntent().getStringExtra(TAG_QUESTION_ID);
+        comment_id = getIntent().getStringExtra(TAG_COMMENT_ID);
+        comment_name = getIntent().getStringExtra(TAG_COMMENT_NAME);
         ivEditArea = findViewById(R.id.iv_edit_area);
         ivReplyOval = findViewById(R.id.iv_reply_oval);
         ivReplyPic = findViewById(R.id.iv_reply_pic);
@@ -165,7 +175,6 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             public void run() {
                 initHeight = llRoot.getHeight();
                 screenHeight = CommentDialogActivity.this.getWindow().getDecorView().getRootView().getHeight();
-
             }
         });
 
@@ -351,8 +360,11 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     }
 
     @Override
-    public void sendCommment() {
+    public void sendCommment(CommentInsertBean insertBean) {
+        // TODO: 2019/4/3
         hidLoadDiaLog();
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_114, insertBean, comment_id));
+
         showShortToast("评论成功");
         finish();
     }
@@ -411,7 +423,10 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     public void onItemClick(TutuIconBean tutuIconBean) {
         commentFace=tutuIconBean.key;
         rlGif.setVisibility(View.VISIBLE);
-        Glide.with(this).load(tutuIconBean.TutuId).asGif().into(ivReplyGif);
+//        Glide.with(this).load(tutuIconBean.TutuId).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivReplyGif);
+//        Glide.with(this).load(tutuIconBean.TutuId).into(ivReplyGif);
+        GlideManager.getInstance().setGlideResourceImage(ivReplyGif,tutuIconBean.TutuId,R.drawable.image_failure, R.drawable.course_image ,this);
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.contranct.CommentDetailContranct;
 import com.example.module_employees_world.model.CommentDetailodel;
 import com.wb.baselib.app.AppUtils;
@@ -58,10 +59,10 @@ public class CommentDetailPresenter extends CommentDetailContranct.CommentDetail
 
     @Override
     public void commentChildrenList(int commentId, int page, int limit, int st) {
-        HttpManager.newInstance().commonRequest(mModel.commentChildrenList(commentId,page,limit,st), new BaseObserver<Result<List<CommentChildrenBean>>>(AppUtils.getContext()) {
+        HttpManager.newInstance().commonRequest(mModel.commentChildrenList(commentId,page,limit,st), new BaseObserver<Result<List<ParentBean>>>(AppUtils.getContext()) {
 
             @Override
-            public void onSuccess(Result<List<CommentChildrenBean>> childrenList) {
+            public void onSuccess(Result<List<ParentBean>> childrenList) {
                 if (childrenList.getData()!=null){
                     if ( childrenList.getData().size() == 0) {
                         if (page==1) {

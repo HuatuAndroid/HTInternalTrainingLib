@@ -45,4 +45,9 @@ public class PostDetailModel implements PostsDetailContranct.PostsDetailModel {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).deleteComment(commentId);
     }
 
+    @Override
+    public Observable<Result> editQuestion(String type, String id) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).editQuestion(type,id);
+    }
+
 }

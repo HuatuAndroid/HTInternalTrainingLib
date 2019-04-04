@@ -3,6 +3,7 @@ package com.example.module_employees_world.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.wb.rxbus.taskBean.RxBus;
 
@@ -24,14 +26,17 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
 
     private View mMenuView;
     private Activity context;
+    private PostsDetailActivity.MyHandler myHandler;
 
     /**
      * @param commentType 帖子类型
      * @param adoptCode 当commentType=2时有用，采纳状态值
+     * @param myHandler
      */
-    public PostsDetailPopw(final Activity context,int commentType,int adoptCode) {
+    public PostsDetailPopw(final Activity context, int commentType, int adoptCode, PostsDetailActivity.MyHandler myHandler) {
         super(context);
         this.context=context;
+        this.myHandler=myHandler;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popw_posts_detail_layout, null);
         initView(mMenuView,commentType,adoptCode);
@@ -107,19 +112,28 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
         int i = v.getId();
         if (i == R.id.tv_update_type) {
             myDismiss();
-            new PostsTypePopw(context);
+            new PostsTypePopw(context,myHandler);
         }else if (i == R.id.tv_del){
-            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_107,null));
+//            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_107,null));
+            Message message = new Message();
+            message.what=RxBusMessageBean.MessageType.POST_107;
+            myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_cancel){
             myDismiss();
         }else if (i == R.id.tv_edit){
             myDismiss();
         }else if (i == R.id.tv_adopt){
-            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_104,null));
+//            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_104,null));
+            Message message = new Message();
+            message.what=RxBusMessageBean.MessageType.POST_104;
+            myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_invite){
-            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_105,null));
+//            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_105,null));
+            Message message = new Message();
+            message.what=RxBusMessageBean.MessageType.POST_105;
+            myHandler.handleMessage(message);
             myDismiss();
         }
     }
