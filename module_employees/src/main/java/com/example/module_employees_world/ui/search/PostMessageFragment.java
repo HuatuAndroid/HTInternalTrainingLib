@@ -86,6 +86,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
                 if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
                     page = 1;
+                    multipleStatusView.showLoading();
                     mPresenter.getSerachPost(type, keyword, page);
                 } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
                     String total = (String) rxMessageBean.getMessage();
@@ -98,6 +99,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
                 } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
                     page = 1;
                     keyword = (String) rxMessageBean.getMessage();
+                    multipleStatusView.showLoading();
                     mPresenter.getSerachPost(type, keyword, page);
                 }
             }
@@ -200,6 +202,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
 
     @Override
     public void SuccessData(Object o) {
+        multipleStatusView.showContent();
         if (page == 1) {
             searchPostBeans.clear();
         }

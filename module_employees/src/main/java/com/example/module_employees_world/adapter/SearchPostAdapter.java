@@ -82,7 +82,7 @@ public class SearchPostAdapter extends ListBaseAdapter {
 
         String start = "<font color='#FF4429'>";
         String end = "</font>";
-        String content = searchPostBean.getContent();
+        String content = searchPostBean.getText_img();
         String title = searchPostBean.getTitle();
         if (title.indexOf(keyword)==-1){
             viewHolder.tvPostTitle.setText(title);
@@ -105,6 +105,9 @@ public class SearchPostAdapter extends ListBaseAdapter {
             }
             viewHolder.tvPostTitle.setText(Html.fromHtml(htmlTitle));
         }
+       /* if (content.length()>90){
+            content = content.substring(0,90);
+        }*/
         if (content.indexOf(keyword)==-1){
             viewHolder.tvPostContent.setText(content);
         }else {

@@ -46,6 +46,24 @@ public class SearchPostBean {
     private int created_id;
     private String h5_detail;
     private int allow_del;
+    private String content_text;
+    private String text_img;
+
+    public String getContent_text() {
+        return content_text;
+    }
+
+    public void setContent_text(String content_text) {
+        this.content_text = content_text;
+    }
+
+    public String getText_img() {
+        return text_img;
+    }
+
+    public void setText_img(String text_img) {
+        this.text_img = text_img;
+    }
 
     public int getSolve_status() {
         return solve_status;
