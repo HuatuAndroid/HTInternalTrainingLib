@@ -3,10 +3,13 @@ package com.example.module_employees_world.model;
 import com.example.module_employees_world.CommunityServiceApi;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpManager;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -48,6 +51,21 @@ public class PostDetailModel implements PostsDetailContranct.PostsDetailModel {
     @Override
     public Observable<Result> editQuestion(String type, String id) {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).editQuestion(type,id);
+    }
+
+    @Override
+    public Observable<Result<List<ParentBean>>> commentChildrenList(int commentId, int page, int limit, int st) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).commentChildrenList(commentId,page,limit,st);
+    }
+
+    @Override
+    public Observable<Result> acceptPosts(String id, String solve_status) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).acceptPosts(id,solve_status);
+    }
+
+    @Override
+    public Observable<Result> acceptComment(String comment_id) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).acceptComment(comment_id);
     }
 
 }

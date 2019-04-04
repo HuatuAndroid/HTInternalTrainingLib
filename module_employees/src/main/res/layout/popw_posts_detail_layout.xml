@@ -14,6 +14,7 @@
         android:textSize="15sp"
         android:gravity="center"
         android:background="#FFFFFF"
+        android:visibility="gone"
         android:text="修改类型"/>
 
     <TextView
@@ -25,6 +26,7 @@
         android:gravity="center"
         android:background="#FFFFFF"
         android:layout_marginTop="1dp"
+        android:visibility="gone"
         android:text="采纳"/>
     <!--<RelativeLayout
         android:id="@+id/rl_adopt_checked"
@@ -53,6 +55,7 @@
         android:gravity="center"
         android:background="#FFFFFF"
         android:layout_marginTop="1dp"
+        android:visibility="gone"
         android:text="邀请回答"/>
 
     <TextView

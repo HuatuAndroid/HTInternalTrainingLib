@@ -4,11 +4,14 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.wb.baselib.base.mvp.BaseModel;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.base.mvp.MvpView;
 import com.wb.baselib.bean.Result;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -28,6 +31,9 @@ public interface PostsDetailContranct {
         void deletePost();
         void deleteComment(int position,int partenPosition);
         void editQuestion();
+        void acceptPosts();
+        void acceptComment();
+        void commentChildrenList(List<ParentBean> childrenBeans, int partenPosition);
     }
 
     interface PostsDetailModel extends BaseModel{
@@ -38,6 +44,9 @@ public interface PostsDetailContranct {
         Observable<Result> deletePost(String postId);
         Observable<Result> deleteComment(String commentId);
         Observable<Result> editQuestion(String type,String id);
+        Observable<Result<List<ParentBean>>> commentChildrenList(int commentId,int page,int limit,int st);
+        Observable<Result> acceptPosts(String id,String solve_status);
+        Observable<Result> acceptComment(String comment_id);
     }
 
     abstract class PostDetailPresenter extends BasePreaenter<PostsDetailView,PostsDetailModel>{
@@ -48,6 +57,9 @@ public interface PostsDetailContranct {
         public abstract void deletePost(String postId);
         public abstract void deleteComment(String deleteComment,int position,int partenPosition);
         public abstract void editQuestion(String type,String id);
+        public abstract void commentChildrenList(int partenPosition, int commentId, int page, int limit, int st);
+        public abstract void acceptPosts(String id,String solve_status);
+        public abstract void acceptComment(String comment_id);
     }
 
 }
