@@ -290,7 +290,7 @@ public class MultipleStatusView extends RelativeLayout {
         }
         showViewById(mNoNetworkView.getId());
     }
-
+    boolean isAddContentView;
     /**
      * 显示内容视图
      */

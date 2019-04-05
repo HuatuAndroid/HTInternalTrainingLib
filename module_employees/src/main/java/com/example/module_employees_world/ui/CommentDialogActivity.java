@@ -363,8 +363,13 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     public void sendCommment(CommentInsertBean insertBean) {
         // TODO: 2019/4/3
         hidLoadDiaLog();
-        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_114, insertBean, comment_id));
+        /*Intent intent = new Intent();
+        intent.putExtra("data",insertBean);
+        intent.putExtra("comment_id",comment_id);
+        setResult(RxBusMessageBean.MessageType.POST_114,intent);*/
 
+
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_114, insertBean, comment_id));
         showShortToast("评论成功");
         finish();
     }

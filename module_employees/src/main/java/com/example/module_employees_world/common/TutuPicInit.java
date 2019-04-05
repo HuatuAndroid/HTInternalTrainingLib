@@ -98,6 +98,6 @@ public class TutuPicInit {
                 return EMOJICONS.get(i).TutuId;
             }
         }
-        return 0;
+        return R.drawable.image_failure;
     }
 }

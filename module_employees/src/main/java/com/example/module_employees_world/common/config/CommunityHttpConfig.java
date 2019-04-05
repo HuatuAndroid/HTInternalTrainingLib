@@ -58,4 +58,6 @@ public interface CommunityHttpConfig {
     String acceptPosts="api/app/discuss/cancelAdoption";
     /**采纳评论*/
     String acceptComment="api/app/discuss/comment/comment_id={comment_id}";
+    /**邀请回答*/
+    String invitationUser="api/app/discuss/invitation";
 }
