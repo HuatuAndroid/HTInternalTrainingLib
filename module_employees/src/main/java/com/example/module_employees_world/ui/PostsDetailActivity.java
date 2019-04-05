@@ -182,7 +182,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         imgAdapter = new ImgAdapter(this, imgList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.showToast(PostsDetailActivity.this,"点击看大图");
+                Intent intent = new Intent(PostsDetailActivity.this, PictuirePreviewActivity.class);
+                intent.putStringArrayListExtra(PictuirePreviewActivity.TAG_JUMP,imgList);
+                startActivity(intent);
             }
         });
         tvImg.setNestedScrollingEnabled(false);
@@ -201,8 +203,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
         RefreshUtils.getInstance(smartRefreshLayout,this ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(false);
-
-
+        smartRefreshLayout.setEnableLoadMore(false);
     }
 
     @Override
@@ -349,8 +350,10 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     String comment_id = (String) rxMessageBean.getMessage1();
                     if ("0".equals(comment_id)){
                         //一级评论
-                        commentList.add(insertBean.first);
                         multipleStatusview.showContent();
+                        commentList.add(insertBean.first);
+                        tvCommentNum.setText("全部评论 (" + ++postDetailBean.questionInfo.commentCount+ ")");
+                        smartRefreshLayout.setEnableLoadMore(true);
                     }else {
                         //二级评论
                         for (int i = 0; i < commentList.size(); i++) {
@@ -549,6 +552,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         commentList.addAll(listBeanList);
         postDetailAdapter.notifyDataSetChanged();
         multipleStatusview.showContent();
+        smartRefreshLayout.setEnableLoadMore(true);
         page++;
         if (page==1){
             scvPost.post(new Runnable() {
