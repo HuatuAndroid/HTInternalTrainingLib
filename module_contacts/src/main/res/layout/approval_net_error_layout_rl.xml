@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/approval_net_error_layout_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF6F7FB">
+
+    <ImageView
+        android:id="@+id/approval_neterror_icon_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="131.5dp"
+        android:src="@mipmap/search_result" />
+
+    <TextView
+        android:id="@+id/approval_neterror_tips_iv"
+        android:layout_width="96dp"
+        android:layout_height="22.5dp"
+        android:layout_below="@+id/approval_neterror_icon_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:gravity="center"
+        android:text="网络不给力"
+        android:textColor="#FF5C5E63"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/reload_data_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/approval_neterror_tips_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/attendance_start_clickin_bg"
+        android:paddingBottom="8dp"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:paddingTop="8dp"
+        android:text="重新加载"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp" />
+</RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_reserve_title"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/blue_FF4A88FB"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_reserver_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:src="@mipmap/resever_title_return" />
+
+    <TextView
+        android:id="@+id/tv_reserver_title"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="北京"
+        android:textColor="#ffffffff"
+        android:textSize="17sp" />
+
+    <!--向下箭头添加 需要显示自己设置-->
+    <ImageView
+        android:id="@+id/mIvCommonTitleDownWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_alignBottom="@+id/tv_reserver_title"
+        android:layout_toRightOf="@+id/tv_reserver_title"
+        android:src="@mipmap/common_title_down_white"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/tv_reserver_search"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:src="@mipmap/reserve_search" />
+
+    <TextView
+        android:id="@+id/mTvRightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:text="；阿拉山口独家发售数量的肌肤"
+        android:textSize="15sp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="120dp"
+        android:singleLine="true"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
+</RelativeLayout>
