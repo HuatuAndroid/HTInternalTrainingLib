@@ -1,2 +1,2 @@
-include ':app', ':module_main', ':module_down', ':common_dotest', ':videoplayer-ui', ':liveplayer-sdk-ui', ':module_employees',
+include ':app', ':module_main', ':module_down', ':common_dotest', ':videoplayer-ui', ':liveplayer-sdk-ui', ':module_employees', ':module_contacts',
         ':common_down',':common_rxbus',':common_base',':common_coorinator',':common_pop',':refresh-header',':refresh-layout'

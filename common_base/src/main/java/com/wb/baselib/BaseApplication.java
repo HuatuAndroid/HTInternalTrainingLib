@@ -7,6 +7,7 @@ import android.support.multidex.MultiDexApplication;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hss01248.dialog.ActivityStackManager;
 import com.hss01248.dialog.StyledDialog;
+import com.liuxiaoji.module_contacts.selectparticipant.service.ServiceFactory;
 import com.wb.baselib.crash.CrashHandler;
 import com.wb.baselib.interfaces.IApplicationDelegate;
 import com.wb.baselib.classs.ClassUtils;
@@ -36,6 +37,11 @@ public abstract class BaseApplication extends MultiDexApplication {
         crashHandler.init(this);
 
         Fresco.initialize(this);
+
+        //联系人，接口数据初始化
+        ServiceFactory.getInstance().createMonitorService(this);
+        ServiceFactory.getInstance().createIEHRService();
+        ServiceFactory.getInstance().createIReimburseService();
 
     }
 

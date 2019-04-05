@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/common_title_ui_rl"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/approval_shot_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/common_title_ui_shot_mid_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#373D46"
+            android:textSize="18.5sp"
+            tools:text="中间title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/seprate_color" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:id="@+id/common_title_ui_back_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4.5dp"
+            android:src="@mipmap/blue_back" />
+
+        <TextView
+            android:id="@+id/common_title_ui_left_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/common_title_ui_back_imageview"
+            android:textColor="#4A88FB"
+            android:textSize="16sp"
+            tools:text="返回" />
+
+        <ImageView
+            android:id="@+id/common_title_ui_right_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="1dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingTop="1dp"/>
+
+        <ImageView
+            android:id="@+id/common_title_ui_right_imageview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/common_title_ui_right_imageview"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="1dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingTop="1dp" />
+
+        <TextView
+            android:id="@+id/common_title_ui_right_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/common_title_ui_right_imageview"
+            android:textColor="#4A88FB"
+            android:textSize="16sp"
+            tools:text="确认" />
+
+
+        <TextView
+            android:id="@+id/common_title_ui_mid_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#373D46"
+            android:textSize="18.5sp"
+            tools:text="中间title" />
+
+        <View
+            android:id="@+id/common_title_ui_seperate_view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/seprate_color" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

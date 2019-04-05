@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_contract_personal_item_ll"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/mRlOnClick"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/mCircleImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="9dp"
+            android:layout_toRightOf="@+id/mIvSelect"
+            android:src="@mipmap/portairt" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/mCircleImageView">
+
+            <TextView
+                android:id="@+id/mTvPersonalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/apply_tab_text_color"
+                android:textSize="14sp"
+                tools:text="李三" />
+
+            <TextView
+                android:id="@+id/mTvPersonalId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mTvPersonalName"
+                android:layout_marginTop="3dp"
+                android:text=""
+                android:textColor="@color/black_999CAA"
+                android:textSize="12sp"
+                tools:text="01122" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/mIvConflict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/mIvJiantou"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:src="@mipmap/profile_btn_delete"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/seprate_color" />
+
+        <TextView
+            android:id="@+id/mTvDepartmentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@color/black_999CAA"
+            android:textSize="12sp"
+            tools:text="新产品研发部" />
+
+        <TextView
+            android:id="@+id/mTvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/mTvDepartmentName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
+            android:text=""
+            android:textColor="@color/black_999CAA"
+            android:textSize="12sp"
+            tools:text="www.baidu.com" />
+
+    </RelativeLayout>
+
+</LinearLayout>
