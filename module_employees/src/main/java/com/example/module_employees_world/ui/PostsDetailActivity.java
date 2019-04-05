@@ -94,13 +94,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     private MultipleStatusView multipleStatusview;
     private List<CommentListBean.ListBean> commentList=new ArrayList<>();
     private int page = 1;
-    private int limit = 6;
+    private int limit = 10;
     private ImgAdapter imgAdapter;
     private String question_id;
     private PostsDetailPopw postsDetailPopw;
     private PostDetailBean postDetailBean;
     private CommontPopw commontPopw;
     private MyHandler myHandler;
+    private final static int ACTIVITY_FOR_REQUEST_ID=1000;
 
     @Override
     protected PostDetailPersenter onCreatePresenter() {
@@ -114,12 +115,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         question_id = getIntent().getStringExtra("question_id");
         mPresenter.getPostDetail(question_id,"1");
-        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+//        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                page=1;
+                mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+            }
+        },200);
     }
 
     @Override
@@ -176,6 +184,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvSoleTime=findViewById(R.id.tv_solve_time);
         ll_solve_root=findViewById(R.id.ll_solve_root);
 
+        multipleStatusview.showContent();
         tvCommentNum.setText("全部评论 (" + 0 + ")");
         TextView centerTextView = topBarView.getCenterTextView();
         centerTextView.setVisibility(View.INVISIBLE);
@@ -346,24 +355,29 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
                 if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114){
-                    CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
+                    // TODO: 2019/4/5 添加二级评论时，点赞状态错乱，需修改后才能用下面这段代码，现在暂时掉接口刷新
+                    /*CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
                     String comment_id = (String) rxMessageBean.getMessage1();
                     if ("0".equals(comment_id)){
                         //一级评论
-                        multipleStatusview.showContent();
                         commentList.add(insertBean.first);
+                        postDetailAdapter.notifyDataSetChanged();
+//                        multipleStatusview.showContent();
                         tvCommentNum.setText("全部评论 (" + ++postDetailBean.questionInfo.commentCount+ ")");
                         smartRefreshLayout.setEnableLoadMore(true);
                     }else {
                         //二级评论
                         for (int i = 0; i < commentList.size(); i++) {
                             if (comment_id.equals(commentList.get(i).id+"")){
+                                List<ParentBean> parent = commentList.get(i).parent;
+                                commentList.get(i).parent.clear();
                                 commentList.get(i).parent.add(insertBean.second);
+                                commentList.get(i).parent.addAll(parent);
                                 commentList.get(i).count++;
                             }
                         }
-                    }
-                    postDetailAdapter.notifyDataSetChanged();
+                        postDetailAdapter.notifyDataSetChanged();
+                    }*/
                 }
             }
         });
@@ -513,22 +527,22 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     @Override
     public void ShowLoadView() {
-        multipleStatusview.showLoading();
+//        multipleStatusview.showLoading();
     }
 
     @Override
     public void NoNetWork() {
-        multipleStatusview.showNoNetwork();
+//        multipleStatusview.showNoNetwork();
     }
 
     @Override
     public void NoData() {
-        multipleStatusview.showEmpty();
+//        multipleStatusview.showEmpty();
     }
 
     @Override
     public void ErrorData() {
-        multipleStatusview.showError();
+//        multipleStatusview.showError();
     }
 
     @Override
@@ -551,17 +565,17 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         }
         commentList.addAll(listBeanList);
         postDetailAdapter.notifyDataSetChanged();
-        multipleStatusview.showContent();
+//        multipleStatusview.showContent();
         smartRefreshLayout.setEnableLoadMore(true);
         page++;
-        if (page==1){
+        /*if (page==1){
             scvPost.post(new Runnable() {
                 @Override
                 public void run() {
                     scvPost.scrollTo(0,0);
                 }
             });
-        }
+        }*/
 
     }
 
@@ -721,6 +735,11 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         if (position == -1){
             //删除评论
             commentList.remove(partenPosition);
+            if (postDetailBean.questionInfo.commentCount>0){
+                tvCommentNum.setText("全部评论 (" + --postDetailBean.questionInfo.commentCount+ ")");
+            }else {
+                tvCommentNum.setText("全部评论 (" + 0+ ")");
+            }
             postDetailAdapter.notifyDataSetChanged();
         }else {
             //删除子评论
@@ -835,6 +854,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     break;
                 case RxBusMessageBean.MessageType.POST_105:
                     // TODO: 2019/3/29  邀请回答
+//                    activity.startActivityForResult(new Intent(activity));
+
+
                     ToastUtils.showToast(activity,"邀请回答");
                     break;
                 case RxBusMessageBean.MessageType.POST_106:
