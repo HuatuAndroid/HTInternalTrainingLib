@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#FF4E7CFF</color>
+    <color name="transparent">#00000000</color>
+    // Android状态栏的颜色值
+    <color name="status_bar_color">#2d2c32</color>
+
+
+    <color name="camera_pop_normal">#5DB8FE</color>
+    <color name="blue_00ACFF">#00ACFF</color>
+
+    <color name="translate">#00000000</color>
+    <color name="banner_select_color">#4A88FB</color>
+    <color name="banner_unselect_color">#FFFFFF</color>
+    <color name="work_flow_title_color">#C1C2C5</color>
+    <color name="app_background">#F6F7FB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_translate">#50FFFFFF</color>
+    <color name="home_bottom_menu_check_color">#666666</color>
+    <color name="home_bottom_menu_color">#666666</color>
+
+    <color name="apply_tab_text_color">#373D46</color>
+
+    <color name="apply_item_time_color">#C1C2C5</color>
+    <color name="seprate_color">#EEF1F6</color>
+
+    <color name="approval_suggest_color">#8F9296</color>
+
+    <!--城市选择器要-->
+    <color name="cp_color_gray_dark">#FF373D46</color>
+    <color name="cp_color_gray">#FF4E7CFF</color>
+    <!--城市选择器要-->
+
+
+    <!--侧边滑动需要颜色 start-->
+    <color name="recycler_swipe_color_text_gray">#FF777777</color>
+
+    <color name="recycler_swipe_color_loading_color1">#55777777</color>
+    <color name="recycler_swipe_color_loading_color2">#B1777777</color>
+    <color name="recycler_swipe_color_loading_color3">#FF777777</color>
+
+    <!--侧边滑动需要颜色 end-->
+
+    <color name="bg_click_press_bg">#1A000000</color>
+    <color name="bg_click_press_bg_normal">#00000000</color>
+
+
+    <color name="black_000000">#000000</color>
+    <color name="black_6B000000">#6B000000</color>
+    <color name="black_3D3E43">#3D3E43</color>
+    <color name="black_9B9EAC">#9B9EAC</color>
+    <color name="black_EEE7E7">#EEE7E7</color>
+    <color name="black_EEEFF4">#EEEFF4</color>
+    <color name="black_373d46">#373d46</color>
+    <color name="black_EEF1F6">#EEF1F6</color>
+    <color name="black_EAEBF0">#EAEBF0</color>
+    <color name="black_626787">#626787</color>
+    <color name="black_17181E">#5517181E</color>
+    <color name="black_999CAA">#999CAA</color>
+    <color name="black_999999">#999999</color>
+    <color name="black_414247">#414247</color>
+    <color name="black_C1C2C5">#C1C2C5</color>
+    <color name="blue_55A2F4">#55A2F4</color>
+    <color name="blue_4A88FB">#4A88FB</color>
+    <color name="blue_FF4A88FB">#FF4A88FB</color>
+    <color name="gray_text">#adadad</color>
+    <color name="gray_text_FFEEF1F6">#FFEEF1F6</color>
+    <color name="black_trans50">#55000000</color>
+    <color name="black_translates">#00000000</color>
+    <color name="black_translates_FF3D3E43">#FF3D3E43</color>
+    <color name="gray_bg_F7FAFF">#FFF7FAFF</color>
+    <color name="F7F7F7F">#F7F7F7</color>
+    <color name="blue_3AC284">#3AC284</color>
+
+    <!-- scan color -->
+    <color name="viewfinder_frame">#929292</color>
+    <color name="viewfinder_laser">#fe5600</color>
+    <color name="viewfinder_mask">#000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+
+    <color name="remotefile_timebar_color">#39a3ed</color>
+    <color name="remotefile_timebar_alarm_color">#ff8261</color>
+    <color name="remotefile_line_color">#fe2b2b</color>
+    <color name="dark_bg_70p">#bb000000</color>
+    <color name="quality_focused_color">#448cf3</color>
+    <color name="refresh_bg">#5A9FEA</color>
+    <color name="gray_bg">#FFEEEFF4</color>
+    <color name="gray_FFEAEBF0">#FFEAEBF0</color>
+    <color name="gray_FF999CAA">#FF999CAA</color>
+    <color name="blue_FF1890FF">#FF1890FF</color>
+    <color name="red_FFF15F50">#FFF15F50</color>
+    <color name="red_FFEF4332">#FFEF4332</color>
+    <color name="gray_FF9B9EAC">#FF9B9EAC</color>
+
+    <color name="FF108EE9">#108EE9</color>
+    <color name="FFF5F5F5">#F5F5F5</color>
+    <color name="FF333333">#333333</color>
+    <color name="FFEEEEEE">#EEEEEE</color>
+    <color name="FFDADCE5">#DADCE5</color>
+    <color name="FFD4D6E4">#D4D6E4</color>
+    <color name="FF848999">#848999</color>
+    <color name="popw_bac">#77000000</color>
+</resources>

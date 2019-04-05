@@ -81,5 +81,5 @@ dependencies {
     compile 'skin.support:skin-support:3.1.1'
 
 //    compile 'org.jsoup:jsoup:1.9.2’
-
+    api project(':module_contacts')
 }
