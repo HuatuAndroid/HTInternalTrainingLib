@@ -105,9 +105,9 @@ public class SearchPostAdapter extends ListBaseAdapter {
             }
             viewHolder.tvPostTitle.setText(Html.fromHtml(htmlTitle));
         }
-       /* if (content.length()>90){
+        if (content.length()>90){
             content = content.substring(0,90);
-        }*/
+        }
         if (content.indexOf(keyword)==-1){
             viewHolder.tvPostContent.setText(content);
         }else {
