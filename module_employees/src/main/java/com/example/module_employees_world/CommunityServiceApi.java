@@ -185,4 +185,10 @@ public interface CommunityServiceApi {
     @FormUrlEncoded
     @POST(CommunityHttpConfig.editQuestion)
     Observable<Result> editQuestion(@Field("type") String type, @Field("id") String id);
+
+    @GET(CommunityHttpConfig.acceptPosts)
+    Observable<Result> acceptPosts(@Query("id") String id,@Query("solve_status") String solve_status);
+
+    @GET(CommunityHttpConfig.acceptComment)
+    Observable<Result> acceptComment(@Path("comment_id") String comment_id);
 }

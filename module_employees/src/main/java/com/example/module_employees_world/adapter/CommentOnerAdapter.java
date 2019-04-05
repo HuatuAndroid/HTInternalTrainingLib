@@ -106,6 +106,7 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
             if (!TextUtils.isEmpty(parentBean.commentFace)){
                 holder.ivGif.setVisibility(View.VISIBLE);
                 GlideManager.getInstance().setGlideResourceImage(holder.ivGif, TutuPicInit.getResFromEmojicList(parentBean.commentFace),R.drawable.image_failure, R.drawable.course_image ,context);
+                GlideManager.getInstance().setCommonPhoto(holder.ivGif, R.drawable.course_image ,context , HttpConfig.newInstance().getmBaseUrl()+"/"+ parentBean.commentFace ,false );
             }else {
                 holder.ivGif.setVisibility(View.GONE);
             }

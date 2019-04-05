@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,12 +24,15 @@ public class PostDetailBean implements Parcelable{
     public QuestionInfoBean questionInfo;
     @SerializedName("solve_comment")
     public SolveComment solve_comment;
-    @SerializedName("recommend_list")
+    @SerializedName("info")
+    public ArrayList<String> info;
+    @SerializedName("recommendList")
     public List<RecommendListBean> recommendList;
 
     protected PostDetailBean(Parcel in) {
         questionInfo = in.readParcelable(QuestionInfoBean.class.getClassLoader());
         solve_comment = in.readParcelable(SolveComment.class.getClassLoader());
+        info = in.createStringArrayList();
         recommendList = in.createTypedArrayList(RecommendListBean.CREATOR);
     }
 
@@ -53,6 +57,7 @@ public class PostDetailBean implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(questionInfo, flags);
         dest.writeParcelable(solve_comment, flags);
+        dest.writeStringList(info);
         dest.writeTypedList(recommendList);
     }
 

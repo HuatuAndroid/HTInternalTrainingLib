@@ -107,8 +107,10 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         //删除权限  0：无权限   1：有权限
         if (listBean.allowDel==0){
             holder.ivCommentDel.setVisibility(View.GONE);
+            holder.ivChecked.setVisibility(View.GONE);
         }else {
             holder.ivCommentDel.setVisibility(View.VISIBLE);
+            holder.ivChecked.setVisibility(View.VISIBLE);
         }
         //删除评论
         holder.ivCommentDel.setOnClickListener(new View.OnClickListener() {
@@ -123,15 +125,26 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         });
 
         //帖子类型 1交流 2建议 3提问
-        if (listBean.type==1||listBean.type==3){
+        if (listBean.type==1||listBean.type==2){
             holder.ivChecked.setVisibility(View.GONE);
-        }else if (listBean.type==2){
-            // 0 未解决，未采纳 1已解决，已采纳
-            if (listBean.solveStatus==0){
-                holder.ivChecked.setVisibility(View.VISIBLE);
-            }else {
+        }else if (listBean.type==3){
+            //solveStatus   0 未解决，未采纳 1已解决，已采纳
+            if (listBean.solveStatus==1){
                 holder.ivChecked.setVisibility(View.GONE);
+            }else {
+                holder.ivChecked.setVisibility(View.VISIBLE);
             }
+
+            //采纳权限  0：无权限   1：有权限
+            /*if (listBean.allowDel==0){
+                holder.ivChecked.setVisibility(View.GONE);
+            }else {
+                if (listBean.solveStatus==1){
+                    holder.ivChecked.setVisibility(View.GONE);
+                }else {
+                    holder.ivChecked.setVisibility(View.VISIBLE);
+                }
+            }*/
         }
         holder.ivChecked.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -54,4 +54,8 @@ public interface CommunityHttpConfig {
     String GUIDE = "api/app/discuss/getBanner";
     /**修改帖子类型*/
     String editQuestion = "api/app/discuss/editQuestionType";
+    /**采纳帖子*/
+    String acceptPosts="api/app/discuss/cancelAdoption";
+    /**采纳评论*/
+    String acceptComment="api/app/discuss/comment/comment_id={comment_id}";
 }

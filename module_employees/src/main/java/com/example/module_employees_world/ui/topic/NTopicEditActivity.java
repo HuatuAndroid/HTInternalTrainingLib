@@ -310,8 +310,6 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
-                showLoadV("提交中....");
-
                 String title = mEtTopicTitle.getText().toString();
                 List<TopicContentItem> datas = mTopicEditView.getDatas();
                 if (TextUtils.isEmpty(title)) {
@@ -327,6 +325,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     showShortToast("请选择小组");
                     return;
                 }
+
+                showLoadV("提交中....");
 
                 TopicContentItem[] imageItems = mTopicEditView.getImageItems();
 

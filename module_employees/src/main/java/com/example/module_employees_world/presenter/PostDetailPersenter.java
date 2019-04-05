@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.model.PostDetailModel;
@@ -12,6 +13,8 @@ import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
+
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
@@ -230,5 +233,81 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
                 mView.showErrorMsg(e.getMessage());
             }
         }, mView.binLifecycle());
+    }
+
+    @Override
+    public void commentChildrenList(int partenPosition, int commentId, int page, int limit, int st) {
+        HttpManager.newInstance().commonRequest(mModel.commentChildrenList(commentId,page,limit,st), new BaseObserver<Result<List<ParentBean>>>(AppUtils.getContext()) {
+            @Override
+            public void onSuccess(Result<List<ParentBean>> childrenList) {
+                if (childrenList.getData()!=null){
+                    mView.commentChildrenList(childrenList.getData(),partenPosition);
+                }
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        },mView.binLifecycle());
+    }
+
+    @Override
+    public void acceptPosts(String id, String solve_status) {
+        HttpManager.newInstance().commonRequest(mModel.acceptPosts(id,solve_status), new BaseObserver<Result>(AppUtils.getContext()) {
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.acceptPosts();
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        },mView.binLifecycle());
+    }
+
+    @Override
+    public void acceptComment(String comment_id) {
+        HttpManager.newInstance().commonRequest(mModel.acceptComment(comment_id), new BaseObserver<Result>(AppUtils.getContext()) {
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.acceptComment();
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        },mView.binLifecycle());
     }
 }

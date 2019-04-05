@@ -18,6 +18,8 @@ import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.wb.rxbus.taskBean.RxBus;
 
+import java.util.ArrayList;
+
 /**
  * author:LIENLIN
  * date:2019/3/27
@@ -26,17 +28,20 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
 
     private View mMenuView;
     private Activity context;
+    private ArrayList<String> info;
     private PostsDetailActivity.MyHandler myHandler;
 
     /**
      * @param commentType 帖子类型
+     * @param info
      * @param adoptCode 当commentType=2时有用，采纳状态值
      * @param myHandler
      */
-    public PostsDetailPopw(final Activity context, int commentType, int adoptCode, PostsDetailActivity.MyHandler myHandler) {
+    public PostsDetailPopw(final Activity context, int commentType, ArrayList<String> info, int adoptCode, PostsDetailActivity.MyHandler myHandler) {
         super(context);
         this.context=context;
         this.myHandler=myHandler;
+        this.info=info;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popw_posts_detail_layout, null);
         initView(mMenuView,commentType,adoptCode);
@@ -70,19 +75,33 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
         tv_adopt.setOnClickListener(this);
         tv_invite.setOnClickListener(this);
 
-        switch (commentType){
-            case 1://交流
-                tv_adopt.setVisibility(View.GONE);
-                tv_invite.setVisibility(View.GONE);
-                break;
-            case 2://建议
-                tv_invite.setVisibility(View.GONE);
-                tv_adopt.setVisibility(View.VISIBLE);
-                break;
-            case 3://提问
-                tv_adopt.setVisibility(View.GONE);
-                tv_invite.setVisibility(View.VISIBLE);
-                break;
+        //如果info为null说明没有管理员权限，只能编辑、删除
+        if (info!=null||info.size()>0){
+
+            for (int i = 0; i < info.size(); i++) {
+                if (info.get(i).equals("1")){
+                    tv_update_type.setVisibility(View.VISIBLE);
+                }
+            }
+
+            switch (commentType){
+                case 1://交流
+                    break;
+                case 2://建议
+                    for (int i = 0; i < info.size(); i++) {
+                        if (info.get(i).equals("3")){
+                            tv_adopt.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    break;
+                case 3://提问
+                    for (int i = 0; i < info.size(); i++) {
+                        if (info.get(i).equals("2")){
+                            tv_invite.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    break;
+            }
         }
     }
 
