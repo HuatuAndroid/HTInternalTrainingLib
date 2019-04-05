@@ -161,10 +161,11 @@ public class CommunityActivity extends BaseActivity{
     private void judgePermission() {
         //初始化并发起权限申请
         permissionUtil = new PermissionUtil();
-        permissionUtil.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
-                , 10000);
-
+        if (!permissionUtil.hasPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+            permissionUtil.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
+                    , 10000);
+        }
     }
 
     /**

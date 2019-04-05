@@ -24,6 +24,7 @@ import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.base.activity.BaseActivity;
 import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.rxbus.taskBean.RxBus;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class SearchActivity extends BaseActivity {
     private ScrollIndicatorView scorllIndicator;
     private ViewPager viewpager;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,30 +65,37 @@ public class SearchActivity extends BaseActivity {
         etcSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (mFragments.size() == 0) {
-                    llTab.setVisibility(View.VISIBLE);
-                    ArrayList<String> str = new ArrayList<>();
-                    str.add("帖子");
-                    str.add("评论");
-                    String keyword = v.getText().toString();
-                    mFragments.add(PostMessageFragment.newInstance("1", keyword, true));
-                    mFragments.add(CommentFragment.newInstance("2", keyword, true));
-                    scorllIndicator.setSplitAuto(true);
-                    scorllIndicator.setOnTransitionListener(new OnTransitionTextListener() {
-                        @Override
-                        public TextView getTextView(View tabItemView, int position) {
-                            return (TextView) tabItemView.findViewById(R.id.test_tv);
-                        }
-                    }.setColor(getResources().getColor(R.color.main_text_blue_458), Color.BLACK));
-                    ColorBar colorBar = new ColorBar(SearchActivity.this, getResources().getColor(R.color.main_text_blue_458), 8);
-                    scorllIndicator.setScrollBar(colorBar);
-                    IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scorllIndicator, viewpager);
-                    ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), SearchActivity.this, mFragments, str);
-                    indicatorViewPager.setAdapter(viewPageTabAdapter);
-                    viewpager.setOffscreenPageLimit(mFragments.size());
-                    viewpager.setCurrentItem(0);
+                String temp = v.getText().toString().trim();
+                if ("".equals(temp)){
+                    ToastUtils.showToast(SearchActivity.this,"请输入搜索关键字");
                 }else {
-                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD,v.getText().toString()));
+                    if (!temp.equals(keyword)){
+                        keyword = temp;
+                        if (mFragments.size() == 0) {
+                            llTab.setVisibility(View.VISIBLE);
+                            ArrayList<String> str = new ArrayList<>();
+                            str.add("帖子");
+                            str.add("评论");
+                            mFragments.add(PostMessageFragment.newInstance("1", keyword, true));
+                            mFragments.add(CommentFragment.newInstance("2", keyword, true));
+                            scorllIndicator.setSplitAuto(true);
+                            scorllIndicator.setOnTransitionListener(new OnTransitionTextListener() {
+                                @Override
+                                public TextView getTextView(View tabItemView, int position) {
+                                    return (TextView) tabItemView.findViewById(R.id.test_tv);
+                                }
+                            }.setColor(getResources().getColor(R.color.main_text_blue_458), Color.BLACK));
+                            ColorBar colorBar = new ColorBar(SearchActivity.this, getResources().getColor(R.color.main_text_blue_458), 8);
+                            scorllIndicator.setScrollBar(colorBar);
+                            IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scorllIndicator, viewpager);
+                            ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), SearchActivity.this, mFragments, str);
+                            indicatorViewPager.setAdapter(viewPageTabAdapter);
+                            viewpager.setOffscreenPageLimit(mFragments.size());
+                            viewpager.setCurrentItem(0);
+                        }else {
+                            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD,v.getText().toString()));
+                        }
+                    }
                 }
                 return true;
             }

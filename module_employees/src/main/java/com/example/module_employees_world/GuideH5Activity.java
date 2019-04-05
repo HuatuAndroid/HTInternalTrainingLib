@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.ui.home.CommunityActivity;
@@ -14,7 +16,9 @@ import com.wb.baselib.utils.StatusBarUtil;
 
 public class GuideH5Activity extends BaseActivity {
     private WebView wv;
+    private TextView tvTitle;
     private ImageView ivGoMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +33,11 @@ public class GuideH5Activity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         ivGoMain = findViewById(R.id.ivGoMain);
         wv = findViewById(R.id.wv);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvTitle.setText(getIntent().getStringExtra("title"));
+        wv.setWebViewClient(new WebViewClient());
         wv.loadUrl(getIntent().getStringExtra("url"));
+
     }
 
     @Override
@@ -38,6 +46,7 @@ public class GuideH5Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 StartActivityCommon.startActivity(GuideH5Activity.this, CommunityActivity.class);
+                finish();
             }
         });
     }

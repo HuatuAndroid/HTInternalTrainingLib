@@ -209,7 +209,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     if ("0".equals(comment_id)){
                         //一级评论
                     }else {
-                        //二级评论 todo
+                        //二级评论
                         commentChildrenList.add(insertBean.second);
                     }
                     commentChildrenAdapter.notifyDataSetChanged();
@@ -369,7 +369,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_111:
-                    // TODO: 2019/3/30 回复子评论
+                    // 2019/3/30 回复子评论
                     ParentBean parentBean= (ParentBean) msg.obj;
                     Intent intent = new Intent(activity, CommentDialogActivity.class);
                     intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,parentBean.questionId+"");

@@ -68,4 +68,9 @@ public class PostDetailModel implements PostsDetailContranct.PostsDetailModel {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).acceptComment(comment_id);
     }
 
+    @Override
+    public Observable<Result> invitationUser(String cover_user_id, String question_id) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).invitationUser(cover_user_id,question_id);
+    }
+
 }

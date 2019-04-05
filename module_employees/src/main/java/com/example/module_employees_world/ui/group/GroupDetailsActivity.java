@@ -43,6 +43,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     private ViewPager mViewPager;
     private GroupInfoBean groupInfoBean;
     private String groupId;
+    private String name;
 
 
     @Override
@@ -78,7 +79,13 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (groupInfoBean.getIs_group().equals("1")) {
+                //发帖
+                Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupName", name);
+                startActivity(intent);
+
+                /*if (groupInfoBean.getIs_group().equals("1")) {
                     //发帖
                     Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
                     intent.putExtra("groupId", groupId);
@@ -96,7 +103,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
 
                                 }
                             });
-                }
+                }*/
             }
         });
         ivSearch.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +171,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     public void SuccessData(Object o) {
         groupInfoBean = (GroupInfoBean) o;
         GlideManager.getInstance().setRoundPhoto(imageView, R.drawable.course_image, this, groupInfoBean.getImg(), 4);
+        name = groupInfoBean.getName();
         title.setText(groupInfoBean.getName());
         num.setText("成员: " + groupInfoBean.getUser_count() + "人");
         content.setText(groupInfoBean.getIntroduce());

@@ -186,6 +186,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
 
     @Override
     public void SuccessData(Object o) {
+        multipleStatusView.showContent();
         if (page == 1) {
             searchCommenBeans.clear();
         }
