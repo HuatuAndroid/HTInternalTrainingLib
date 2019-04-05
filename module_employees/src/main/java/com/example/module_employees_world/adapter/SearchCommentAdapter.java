@@ -67,7 +67,7 @@ public class SearchCommentAdapter extends ListBaseAdapter {
         viewHolder.tvPart.setText(searchCommenBean.getDepartment_name());
         viewHolder.tvTime.setText(searchCommenBean.getCreated_at());
 
-        String comment = searchCommenBean.getContent();
+        String comment = searchCommenBean.getText_img();
         if (comment.indexOf(keyword)==-1){
             viewHolder.tvComment.setText(comment);
         }else {

@@ -49,10 +49,17 @@ public class SearchCommenBean {
     private String user_id;
     private String user_name;
     private String avatar;
-    private String content_text;
-    private String content_img;
     private String text_img;
     private int allow_del;
+
+
+    public String getText_img() {
+        return text_img;
+    }
+
+    public void setText_img(String text_img) {
+        this.text_img = text_img;
+    }
 
     public String getQuestion_title() {
         return question_title;
