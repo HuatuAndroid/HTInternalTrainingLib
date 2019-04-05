@@ -310,4 +310,29 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
             }
         },mView.binLifecycle());
     }
+
+    @Override
+    public void invitationUser(String cover_user_id, String question_id) {
+        HttpManager.newInstance().commonRequest(mModel.invitationUser(cover_user_id,question_id), new BaseObserver<Result>(AppUtils.getContext()) {
+
+            @Override
+            public void onSuccess(Result result) {
+                mView.invitationUser();
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+                mView.showErrorMsg(e.getMessage());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        },mView.binLifecycle());
+    }
 }

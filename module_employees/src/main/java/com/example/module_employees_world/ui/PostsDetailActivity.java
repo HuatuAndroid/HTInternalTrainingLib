@@ -46,6 +46,9 @@ import com.example.module_employees_world.utils.MyInterpolator;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.view.CommontPopw;
 import com.example.module_employees_world.view.PostsDetailPopw;
+import com.liuxiaoji.module_contacts.selectparticipant.bean.ContactsBean;
+import com.liuxiaoji.module_contacts.selectparticipant.ui.ContactContract;
+import com.liuxiaoji.module_contacts.selectparticipant.ui.SelectParticipantActivity;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
@@ -63,6 +66,7 @@ import com.wb.rxbus.taskBean.RxBus;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -128,6 +132,16 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 mPresenter.getCommentList(question_id,"1",page+"",limit+"");
             }
         },200);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SelectParticipantActivity.intentCode){
+            ContactsBean.DataBean.StaffsBean staffsBean = (ContactsBean.DataBean.StaffsBean) data.getSerializableExtra("staffsBean");
+            showLoadDiaLog("");
+            mPresenter.invitationUser(staffsBean.id+"",question_id);
+        }
     }
 
     @Override
@@ -782,6 +796,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     }
 
     @Override
+    public void invitationUser() {
+        //邀请回答
+        hidLoadDiaLog();
+        ToastUtils.showToast(this,"邀请回答成功");
+    }
+
+    @Override
     public void commentChildrenList(List<ParentBean> childrenBeans, int partenPosition) {
         hidLoadDiaLog();
         // : 2019/4/4 子评论更新
@@ -854,10 +875,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     break;
                 case RxBusMessageBean.MessageType.POST_105:
                     // TODO: 2019/3/29  邀请回答
-//                    activity.startActivityForResult(new Intent(activity));
-
-
-                    ToastUtils.showToast(activity,"邀请回答");
+                    activity.startActivityForResult(new Intent(activity, SelectParticipantActivity.class),SelectParticipantActivity.intentCode);
                     break;
                 case RxBusMessageBean.MessageType.POST_106:
                     // : 2019/3/29  评论点赞

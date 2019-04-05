@@ -191,4 +191,11 @@ public interface CommunityServiceApi {
 
     @GET(CommunityHttpConfig.acceptComment)
     Observable<Result> acceptComment(@Path("comment_id") String comment_id);
+
+    /**
+     * 邀请回答
+     */
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.invitationUser)
+    Observable<Result> invitationUser(@Field("cover_user_id") String cover_user_id, @Field("question_id") String question_id);
 }

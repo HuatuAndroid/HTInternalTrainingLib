@@ -33,6 +33,7 @@ public interface PostsDetailContranct {
         void editQuestion();
         void acceptPosts();
         void acceptComment();
+        void invitationUser();
         void commentChildrenList(List<ParentBean> childrenBeans, int partenPosition);
     }
 
@@ -47,6 +48,7 @@ public interface PostsDetailContranct {
         Observable<Result<List<ParentBean>>> commentChildrenList(int commentId,int page,int limit,int st);
         Observable<Result> acceptPosts(String id,String solve_status);
         Observable<Result> acceptComment(String comment_id);
+        Observable<Result> invitationUser(String cover_user_id,String question_id);
     }
 
     abstract class PostDetailPresenter extends BasePreaenter<PostsDetailView,PostsDetailModel>{
@@ -60,6 +62,7 @@ public interface PostsDetailContranct {
         public abstract void commentChildrenList(int partenPosition, int commentId, int page, int limit, int st);
         public abstract void acceptPosts(String id,String solve_status);
         public abstract void acceptComment(String comment_id);
+        public abstract void invitationUser(String cover_user_id,String question_id);
     }
 
 }
