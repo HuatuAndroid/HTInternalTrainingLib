@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -72,6 +73,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.reactivex.functions.Consumer;
 
@@ -120,7 +123,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         question_id = getIntent().getStringExtra("question_id");
         mPresenter.getPostDetail(question_id,"1");
 //        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+
+        String htmlStr="<p>11.26测试字体加粗11.26测试字体加粗11.26测试字体加粗<\\/p><p>11.26测试字体加粗倾斜11.26测试字体加粗倾斜11.26测试字体加粗倾斜<\\/p><p>11.26测试字体下划线11.26测试字体下划线11.26测试字体下划线<\\/p><p>11.26测试字体中划线11.26测试字体中划线11.26测试字体中划线<\\/p><p><span style=\\\"color: rgb(230, 0, 0);\\\">11.26测试字体颜色11.26测试字体颜色11.26测试字体颜色<\\/span><\\/p><p>链接：<a href=\\\"https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg\\\" target=\\\"_blank\\\">https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg<\\/a><\\/p><p>图片：<\\/p>";
+        String s = filterHtml(htmlStr);
+        Log.d("aaaaa",s);
+
     }
+
+    public String filterHtml(String htmlStr){
+        Pattern p_html = Pattern.compile("<[^>]+>", Pattern.CASE_INSENSITIVE);
+        Matcher m_html = p_html.matcher(htmlStr);
+        return  m_html.replaceAll("");
+    }
+
 
     @Override
     protected void onResume() {
