@@ -75,7 +75,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     //1交流 2建议 3提问
     private int type = 1;
 
-    private String groupId;
+    //小组的id和名字
+    private String groupId = "";
+    private String groupName = "";
 
     private File mFileTemp;
 
@@ -138,6 +140,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
                 if (data != null) {
                     groupId = data.getStringExtra("group_id");
+                    groupName = data.getStringExtra("groupName");
+
+                    setmTvXiaoXuText(groupName);
                 }
 
                 break;
@@ -177,6 +182,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         setContentView(R.layout.activity_ntopic_edit);
 
         groupId = getIntent().getStringExtra("groupId");
+        groupName = getIntent().getStringExtra("groupName");
 
         topBarView = findViewById(R.id.topbarview);
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
@@ -244,6 +250,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 //        mEtTopicTitle.postDelayed(() -> SoftKeyboardUtils.showORhideSoftKeyboard(NTopicEditActivity.this), 1000);
 
         mHideView(true);
+
+        setmTvXiaoXuText(groupName);
     }
 
     @Override
@@ -375,6 +383,19 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             }
 
         });
+    }
+
+    /**
+     * 修改ui， 选择小组
+     * @param groupName
+     */
+    public void setmTvXiaoXuText(String groupName){
+
+        if (TextUtils.isEmpty(groupName)){
+            mTvXiaoXu.setText("选择小组");
+        }else {
+            mTvXiaoXu.setText(groupName);
+        }
     }
 
     @Override

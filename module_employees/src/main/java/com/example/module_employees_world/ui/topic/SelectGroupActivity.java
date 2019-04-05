@@ -208,6 +208,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
         Intent intent = new Intent();
         intent.putExtra("group_id", listBean.getId());
+        intent.putExtra("groupName", listBean.getName());
         this.setResult(CommonUtils.SELECT_GROUP, intent);
 
         finish();
