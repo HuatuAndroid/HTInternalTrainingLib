@@ -300,6 +300,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                 if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty){
 
                     finish();
+                    return;
 
                 }
 
@@ -673,7 +674,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             LogUtil.e("commitTopicData = " + encode + "");
 
-            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 1 + "", type + "");
+            mPresenter.commitTopicData(groupId, mEtTopicTitle.getText().toString(), encode, 0 + "", type + "");
 
         } catch (Exception e) {
             e.printStackTrace();
