@@ -9,6 +9,7 @@ import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.GroupDetailsBean;
 import com.example.module_employees_world.bean.GuideBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.MyItemBean;
 import com.example.module_employees_world.bean.MyPartBean;
 import com.example.module_employees_world.bean.ParentBean;
@@ -198,4 +199,12 @@ public interface CommunityServiceApi {
     @FormUrlEncoded
     @POST(CommunityHttpConfig.invitationUser)
     Observable<Result> invitationUser(@Field("cover_user_id") String cover_user_id, @Field("question_id") String question_id);
+
+
+    /**
+     * 广告
+     */
+    @POST(CommunityHttpConfig.isBanned)
+    Observable<Result<IsBannedBean>> getIsBanned();
+
 }

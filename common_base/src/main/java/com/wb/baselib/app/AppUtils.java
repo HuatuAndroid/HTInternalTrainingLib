@@ -33,6 +33,9 @@ import static com.thefinestartist.utils.content.ContextUtil.getExternalCacheDir;
  */
 public class AppUtils {
 
+    //是否禁言 0不禁言 1禁言
+    public static int is_banned = 0;
+
     private static Context context;
 
     private AppUtils() {

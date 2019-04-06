@@ -311,11 +311,16 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 String encode = EmojiUtils.getString(editTextSB.toString());
-                if (!TextUtils.isEmpty(encode) || !TextUtils.isEmpty(commentPicture) || !TextUtils.isEmpty(commentFace)) {
-                    mPresenter.sendComment(question_id, encode, commentPicture, commentFace, isAnonymity, comment_id);
-                    showLoadDiaLog("");
-                } else {
-                    showShortToast("评论不能为空");
+
+                if (AppUtils.is_banned == 0) {
+                    if (!TextUtils.isEmpty(encode) || !TextUtils.isEmpty(commentPicture) || !TextUtils.isEmpty(commentFace)) {
+                        mPresenter.sendComment(question_id, encode, commentPicture, commentFace, isAnonymity, comment_id);
+                        showLoadDiaLog("");
+                    } else {
+                        showShortToast("评论不能为空");
+                    }
+                }else{
+                    showShortToast("你已被禁言");
                 }
             }
         });
