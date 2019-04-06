@@ -8,7 +8,7 @@
         android:layout_height="122dp"
         android:src="@drawable/search_empty"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp"/>
+        android:layout_marginTop="130dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,6 +17,6 @@
         android:textColor="#ff626787"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="368dp"/>
+        android:layout_marginTop="268dp"/>
 
 </RelativeLayout>

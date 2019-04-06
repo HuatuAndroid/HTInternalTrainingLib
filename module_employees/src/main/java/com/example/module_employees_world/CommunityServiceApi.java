@@ -43,7 +43,7 @@ public interface CommunityServiceApi {
      * @return
      */
     @GET(CommunityHttpConfig.GROUPLIST)
-    Observable<Result<CommunityGroupBean>> getGroupList(@Query("page") int page);
+    Observable<Result<CommunityGroupBean>> getGroupList(@Query("page") int page,@Query("limit") int limit);
 
     /**
      * 加入或退出小组
@@ -180,7 +180,7 @@ public interface CommunityServiceApi {
      * 我的参与
      */
     @GET(CommunityHttpConfig.MYPART)
-    Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page);
+    Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page,@Query("limit") int limit);
 
     @FormUrlEncoded
     @POST(CommunityHttpConfig.editQuestion)

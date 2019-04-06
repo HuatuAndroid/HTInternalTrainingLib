@@ -384,7 +384,8 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
                 if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114){
-                    // TODO: 2019/4/5 添加二级评论时，点赞状态错乱，需修改后才能用下面这段代码，现在暂时掉接口刷新
+                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_COMMENT,++postDetailBean.questionInfo.commentCount+""));
+// TODO: 2019/4/5 添加二级评论时，点赞状态错乱，需修改后才能用下面这段代码，现在暂时掉接口刷新
                     /*CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
                     String comment_id = (String) rxMessageBean.getMessage1();
                     if ("0".equals(comment_id)){
@@ -730,6 +731,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
             tvZan.setCompoundDrawables(drawable,null,null,null);
         }
+
     }
 
     @Override
@@ -749,25 +751,30 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
             tvPostZan.setCompoundDrawables(drawable,null,null,null);
         }
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_LIKE,tvPostZan.getText().toString().trim()));
     }
 
     @Override
     public void deletePost() {
         hidLoadDiaLog();
         // TODO: 2019/3/29 事件通知首页刷新数据
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE,""));
         finish();
     }
 
     @Override
     public void deleteComment(int partenPosition, int position) {
         hidLoadDiaLog();
+        String comment= "";
         if (position == -1){
             //删除评论
             commentList.remove(partenPosition);
             if (postDetailBean.questionInfo.commentCount>0){
-                tvCommentNum.setText("全部评论 (" + --postDetailBean.questionInfo.commentCount+ ")");
+                comment = --postDetailBean.questionInfo.commentCount+"";
+            tvCommentNum.setText("全部评论 (" + comment+ ")");
             }else {
-                tvCommentNum.setText("全部评论 (" + 0+ ")");
+                comment = "0";
+                tvCommentNum.setText("全部评论 (" + comment+ ")");
             }
             postDetailAdapter.notifyDataSetChanged();
         }else {
@@ -778,7 +785,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 //            commentList.get(partenPosition).parent.remove(position);
 //            commentList.get(partenPosition).count--;
         }
-
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD,comment));
     }
 
     @Override

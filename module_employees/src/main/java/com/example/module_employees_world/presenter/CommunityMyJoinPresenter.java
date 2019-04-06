@@ -21,8 +21,8 @@ public class CommunityMyJoinPresenter extends CommunityMyJoinContranct.Community
     }
 
     @Override
-    public void getMyPartData(final int page) {
-        HttpManager.newInstance().commonRequest(mModel.getMyPartData(page), new BaseObserver<Result<MyPartBean>>(AppUtils.getContext()) {
+    public void getMyPartData(final int page,int limit) {
+        HttpManager.newInstance().commonRequest(mModel.getMyPartData(page,limit), new BaseObserver<Result<MyPartBean>>(AppUtils.getContext()) {
             @Override
             public void onSuccess(Result<MyPartBean> myPartBeanResult) {
                 if (myPartBeanResult.getData() == null) {

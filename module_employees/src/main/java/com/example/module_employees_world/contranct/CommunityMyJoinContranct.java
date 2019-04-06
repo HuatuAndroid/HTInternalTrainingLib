@@ -13,9 +13,9 @@ public interface CommunityMyJoinContranct {
         void isLoadMore(boolean isLoadMore);
     }
     interface CommunityMyJoinModel extends BaseModel {
-        Observable<Result<MyPartBean>> getMyPartData(int page);
+        Observable<Result<MyPartBean>> getMyPartData(int page,int limit);
     }
     abstract class CommunityMyJoinPresenter extends BasePreaenter<CommunityMyJoinView,CommunityMyJoinModel> {
-        public abstract void getMyPartData(int page);
+        public abstract void getMyPartData(int page,int limit);
     }
 }

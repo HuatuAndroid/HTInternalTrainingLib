@@ -30,7 +30,7 @@ public class CommunityDiscussPresenter extends CommunityDiscussContranct.Communi
                         mView.ErrorData();
                     } else {
                         mView.showErrorMsg("服务器繁忙，请稍后尝试！");
-                        mView.isLoadMore(true);
+                        mView.isLoadMore(false);
                     }
                 } else {
                     if (communityDiscussBeanResult.getData().getList() == null || communityDiscussBeanResult.getData().getList().size() == 0) {
