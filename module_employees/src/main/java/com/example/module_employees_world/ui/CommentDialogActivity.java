@@ -4,9 +4,12 @@ import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -28,15 +31,19 @@ import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.TutuIconBean;
+import com.example.module_employees_world.common.CommonUtils;
+import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
 import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
+import com.example.module_employees_world.ui.topic.LocalAlbumDetailActicity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
+import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
@@ -119,21 +126,81 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
     }
 
+        public String getRealPathFromURI(Context context, Uri contentUri) {
+
+        if (contentUri != null && contentUri.toString().toLowerCase().startsWith("content:")) {
+
+        } else {
+            return contentUri.getPath();
+        }
+
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return Uri.fromFile(new File(res)).getPath();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAG_ACTIVTY_RESULT_CODE) {
-            if (data == null) return;
-            result = data.getStringArrayListExtra("result");
-            if (result != null && result.size() > 0) {
-                Map<String, File> map = new HashMap<>();
-                for (int i = 0; i < result.size(); i++) {
-                    File file = new File(result.get(i));
-                    map.put("file" + i, file);
+//            if (data == null) return;
+//            result = data.getStringArrayListExtra("result");
+//            if (result != null && result.size() > 0) {
+//                Map<String, File> map = new HashMap<>();
+//                for (int i = 0; i < result.size(); i++) {
+//                    File file = new File(result.get(i));
+//                    map.put("file" + i, file);
+//                }
+//                Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+//                showLoadDiaLog("");
+//                mPresenter.commitImage(bodyMap);
+//            }
+        }else if (requestCode == CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP){
+
+            try {
+                if (LocalImageHelper.getInstance().isResultOk()) {
+                    LocalImageHelper.getInstance().setResultOk(false);
+                    //获取选中的图片
+                    List<LocalImageHelper.LocalFile> files = LocalImageHelper.getInstance().getCheckedItems();
+                    Map<String, File> map = new HashMap<>();
+                    for (int i = 0; i < files.size(); i++) {
+
+                        File file = new File(getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri())));
+                        map.put("file" + i, file);
+
+                    }
+
+                    //清空选中的图片
+                    files.clear();
+
+                    Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+                    showLoadDiaLog("");
+                    mPresenter.commitImage(bodyMap);
+
+                } else {
+                    if (data != null) {
+                        String path = data.getStringExtra("mFileTemp");
+
+                        Map<String, File> map = new HashMap<>();
+                        File file = new File(path);
+                        map.put("file", file);
+
+                        Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+                        showLoadDiaLog("");
+                        mPresenter.commitImage(bodyMap);
+                    }
                 }
-                Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
-                showLoadDiaLog("");
-                mPresenter.commitImage(bodyMap);
+
+                LocalImageHelper.getInstance().getCheckedItems().clear();
+
+            }catch (Exception e){
+                LogUtil.e(e.toString());
             }
         }
     }
@@ -203,6 +270,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
 
             }
         });
+
+        //相册初始化
+        LocalImageHelper.init(this);
     }
     int oldHeight=0;
     @Override
@@ -270,14 +340,26 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 // : 2019/4/1 相册
-                showAlbue(picNum);
+//                showAlbue(picNum);
+
+
+                Intent intent = new Intent(CommentDialogActivity.this, LocalAlbumDetailActicity.class);
+                intent.putExtra("pic_size", 0);
+                intent.putExtra("maxicSize", 1);
+                startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
             }
         });
         ivReplyret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextSB.append("\n");
-                etContent.setText(editTextSB);
+//                editTextSB.append("\n");
+////                etContent.setText(editTextSB);
+
+                //解决换行时，光标随着改变
+                Editable editable = etContent.getText();
+                int index = etContent.getSelectionStart();
+                editable.insert(index, "\n");
+
             }
         });
         //删除图片
@@ -449,5 +531,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             emojiKeyboardFragment.setflEmojiContentShow(false);
         }
     }
+
+
 
 }

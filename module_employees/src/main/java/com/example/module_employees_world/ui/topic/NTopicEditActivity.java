@@ -440,6 +440,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
             intent.putExtra("pic_size", mTopicEditView.getImageCount());
+            intent.putExtra("maxicSize", 9);
             startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
 
         } else if (v.getId() == R.id.mIvFace) {
