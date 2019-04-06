@@ -43,6 +43,7 @@ import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.hss01248.dialog.StyledDialog;
 import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.utils.StatusBarUtil;
@@ -320,32 +321,38 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
-                String title = mEtTopicTitle.getText().toString();
-                List<TopicContentItem> datas = mTopicEditView.getDatas();
-                if (TextUtils.isEmpty(title)) {
-                    showShortToast("标题不能为空");
-                    return;
+                if (AppUtils.is_banned == 0) {
+
+                    String title = mEtTopicTitle.getText().toString();
+                    List<TopicContentItem> datas = mTopicEditView.getDatas();
+                    if (TextUtils.isEmpty(title)) {
+                        showShortToast("标题不能为空");
+                        return;
+                    }
+                    if (datas == null || datas.size() == 0) {
+                        showShortToast("内容不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(groupId) || "".equals(groupId)) {
+                        showShortToast("请选择小组");
+                        return;
+                    }
+
+                    showLoadV("提交中....");
+
+                    TopicContentItem[] imageItems = mTopicEditView.getImageItems();
+
+                    if (imageItems != null && imageItems.length != 0) {
+                        mPresenter.processImage(imageItems);
+                    } else {
+                        mPresenter.processData(getData());
+                    }
+                }else{
+
+                    showShortToast("你已被禁言");
+
                 }
-                if (datas == null || datas.size() == 0) {
-                    showShortToast("内容不能为空");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
-                    showShortToast("请选择小组");
-                    return;
-                }
-
-                showLoadV("提交中....");
-
-                TopicContentItem[] imageItems = mTopicEditView.getImageItems();
-
-                if (imageItems != null && imageItems.length != 0) {
-                    mPresenter.processImage(imageItems);
-                } else {
-                    mPresenter.processData(getData());
-                }
-
             }
         });
 
@@ -440,6 +447,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
             intent.putExtra("pic_size", mTopicEditView.getImageCount());
+            intent.putExtra("maxicSize", 9);
             startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
 
         } else if (v.getId() == R.id.mIvFace) {

@@ -3,6 +3,7 @@ package com.example.module_employees_world.presenter;
 import android.app.Activity;
 
 import com.example.module_employees_world.bean.GuideBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.SearchPostBean;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.GuideContranct;
@@ -105,6 +106,44 @@ public class GuidePresenter extends GuideContranct.Presenter {
 
             }
         });
+
+    }
+
+
+    /**
+     * app-判断是否可以发表评论
+     */
+    @Override
+    public void getIsBanned(){
+
+        HttpManager.newInstance().commonRequest(mModel.getIsBanned(), new BaseObserver<Result<IsBannedBean>>(AppUtils.getContext()) {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSuccess(Result<IsBannedBean> guideBeanResult) {
+
+                IsBannedBean data = guideBeanResult.getData();
+
+                if (data != null) {
+
+                    AppUtils.is_banned = data.isBanned;
+                }
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+
+            }
+        });
+
 
     }
 }

@@ -1,6 +1,7 @@
 package com.example.module_employees_world.contranct;
 
 import com.example.module_employees_world.bean.GuideBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.SearchCommenBean;
 import com.wb.baselib.base.mvp.BaseModel;
 import com.wb.baselib.base.mvp.BasePreaenter;
@@ -22,11 +23,13 @@ public interface GuideContranct {
     }
     interface Model extends BaseModel {
         Observable<Result<GuideBean>> getGuide();
+        Observable<Result<IsBannedBean>> getIsBanned();
 
     }
     abstract class Presenter extends BasePreaenter<View, Model> {
         public abstract void countDown();
         public abstract void onDestroy();
         public abstract void getData();
+        public abstract void getIsBanned();
     }
 }

@@ -4,13 +4,17 @@ import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -28,15 +32,19 @@ import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
 import com.example.module_employees_world.bean.TutuIconBean;
+import com.example.module_employees_world.common.CommonUtils;
+import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.CommentSendDialogContranct;
 import com.example.module_employees_world.presenter.CommentSendDialogPresenter;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
+import com.example.module_employees_world.ui.topic.LocalAlbumDetailActicity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
+import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
@@ -69,40 +77,40 @@ import okhttp3.RequestBody;
 public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresenter> implements CommentSendDialogContranct.ICommentSendDialogView, EmojiItemClickListener {
 
     public final int TAG_ACTIVTY_RESULT_CODE = 200;
-    private ImageView ivEditArea,ivReplyOval,ivReplyPic,ivReplyret,ivReplyimg,ivReplyGif,ivDelGif,ivDelImg;
-    private TextView tvParentName,tvReplySend;
-    private LinearLayout llRoot,llBottom;
+    private ImageView ivEditArea, ivReplyOval, ivReplyPic, ivReplyret, ivReplyimg, ivReplyGif, ivDelGif, ivDelImg;
+    private TextView tvParentName, tvReplySend;
+    private LinearLayout llRoot, llBottom;
     private EditText etContent;
     private int initHeight;
     private int RootViewHeight;
     private int screenHeight;
-    public static final String TAG_QUESTION_ID="question_id";
-    public static final String TAG_COMMENT_ID="comment_id";
-    public static final String TAG_COMMENT_NAME="comment_name";
+    public static final String TAG_QUESTION_ID = "question_id";
+    public static final String TAG_COMMENT_ID = "comment_id";
+    public static final String TAG_COMMENT_NAME = "comment_name";
     //帖子id
     private String question_id;
     //父评论id，对帖子评论是默认为“0”
     private String comment_id;
     //评论对象名称
-    private String comment_name="";
+    private String comment_name = "";
     //评论图片地址
-    private String commentPicture="";
+    private String commentPicture = "";
     //评论表情包地址
-    private String commentFace="";
+    private String commentFace = "";
     //1：不匿名
-    private String isAnonymity="0";
+    private String isAnonymity = "0";
     //相册选择照片集合
     private List<String> result;
     //允许上传图片个数
-    private int picNum=1;
+    private int picNum = 1;
     //判断键盘是否显示/隐藏
     private boolean emojiKeyboardOpen = false;
     private EmojiKeyboardFragment emojiKeyboardFragment;
     private int heightDifference;
     private int viewHeight;
     private View view;
-    private StringBuffer editTextSB=new StringBuffer();
-    private RelativeLayout rlImg,rlGif;
+    private StringBuffer editTextSB = new StringBuffer();
+    private RelativeLayout rlImg, rlGif;
 
 
     @Override
@@ -119,21 +127,81 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
     }
 
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+
+        if (contentUri != null && contentUri.toString().toLowerCase().startsWith("content:")) {
+
+        } else {
+            return contentUri.getPath();
+        }
+
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return Uri.fromFile(new File(res)).getPath();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAG_ACTIVTY_RESULT_CODE) {
-            if (data == null) return;
-            result = data.getStringArrayListExtra("result");
-            if (result != null && result.size() > 0) {
-                Map<String, File> map = new HashMap<>();
-                for (int i = 0; i < result.size(); i++) {
-                    File file = new File(result.get(i));
-                    map.put("file" + i, file);
+//            if (data == null) return;
+//            result = data.getStringArrayListExtra("result");
+//            if (result != null && result.size() > 0) {
+//                Map<String, File> map = new HashMap<>();
+//                for (int i = 0; i < result.size(); i++) {
+//                    File file = new File(result.get(i));
+//                    map.put("file" + i, file);
+//                }
+//                Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+//                showLoadDiaLog("");
+//                mPresenter.commitImage(bodyMap);
+//            }
+        } else if (requestCode == CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP) {
+
+            try {
+                if (LocalImageHelper.getInstance().isResultOk()) {
+                    LocalImageHelper.getInstance().setResultOk(false);
+                    //获取选中的图片
+                    List<LocalImageHelper.LocalFile> files = LocalImageHelper.getInstance().getCheckedItems();
+                    Map<String, File> map = new HashMap<>();
+                    for (int i = 0; i < files.size(); i++) {
+
+                        File file = new File(getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri())));
+                        map.put("file" + i, file);
+
+                    }
+
+                    //清空选中的图片
+                    files.clear();
+
+                    Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+                    showLoadDiaLog("");
+                    mPresenter.commitImage(bodyMap);
+
+                } else {
+                    if (data != null) {
+                        String path = data.getStringExtra("mFileTemp");
+
+                        Map<String, File> map = new HashMap<>();
+                        File file = new File(path);
+                        map.put("file", file);
+
+                        Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+                        showLoadDiaLog("");
+                        mPresenter.commitImage(bodyMap);
+                    }
                 }
-                Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
-                showLoadDiaLog("");
-                mPresenter.commitImage(bodyMap);
+
+                LocalImageHelper.getInstance().getCheckedItems().clear();
+
+            } catch (Exception e) {
+                LogUtil.e(e.toString());
             }
         }
     }
@@ -167,9 +235,9 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         rlGif = findViewById(R.id.rl_reply_gif);
         view = findViewById(R.id.tv_view);
 
-        tvParentName.setText(comment_name+"（作者）");
+        tvParentName.setText(comment_name + "（作者）");
         emojiKeyboardFragment = EmojiKeyboardFragment.newInstance(this, this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_dialog,emojiKeyboardFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_dialog, emojiKeyboardFragment).commit();
         llRoot.post(new Runnable() {
             @Override
             public void run() {
@@ -203,8 +271,13 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
 
             }
         });
+
+        //相册初始化
+        LocalImageHelper.init(this);
     }
-    int oldHeight=0;
+
+    int oldHeight = 0;
+
     @Override
     protected void setListener() {
         /*ivEditArea.setOnClickListener(new View.OnClickListener() {
@@ -238,11 +311,16 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 String encode = EmojiUtils.getString(editTextSB.toString());
-                if (!TextUtils.isEmpty(encode)||!TextUtils.isEmpty(commentPicture)||!TextUtils.isEmpty(commentFace)){
-                    mPresenter.sendComment(question_id,encode,commentPicture,commentFace,isAnonymity,comment_id);
-                    showLoadDiaLog("");
-                }else {
-                    showShortToast("评论不能为空");
+
+                if (AppUtils.is_banned == 0) {
+                    if (!TextUtils.isEmpty(encode) || !TextUtils.isEmpty(commentPicture) || !TextUtils.isEmpty(commentFace)) {
+                        mPresenter.sendComment(question_id, encode, commentPicture, commentFace, isAnonymity, comment_id);
+                        showLoadDiaLog("");
+                    } else {
+                        showShortToast("评论不能为空");
+                    }
+                }else{
+                    showShortToast("你已被禁言");
                 }
             }
         });
@@ -257,7 +335,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                         SoftKeyboardUtils.hideSoftKeyboard(CommentDialogActivity.this);
                         //是否显示表情视图
                         emojiKeyboardFragment.setflEmojiContentShow(true);
-                    }else{
+                    } else {
                         //是否显示表情视图
                         emojiKeyboardFragment.setflEmojiContentShow(false);
                         //显示软键盘
@@ -270,22 +348,34 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 // : 2019/4/1 相册
-                showAlbue(picNum);
+//                showAlbue(picNum);
+
+
+                Intent intent = new Intent(CommentDialogActivity.this, LocalAlbumDetailActicity.class);
+                intent.putExtra("pic_size", 0);
+                intent.putExtra("maxicSize", 1);
+                startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
             }
         });
         ivReplyret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextSB.append("\n");
-                etContent.setText(editTextSB);
+//                editTextSB.append("\n");
+////                etContent.setText(editTextSB);
+
+                //解决换行时，光标随着改变
+                Editable editable = etContent.getText();
+                int index = etContent.getSelectionStart();
+                editable.insert(index, "\n");
+
             }
         });
         //删除图片
         ivDelImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commentPicture="";
-                picNum=1;
+                commentPicture = "";
+                picNum = 1;
                 rlImg.setVisibility(View.GONE);
             }
         });
@@ -293,7 +383,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         ivDelGif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commentFace="";
+                commentFace = "";
                 rlGif.setVisibility(View.GONE);
             }
         });
@@ -305,12 +395,16 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         });
         etContent.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
-                editTextSB.delete(0,editTextSB.length());
+                editTextSB.delete(0, editTextSB.length());
                 editTextSB.append(s.toString());
             }
         });
@@ -352,7 +446,8 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     }
 
     @Override
-    public void SuccessData(Object o) {}
+    public void SuccessData(Object o) {
+    }
 
     @Override
     public LifecycleTransformer binLifecycle() {
@@ -377,17 +472,18 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     @Override
     public void commitImage(List<NImageBean> pathList) {
         hidLoadDiaLog();
-        if (pathList.size()>0){
-            picNum=0;
+        if (pathList.size() > 0) {
+            picNum = 0;
             rlImg.setVisibility(View.VISIBLE);
-            commentPicture=pathList.get(0).getPath();
-            GlideManager.getInstance().setCommonPhoto(ivReplyimg, R.drawable.course_image ,this , HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(0).getPath() ,false );
+            commentPicture = pathList.get(0).getPath();
+            GlideManager.getInstance().setCommonPhoto(ivReplyimg, R.drawable.course_image, this, HttpConfig.newInstance().getmBaseUrl() + "/" + pathList.get(0).getPath(), false);
         }
 
     }
 
     /**
      * 调起相册拍照
+     *
      * @param picNum
      */
     private void showAlbue(final int picNum) {
@@ -422,15 +518,19 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     @Override
     public void onDeleteClick() {
 
+        KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0,
+                0, KeyEvent.KEYCODE_ENDCALL);
+        etContent.dispatchKeyEvent(event);
+
     }
 
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-        commentFace=tutuIconBean.key;
+        commentFace = tutuIconBean.key;
         rlGif.setVisibility(View.VISIBLE);
 //        Glide.with(this).load(tutuIconBean.TutuId).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivReplyGif);
 //        Glide.with(this).load(tutuIconBean.TutuId).into(ivReplyGif);
-        GlideManager.getInstance().setGlideResourceImage(ivReplyGif,tutuIconBean.TutuId,R.drawable.image_failure, R.drawable.course_image ,this);
+        GlideManager.getInstance().setGlideResourceImage(ivReplyGif, tutuIconBean.TutuId, R.drawable.image_failure, R.drawable.course_image, this);
 
     }
 
@@ -442,12 +542,13 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     /**
      * 表情视图隐藏
      */
-    public void hideEmojiKeyboardFragment(){
-        if (emojiKeyboardFragment !=null) {
+    public void hideEmojiKeyboardFragment() {
+        if (emojiKeyboardFragment != null) {
             emojiKeyboardOpen = false;
             //隐藏表情视图
             emojiKeyboardFragment.setflEmojiContentShow(false);
         }
     }
+
 
 }
