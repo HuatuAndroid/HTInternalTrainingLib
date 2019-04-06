@@ -15,11 +15,11 @@ public interface CommunityGroupContranct {
         void isLoadMore(boolean isLoadMore);
     }
     interface CommunityGroupModel extends BaseModel {
-        Observable<Result<CommunityGroupBean>> getGroupList(int page);
+        Observable<Result<CommunityGroupBean>> getGroupList(int page,int limit);
         Observable<Result> setGroup(String groupId, String states);
     }
     abstract class CommunityGroupPresenter extends BasePreaenter<CommunityGroupView,CommunityGroupModel> {
-        public abstract void getGroupList(int page);
+        public abstract void getGroupList(int page,int limit);
         public abstract void setGroup(String groupId,String states);
     }
 }

@@ -64,13 +64,13 @@ public class CommunityMyJoinFragment extends MvpFragment<CommunityMyJoinPresente
         listView.setAdapter(mAdapter);
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         multipleStatusView.showLoading();
-        mPresenter.getMyPartData(page);
+        mPresenter.getMyPartData(page,20);
         RxBus.getIntanceBus().registerRxBus(RxMessageBean.class, new Consumer<RxMessageBean>() {
             @Override
             public void accept(RxMessageBean rxMessageBean) throws Exception {
                 if (rxMessageBean.getMessageType() == 852) {
                     page = 1;
-                    mPresenter.getMyPartData(page);
+                    mPresenter.getMyPartData(page,20);
                 }
             }
         });
@@ -85,20 +85,20 @@ public class CommunityMyJoinFragment extends MvpFragment<CommunityMyJoinPresente
             public void onClick(View v) {
                 multipleStatusView.showLoading();
                 page = 1;
-                mPresenter.getMyPartData(page);
+                mPresenter.getMyPartData(page,20);
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-                mPresenter.getMyPartData(page);
+                mPresenter.getMyPartData(page,20);
             }
         });
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getMyPartData(page);
+                mPresenter.getMyPartData(page,20);
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

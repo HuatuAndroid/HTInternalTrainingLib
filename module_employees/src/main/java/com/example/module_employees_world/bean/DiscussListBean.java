@@ -23,6 +23,24 @@ public class DiscussListBean implements Parcelable {
     private String avatar;
     private String h5_detail;
     private String department_name;
+    private int solve_status;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getSolve_status() {
+        return solve_status;
+    }
+
+    public void setSolve_status(int solve_status) {
+        this.solve_status = solve_status;
+    }
 
     public void setId(String id) {
         this.id = id;

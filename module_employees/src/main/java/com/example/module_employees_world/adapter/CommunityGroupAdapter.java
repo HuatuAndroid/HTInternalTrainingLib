@@ -50,7 +50,7 @@ public class CommunityGroupAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.main_item_community, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gropu_main, null);
             viewHolder.imageView = convertView.findViewById(R.id.community_image);
             viewHolder.title = convertView.findViewById(R.id.community_title);
             viewHolder.subtitle = convertView.findViewById(R.id.community_subtitle);
@@ -63,10 +63,10 @@ public class CommunityGroupAdapter extends BaseAdapter {
         GlideManager.getInstance().setRoundPhoto(viewHolder.imageView, R.drawable.course_image, mContext, listBean.getImg(), 4);
         viewHolder.title.setText(listBean.getName());
         Log.d("kaelli", "getUser_count:" + listBean.getUser_count());
-        Drawable drawable = mContext.getResources().getDrawable(R.drawable.icon_person);
+        /*Drawable drawable = mContext.getResources().getDrawable(R.drawable.icon_person);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         viewHolder.subtitle.setCompoundDrawables(drawable, null, null, null);
-        viewHolder.subtitle.setText(listBean.getUser_count() + "人");
+        */viewHolder.subtitle.setText(listBean.getUser_count() + "人");
         viewHolder.context.setText(listBean.getIntroduce());
         if (listBean.getIs_group().equals("0")) {
             viewHolder.join.setSelected(false);

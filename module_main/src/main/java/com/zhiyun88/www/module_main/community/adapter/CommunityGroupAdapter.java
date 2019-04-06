@@ -49,7 +49,7 @@ public class CommunityGroupAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.main_item_community, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gropu_main, null);
             viewHolder.imageView = convertView.findViewById(R.id.community_image);
             viewHolder.title = convertView.findViewById(R.id.community_title);
             viewHolder.subtitle = convertView.findViewById(R.id.community_subtitle);

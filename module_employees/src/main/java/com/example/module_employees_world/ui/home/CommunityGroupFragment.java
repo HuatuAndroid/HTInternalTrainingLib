@@ -69,7 +69,7 @@ public class CommunityGroupFragment extends MvpFragment<CommunityGroupPresenter>
         listView.setAdapter(communityGroupAdapter);
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         multipleStatusView.showLoading();
-        mPresenter.getGroupList(page);
+        mPresenter.getGroupList(page,10);
         RxBus.getIntanceBus().registerRxBus(RxMessageBean.class, new Consumer<RxMessageBean>() {
             @Override
             public void accept(RxMessageBean rxMessageBean) throws Exception {
@@ -110,20 +110,20 @@ public class CommunityGroupFragment extends MvpFragment<CommunityGroupPresenter>
                 public void onClick(View v) {
                     multipleStatusView.showLoading();
                     page = 1;
-                    mPresenter.getGroupList(page);
+                    mPresenter.getGroupList(page,10);
                 }
             });
             smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
                 public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                     page = 1;
-                    mPresenter.getGroupList(page);
+                    mPresenter.getGroupList(page,10);
                 }
             });
             smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                    mPresenter.getGroupList(page);
+                    mPresenter.getGroupList(page,10);
                 }
             });
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
