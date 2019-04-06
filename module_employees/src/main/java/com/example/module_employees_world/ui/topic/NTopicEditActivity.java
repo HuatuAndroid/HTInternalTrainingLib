@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -61,7 +62,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     private EditText mEtTopicTitle;
     private LinearLayout llBottom, mLinearLayout, mViewInputField;
-    private RelativeLayout mHideView;
+    private RelativeLayout mHideView, mScrollView;
     private TopicEditView mTopicEditView;
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
@@ -183,7 +184,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         groupId = getIntent().getStringExtra("groupId");
         groupName = getIntent().getStringExtra("groupName");
-
+        mScrollView = findViewById(R.id.mScrollView);
         topBarView = findViewById(R.id.topbarview);
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
         mTopicEditView = findViewById(R.id.mTopicEditView);
@@ -261,7 +262,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     @Override
     protected void setListener() {
-
+        mScrollView.setOnClickListener(this);
         mTvJiaoLiu.setOnClickListener(this);
         mTvJianYi.setOnClickListener(this);
         mTvTiWen.setOnClickListener(this);
@@ -478,6 +479,24 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         }else if (v.getId() == R.id.mHideView){
             hideEmojiKeyboardFragment();
             SoftKeyboardUtils.hideSoftKeyboard(this);
+        }else if (v.getId() == R.id.mScrollView){
+
+            View childAt = mTopicEditView.getChildAt(0);
+
+            if (childAt != null){
+
+                if (childAt instanceof EditText) {
+                    EditText editText = (EditText) childAt;
+
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+
+                    SoftKeyboardUtils.showSoftKeyboard(editText);
+
+                }
+            }
+
         }
 
     }
