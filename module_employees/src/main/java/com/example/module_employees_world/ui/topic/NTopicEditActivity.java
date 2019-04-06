@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -61,7 +62,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     private EditText mEtTopicTitle;
     private LinearLayout llBottom, mLinearLayout, mViewInputField;
-    private RelativeLayout mHideView;
+    private RelativeLayout mHideView, mScrollView;
     private TopicEditView mTopicEditView;
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
@@ -75,7 +76,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     //1交流 2建议 3提问
     private int type = 1;
 
-    private String groupId;
+    //小组的id和名字
+    private String groupId = "";
+    private String groupName = "";
 
     private File mFileTemp;
 
@@ -138,6 +141,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
                 if (data != null) {
                     groupId = data.getStringExtra("group_id");
+                    groupName = data.getStringExtra("groupName");
+
+                    setmTvXiaoXuText(groupName);
                 }
 
                 break;
@@ -177,7 +183,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         setContentView(R.layout.activity_ntopic_edit);
 
         groupId = getIntent().getStringExtra("groupId");
-
+        groupName = getIntent().getStringExtra("groupName");
+        mScrollView = findViewById(R.id.mScrollView);
         topBarView = findViewById(R.id.topbarview);
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
         mTopicEditView = findViewById(R.id.mTopicEditView);
@@ -244,6 +251,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 //        mEtTopicTitle.postDelayed(() -> SoftKeyboardUtils.showORhideSoftKeyboard(NTopicEditActivity.this), 1000);
 
         mHideView(true);
+
+        setmTvXiaoXuText(groupName);
     }
 
     @Override
@@ -253,7 +262,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     @Override
     protected void setListener() {
-
+        mScrollView.setOnClickListener(this);
         mTvJiaoLiu.setOnClickListener(this);
         mTvJianYi.setOnClickListener(this);
         mTvTiWen.setOnClickListener(this);
@@ -377,6 +386,19 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         });
     }
 
+    /**
+     * 修改ui， 选择小组
+     * @param groupName
+     */
+    public void setmTvXiaoXuText(String groupName){
+
+        if (TextUtils.isEmpty(groupName)){
+            mTvXiaoXu.setText("选择小组");
+        }else {
+            mTvXiaoXu.setText(groupName);
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -457,6 +479,24 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         }else if (v.getId() == R.id.mHideView){
             hideEmojiKeyboardFragment();
             SoftKeyboardUtils.hideSoftKeyboard(this);
+        }else if (v.getId() == R.id.mScrollView){
+
+            View childAt = mTopicEditView.getChildAt(0);
+
+            if (childAt != null){
+
+                if (childAt instanceof EditText) {
+                    EditText editText = (EditText) childAt;
+
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+
+                    SoftKeyboardUtils.showSoftKeyboard(editText);
+
+                }
+            }
+
         }
 
     }
