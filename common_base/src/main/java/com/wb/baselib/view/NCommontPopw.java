@@ -59,10 +59,15 @@ public class NCommontPopw extends PopupWindow {
         this.showAtLocation(context.getWindow().getDecorView().findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
     }
 
+    public void clearFlags(){
+        //解决退出后屏幕会黑屏
+        context.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
 
     public void myDismiss() {
         dismiss();
         backgroundAlpha(context, 1.0f);
+        clearFlags();
     }
 
     /**

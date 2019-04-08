@@ -24,6 +24,9 @@ public class CommonUtils {
     public static final String BASE_PATH = Environment
             .getExternalStorageDirectory().getAbsolutePath();
 
+    public static final int REQUEST_CODE_GALLERY = 0x1;
+    public static final int REQUEST_TAG_CROP_IMAGE = 20;
+
     /**
      * 请求相册
      */
