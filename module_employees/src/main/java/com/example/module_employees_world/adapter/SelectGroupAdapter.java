@@ -17,11 +17,18 @@ public class SelectGroupAdapter extends BaseAdapter {
     private List<ListBean> listBeans;
     private Context mContext;
     private OnItemJoinListener onItemJoinListener;
+    private String selectGroupId;
 
-    public SelectGroupAdapter(Context context, List<ListBean> listBeans, OnItemJoinListener onItemJoinListener) {
+    public SelectGroupAdapter(Context context, List<ListBean> listBeans,String selectGroupId, OnItemJoinListener onItemJoinListener) {
         this.mContext = context;
         this.listBeans = listBeans;
         this.onItemJoinListener = onItemJoinListener;
+        this.selectGroupId = selectGroupId;
+    }
+
+    public void setSelectGroupId(String selectGroupId){
+        this.selectGroupId = selectGroupId;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -52,6 +59,12 @@ public class SelectGroupAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        if (selectGroupId.equals(listBean.getId())){
+            viewHolder.mTvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_FF4A88FB));
+        }else{
+            viewHolder.mTvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_FF3D3E43));
+        }
+
         viewHolder.mTvGroupName.setText(listBean.getName()+"");
 
         viewHolder.mTvGroupName.setOnClickListener(v -> {
@@ -65,7 +78,6 @@ public class SelectGroupAdapter extends BaseAdapter {
     class ViewHolder {
         TextView mTvGroupName;
     }
-
     public interface OnItemJoinListener{
         void onItemJoinListener(ListBean listBean);
     }
