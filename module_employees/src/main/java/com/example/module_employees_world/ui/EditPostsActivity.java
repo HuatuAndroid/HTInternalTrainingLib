@@ -307,16 +307,21 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 Log.i("edittext", "beforeTextChanged   CharSequence:(" + s + ");  start: (" + start + "); count: (" + count + "); after: (" + after + ")");
+
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("edittext", "onTextChanged   CharSequence:(" + s + ");  start: (" + start + "); before: (" + before + "); count: (" + count + ")");
+
             }
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO: 2019/4/7
-                editContent=s.toString();
+//                editContent=s.toString();
+                int selectionEnd = etContent.getSelectionEnd();
+                int selectionStart = etContent.getSelectionStart();
                 Log.d("aaaaa",s.toString());
+                Log.d("aaaaa","selectionStart:"+selectionStart+",selectionEnd:"+selectionEnd);
             }
         });
 
@@ -484,12 +489,11 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
     @Override
     public void onItemClick(EmojiconBean emojicon) {
-
-        int selectionEnd = etContent.getSelectionEnd();
+//        int selectionEnd = etContent.getSelectionEnd();
         etContent.setText(editContent);
         Editable editable = etContent.getText();
-        editable.insert(selectionEnd,emojicon.emojiChart);
-        etContent.setSelection(selectionEnd+1);
+        editable.insert(etContent.getSelectionEnd(),emojicon.emojiChart);
+//        etContent.setSelection(selectionEnd+1);
         editContent=editable.toString();
         setActivityContent(editContent,etContent);
     }
@@ -502,10 +506,10 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
         // TODO: 2019/4/6
-        int selectionEnd = etContent.getSelectionEnd();
+//        int selectionEnd = etContent.getSelectionEnd();
         etContent.setText(editContent);
         Editable editable = etContent.getText();
-        editable.insert(selectionEnd,tutuIconBean.key);
+        editable.insert(etContent.getSelectionEnd(),tutuIconBean.key);
         editContent=editable.toString();
 
         setActivityContent(editContent,etContent);
