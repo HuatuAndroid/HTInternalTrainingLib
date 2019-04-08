@@ -177,6 +177,10 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (sureBackPopw != null){
+            sureBackPopw.clearFlags();
+            sureBackPopw = null;
+        }
     }
 
     @Override
@@ -288,37 +292,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             //点击back键退出时，按键响应
             if (action == TopBarView.ACTION_LEFT_BUTTON) {
 
-                boolean isEmpty = false;
-
-                List<TopicContentItem> topicContentItems = mTopicEditView.getDatas();
-
-                for (TopicContentItem topicContentItem : topicContentItems) {
-                    if (TopicContentItem.TYPE_IMG.equals(topicContentItem.type.toString())) {
-
-                        if (!"".equals(topicContentItem.localUrl)) {
-                            isEmpty = true;
-                        }
-
-                    } else if (TopicContentItem.TYPE_TXT.equals(topicContentItem.type.toString())) {
-
-                        if (!"".equals(topicContentItem.content)) {
-                            isEmpty = true;
-                        }
-                    }
-                }
-
-                if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty) {
-
-                    finish();
-                    return;
-
-                }
-
-                sureBackPopw = new NCommontPopw(NTopicEditActivity.this, "确定放弃编辑吗?", v1 -> {
-                    sureBackPopw.myDismiss();
-                    NTopicEditActivity.this.finish();
-                });
-
+                isContentEmpty();
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
                 String title = mEtTopicTitle.getText().toString();
@@ -744,6 +718,67 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         } else {
             mViewInputField.setVisibility(View.VISIBLE);
         }
+
+    }
+
+    /**
+     * 判断内容是否为空
+     * @return
+     */
+    public void isContentEmpty(){
+
+        boolean isEmpty = false;
+
+        List<TopicContentItem> topicContentItems = mTopicEditView.getDatas();
+
+        for (TopicContentItem topicContentItem : topicContentItems) {
+            if (TopicContentItem.TYPE_IMG.equals(topicContentItem.type.toString())) {
+
+                if (!"".equals(topicContentItem.localUrl)) {
+                    isEmpty = true;
+                    break;
+                }
+
+            } else if (TopicContentItem.TYPE_TXT.equals(topicContentItem.type.toString())) {
+
+                if (!"".equals(topicContentItem.content)) {
+                    isEmpty = true;
+                    break;
+                }
+            }
+        }
+
+        if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty) {
+
+            NTopicEditActivity.this.finish();
+            return ;
+        }
+
+        sureBackPopw = new NCommontPopw(NTopicEditActivity.this, "确定放弃编辑吗?", v1 -> {
+            sureBackPopw.myDismiss();
+            NTopicEditActivity.this.finish();
+        });
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                isContentEmpty();
+                return true;
+            case KeyEvent.KEYCODE_MENU:
+                break;
+            case KeyEvent.KEYCODE_HOME:
+                break;
+            case KeyEvent.KEYCODE_APP_SWITCH:
+                break;
+            default:
+                break;
+        }
+
+        return super.onKeyDown(keyCode, event);
 
     }
 
