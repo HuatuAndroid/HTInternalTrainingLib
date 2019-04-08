@@ -3,6 +3,7 @@ package com.example.module_employees_world.ui.topic;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ListView;
 
 import com.example.module_employees_world.CommunityServiceApi;
@@ -47,6 +48,8 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
     private int page = 1;
     private List<ListBean> listBeans;
 
+    private String groupId = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,19 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_select_group);
 
+        groupId = getIntent().getStringExtra("groupId");
+
         mTopBarView = getViewById(R.id.mTopBarView);
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
 
+        if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
+            groupId = "";
+        }
+
         listBeans = new ArrayList<>();
-        communityGroupAdapter = new SelectGroupAdapter(this, listBeans, this);
+        communityGroupAdapter = new SelectGroupAdapter(this, listBeans, groupId, this);
         listView.setAdapter(communityGroupAdapter);
 
         processLogic(savedInstanceState);

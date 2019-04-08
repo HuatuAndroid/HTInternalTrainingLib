@@ -93,10 +93,6 @@ public interface CommunityServiceApi {
     Observable<Result<CommentListBean>> getCommentList(@Path("question_id") String question_id, @Query("st") String st, @Query("page") String page, @Query("limit") String limit);
 
     /**
-<<<<<<< HEAD
-=======
-     * <<<<<<< HEAD
->>>>>>> 0a5a0d05d339fa3c4cfeb73c4e061fbce6647a29
      * 搜索帖子
      */
     @GET(CommunityHttpConfig.SEARCH)
@@ -200,11 +196,14 @@ public interface CommunityServiceApi {
     @POST(CommunityHttpConfig.invitationUser)
     Observable<Result> invitationUser(@Field("cover_user_id") String cover_user_id, @Field("question_id") String question_id);
 
+    @FormUrlEncoded
+    @POST(CommunityHttpConfig.editPost)
+    Observable<Result> editPost(@Field("id") String id, @Field("title") String title, @Field("content") String content,
+                                       @Field("is_anonymity") String is_anonymity, @Field("type") String type);
 
     /**
      * 广告
      */
     @POST(CommunityHttpConfig.isBanned)
     Observable<Result<IsBannedBean>> getIsBanned();
-
 }

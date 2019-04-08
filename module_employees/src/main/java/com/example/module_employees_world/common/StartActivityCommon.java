@@ -22,6 +22,8 @@ public class StartActivityCommon {
         mContext.startActivityForResult(intent, state);
     }
 
-
+    public static void startActivity(Context mContext, Intent intent){
+        mContext.startActivity(intent);
+    }
 
 }
