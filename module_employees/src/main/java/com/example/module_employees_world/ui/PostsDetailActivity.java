@@ -123,19 +123,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         question_id = getIntent().getStringExtra("question_id");
         mPresenter.getPostDetail(question_id,"1");
 //        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
-
-        String htmlStr="<p>11.26测试字体加粗11.26测试字体加粗11.26测试字体加粗<\\/p><p>11.26测试字体加粗倾斜11.26测试字体加粗倾斜11.26测试字体加粗倾斜<\\/p><p>11.26测试字体下划线11.26测试字体下划线11.26测试字体下划线<\\/p><p>11.26测试字体中划线11.26测试字体中划线11.26测试字体中划线<\\/p><p><span style=\\\"color: rgb(230, 0, 0);\\\">11.26测试字体颜色11.26测试字体颜色11.26测试字体颜色<\\/span><\\/p><p>链接：<a href=\\\"https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg\\\" target=\\\"_blank\\\">https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg<\\/a><\\/p><p>图片：<\\/p>";
-        String s = filterHtml(htmlStr);
-        Log.d("aaaaa",s);
-
     }
-
-    public String filterHtml(String htmlStr){
-        Pattern p_html = Pattern.compile("<[^>]+>", Pattern.CASE_INSENSITIVE);
-        Matcher m_html = p_html.matcher(htmlStr);
-        return  m_html.replaceAll("");
-    }
-
 
     @Override
     protected void onResume() {
@@ -889,7 +877,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     });
                     break;
                 case RxBusMessageBean.MessageType.POST_105:
-                    // TODO: 2019/3/29  邀请回答
+                    //  2019/3/29  邀请回答
                     activity.startActivityForResult(new Intent(activity, SelectParticipantActivity.class),SelectParticipantActivity.intentCode);
                     break;
                 case RxBusMessageBean.MessageType.POST_106:
@@ -926,6 +914,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     String type = msg.arg1+"";
                     activity.showLoadDiaLog("");
                     activity.mPresenter.editQuestion(type,activity.question_id);
+                    break;
+                case RxBusMessageBean.MessageType.POST_115:
+                    // TODO: 2019/4/6 编辑
+                    Intent intent1 = new Intent(activity, EditPostsActivity.class);
+                    intent1.putExtra(EditPostsActivity.TAG_TITLE_STR,activity.postDetailBean.questionInfo.title);
+                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_STR,activity.postDetailBean.questionInfo.content);
+                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_ID,activity.postDetailBean.questionInfo.id+"");
+                    activity.startActivity(intent1);
                     break;
             }
         }

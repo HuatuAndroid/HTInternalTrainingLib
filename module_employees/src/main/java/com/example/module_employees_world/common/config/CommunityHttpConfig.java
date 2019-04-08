@@ -60,4 +60,6 @@ public interface CommunityHttpConfig {
     String acceptComment="api/app/discuss/comment/comment_id={comment_id}";
     /**邀请回答*/
     String invitationUser="api/app/discuss/invitation";
+    /**编辑帖子*/
+    String editPost="api/app/discuss/editQuestion";
 }

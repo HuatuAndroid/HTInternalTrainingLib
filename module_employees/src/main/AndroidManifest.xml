@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.module_employees_world">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application android:theme="@style/BaseAppTheme">
-        <activity android:name=".GuideH5Activity"></activity>
+        <activity android:name=".GuideH5Activity" />
         <activity android:name=".ui.PictuirePreviewActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
@@ -35,7 +35,7 @@
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.topic.LocalAlbumDetailActicity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
@@ -51,7 +51,12 @@
         <activity
             android:name=".ui.group.MyItemActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.EditPostsActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

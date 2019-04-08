@@ -141,6 +141,9 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
         }else if (i == R.id.tv_cancel){
             myDismiss();
         }else if (i == R.id.tv_edit){
+            Message message = new Message();
+            message.what=RxBusMessageBean.MessageType.POST_115;
+            myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_adopt){
 //            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_104,null));
