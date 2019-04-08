@@ -104,13 +104,13 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             } else {
                 if (discussListBean.getType() == 2) {
                     String status = " | 未采纳";
-                    if (discussListBean.getSolve_status() == 0) {
+                    if (discussListBean.getSolve_status() == 1) {
                         status = " | 已采纳";
                     }
                     viewHolder.time.setText(discussListBean.getCreated_at() + status);
                 } else {
                     String status = " | 未解决";
-                    if (discussListBean.getSolve_status() == 0) {
+                    if (discussListBean.getSolve_status() == 1) {
                         status = " | 已解决";
                     }
                     viewHolder.time.setText(discussListBean.getCreated_at() + status);
