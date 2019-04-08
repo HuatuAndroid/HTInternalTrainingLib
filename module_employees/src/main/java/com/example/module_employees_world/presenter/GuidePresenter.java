@@ -134,7 +134,7 @@ public class GuidePresenter extends GuideContranct.Presenter {
 
                 if (data != null) {
 
-                    AppUtils.is_banned = 1;//data.isBanned;
+                    AppUtils.is_banned = data.isBanned;
                 }
             }
 
