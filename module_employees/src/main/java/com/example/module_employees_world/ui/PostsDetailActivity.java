@@ -123,7 +123,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         question_id = getIntent().getStringExtra("question_id");
-        mPresenter.getPostDetail(question_id, "1");
+
 //        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
 
@@ -134,6 +134,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void run() {
                 page = 1;
+                mPresenter.getPostDetail(question_id, "1");
                 mPresenter.getCommentList(question_id, "1", page + "", limit + "");
             }
         }, 200);
