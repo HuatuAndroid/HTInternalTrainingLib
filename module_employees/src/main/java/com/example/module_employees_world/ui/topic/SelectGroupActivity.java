@@ -1,9 +1,12 @@
 package com.example.module_employees_world.ui.topic;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.module_employees_world.CommunityServiceApi;
@@ -14,10 +17,16 @@ import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.ListBean;
 import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.contranct.CommunityGroupContranct;
+import com.hss01248.dialog.StyledDialog;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
+import com.wangbo.smartrefresh.layout.api.RefreshLayout;
+import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.wangbo.smartrefresh.layout.listener.OnRefreshListener;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.BaseActivity;
+import com.wb.baselib.base.activity.MvpActivity;
+import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
@@ -50,6 +59,8 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
     private String groupId = "";
 
+    private Dialog mDiaLog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +78,8 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
         multipleStatusView = getViewById(R.id.multiplestatusview);
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
+
+        RefreshUtils.getInstance(smartRefreshLayout,this).defaultRefreSh();
 
         if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
             groupId = "";
@@ -91,64 +104,94 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
             }
         });
 
+        multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                multipleStatusView.showLoading();
+                page = 1;
+                getGroupList(page,10);
+            }
+        });
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                getGroupList(page,10);
+            }
+        });
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getGroupList(page,10);
+            }
+        });
+
     }
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-        HttpManager.newInstance().commonRequest(HttpManager.newInstance().getService(CommunityServiceApi.class).getGroupList(page,10),
+        showLoadV("加载中...");
+        getGroupList(page, 10);
+
+    }
+
+    public void getGroupList(int page, int sizeCount){
+        HttpManager.newInstance().commonRequest(HttpManager.newInstance().getService(CommunityServiceApi.class).getGroupList(page,sizeCount),
                 new BaseObserver<Result<CommunityGroupBean>>(AppUtils.getContext()) {
-            @Override
-            public void onSuccess(Result<CommunityGroupBean> communityGroupBeanResult) {
-                if (communityGroupBeanResult.getData().getGroup_list() == null) {
-                    if (page == 1) {
-                        ErrorData();
-                    } else {
-                        showErrorMsg("服务器繁忙，请稍后尝试！");
-                        isLoadMore(true);
-                    }
-                } else {
-                    if (communityGroupBeanResult.getData().getGroup_list().getList() == null || communityGroupBeanResult.getData().getGroup_list().getList().size() == 0) {
-                        if (page == 1) {
-                            NoData();
+                    @Override
+                    public void onSuccess(Result<CommunityGroupBean> communityGroupBeanResult) {
+                        if (communityGroupBeanResult.getData().getGroup_list() == null) {
+                            if (page == 1) {
+                                ErrorData();
+                            } else {
+                                showErrorMsg("服务器繁忙，请稍后尝试！");
+                                isLoadMore(true);
+                            }
                         } else {
-                            showErrorMsg("已经没有数据了!");
-                            isLoadMore(false);
+                            if (communityGroupBeanResult.getData().getGroup_list().getList() == null || communityGroupBeanResult.getData().getGroup_list().getList().size() == 0) {
+                                if (page == 1) {
+                                    NoData();
+                                } else {
+                                    showErrorMsg("已经没有数据了!");
+                                    isLoadMore(false);
+                                }
+                            } else {
+                                if (communityGroupBeanResult.getData().getGroup_list().getList().size() < 6) {
+                                    //已经没有下一页了
+                                    isLoadMore(false);
+                                } else {
+                                    //还有下一页
+                                    isLoadMore(true);
+                                }
+                                SuccessData(communityGroupBeanResult.getData().getGroup_list().getList());
+                            }
                         }
-                    } else {
-                        if (communityGroupBeanResult.getData().getGroup_list().getList().size() < 6) {
-                            //已经没有下一页了
-                            isLoadMore(false);
+                        closeLoadV();
+
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (page == 1) {
+                            ErrorData();
                         } else {
-                            //还有下一页
+                            showErrorMsg(e.getMessage());
                             isLoadMore(true);
                         }
-                        SuccessData(communityGroupBeanResult.getData().getGroup_list().getList());
+                        closeLoadV();
                     }
-                }
-            }
 
-            @Override
-            public void onFail(ApiException e) {
-                if (page == 1) {
-                    ErrorData();
-                } else {
-                    showErrorMsg(e.getMessage());
-                    isLoadMore(true);
-                }
-            }
-
-            @Override
-            public void onSubscribe(Disposable d) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 //                addSubscribe(d);
-            }
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        }, binLifecycle());
-
+                    }
+                }, binLifecycle());
     }
 
     @Override
@@ -178,12 +221,16 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
     @Override
     public void showLoadV(String msg) {
-
+        mDiaLog = StyledDialog.buildLoading(msg).show();
     }
 
     @Override
     public void closeLoadV() {
-
+        if (mDiaLog == null)
+            return;
+        if (mDiaLog.isShowing()) {
+            mDiaLog.dismiss();
+        }
     }
 
     @Override
