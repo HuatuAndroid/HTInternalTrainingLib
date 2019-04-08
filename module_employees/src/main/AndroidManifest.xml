@@ -3,7 +3,10 @@
     package="com.example.module_employees_world">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.FLAG_GRANT_READ_URI_PERMISSION" />
+    <uses-permission android:name="android.permission.FLAG_GRANT_WRITE_URI_PERMISSION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    
     <application android:theme="@style/BaseAppTheme">
         <activity android:name=".GuideH5Activity" />
         <activity android:name=".ui.PictuirePreviewActivity" />
@@ -57,6 +60,17 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
+
+        <provider
+            android:name=".utils.MProvider"
+            android:authorities="com.example.module_employees_world.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+        </provider>
+
     </application>
 
 </manifest>

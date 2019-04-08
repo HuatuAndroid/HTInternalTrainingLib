@@ -1,14 +1,19 @@
 package com.example.module_employees_world.ui.topic;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,6 +41,7 @@ import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.common.LocalImageHelper;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.TopBarView;
 
 import java.io.File;
@@ -368,6 +374,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
             holder.mIvCamera.setOnClickListener(view -> {
 
                 if (position == 0) {
+
                     photoEven();
                 }
             });
@@ -401,8 +408,11 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
     }
 
     public void photoEven() {
-        pictureInIt();
-        takePicture();
+
+        if (isCameraPermission(this, CommonUtils.REQUEST_CODE_TAKE_PICTURE, PERMISSIONS_CAMERA_AND_STORAGE2)) {
+            pictureInIt();
+            takePicture();
+        }
     }
 
     public void pictureInIt() {
@@ -427,7 +437,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
             if (Environment.MEDIA_MOUNTED.equals(state)) {
 
                 if (Build.VERSION.SDK_INT >= 24) {
-                    mImageCaptureUri = FileProvider.getUriForFile(this, "com.ekao123.manmachine.fileprovider", mFileTemp);
+                    mImageCaptureUri = FileProvider.getUriForFile(this, "com.example.module_employees_world.provider", mFileTemp);
                 } else {
                     mImageCaptureUri = Uri.fromFile(mFileTemp);
                 }
@@ -473,4 +483,57 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
         }
     }
+
+    //请求权限回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CommonUtils.REQUEST_CODE_TAKE_PICTURE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (isCameraPermission(this, CommonUtils.REQUEST_TAG_CROP_IMAGE, PERMISSIONS_CAMERA_AND_STORAGE1)) {
+                        pictureInIt();
+                        takePicture();
+                    }
+                } else {
+                    ToastUtils.showToast(this,"拍照权限被拒绝");
+                }
+                break;
+            case CommonUtils.REQUEST_TAG_CROP_IMAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pictureInIt();
+                    takePicture();
+                } else {
+                    ToastUtils.showToast(this,"拍照权限被拒绝");
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private String[] PERMISSIONS_CAMERA_AND_STORAGE1 = {
+            Manifest.permission.CAMERA};
+
+    private String[] PERMISSIONS_CAMERA_AND_STORAGE2 = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+
+    public boolean isCameraPermission(Activity context, int requestCode, String[] PERMISSIONS_CAMERA_AND_STORAGE) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int storagePermission = ActivityCompat.checkSelfPermission(context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            int cameraPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
+
+            if (storagePermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(context, PERMISSIONS_CAMERA_AND_STORAGE,
+                        requestCode);
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
