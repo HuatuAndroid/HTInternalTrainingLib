@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -42,6 +43,7 @@ import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.hss01248.dialog.StyledDialog;
 import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.utils.StatusBarUtil;
@@ -61,7 +63,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     private EditText mEtTopicTitle;
     private LinearLayout llBottom, mLinearLayout, mViewInputField;
-    private RelativeLayout mHideView;
+    private RelativeLayout mHideView, mScrollView;
     private TopicEditView mTopicEditView;
     private TopBarView topBarView;
     private TextView mTvJiaoLiu, mTvJianYi, mTvTiWen, mTvXiaoXu;
@@ -75,7 +77,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     //1交流 2建议 3提问
     private int type = 1;
 
-    private String groupId;
+    //小组的id和名字
+    private String groupId = "";
+    private String groupName = "";
 
     private File mFileTemp;
 
@@ -138,6 +142,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
                 if (data != null) {
                     groupId = data.getStringExtra("group_id");
+                    groupName = data.getStringExtra("groupName");
+
+                    setmTvXiaoXuText(groupName);
                 }
 
                 break;
@@ -177,7 +184,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         setContentView(R.layout.activity_ntopic_edit);
 
         groupId = getIntent().getStringExtra("groupId");
-
+        groupName = getIntent().getStringExtra("groupName");
+        mScrollView = findViewById(R.id.mScrollView);
         topBarView = findViewById(R.id.topbarview);
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
         mTopicEditView = findViewById(R.id.mTopicEditView);
@@ -244,6 +252,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 //        mEtTopicTitle.postDelayed(() -> SoftKeyboardUtils.showORhideSoftKeyboard(NTopicEditActivity.this), 1000);
 
         mHideView(true);
+
+        setmTvXiaoXuText(groupName);
     }
 
     @Override
@@ -253,7 +263,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     @Override
     protected void setListener() {
-
+        mScrollView.setOnClickListener(this);
         mTvJiaoLiu.setOnClickListener(this);
         mTvJianYi.setOnClickListener(this);
         mTvTiWen.setOnClickListener(this);
@@ -282,22 +292,22 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
                 List<TopicContentItem> topicContentItems = mTopicEditView.getDatas();
 
-                for (TopicContentItem topicContentItem : topicContentItems){
+                for (TopicContentItem topicContentItem : topicContentItems) {
                     if (TopicContentItem.TYPE_IMG.equals(topicContentItem.type.toString())) {
 
-                        if (!"".equals(topicContentItem.localUrl)){
+                        if (!"".equals(topicContentItem.localUrl)) {
                             isEmpty = true;
                         }
 
                     } else if (TopicContentItem.TYPE_TXT.equals(topicContentItem.type.toString())) {
 
-                        if (!"".equals(topicContentItem.content)){
+                        if (!"".equals(topicContentItem.content)) {
                             isEmpty = true;
                         }
                     }
                 }
 
-                if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty){
+                if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty) {
 
                     finish();
                     return;
@@ -322,7 +332,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     return;
                 }
 
-                if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
+                if (TextUtils.isEmpty(groupId) || "".equals(groupId)) {
                     showShortToast("请选择小组");
                     return;
                 }
@@ -377,6 +387,20 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         });
     }
 
+    /**
+     * 修改ui， 选择小组
+     *
+     * @param groupName
+     */
+    public void setmTvXiaoXuText(String groupName) {
+
+        if (TextUtils.isEmpty(groupName)) {
+            mTvXiaoXu.setText("选择小组");
+        } else {
+            mTvXiaoXu.setText(groupName);
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -418,6 +442,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             //点击 照片
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
             intent.putExtra("pic_size", mTopicEditView.getImageCount());
+            intent.putExtra("maxicSize", 9);
             startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
 
         } else if (v.getId() == R.id.mIvFace) {
@@ -437,9 +462,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                         editText = (EditText) focusedChild;
                     }
 
-                    if (editText != null){
+                    if (editText != null) {
                         SoftKeyboardUtils.showSoftKeyboard(editText);
-                    }else{
+                    } else {
                         //显示软键盘
                         SoftKeyboardUtils.showSoftKeyboard(mEtTopicTitle);
                     }
@@ -454,9 +479,27 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         } else if (v.getId() == R.id.mIvLineFeed) {
             //点击 换行
             mTopicEditView.AddLineFeed(0, null);
-        }else if (v.getId() == R.id.mHideView){
+        } else if (v.getId() == R.id.mHideView) {
             hideEmojiKeyboardFragment();
             SoftKeyboardUtils.hideSoftKeyboard(this);
+        } else if (v.getId() == R.id.mScrollView) {
+
+            View childAt = mTopicEditView.getChildAt(0);
+
+            if (childAt != null) {
+
+                if (childAt instanceof EditText) {
+                    EditText editText = (EditText) childAt;
+
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+
+                    SoftKeyboardUtils.showSoftKeyboard(editText);
+
+                }
+            }
+
         }
 
     }
@@ -597,7 +640,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
 //            Spanned spanned = Html.fromHtml(html);
 
-            mTopicEditView.AddConnect(mEtConnectString,mEtConnectContentString);
+            mTopicEditView.AddConnect(mEtConnectString, mEtConnectContentString);
 
             dialog.dismiss();
         });
@@ -644,7 +687,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
      */
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-        LogUtil.e("onItemClick -- " +tutuIconBean.type + " --- " + tutuIconBean.key);
+        LogUtil.e("onItemClick -- " + tutuIconBean.type + " --- " + tutuIconBean.key);
 
         mTopicEditView.addTutuImg(tutuIconBean.TutuId, tutuIconBean.key);
     }
@@ -684,13 +727,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     /**
      * 显示/隐藏输入按钮， ： 表情、换行...
+     *
      * @param boo
      */
-    public void mHideView(boolean boo){
+    public void mHideView(boolean boo) {
 
         if (boo) {
             mViewInputField.setVisibility(View.GONE);
-        }else{
+        } else {
             mViewInputField.setVisibility(View.VISIBLE);
         }
 

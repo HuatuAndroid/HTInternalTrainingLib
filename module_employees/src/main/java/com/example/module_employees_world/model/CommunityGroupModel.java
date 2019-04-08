@@ -13,8 +13,8 @@ public class CommunityGroupModel implements CommunityGroupContranct.CommunityGro
 
 
     @Override
-    public Observable<Result<CommunityGroupBean>> getGroupList(int page) {
-        return HttpManager.newInstance().getService(CommunityServiceApi.class).getGroupList(page);
+    public Observable<Result<CommunityGroupBean>> getGroupList(int page, int limit) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).getGroupList(page,limit);
     }
 
     @Override

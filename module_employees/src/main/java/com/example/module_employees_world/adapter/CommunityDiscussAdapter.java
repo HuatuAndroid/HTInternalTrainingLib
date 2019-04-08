@@ -99,8 +99,24 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
 //        viewHolder.title.setText(discussListBean.getTitle());
             viewHolder.like.setText(discussListBean.getLike_count());
             viewHolder.comment.setText(discussListBean.getComment_count());
-            viewHolder.time.setText(discussListBean.getCreated_at());
-            viewHolder.group.setText("「" + discussListBean.getGroup_name() + "」");
+            if (discussListBean.getType() == 1) {
+                viewHolder.time.setText(discussListBean.getCreated_at());
+            } else {
+                if (discussListBean.getType() == 2) {
+                    String status = " | 未采纳";
+                    if (discussListBean.getSolve_status() == 0) {
+                        status = " | 已采纳";
+                    }
+                    viewHolder.time.setText(discussListBean.getCreated_at() + status);
+                } else {
+                    String status = " | 未解决";
+                    if (discussListBean.getSolve_status() == 0) {
+                        status = " | 已解决";
+                    }
+                    viewHolder.time.setText(discussListBean.getCreated_at() + status);
+                }
+            }
+            viewHolder.group.setText("【" + discussListBean.getGroup_name() + "】");
             viewHolder.partName.setText(discussListBean.getDepartment_name());
         }
 

@@ -87,7 +87,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-        HttpManager.newInstance().commonRequest(HttpManager.newInstance().getService(CommunityServiceApi.class).getGroupList(page),
+        HttpManager.newInstance().commonRequest(HttpManager.newInstance().getService(CommunityServiceApi.class).getGroupList(page,10),
                 new BaseObserver<Result<CommunityGroupBean>>(AppUtils.getContext()) {
             @Override
             public void onSuccess(Result<CommunityGroupBean> communityGroupBeanResult) {
@@ -208,6 +208,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
         Intent intent = new Intent();
         intent.putExtra("group_id", listBean.getId());
+        intent.putExtra("groupName", listBean.getName());
         this.setResult(CommonUtils.SELECT_GROUP, intent);
 
         finish();

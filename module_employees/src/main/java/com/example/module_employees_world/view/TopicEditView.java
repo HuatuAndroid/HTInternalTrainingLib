@@ -38,7 +38,6 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.TopicContentItem;
 import com.example.module_employees_world.ui.ExtendImageView;
-import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.ImgUtils;
 import com.example.module_employees_world.utils.Rgba;
 import com.facebook.common.executors.CallerThreadExecutor;
@@ -52,7 +51,6 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.thefinestartist.utils.log.LogUtil;
 import com.wb.baselib.utils.VerticalImageSpan;
 import com.wb.baselib.view.NCommontPopw;
 

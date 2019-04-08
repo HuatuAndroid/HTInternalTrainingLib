@@ -19,8 +19,8 @@ public class CommunityGroupPresenter extends CommunityGroupContranct.CommunityGr
     }
 
     @Override
-    public void getGroupList(final int page) {
-        HttpManager.newInstance().commonRequest(mModel.getGroupList(page), new BaseObserver<Result<CommunityGroupBean>>(AppUtils.getContext()) {
+    public void getGroupList(final int page,int limit) {
+        HttpManager.newInstance().commonRequest(mModel.getGroupList(page,limit), new BaseObserver<Result<CommunityGroupBean>>(AppUtils.getContext()) {
             @Override
             public void onSuccess(Result<CommunityGroupBean> communityGroupBeanResult) {
                 if (communityGroupBeanResult.getData().getGroup_list() == null) {

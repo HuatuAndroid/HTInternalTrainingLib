@@ -11,8 +11,8 @@ import io.reactivex.Observable;
 public class CommunityMyJoinModel implements CommunityMyJoinContranct.CommunityMyJoinModel {
 
     @Override
-    public Observable<Result<MyPartBean>> getMyPartData(int page) {
-        return HttpManager.newInstance().getService(CommunityServiceApi.class).getMyPartData(page);
+    public Observable<Result<MyPartBean>> getMyPartData(int page,int limit) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).getMyPartData(page,limit);
     }
 
 }

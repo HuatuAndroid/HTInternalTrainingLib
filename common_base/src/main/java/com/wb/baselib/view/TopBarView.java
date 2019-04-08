@@ -316,6 +316,10 @@ public class TopBarView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
+    public void settvRight(String rightText){
+        tvRight.setText(rightText);
+    }
+
     /**
      * 初始化主视图右边部分
      *

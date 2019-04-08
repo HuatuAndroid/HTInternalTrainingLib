@@ -49,6 +49,7 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
     @Override
     protected void processLogic(Bundle savedInstanceState) {
        mPresenter.getData();
+       mPresenter.getIsBanned();
     }
 
     @Override

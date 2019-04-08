@@ -73,7 +73,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
     //前面传的参数：插入图片的个数
     private int pic_size = 0;
     //插入图片的最大数量
-    private final int maxicSize = 9;
+    private int maxicSize = 9;
 
     private File mFileTemp;
 
@@ -106,6 +106,7 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
         Intent intent = getIntent();
         folder = intent.getStringExtra(CommonUtils.LOCAL_FOLDER_NAME);
         pic_size = intent.getIntExtra("pic_size", 0);
+        maxicSize = intent.getIntExtra("maxicSize", 9);
 
         if (folder == null) {
             folder = getResourcesImage(this, helper.getFolderMap());
@@ -157,6 +158,8 @@ public class LocalAlbumDetailActicity extends MvpActivity implements View.OnClic
 
             }
         });
+
+        mPicTopBarView.settvRight("确定(0/" + maxicSize + ")");
 
         mPicTopBarView.setListener((v, action, extra) -> {
             //点击back键退出时，按键响应

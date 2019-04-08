@@ -30,6 +30,7 @@ import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
+import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.BaseActivity;
 import com.wb.baselib.utils.StatusBarUtil;
 
@@ -117,8 +118,14 @@ public class CommunityActivity extends BaseActivity{
         ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CommunityActivity.this, NTopicEditActivity.class);
-                startActivity(intent);
+                //需要判断，用户是否被禁言
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    Intent intent = new Intent(CommunityActivity.this, NTopicEditActivity.class);
+                    startActivity(intent);
+                }else{
+                    showShortToast("你已被禁言");
+                }
             }
         });
         ivContacts.setOnClickListener(new View.OnClickListener() {

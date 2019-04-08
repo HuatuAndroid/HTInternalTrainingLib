@@ -9,6 +9,7 @@ import com.example.module_employees_world.bean.CommunityDiscussBean;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.GroupDetailsBean;
 import com.example.module_employees_world.bean.GuideBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.MyItemBean;
 import com.example.module_employees_world.bean.MyPartBean;
 import com.example.module_employees_world.bean.ParentBean;
@@ -43,7 +44,7 @@ public interface CommunityServiceApi {
      * @return
      */
     @GET(CommunityHttpConfig.GROUPLIST)
-    Observable<Result<CommunityGroupBean>> getGroupList(@Query("page") int page);
+    Observable<Result<CommunityGroupBean>> getGroupList(@Query("page") int page,@Query("limit") int limit);
 
     /**
      * 加入或退出小组
@@ -176,7 +177,7 @@ public interface CommunityServiceApi {
      * 我的参与
      */
     @GET(CommunityHttpConfig.MYPART)
-    Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page);
+    Observable<Result<MyPartBean>> getMyPartData(@Query("page") int page,@Query("limit") int limit);
 
     @FormUrlEncoded
     @POST(CommunityHttpConfig.editQuestion)
@@ -199,4 +200,10 @@ public interface CommunityServiceApi {
     @POST(CommunityHttpConfig.editPost)
     Observable<Result> editPost(@Field("id") String id, @Field("title") String title, @Field("content") String content,
                                        @Field("is_anonymity") String is_anonymity, @Field("type") String type);
+
+    /**
+     * 广告
+     */
+    @POST(CommunityHttpConfig.isBanned)
+    Observable<Result<IsBannedBean>> getIsBanned();
 }

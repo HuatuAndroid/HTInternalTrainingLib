@@ -62,4 +62,6 @@ public interface CommunityHttpConfig {
     String invitationUser="api/app/discuss/invitation";
     /**编辑帖子*/
     String editPost="api/app/discuss/editQuestion";
+    /**app-判断是否可以发表评论*/
+    String isBanned="api/app/discuss/isBanned";
 }
