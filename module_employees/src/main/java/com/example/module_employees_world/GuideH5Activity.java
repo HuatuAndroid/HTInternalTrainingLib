@@ -1,9 +1,11 @@
 package com.example.module_employees_world;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -36,8 +38,12 @@ public class GuideH5Activity extends BaseActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvTitle.setText(getIntent().getStringExtra("title"));
         wv.setWebViewClient(new WebViewClient());
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            wv.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        }
+        wv.getSettings().setJavaScriptEnabled(true);//启用js
+        wv.getSettings().setBlockNetworkImage(false);//解决图片不显示
         wv.loadUrl(getIntent().getStringExtra("url"));
-
     }
 
     @Override
