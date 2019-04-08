@@ -420,7 +420,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         } else if (v.getId() == R.id.mTvXiaoXu) {
             //点击 选择小组
-            StartActivityCommon.startActivityForResult(this, SelectGroupActivity.class, CommonUtils.SELECT_GROUP);
+            //先要判断是否选择过小组
+            if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
+                StartActivityCommon.startActivityForResult(this, SelectGroupActivity.class, CommonUtils.SELECT_GROUP);
+            }else{
+                Intent intent = new Intent(this, SelectGroupActivity.class);
+                intent.putExtra("groupId", groupId);
+                startActivityForResult(intent, CommonUtils.SELECT_GROUP);
+            }
 
         } else if (v.getId() == R.id.mIvA) {
             //点击 @
