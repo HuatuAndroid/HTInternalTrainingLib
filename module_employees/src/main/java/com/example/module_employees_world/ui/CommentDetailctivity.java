@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.CommentChildrenAdapter;
@@ -36,6 +37,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.http.HttpConfig;
@@ -156,12 +158,17 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 评论回复
-                if (commentDetailBean!=null){
-                    Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
-                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
-                    startActivity(intent);
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    if (commentDetailBean!=null){
+                        Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
+                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
+                        startActivity(intent);
+                    }
+                }else{
+                    showShortToast("你已被禁言");
                 }
 
             }
@@ -170,12 +177,18 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 评论回复
-                if (commentDetailBean!=null){
-                    Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
-                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
-                    startActivity(intent);
+
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    if (commentDetailBean!=null){
+                        Intent intent = new Intent(CommentDetailctivity.this, CommentDialogActivity.class);
+                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,commentDetailBean.questionId+"");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentDetailBean.id+"");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,commentDetailBean.userName);
+                        startActivity(intent);
+                    }
+                }else{
+                    showShortToast("你已被禁言");
                 }
 
             }
@@ -370,12 +383,19 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     break;
                 case RxBusMessageBean.MessageType.POST_111:
                     // 2019/3/30 回复子评论
-                    ParentBean parentBean= (ParentBean) msg.obj;
-                    Intent intent = new Intent(activity, CommentDialogActivity.class);
-                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,parentBean.questionId+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,parentBean.id+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,parentBean.userName);
-                    activity.startActivity(intent);
+                    if (AppUtils.is_banned == 0) {
+                        //发帖
+                        ParentBean parentBean= (ParentBean) msg.obj;
+                        Intent intent = new Intent(activity, CommentDialogActivity.class);
+                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,parentBean.questionId+"");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,parentBean.id+"");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,parentBean.userName);
+                        activity.startActivity(intent);
+                        activity.startActivity(intent);
+                    }else{
+                        Toast.makeText(AppUtils.getContext(), "你已被禁言", Toast.LENGTH_SHORT).show();
+                    }
+
                     break;
                 case RxBusMessageBean.MessageType.POST_112:
                     // : 2019/3/30 子评论点赞

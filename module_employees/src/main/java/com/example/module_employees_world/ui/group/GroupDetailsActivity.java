@@ -24,6 +24,7 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
+import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.StatusBarUtil;
@@ -79,12 +80,17 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //发帖
-                Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
-                intent.putExtra("groupId", groupId);
-                intent.putExtra("groupName", name);
-                startActivity(intent);
 
+                //需要判断，用户是否被禁言
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
+                    intent.putExtra("groupId", groupId);
+                    intent.putExtra("groupName", name);
+                    startActivity(intent);
+                }else{
+                    showShortToast("你已被禁言");
+                }
                 /*if (groupInfoBean.getIs_group().equals("1")) {
                     //发帖
                     Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);

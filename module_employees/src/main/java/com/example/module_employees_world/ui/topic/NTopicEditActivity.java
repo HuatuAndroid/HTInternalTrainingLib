@@ -292,22 +292,22 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
                 List<TopicContentItem> topicContentItems = mTopicEditView.getDatas();
 
-                for (TopicContentItem topicContentItem : topicContentItems){
+                for (TopicContentItem topicContentItem : topicContentItems) {
                     if (TopicContentItem.TYPE_IMG.equals(topicContentItem.type.toString())) {
 
-                        if (!"".equals(topicContentItem.localUrl)){
+                        if (!"".equals(topicContentItem.localUrl)) {
                             isEmpty = true;
                         }
 
                     } else if (TopicContentItem.TYPE_TXT.equals(topicContentItem.type.toString())) {
 
-                        if (!"".equals(topicContentItem.content)){
+                        if (!"".equals(topicContentItem.content)) {
                             isEmpty = true;
                         }
                     }
                 }
 
-                if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty){
+                if ("".equals(mEtTopicTitle.getText().toString()) && !isEmpty) {
 
                     finish();
                     return;
@@ -321,38 +321,32 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
             } else if (action == TopBarView.ACTION_RIGHT_TEXT) {     //点击发布时，按键响应
 
-                if (AppUtils.is_banned == 0) {
-
-                    String title = mEtTopicTitle.getText().toString();
-                    List<TopicContentItem> datas = mTopicEditView.getDatas();
-                    if (TextUtils.isEmpty(title)) {
-                        showShortToast("标题不能为空");
-                        return;
-                    }
-                    if (datas == null || datas.size() == 0) {
-                        showShortToast("内容不能为空");
-                        return;
-                    }
-
-                    if (TextUtils.isEmpty(groupId) || "".equals(groupId)) {
-                        showShortToast("请选择小组");
-                        return;
-                    }
-
-                    showLoadV("提交中....");
-
-                    TopicContentItem[] imageItems = mTopicEditView.getImageItems();
-
-                    if (imageItems != null && imageItems.length != 0) {
-                        mPresenter.processImage(imageItems);
-                    } else {
-                        mPresenter.processData(getData());
-                    }
-                }else{
-
-                    showShortToast("你已被禁言");
-
+                String title = mEtTopicTitle.getText().toString();
+                List<TopicContentItem> datas = mTopicEditView.getDatas();
+                if (TextUtils.isEmpty(title)) {
+                    showShortToast("标题不能为空");
+                    return;
                 }
+                if (datas == null || datas.size() == 0) {
+                    showShortToast("内容不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(groupId) || "".equals(groupId)) {
+                    showShortToast("请选择小组");
+                    return;
+                }
+
+                showLoadV("提交中....");
+
+                TopicContentItem[] imageItems = mTopicEditView.getImageItems();
+
+                if (imageItems != null && imageItems.length != 0) {
+                    mPresenter.processImage(imageItems);
+                } else {
+                    mPresenter.processData(getData());
+                }
+
             }
         });
 
@@ -395,13 +389,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     /**
      * 修改ui， 选择小组
+     *
      * @param groupName
      */
-    public void setmTvXiaoXuText(String groupName){
+    public void setmTvXiaoXuText(String groupName) {
 
-        if (TextUtils.isEmpty(groupName)){
+        if (TextUtils.isEmpty(groupName)) {
             mTvXiaoXu.setText("选择小组");
-        }else {
+        } else {
             mTvXiaoXu.setText(groupName);
         }
     }
@@ -467,9 +462,9 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                         editText = (EditText) focusedChild;
                     }
 
-                    if (editText != null){
+                    if (editText != null) {
                         SoftKeyboardUtils.showSoftKeyboard(editText);
-                    }else{
+                    } else {
                         //显示软键盘
                         SoftKeyboardUtils.showSoftKeyboard(mEtTopicTitle);
                     }
@@ -484,14 +479,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         } else if (v.getId() == R.id.mIvLineFeed) {
             //点击 换行
             mTopicEditView.AddLineFeed(0, null);
-        }else if (v.getId() == R.id.mHideView){
+        } else if (v.getId() == R.id.mHideView) {
             hideEmojiKeyboardFragment();
             SoftKeyboardUtils.hideSoftKeyboard(this);
-        }else if (v.getId() == R.id.mScrollView){
+        } else if (v.getId() == R.id.mScrollView) {
 
             View childAt = mTopicEditView.getChildAt(0);
 
-            if (childAt != null){
+            if (childAt != null) {
 
                 if (childAt instanceof EditText) {
                     EditText editText = (EditText) childAt;
@@ -645,7 +640,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
 //            Spanned spanned = Html.fromHtml(html);
 
-            mTopicEditView.AddConnect(mEtConnectString,mEtConnectContentString);
+            mTopicEditView.AddConnect(mEtConnectString, mEtConnectContentString);
 
             dialog.dismiss();
         });
@@ -692,7 +687,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
      */
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-        LogUtil.e("onItemClick -- " +tutuIconBean.type + " --- " + tutuIconBean.key);
+        LogUtil.e("onItemClick -- " + tutuIconBean.type + " --- " + tutuIconBean.key);
 
         mTopicEditView.addTutuImg(tutuIconBean.TutuId, tutuIconBean.key);
     }
@@ -732,13 +727,14 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     /**
      * 显示/隐藏输入按钮， ： 表情、换行...
+     *
      * @param boo
      */
-    public void mHideView(boolean boo){
+    public void mHideView(boolean boo) {
 
         if (boo) {
             mViewInputField.setVisibility(View.GONE);
-        }else{
+        } else {
             mViewInputField.setVisibility(View.VISIBLE);
         }
 

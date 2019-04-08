@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.ImgAdapter;
@@ -55,6 +56,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
@@ -87,19 +89,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     private TopBarView topBarView;
     private PostDetailAdapter postDetailAdapter;
-    private RecyclerView tvImg,mRvPost;
+    private RecyclerView tvImg, mRvPost;
     private RelativeLayout rlOpen;
-    private TextView tvDetailText,tvName,tvOpen,tvHtml,tvClose,tvTitle,tvPartName,tvPostType,tvTime,tvBrowseNum,tvTopicGroup,tvCommentNum
-            ,tvComment,tvPostNum,tvPostZan,tvSoleName,tvSolePartName,tvSoleTitle,tvSoleTime;
+    private TextView tvDetailText, tvName, tvOpen, tvHtml, tvClose, tvTitle, tvPartName, tvPostType, tvTime, tvBrowseNum, tvTopicGroup, tvCommentNum, tvComment, tvPostNum, tvPostZan, tvSoleName, tvSolePartName, tvSoleTitle, tvSoleTime;
     private SmartRefreshLayout smartRefreshLayout;
-    private ImageView ivAvatar,ivBgUser,ivSoleAvatar,ivSoleImg,ivSolegif;
-    private LinearLayout llDev1,llDev2,llContainerFab,ll_solve_root;
-    private ArrayList<String> imgList = new ArrayList<>();;
+    private ImageView ivAvatar, ivBgUser, ivSoleAvatar, ivSoleImg, ivSolegif;
+    private LinearLayout llDev1, llDev2, llContainerFab, ll_solve_root;
+    private ArrayList<String> imgList = new ArrayList<>();
+    ;
     private NestedScrollView scvPost;
-    private FloatingActionButton fabAll,fabEdit,fabTop;
+    private FloatingActionButton fabAll, fabEdit, fabTop;
     private boolean fabEnable;
     private MultipleStatusView multipleStatusview;
-    private List<CommentListBean.ListBean> commentList=new ArrayList<>();
+    private List<CommentListBean.ListBean> commentList = new ArrayList<>();
     private int page = 1;
     private int limit = 10;
     private ImgAdapter imgAdapter;
@@ -108,7 +110,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     private PostDetailBean postDetailBean;
     private CommontPopw commontPopw;
     private MyHandler myHandler;
-    private final static int ACTIVITY_FOR_REQUEST_ID=1000;
+    private final static int ACTIVITY_FOR_REQUEST_ID = 1000;
 
     @Override
     protected PostDetailPersenter onCreatePresenter() {
@@ -118,22 +120,22 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this,Color.parseColor("#007AFF"));
+        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         question_id = getIntent().getStringExtra("question_id");
-        mPresenter.getPostDetail(question_id,"1");
+        mPresenter.getPostDetail(question_id, "1");
 //        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
 
-        String htmlStr="<p>11.26测试字体加粗11.26测试字体加粗11.26测试字体加粗<\\/p><p>11.26测试字体加粗倾斜11.26测试字体加粗倾斜11.26测试字体加粗倾斜<\\/p><p>11.26测试字体下划线11.26测试字体下划线11.26测试字体下划线<\\/p><p>11.26测试字体中划线11.26测试字体中划线11.26测试字体中划线<\\/p><p><span style=\\\"color: rgb(230, 0, 0);\\\">11.26测试字体颜色11.26测试字体颜色11.26测试字体颜色<\\/span><\\/p><p>链接：<a href=\\\"https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg\\\" target=\\\"_blank\\\">https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg<\\/a><\\/p><p>图片：<\\/p>";
+        String htmlStr = "<p>11.26测试字体加粗11.26测试字体加粗11.26测试字体加粗<\\/p><p>11.26测试字体加粗倾斜11.26测试字体加粗倾斜11.26测试字体加粗倾斜<\\/p><p>11.26测试字体下划线11.26测试字体下划线11.26测试字体下划线<\\/p><p>11.26测试字体中划线11.26测试字体中划线11.26测试字体中划线<\\/p><p><span style=\\\"color: rgb(230, 0, 0);\\\">11.26测试字体颜色11.26测试字体颜色11.26测试字体颜色<\\/span><\\/p><p>链接：<a href=\\\"https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg\\\" target=\\\"_blank\\\">https:\\/\\/www.baidu.com\\/index.php?tn=monline_3_dg<\\/a><\\/p><p>图片：<\\/p>";
         String s = filterHtml(htmlStr);
-        Log.d("aaaaa",s);
+        Log.d("aaaaa", s);
 
     }
 
-    public String filterHtml(String htmlStr){
+    public String filterHtml(String htmlStr) {
         Pattern p_html = Pattern.compile("<[^>]+>", Pattern.CASE_INSENSITIVE);
         Matcher m_html = p_html.matcher(htmlStr);
-        return  m_html.replaceAll("");
+        return m_html.replaceAll("");
     }
 
 
@@ -143,28 +145,28 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                page=1;
-                mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+                page = 1;
+                mPresenter.getCommentList(question_id, "1", page + "", limit + "");
             }
-        },200);
+        }, 200);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SelectParticipantActivity.intentCode){
+        if (requestCode == SelectParticipantActivity.intentCode) {
             ContactsBean.DataBean.StaffsBean staffsBean = (ContactsBean.DataBean.StaffsBean) data.getSerializableExtra("staffsBean");
             showLoadDiaLog("");
-            mPresenter.invitationUser(staffsBean.id+"",question_id);
+            mPresenter.invitationUser(staffsBean.id + "", question_id);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (myHandler!=null){
+        if (myHandler != null) {
             myHandler.removeCallbacksAndMessages(null);
-            myHandler=null;
+            myHandler = null;
         }
         RxBus.getIntanceBus().unSubscribe(this);
     }
@@ -207,11 +209,11 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         ivSoleAvatar = findViewById(R.id.iv_solve_avatar);
         ivSoleImg = findViewById(R.id.iv_solve_img);
         ivSolegif = findViewById(R.id.iv_solve_gif);
-        tvSoleName=findViewById(R.id.tv_solve_name);
-        tvSolePartName=findViewById(R.id.tv_solve_part);
-        tvSoleTitle=findViewById(R.id.tv_solve_title);
-        tvSoleTime=findViewById(R.id.tv_solve_time);
-        ll_solve_root=findViewById(R.id.ll_solve_root);
+        tvSoleName = findViewById(R.id.tv_solve_name);
+        tvSolePartName = findViewById(R.id.tv_solve_part);
+        tvSoleTitle = findViewById(R.id.tv_solve_title);
+        tvSoleTime = findViewById(R.id.tv_solve_time);
+        ll_solve_root = findViewById(R.id.ll_solve_root);
 
         multipleStatusview.showContent();
         tvCommentNum.setText("全部评论 (" + 0 + ")");
@@ -221,14 +223,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostsDetailActivity.this, PictuirePreviewActivity.class);
-                intent.putStringArrayListExtra(PictuirePreviewActivity.TAG_JUMP,imgList);
+                intent.putStringArrayListExtra(PictuirePreviewActivity.TAG_JUMP, imgList);
                 startActivity(intent);
             }
         });
         tvImg.setNestedScrollingEnabled(false);
-        tvImg.setLayoutManager(new GridLayoutManager(this,4));
+        tvImg.setLayoutManager(new GridLayoutManager(this, 4));
         tvImg.setAdapter(imgAdapter);
-        postDetailAdapter = new PostDetailAdapter(this,commentList,myHandler);
+        postDetailAdapter = new PostDetailAdapter(this, commentList, myHandler);
         mRvPost.setNestedScrollingEnabled(false);
         mRvPost.setLayoutManager(new LinearLayoutManager(this));
         mRvPost.setAdapter(postDetailAdapter);
@@ -239,7 +241,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             }
         });*/
 
-        RefreshUtils.getInstance(smartRefreshLayout,this ).defaultRefreSh();
+        RefreshUtils.getInstance(smartRefreshLayout, this).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(false);
         smartRefreshLayout.setEnableLoadMore(false);
     }
@@ -255,7 +257,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         topBarView.getRightImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (postsDetailPopw!=null){
+                if (postsDetailPopw != null) {
                     postsDetailPopw.myShow();
                 }
             }
@@ -268,7 +270,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 scvPost.post(new Runnable() {
                     @Override
                     public void run() {
-                        scvPost.scrollTo(0,0);
+                        scvPost.scrollTo(0, 0);
                     }
                 });
             }
@@ -281,7 +283,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 scvPost.post(new Runnable() {
                     @Override
                     public void run() {
-                        scvPost.scrollTo(0,0);
+                        scvPost.scrollTo(0, 0);
                     }
                 });
             }
@@ -290,14 +292,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (postDetailBean!=null){
-                    Intent intent = new Intent(PostsDetailActivity.this, CommentDialogActivity.class);
-                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,postDetailBean.questionInfo.id+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,"0");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,postDetailBean.questionInfo.userName);
-                    startActivity(intent);
-                }
 
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    if (postDetailBean != null) {
+                        Intent intent = new Intent(PostsDetailActivity.this, CommentDialogActivity.class);
+                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, postDetailBean.questionInfo.id + "");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, "0");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME, postDetailBean.questionInfo.userName);
+                        startActivity(intent);
+                    }
+                } else {
+                    showShortToast("你已被禁言");
+                }
             }
         });
         tvPostNum.setOnClickListener(new View.OnClickListener() {
@@ -310,9 +317,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void onClick(View v) {
                 // : 2019/3/27 点赞
-                if (postDetailBean!=null){
+                if (postDetailBean != null) {
                     showLoadDiaLog("");
-                    mPresenter.postsLike(postDetailBean.questionInfo.id+"");
+                    mPresenter.postsLike(postDetailBean.questionInfo.id + "");
                 }
             }
         });
@@ -321,18 +328,18 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         fabAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fabEnable){
+                if (fabEnable) {
                     llContainerFab.setVisibility(View.GONE);
-                    fabEnable=false;
-                }else {
+                    fabEnable = false;
+                } else {
                     AnimationSet animationSet = new AnimationSet(true);
                     animationSet.addAnimation(new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f));
-                    animationSet.addAnimation(new AlphaAnimation(0.5f,1.0f));
+                    animationSet.addAnimation(new AlphaAnimation(0.5f, 1.0f));
                     animationSet.setInterpolator(new MyInterpolator(0.5f));
                     animationSet.setDuration(200);
                     llContainerFab.setAnimation(animationSet);
                     llContainerFab.setVisibility(View.VISIBLE);
-                    fabEnable=true;
+                    fabEnable = true;
                 }
             }
         });
@@ -341,7 +348,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/29
-                ToastUtils.showToast(PostsDetailActivity.this,"发帖");
+                ToastUtils.showToast(PostsDetailActivity.this, "发帖");
 
             }
         });
@@ -351,7 +358,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 scvPost.post(new Runnable() {
                     @Override
                     public void run() {
-                        scvPost.scrollTo(0,0);
+                        scvPost.scrollTo(0, 0);
                     }
                 });
             }
@@ -365,7 +372,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 if (cover) {
                     tvTitle.setVisibility(View.VISIBLE);
                     topBarView.getCenterTextView().setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     tvTitle.setVisibility(View.INVISIBLE);
                     topBarView.getCenterTextView().setVisibility(View.VISIBLE);
 
@@ -376,15 +383,15 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+                mPresenter.getCommentList(question_id, "1", page + "", limit + "");
             }
         });
 
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
-                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114){
-                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_COMMENT,++postDetailBean.questionInfo.commentCount+""));
+                if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.POST_114) {
+                    RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_COMMENT, ++postDetailBean.questionInfo.commentCount + ""));
 // TODO: 2019/4/5 添加二级评论时，点赞状态错乱，需修改后才能用下面这段代码，现在暂时掉接口刷新
                     /*CommentInsertBean insertBean = (CommentInsertBean) rxMessageBean.getMessage();
                     String comment_id = (String) rxMessageBean.getMessage1();
@@ -414,10 +421,12 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {}
+    protected void processLogic(Bundle savedInstanceState) {
+    }
 
     /**
      * 加载HTML文本
+     *
      * @param activityContent
      * @param tvHtml
      */
@@ -426,13 +435,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         String decodeContent = new String(EmojiUtils.decode(activityContent.trim()));
         for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
             String key = TutuPicInit.EMOJICONS.get(i).key;
-            if (decodeContent.contains(key)){
-                String content="<\\br><img src=\"date:res="+TutuPicInit.EMOJICONS.get(i).TutuId+"\"><\\br>";
-                decodeContent=decodeContent.replace(key,content);
+            if (decodeContent.contains(key)) {
+                String content = "<\\br><img src=\"date:res=" + TutuPicInit.EMOJICONS.get(i).TutuId + "\"><\\br>";
+                decodeContent = decodeContent.replace(key, content);
             }
         }
 
-        final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
+        final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth() * 0.95);
         String finalDecodeContent = decodeContent;
         new Thread(new Runnable() {
             @Override
@@ -443,33 +452,33 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                         Drawable drawable;
                         int resType;
                         //临时解决方案，介于目前前端上传图片没base64编码，web端有base64编码，判断是否通过base64编码临时解决
-                        if (source.startsWith("data:image/")){
+                        if (source.startsWith("data:image/")) {
                             drawable = getBase64ImageNetwork(source);
-                            resType=0;
-                        }else if (source.startsWith("date:res")){
-                            String resId = source.substring(source.indexOf("=")+1, source.length());
+                            resType = 0;
+                        } else if (source.startsWith("date:res")) {
+                            String resId = source.substring(source.indexOf("=") + 1, source.length());
                             drawable = getResources().getDrawable(Integer.valueOf(resId));
-                            resType=1;
-                        }else {
+                            resType = 1;
+                        } else {
                             drawable = getImageNetwork(source);
-                            resType=2;
+                            resType = 2;
                         }
 
                         if (drawable == null) {
                             drawable = getResources().getDrawable(R.drawable.image_failure);
-                            resType=0;
+                            resType = 0;
                         }
-                        switch (resType){
+                        switch (resType) {
                             case 0:
                             case 2:
                                 int minimumWidth = drawable.getMinimumWidth();
                                 int minimumHeight = drawable.getMinimumHeight();
-                                int height = (int) (((float)screenWidth / minimumWidth) * minimumHeight);
-                                drawable.setBounds(0, 0,screenWidth ,height);
+                                int height = (int) (((float) screenWidth / minimumWidth) * minimumHeight);
+                                drawable.setBounds(0, 0, screenWidth, height);
                                 break;
                             case 1:
                                 //GIF大小暂写死
-                                drawable.setBounds(0, 0,360 ,360);
+                                drawable.setBounds(0, 0, 360, 360);
                                 break;
                         }
 
@@ -489,6 +498,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     /**
      * 过去Base64格式的图片
+     *
      * @param imageUrl
      * @return
      */
@@ -500,6 +510,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     /**
      * 获取URL格式图片
+     *
      * @param imageUrl
      * @return
      */
@@ -525,14 +536,15 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 
     /**
      * 对网络获取图片压缩处理
+     *
      * @param inputStream
      * @return
      * @throws Exception
      */
-    public static Bitmap getFitSampleBitmap(InputStream  inputStream) throws Exception{
+    public static Bitmap getFitSampleBitmap(InputStream inputStream) throws Exception {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        options.inPreferredConfig=Bitmap.Config.ALPHA_8;
+        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
         byte[] bytes = readStream(inputStream);
         BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
         options.inSampleSize = 2;
@@ -582,15 +594,17 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     }
 
     @Override
-    public void showLoadV(String msg) {}
+    public void showLoadV(String msg) {
+    }
 
     @Override
-    public void closeLoadV() {}
+    public void closeLoadV() {
+    }
 
     @Override
     public void SuccessData(Object o) {
         List<CommentListBean.ListBean> listBeanList = (List<CommentListBean.ListBean>) o;
-        if (page==1){
+        if (page == 1) {
             commentList.clear();
         }
         commentList.addAll(listBeanList);
@@ -623,64 +637,64 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     public void getPostDetail(PostDetailBean postDetailBean) {
         hidLoadDiaLog();
         // : 2019/3/26
-        this.postDetailBean=postDetailBean;
+        this.postDetailBean = postDetailBean;
         tvTitle.setText(postDetailBean.questionInfo.title);
         topBarView.getCenterTextView().setText(postDetailBean.questionInfo.title);
         Picasso.with(this).load(postDetailBean.questionInfo.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
         tvName.setText(postDetailBean.questionInfo.userName);
         tvPartName.setText(postDetailBean.questionInfo.departmentName);
         tvTime.setText(postDetailBean.questionInfo.createdAt);
-        tvBrowseNum.setText("l  "+postDetailBean.questionInfo.readCount+"人浏览");
-        tvTopicGroup.setText("【"+postDetailBean.questionInfo.groupName+"】");
-        tvCommentNum.setText("全部评论 (" + postDetailBean.questionInfo.commentCount+ ")");
-        tvPostNum.setText(postDetailBean.questionInfo.commentCount+"");
-        tvPostZan.setText(postDetailBean.questionInfo.likeCount+"");
+        tvBrowseNum.setText("l  " + postDetailBean.questionInfo.readCount + "人浏览");
+        tvTopicGroup.setText("【" + postDetailBean.questionInfo.groupName + "】");
+        tvCommentNum.setText("全部评论 (" + postDetailBean.questionInfo.commentCount + ")");
+        tvPostNum.setText(postDetailBean.questionInfo.commentCount + "");
+        tvPostZan.setText(postDetailBean.questionInfo.likeCount + "");
         tvDetailText.setText(postDetailBean.questionInfo.contentText);
-        setActivityContent(postDetailBean.questionInfo.contentText,tvDetailText);
+        setActivityContent(postDetailBean.questionInfo.contentText, tvDetailText);
         //1=已点赞 0 未点赞
-        if (postDetailBean.questionInfo.isLike==0){
+        if (postDetailBean.questionInfo.isLike == 0) {
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan);
-            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-            tvPostZan.setCompoundDrawables(drawable,null,null,null);
-        }else{
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvPostZan.setCompoundDrawables(drawable, null, null, null);
+        } else {
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan_able);
-            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-            tvPostZan.setCompoundDrawables(drawable,null,null,null);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvPostZan.setCompoundDrawables(drawable, null, null, null);
         }
         //帖子类型 1交流 2建议 3提问
-        if (postDetailBean.questionInfo.type==1){
+        if (postDetailBean.questionInfo.type == 1) {
             tvPostType.setVisibility(View.INVISIBLE);
-        }else if (postDetailBean.questionInfo.type==2){
+        } else if (postDetailBean.questionInfo.type == 2) {
             tvPostType.setVisibility(View.VISIBLE);
-            if (postDetailBean.questionInfo.solveStatus==0){
+            if (postDetailBean.questionInfo.solveStatus == 0) {
                 tvPostType.setText("未采纳");
-            }else {
+            } else {
                 topBarView.getRightImageButton().setVisibility(View.GONE);
                 tvPostType.setVisibility(View.INVISIBLE);
                 ivBgUser.setVisibility(View.VISIBLE);
             }
-        }else if (postDetailBean.questionInfo.type==3){
+        } else if (postDetailBean.questionInfo.type == 3) {
             tvPostType.setVisibility(View.VISIBLE);
-            if (postDetailBean.questionInfo.solveStatus==0){
+            if (postDetailBean.questionInfo.solveStatus == 0) {
                 tvPostType.setText("未解决");
                 ll_solve_root.setVisibility(View.GONE);
-            }else {
+            } else {
                 tvPostType.setText("已解决");
                 ll_solve_root.setVisibility(View.VISIBLE);
                 topBarView.getRightImageButton().setVisibility(View.GONE);
                 //展示已采纳的评论
-                if (postDetailBean.solve_comment!=null){
+                if (postDetailBean.solve_comment != null) {
                     Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
-                    if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentPicture)){
+                    if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentPicture)) {
                         ivSoleImg.setVisibility(View.VISIBLE);
-                        GlideManager.getInstance().setCommonPhoto(ivSoleImg, R.drawable.course_image ,this , HttpConfig.newInstance().getmBaseUrl()+"/"+postDetailBean.solve_comment.commentPicture ,false );
-                    }else {
+                        GlideManager.getInstance().setCommonPhoto(ivSoleImg, R.drawable.course_image, this, HttpConfig.newInstance().getmBaseUrl() + "/" + postDetailBean.solve_comment.commentPicture, false);
+                    } else {
                         ivSoleImg.setVisibility(View.GONE);
                     }
-                    if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentFace)){
+                    if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentFace)) {
                         ivSolegif.setVisibility(View.VISIBLE);
-                        GlideManager.getInstance().setGlideResourceImage(ivSolegif, TutuPicInit.getResFromEmojicList(postDetailBean.solve_comment.commentFace),R.drawable.image_failure, R.drawable.course_image ,this);
-                    }else {
+                        GlideManager.getInstance().setGlideResourceImage(ivSolegif, TutuPicInit.getResFromEmojicList(postDetailBean.solve_comment.commentFace), R.drawable.image_failure, R.drawable.course_image, this);
+                    } else {
                         ivSolegif.setVisibility(View.GONE);
                     }
                     tvSoleName.setText(postDetailBean.solve_comment.userName);
@@ -696,20 +710,20 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvDetailText.post(new Runnable() {
             @Override
             public void run() {
-                if (tvDetailText.getLineCount()==5||postDetailBean.questionInfo.contentImg.size()>0){
+                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0) {
                     tvOpen.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvOpen.setVisibility(View.INVISIBLE);
                 }
             }
         });
-        setActivityContent(postDetailBean.questionInfo.content,tvHtml);
+        setActivityContent(postDetailBean.questionInfo.content, tvHtml);
 
         imgList.clear();
         imgList.addAll(postDetailBean.questionInfo.contentImg);
         imgAdapter.notifyDataSetChanged();
 
-        postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this,postDetailBean.questionInfo.type,postDetailBean.info,postDetailBean.questionInfo.solveStatus,myHandler);
+        postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this, postDetailBean.questionInfo.type, postDetailBean.info, postDetailBean.questionInfo.solveStatus, myHandler);
 
     }
 
@@ -717,19 +731,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     public void commentLike(CommentLikeBean commentLikeBean, TextView tvZan) {
         hidLoadDiaLog();
         int integer = Integer.valueOf(tvZan.getText().toString());
-        if (commentLikeBean.resultType==1){
+        if (commentLikeBean.resultType == 1) {
             //取消成功
-            tvZan.setText(--integer+"");
+            tvZan.setText(--integer + "");
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan);
-            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-            tvZan.setCompoundDrawables(drawable,null,null,null);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvZan.setCompoundDrawables(drawable, null, null, null);
 
-        }else if (commentLikeBean.resultType==2){
+        } else if (commentLikeBean.resultType == 2) {
             //点赞成功
-            tvZan.setText(++integer+"");
+            tvZan.setText(++integer + "");
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan_able);
-            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-            tvZan.setCompoundDrawables(drawable,null,null,null);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvZan.setCompoundDrawables(drawable, null, null, null);
         }
 
     }
@@ -739,63 +753,63 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         // : 2019/3/29 帖子点赞
         hidLoadDiaLog();
         int integer = Integer.valueOf(tvPostZan.getText().toString());
-        if (commentLikeBean.resultType==1){
-            tvPostZan.setText(--integer+"");
+        if (commentLikeBean.resultType == 1) {
+            tvPostZan.setText(--integer + "");
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan);
-            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-            tvPostZan.setCompoundDrawables(drawable,null,null,null);
-        }else if (commentLikeBean.resultType==2){
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvPostZan.setCompoundDrawables(drawable, null, null, null);
+        } else if (commentLikeBean.resultType == 2) {
             //点赞成功
-            tvPostZan.setText(++integer+"");
+            tvPostZan.setText(++integer + "");
             Drawable drawable = getResources().getDrawable(R.drawable.post_comment_zan_able);
-            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-            tvPostZan.setCompoundDrawables(drawable,null,null,null);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvPostZan.setCompoundDrawables(drawable, null, null, null);
         }
-        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_LIKE,tvPostZan.getText().toString().trim()));
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_LIKE, tvPostZan.getText().toString().trim()));
     }
 
     @Override
     public void deletePost() {
         hidLoadDiaLog();
         // TODO: 2019/3/29 事件通知首页刷新数据
-        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE,""));
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE, ""));
         finish();
     }
 
     @Override
     public void deleteComment(int partenPosition, int position) {
         hidLoadDiaLog();
-        String comment= "";
-        if (position == -1){
+        String comment = "";
+        if (position == -1) {
             //删除评论
             commentList.remove(partenPosition);
-            if (postDetailBean.questionInfo.commentCount>0){
-                comment = --postDetailBean.questionInfo.commentCount+"";
-            tvCommentNum.setText("全部评论 (" + comment+ ")");
-            }else {
+            if (postDetailBean.questionInfo.commentCount > 0) {
+                comment = --postDetailBean.questionInfo.commentCount + "";
+                tvCommentNum.setText("全部评论 (" + comment + ")");
+            } else {
                 comment = "0";
-                tvCommentNum.setText("全部评论 (" + comment+ ")");
+                tvCommentNum.setText("全部评论 (" + comment + ")");
             }
             postDetailAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             //删除子评论
             int postId = commentList.get(partenPosition).id;
-            mPresenter.commentChildrenList(partenPosition,postId,1,2,1);
+            mPresenter.commentChildrenList(partenPosition, postId, 1, 2, 1);
             showLoadDiaLog("");
 //            commentList.get(partenPosition).parent.remove(position);
 //            commentList.get(partenPosition).count--;
         }
-        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD,comment));
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, comment));
     }
 
     @Override
     public void editQuestion() {
         hidLoadDiaLog();
         //刷新数据
-        page=1;
+        page = 1;
         showLoadDiaLog("");
-        mPresenter.getPostDetail(question_id,"1");
-        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+        mPresenter.getPostDetail(question_id, "1");
+        mPresenter.getCommentList(question_id, "1", page + "", limit + "");
     }
 
     @Override
@@ -803,7 +817,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         // : 2019/4/4 采纳帖子
         hidLoadDiaLog();
         showLoadDiaLog("");
-        mPresenter.getPostDetail(question_id,"1");
+        mPresenter.getPostDetail(question_id, "1");
 //        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
     }
 
@@ -812,33 +826,33 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         // : 2019/4/4 采纳评论
         hidLoadDiaLog();
         showLoadDiaLog("");
-        page=1;
-        mPresenter.getPostDetail(question_id,"1");
-        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
+        page = 1;
+        mPresenter.getPostDetail(question_id, "1");
+        mPresenter.getCommentList(question_id, "1", page + "", limit + "");
     }
 
     @Override
     public void invitationUser() {
         //邀请回答
         hidLoadDiaLog();
-        ToastUtils.showToast(this,"邀请回答成功");
+        ToastUtils.showToast(this, "邀请回答成功");
     }
 
     @Override
     public void commentChildrenList(List<ParentBean> childrenBeans, int partenPosition) {
         hidLoadDiaLog();
         // : 2019/4/4 子评论更新
-        if (commentList.get(partenPosition).parent!=null){
+        if (commentList.get(partenPosition).parent != null) {
             commentList.get(partenPosition).parent.clear();
             commentList.get(partenPosition).parent.addAll(childrenBeans);
-        }else {
-            commentList.get(partenPosition).parent=childrenBeans;
+        } else {
+            commentList.get(partenPosition).parent = childrenBeans;
         }
         commentList.get(partenPosition).count--;
         postDetailAdapter.notifyDataSetChanged();
     }
 
-    public static class MyHandler extends Handler{
+    public static class MyHandler extends Handler {
 
         private final WeakReference<PostsDetailActivity> weakReference;
 
@@ -851,7 +865,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             int what = msg.what;
             int commentId;
             PostsDetailActivity activity = weakReference.get();
-            switch (what){
+            switch (what) {
                 case RxBusMessageBean.MessageType.POST_101:
                     // : 2019/3/29 删除评论接口
                     commentId = msg.arg1;
@@ -859,7 +873,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     activity.commontPopw = new CommontPopw(activity, "删除评论后，评论下所有回复都会被删除。", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            activity.mPresenter.deleteComment(commentId+"", commentPosition, -1);
+                            activity.mPresenter.deleteComment(commentId + "", commentPosition, -1);
                             activity.showLoadDiaLog("");
                             activity.commontPopw.myDismiss();
                         }
@@ -867,18 +881,18 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     break;
                 case RxBusMessageBean.MessageType.POST_102:
                     // : 2019/3/29 删除子评论接口
-                    commentId=(int)msg.obj;
+                    commentId = (int) msg.obj;
                     int partenPosition = msg.arg1;
                     int position = msg.arg2;
-                    activity.mPresenter.deleteComment(commentId+"",partenPosition,position);
+                    activity.mPresenter.deleteComment(commentId + "", partenPosition, position);
                     break;
                 case RxBusMessageBean.MessageType.POST_103:
-                    CommentListBean.ListBean listBean= (CommentListBean.ListBean) msg.obj;
+                    CommentListBean.ListBean listBean = (CommentListBean.ListBean) msg.obj;
                     // : 2019/3/29 采纳评论
                     activity.commontPopw = new CommontPopw(activity, "确定采纳该建议吗？", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            activity.mPresenter.acceptComment(listBean.id+"");
+                            activity.mPresenter.acceptComment(listBean.id + "");
                             activity.showLoadDiaLog("");
                             activity.commontPopw.myDismiss();
                         }
@@ -889,7 +903,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     activity.commontPopw = new CommontPopw(activity, "确定采纳该建议吗?", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            activity.mPresenter.acceptPosts(activity.question_id,"1");
+                            activity.mPresenter.acceptPosts(activity.question_id, "1");
                             activity.showLoadDiaLog("");
                             activity.commontPopw.myDismiss();
                         }
@@ -897,13 +911,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     break;
                 case RxBusMessageBean.MessageType.POST_105:
                     // TODO: 2019/3/29  邀请回答
-                    activity.startActivityForResult(new Intent(activity, SelectParticipantActivity.class),SelectParticipantActivity.intentCode);
+                    activity.startActivityForResult(new Intent(activity, SelectParticipantActivity.class), SelectParticipantActivity.intentCode);
                     break;
                 case RxBusMessageBean.MessageType.POST_106:
                     // : 2019/3/29  评论点赞
-                    TextView tvZan= (TextView) msg.obj;
-                    commentId=msg.arg1;
-                    activity.mPresenter.commentLike(commentId+"",tvZan);
+                    TextView tvZan = (TextView) msg.obj;
+                    commentId = msg.arg1;
+                    activity.mPresenter.commentLike(commentId + "", tvZan);
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_107:
@@ -913,26 +927,31 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     break;
                 case RxBusMessageBean.MessageType.POST_108:
                     // : 2019/3/29  子评论点赞
-                    TextView tvChildrenZan= (TextView) msg.obj;
-                    commentId=msg.arg1;
-                    activity.mPresenter.commentLike(commentId+"",tvChildrenZan);
+                    TextView tvChildrenZan = (TextView) msg.obj;
+                    commentId = msg.arg1;
+                    activity.mPresenter.commentLike(commentId + "", tvChildrenZan);
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_109:
-                    String userName= (String) msg.obj;
+                    String userName = (String) msg.obj;
                     int questionId = msg.arg1;
                     commentId = msg.arg2;
-                    Intent intent = new Intent(activity, CommentDialogActivity.class);
-                    intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID,questionId+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,commentId+"");
-                    intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,userName);
-                    activity.startActivity(intent);
+                    if (AppUtils.is_banned == 0) {
+                        //发帖
+                        Intent intent = new Intent(activity, CommentDialogActivity.class);
+                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, questionId + "");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, commentId + "");
+                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME, userName);
+                        activity.startActivity(intent);
+                    }else{
+                        Toast.makeText(AppUtils.getContext(), "你已被禁言", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case RxBusMessageBean.MessageType.POST_113:
                     // 修改帖子类型
-                    String type = msg.arg1+"";
+                    String type = msg.arg1 + "";
                     activity.showLoadDiaLog("");
-                    activity.mPresenter.editQuestion(type,activity.question_id);
+                    activity.mPresenter.editQuestion(type, activity.question_id);
                     break;
             }
         }
