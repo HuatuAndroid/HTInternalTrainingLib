@@ -142,7 +142,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SelectParticipantActivity.intentCode) {
+        if (requestCode == SelectParticipantActivity.intentCode && data!=null) {
             ContactsBean.DataBean.StaffsBean staffsBean = (ContactsBean.DataBean.StaffsBean) data.getSerializableExtra("staffsBean");
             showLoadDiaLog("");
             mPresenter.invitationUser(staffsBean.id + "", question_id);
