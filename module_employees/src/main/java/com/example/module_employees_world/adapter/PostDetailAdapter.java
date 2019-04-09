@@ -182,7 +182,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         if (listBean.parent!=null){
             holder.rvOnerComment.setNestedScrollingEnabled(false);
             holder.rvOnerComment.setLayoutManager(new LinearLayoutManager(context));
-            holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count,position,myHandler));
+            holder.rvOnerComment.setAdapter(new CommentOnerAdapter(context,listBean.parent,listBean.count,position,listBean.id,myHandler));
         }
     }
 

@@ -44,12 +44,14 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
     int partenPosition;
     private final int FLAG_IS_LAST=0;
     private final int FLAG_NOT_LAST=1;
+    private int commentId;
     List<ParentBean> parentBeanList;
     PostsDetailActivity.MyHandler myHandler;
 
-    public CommentOnerAdapter(PostsDetailActivity context, List<ParentBean> parentBeanList, int count, int partenPosition, PostsDetailActivity.MyHandler myHandler) {
+    public CommentOnerAdapter(PostsDetailActivity context, List<ParentBean> parentBeanList, int count, int partenPosition, int commentId,PostsDetailActivity.MyHandler myHandler) {
         this.context=context;
         this.count=count;
+        this.commentId=commentId;
         this.partenPosition=partenPosition;
         this.parentBeanList=parentBeanList;
         this.myHandler=myHandler;
@@ -81,7 +83,7 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, CommentDetailctivity.class);
-                    intent.putExtra(CommentDetailctivity.TAG_JUMP,parentBean.parentId);
+                    intent.putExtra(CommentDetailctivity.TAG_JUMP,commentId);
                     context.startActivity(intent);
                 }
             });

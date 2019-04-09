@@ -281,6 +281,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 });
             }
         });
+
         //发布评论
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override

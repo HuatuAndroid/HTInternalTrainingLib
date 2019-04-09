@@ -97,8 +97,9 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             }*/
             viewHolder.title.setText(type + discussListBean.getTitle());
             //头像统一由服务器获取
-            if (!TextUtils.isEmpty(discussListBean.getAvatar()))
+            if (!TextUtils.isEmpty(discussListBean.getAvatar())) {
                 Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
+            }
             viewHolder.read.setText(discussListBean.getRead_count());
             //  viewHolder.content.setText(discussListBean.getContent());
 

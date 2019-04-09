@@ -465,6 +465,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             SoftKeyboardUtils.hideSoftKeyboard(this);
         } else if (v.getId() == R.id.mScrollView) {
 
+            hideEmojiKeyboardFragment();
+
             View childAt = mTopicEditView.getChildAt(0);
 
             if (childAt != null) {
