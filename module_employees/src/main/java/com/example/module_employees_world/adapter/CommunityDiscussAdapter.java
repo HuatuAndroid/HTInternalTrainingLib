@@ -89,7 +89,13 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.llDing.setVisibility(View.GONE);
             viewHolder.llNoDing.setVisibility(View.VISIBLE);
             viewHolder.rlHead.setVisibility(View.VISIBLE);
-            viewHolder.title.setText(discussListBean.getTitle());
+            String type = "";
+            if (discussListBean.getType() == 2) {
+                type = "【建议】";
+            } else if (discussListBean.getType() == 3) {
+                type = "【问题】";
+            }
+            viewHolder.title.setText(type + discussListBean.getTitle());
             //头像统一由服务器获取
             if (!TextUtils.isEmpty(discussListBean.getAvatar()))
                 Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
@@ -110,7 +116,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
                     viewHolder.time.setText(discussListBean.getCreated_at() + status);
                 } else {
                     String status = " | 未解决";
-                    if (discussListBean.getSolve_status() == 1 ) {
+                    if (discussListBean.getSolve_status() == 1) {
                         status = " | 已解决";
                     }
                     viewHolder.time.setText(discussListBean.getCreated_at() + status);
