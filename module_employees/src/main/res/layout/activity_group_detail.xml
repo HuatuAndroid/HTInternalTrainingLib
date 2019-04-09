@@ -10,28 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#007AFF">
+
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="44dp"
             android:layout_height="match_parent"
-            android:src="@drawable/home_title_left_return"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/home_title_left_return" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="小组详情"
             android:textColor="#ffffffff"
-            android:textSize="18sp"
-            android:layout_centerInParent="true"/>
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/ivSearch"
             android:layout_width="44dp"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_search"
             android:layout_alignParentRight="true"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_search" />
 
 
     </RelativeLayout>
@@ -45,12 +46,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <android.support.design.widget.AppBarLayout
+                android:id="@+id/appBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -71,10 +74,10 @@
                         android:padding="15dp">
 
                         <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/group_image"
                             android:layout_width="100dp"
-                            android:layout_height="68dp" />
+                            android:layout_height="68dp"
+                            android:scaleType="fitXY" />
 
 
                         <TextView
@@ -118,12 +121,13 @@
 
                     </RelativeLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
+
                 <View
-                    android:layout_below="@+id/group_rl"
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
-                    android:background="@color/main_bg_grey_f8"
-                    />
+                    android:layout_below="@+id/group_rl"
+                    android:background="@color/main_bg_grey_f8" />
+
                 <com.shizhefei.view.indicator.ScrollIndicatorView
                     android:id="@+id/spring_indicator"
                     android:layout_width="match_parent"
@@ -143,11 +147,11 @@
             android:id="@+id/ivPost"
             android:layout_width="102dp"
             android:layout_height="55dp"
-            android:src="@drawable/img_post"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginRight="24dp"
             android:layout_marginBottom="38dp"
-            android:layout_marginRight="24dp"/>
+            android:src="@drawable/img_post" />
     </RelativeLayout>
 
 </LinearLayout>

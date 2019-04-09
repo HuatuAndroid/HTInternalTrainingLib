@@ -86,6 +86,7 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
                 Intent intent = new Intent(this, GuideH5Activity.class);
                 intent.putExtra("url",guideBean.getLink());
                 intent.putExtra("title",guideBean.getTitle());
+                intent.putExtra("content",guideBean.getContent());
                 startActivity(intent);
                 finish();
             }

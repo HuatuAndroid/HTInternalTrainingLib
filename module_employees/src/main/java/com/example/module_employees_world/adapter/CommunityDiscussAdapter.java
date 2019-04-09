@@ -110,7 +110,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
                     viewHolder.time.setText(discussListBean.getCreated_at() + status);
                 } else {
                     String status = " | 未解决";
-                    if (discussListBean.getSolve_status() == 1) {
+                    if (discussListBean.getSolve_status() == 1 ) {
                         status = " | 已解决";
                     }
                     viewHolder.time.setText(discussListBean.getCreated_at() + status);
