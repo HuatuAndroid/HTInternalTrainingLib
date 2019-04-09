@@ -37,6 +37,7 @@
                 android:textColorHint="#CCCDD4"
                 android:textSize="13sp"
                 android:textColor="#404145"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:drawablePadding="7dp"
                 android:singleLine="true"
                 android:imeOptions="actionSearch"
