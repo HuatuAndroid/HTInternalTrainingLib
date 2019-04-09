@@ -112,6 +112,8 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     private StringBuffer editTextSB = new StringBuffer();
     private RelativeLayout rlImg, rlGif;
 
+    private boolean isHasPic=false;
+    private boolean isHasGif=false;
 
     @Override
     protected CommentSendDialogPresenter onCreatePresenter() {
@@ -181,7 +183,12 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                     files.clear();
 
                     Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
-                    showLoadDiaLog("");
+                    etContent.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showLoadDiaLog("");
+                        }
+                    },200);
                     mPresenter.commitImage(bodyMap);
 
                 } else {
@@ -193,7 +200,12 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                         map.put("file", file);
 
                         Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
-                        showLoadDiaLog("");
+                        etContent.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showLoadDiaLog("");
+                            }
+                        },200);
                         mPresenter.commitImage(bodyMap);
                     }
                 }
@@ -307,6 +319,13 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             }
         });*/
 
+        ivEditArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         tvReplySend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -376,6 +395,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             public void onClick(View v) {
                 commentPicture = "";
                 picNum = 1;
+                isHasPic=false;
                 rlImg.setVisibility(View.GONE);
             }
         });
@@ -384,6 +404,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             @Override
             public void onClick(View v) {
                 commentFace = "";
+                isHasGif=false;
                 rlGif.setVisibility(View.GONE);
             }
         });
@@ -477,6 +498,15 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
             rlImg.setVisibility(View.VISIBLE);
             commentPicture = pathList.get(0).getPath();
             GlideManager.getInstance().setCommonPhoto(ivReplyimg, R.drawable.course_image, this, HttpConfig.newInstance().getmBaseUrl() + "/" + pathList.get(0).getPath(), false);
+
+            //如果上传图片，替换已有表情包
+            isHasPic=true;
+            if (isHasGif){
+                isHasGif=false;
+                commentFace="";
+                ivReplyGif.setImageBitmap(null);
+                rlGif.setVisibility(View.GONE);
+            }
         }
 
     }
@@ -528,10 +558,16 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
     public void onItemClick(TutuIconBean tutuIconBean) {
         commentFace = tutuIconBean.key;
         rlGif.setVisibility(View.VISIBLE);
-//        Glide.with(this).load(tutuIconBean.TutuId).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivReplyGif);
-//        Glide.with(this).load(tutuIconBean.TutuId).into(ivReplyGif);
         GlideManager.getInstance().setGlideResourceImage(ivReplyGif, tutuIconBean.TutuId, R.drawable.image_failure, R.drawable.course_image, this);
-
+// TODO: 2019/4/9
+        //如果上传表情包，替换已有图片
+        isHasGif=true;
+        if (isHasPic){
+            isHasPic=false;
+            commentPicture="";
+            ivReplyPic.setImageBitmap(null);
+            rlImg.setVisibility(View.GONE);
+        }
     }
 
     @Override

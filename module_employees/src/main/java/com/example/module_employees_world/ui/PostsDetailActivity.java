@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -210,6 +211,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         ll_solve_root = findViewById(R.id.ll_solve_root);
 
         multipleStatusview.showContent();
+        topBarView.getRightImageButton().setVisibility(View.GONE);
         tvCommentNum.setText("全部评论 (" + 0 + ")");
         TextView centerTextView = topBarView.getCenterTextView();
         centerTextView.setVisibility(View.INVISIBLE);
@@ -676,6 +678,13 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tvPostZan.setCompoundDrawables(drawable, null, null, null);
         }
+        //当帖子为本人所发、未被采纳、未被解决时，显示右上角按钮
+        if (postDetailBean.questionInfo.allowDel==1&&postDetailBean.solve_comment==null&&postDetailBean.questionInfo.solveStatus==0){
+            topBarView.getRightImageButton().setVisibility(View.VISIBLE);
+        }else {
+            topBarView.getRightImageButton().setVisibility(View.GONE);
+        }
+
         //帖子类型 1交流 2建议 3提问
         if (postDetailBean.questionInfo.type == 1) {
             tvPostType.setVisibility(View.GONE);
@@ -684,7 +693,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             if (postDetailBean.questionInfo.solveStatus == 0) {
                 tvPostType.setText("未采纳");
             } else {
-                topBarView.getRightImageButton().setVisibility(View.GONE);
+
                 tvPostType.setText("已采纳");
                 ivBgUser.setVisibility(View.VISIBLE);
             }
@@ -696,7 +705,6 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             } else {
                 tvPostType.setText("已解决");
                 ll_solve_root.setVisibility(View.VISIBLE);
-                topBarView.getRightImageButton().setVisibility(View.GONE);
                 //展示已采纳的评论
                 if (postDetailBean.solve_comment != null) {
                     Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
