@@ -156,8 +156,15 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                             map.put("file" + i, file);
                         }
                         Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image*//*"));
-                        showLoadDiaLog("");
-                        mPresenter.commitImage(bodyMap);
+                        etContent.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showLoadDiaLog("加载中...");
+                                mPresenter.commitImage(bodyMap);
+                            }
+                        },300);
+
+
                     } else {
                         if (data != null) {
                             String path = data.getStringExtra("mFileTemp");
@@ -168,8 +175,13 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                                 map.put("file" + i, file);
                             }
                             Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image*//*"));
-                            showLoadDiaLog("");
-                            mPresenter.commitImage(bodyMap);
+                            etContent.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showLoadDiaLog("加载中...");
+                                    mPresenter.commitImage(bodyMap);
+                                }
+                            },300);
                         }
                     }
                     //清空选中的图片
@@ -178,19 +190,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                     e.printStackTrace();
                 }
 
-
-                /*if (data == null) return;
-                List<String> result = data.getStringArrayListExtra("result");
-                if (result != null && result.size() > 0) {
-                    Map<String, File> map = new HashMap<>();
-                    for (int i = 0; i < result.size(); i++) {
-                        File file = new File(result.get(i));
-                        map.put("file" + i, file);
-                    }
-                    Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image*//*"));
-                    showLoadDiaLog("");
-                    mPresenter.commitImage(bodyMap);
-                }*/
                 break;
             case CommonUtils.SELECT_GROUP:
                 if (data != null) {
@@ -601,8 +600,11 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             @Override
             public void run() {
                 etContent.setText(spannableString);
-                if (selectPosition>0)
-                etContent.setSelection(selectPosition+1);
+                hidLoadDiaLog();
+                if (selectPosition>0) {
+                    etContent.setSelection(selectPosition+1);
+                }
+
             }
         });
     }
@@ -814,9 +816,10 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
     @Override
     public void commitImage(List<NImageBean> pathList) {
+//        hidLoadDiaLog();
         picNum+=pathList.size();
         for (int i = 0; i < pathList.size(); i++) {
-            // TODO: 2019/2/22 图片等待添加到光标处
+            // : 2019/2/22 图片等待添加到光标处
             int selectionStart = etContent.getSelectionStart();
             Editable text = etContent.getText();
             text.insert(selectionStart,"<br/><img src=\""+ HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(i).getPath()+"\"><br/>");
