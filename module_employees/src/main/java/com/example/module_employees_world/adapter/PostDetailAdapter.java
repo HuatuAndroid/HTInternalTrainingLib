@@ -80,7 +80,9 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         holder.tvCommentTitle.setText(EmojiUtils.decode(listBean.content));
         holder.tvCommentTime.setText(listBean.createdAt);
         holder.tvCommentZan.setText(listBean.likeCount+"");
-        Picasso.with(context).load(listBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
+        if (listBean.avatar!=null&&!"".equals(listBean.avatar)){
+            Picasso.with(context).load(listBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
+        }
         if (!TextUtils.isEmpty(listBean.commentPicture)){
             holder.ivCommentImg.setVisibility(View.VISIBLE);
             GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , HttpConfig.newInstance().getmBaseUrl()+"/"+ listBean.commentPicture ,false );
