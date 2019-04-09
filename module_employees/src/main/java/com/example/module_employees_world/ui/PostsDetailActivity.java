@@ -930,7 +930,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     int questionId = msg.arg1;
                     commentId = msg.arg2;
                     if (AppUtils.is_banned == 0) {
-                        //发帖
+                        //评论
                         Intent intent = new Intent(activity, CommentDialogActivity.class);
                         intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, questionId + "");
                         intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, commentId + "");
