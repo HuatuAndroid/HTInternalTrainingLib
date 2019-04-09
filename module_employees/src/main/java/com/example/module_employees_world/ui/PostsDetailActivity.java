@@ -37,6 +37,7 @@ import com.example.module_employees_world.adapter.PostDetailAdapter;
 import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.common.TutuPicInit;
@@ -89,6 +90,7 @@ import io.reactivex.functions.Consumer;
  */
 public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implements PostsDetailContranct.PostsDetailView {
 
+    private static Message msg;
     private TopBarView topBarView;
     private PostDetailAdapter postDetailAdapter;
     private RecyclerView tvImg, mRvPost;
@@ -145,7 +147,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SelectParticipantActivity.intentCode && data!=null) {
+        if (requestCode == SelectParticipantActivity.intentCode && data != null) {
             ContactsBean.DataBean.StaffsBean staffsBean = (ContactsBean.DataBean.StaffsBean) data.getSerializableExtra("staffsBean");
             showLoadDiaLog("");
             mPresenter.invitationUser(staffsBean.id + "", question_id);
@@ -283,19 +285,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (AppUtils.is_banned == 0) {
-                    //发帖
-                    if (postDetailBean != null) {
-                        Intent intent = new Intent(PostsDetailActivity.this, CommentDialogActivity.class);
-                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, postDetailBean.questionInfo.id + "");
-                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, "0");
-                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME, postDetailBean.questionInfo.userName);
-                        startActivity(intent);
-                    }
-                } else {
-                    showShortToast("你已被禁言");
-                }
+                mPresenter.getIsBanned(3);
             }
         });
         tvPostNum.setOnClickListener(new View.OnClickListener() {
@@ -340,15 +330,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (AppUtils.is_banned == 0) {
-                    //发帖
-                    Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
-                    startActivity(intent);
-                }else{
-                    showShortToast("你已被禁言");
-                }
-
+                // TODO: 2019/3/29
+                //发帖
+                mPresenter.getIsBanned(1);
             }
         });
         fabTop.setOnClickListener(new View.OnClickListener() {
@@ -625,6 +609,35 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     public LifecycleTransformer binLifecycle() {
         return bindToLifecycle();
+    }
+
+    @Override
+    public void getIdBanned(IsBannedBean isBannedBean, int type) {
+        if (isBannedBean.isBanned == 0) {
+            //type = 1 是发帖 2是评论
+            if (type == 1) {
+                //发帖
+                Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
+                startActivity(intent);
+            } else if (type == 2) {
+                String userName = (String) msg.obj;
+                int questionId = msg.arg1;
+                int commentId = msg.arg2;
+                Intent intent = new Intent(PostsDetailActivity.this, CommentDialogActivity.class);
+                intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, questionId + "");
+                intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, commentId + "");
+                intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME, userName);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(PostsDetailActivity.this, CommentDialogActivity.class);
+                intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, postDetailBean.questionInfo.id + "");
+                intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, "0");
+                intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME, postDetailBean.questionInfo.userName);
+                startActivity(intent);
+            }
+        } else {
+            showShortToast("你已被禁言");
+        }
     }
 
     @Override
@@ -910,7 +923,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     break;
                 case RxBusMessageBean.MessageType.POST_105:
                     //  2019/3/29  邀请回答
-                    activity.startActivityForResult(new Intent(activity, SelectParticipantActivity.class),SelectParticipantActivity.intentCode);
+                    activity.startActivityForResult(new Intent(activity, SelectParticipantActivity.class), SelectParticipantActivity.intentCode);
                     break;
                 case RxBusMessageBean.MessageType.POST_106:
                     // : 2019/3/29  评论点赞
@@ -932,19 +945,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     activity.showLoadDiaLog("");
                     break;
                 case RxBusMessageBean.MessageType.POST_109:
-                    String userName = (String) msg.obj;
-                    int questionId = msg.arg1;
-                    commentId = msg.arg2;
-                    if (AppUtils.is_banned == 0) {
-                        //发帖
-                        Intent intent = new Intent(activity, CommentDialogActivity.class);
-                        intent.putExtra(CommentDialogActivity.TAG_QUESTION_ID, questionId + "");
-                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID, commentId + "");
-                        intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME, userName);
-                        activity.startActivity(intent);
-                    }else{
-                        Toast.makeText(AppUtils.getContext(), "你已被禁言", Toast.LENGTH_SHORT).show();
-                    }
+                    activity.msg = msg;
+                    //评论
+                    activity.mPresenter.getIsBanned(2);
                     break;
                 case RxBusMessageBean.MessageType.POST_113:
                     // 修改帖子类型
@@ -955,9 +958,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 case RxBusMessageBean.MessageType.POST_115:
                     // TODO: 2019/4/6 编辑
                     Intent intent1 = new Intent(activity, EditPostsActivity.class);
-                    intent1.putExtra(EditPostsActivity.TAG_TITLE_STR,activity.postDetailBean.questionInfo.title);
-                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_STR,activity.postDetailBean.questionInfo.content);
-                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_ID,activity.postDetailBean.questionInfo.id+"");
+                    intent1.putExtra(EditPostsActivity.TAG_TITLE_STR, activity.postDetailBean.questionInfo.title);
+                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_STR, activity.postDetailBean.questionInfo.content);
+                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_ID, activity.postDetailBean.questionInfo.id + "");
                     activity.startActivity(intent1);
                     break;
             }

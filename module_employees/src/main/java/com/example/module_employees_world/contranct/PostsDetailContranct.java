@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.wb.baselib.base.mvp.BaseModel;
@@ -23,6 +24,7 @@ import io.reactivex.Observable;
 public interface PostsDetailContranct {
 
     interface PostsDetailView extends MvpView{
+        void getIdBanned(IsBannedBean isBannedBean,int type);
         //void  getCommentList(CommentListBean commentListBean);
         void isLoadMore(boolean moreEnable);
         void getPostDetail(PostDetailBean postDetailBean);
@@ -48,6 +50,7 @@ public interface PostsDetailContranct {
         Observable<Result<List<ParentBean>>> commentChildrenList(int commentId,int page,int limit,int st);
         Observable<Result> acceptPosts(String id,String solve_status);
         Observable<Result> acceptComment(String comment_id);
+        Observable<Result<IsBannedBean>> getIsBanned(int type);
         Observable<Result> invitationUser(String cover_user_id,String question_id);
     }
 
@@ -63,6 +66,7 @@ public interface PostsDetailContranct {
         public abstract void acceptPosts(String id,String solve_status);
         public abstract void acceptComment(String comment_id);
         public abstract void invitationUser(String cover_user_id,String question_id);
+        public abstract void getIsBanned(int type);
     }
 
 }

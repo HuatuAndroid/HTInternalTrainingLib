@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.GroupInfoBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.contranct.GroupDetailsContranct;
 import com.example.module_employees_world.presenter.GroupDetailsPresenter;
 import com.example.module_employees_world.ui.home.CommunityDiscussFragment;
@@ -83,17 +84,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //需要判断，用户是否被禁言
-                if (AppUtils.is_banned == 0) {
-                    //发帖
-                    Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
-                    intent.putExtra("groupId", groupId);
-                    intent.putExtra("groupName", name);
-                    startActivity(intent);
-                } else {
-                    showShortToast("你已被禁言");
-                }
+                mPresenter.getIsBanned();
                 /*if (groupInfoBean.getIs_group().equals("1")) {
                     //发帖
                     Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
@@ -241,6 +232,20 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         num.setText("成员: " + groupInfoBean.getUser_count() + "人");
         RxBus.getIntanceBus().post(new RxMessageBean(592, groupInfoBean.getId(), is_group));
         join.setEnabled(true);
+    }
+
+    @Override
+    public void getIsBanned(IsBannedBean isBannedBean) {
+        //需要判断，用户是否被禁言
+        if (isBannedBean.isBanned == 0) {
+            //发帖
+            Intent intent = new Intent(GroupDetailsActivity.this, NTopicEditActivity.class);
+            intent.putExtra("groupId", groupId);
+            intent.putExtra("groupName", name);
+            startActivity(intent);
+        } else {
+            showShortToast("你已被禁言");
+        }
     }
 
     @Override
