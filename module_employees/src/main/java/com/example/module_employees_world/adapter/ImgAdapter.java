@@ -48,7 +48,7 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ViewHolder> {
             GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context , imgList.get(position) ,false );
         }
 
-        if (position==4){
+        if (position==3){
             if (imgList.size()>4){
                 holder.tvNumber.setVisibility(View.VISIBLE);
                 holder.tvNumber.setText("+"+(imgList.size()-4));

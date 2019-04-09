@@ -536,7 +536,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         options.inPreferredConfig = Bitmap.Config.ALPHA_8;
         byte[] bytes = readStream(inputStream);
         BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-        options.inSampleSize = 2;
+        options.inSampleSize = 4;
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
     }
