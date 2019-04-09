@@ -88,6 +88,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     private CommentChildrenAdapter commentChildrenAdapter;
     private NestedScrollView svComment;
     private CommentDetailBean commentDetailBean;
+    private CommontPopw commontPopw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -378,9 +379,15 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     // : 2019/3/30 删除子评论
                     commentId= msg.arg1;
                     int position=msg.arg2;
-                    activity.mPresenter.deleteComment(commentId+"",position);
-                    activity.showLoadDiaLog("");
-                    break;
+                    activity.commontPopw = new CommontPopw(activity, "删除评论后，评论下所有回复都会被删除。", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            activity.mPresenter.deleteComment(commentId+"",position);
+                            activity.showLoadDiaLog("");
+                            activity.commontPopw.myDismiss();
+                        }
+                    });
+                   break;
                 case RxBusMessageBean.MessageType.POST_111:
                     // 2019/3/30 回复子评论
                     if (AppUtils.is_banned == 0) {

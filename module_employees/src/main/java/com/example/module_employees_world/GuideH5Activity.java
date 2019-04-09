@@ -43,7 +43,13 @@ public class GuideH5Activity extends BaseActivity {
         }
         wv.getSettings().setJavaScriptEnabled(true);//启用js
         wv.getSettings().setBlockNetworkImage(false);//解决图片不显示
-        wv.loadUrl(getIntent().getStringExtra("url"));
+        String url = getIntent().getStringExtra("url");
+        String content = getIntent().getStringExtra("content");
+        if (url!=null){
+            wv.loadUrl(url);
+        }else if (content!=null){
+            wv.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
+        }
     }
 
     @Override
