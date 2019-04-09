@@ -42,6 +42,8 @@ import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.presenter.PostDetailPersenter;
+import com.example.module_employees_world.ui.home.CommunityActivity;
+import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.MyInterpolator;
@@ -337,8 +339,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/29
-                ToastUtils.showToast(PostsDetailActivity.this, "发帖");
-
+                //发帖
+                Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
+                startActivity(intent);
             }
         });
         fabTop.setOnClickListener(new View.OnClickListener() {
