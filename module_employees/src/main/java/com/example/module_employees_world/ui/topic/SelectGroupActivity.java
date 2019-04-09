@@ -130,10 +130,8 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-
         showLoadV("加载中...");
         getGroupList(page, 100);
-
     }
 
     public void getGroupList(int page, int sizeCount){

@@ -90,11 +90,11 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.llNoDing.setVisibility(View.VISIBLE);
             viewHolder.rlHead.setVisibility(View.VISIBLE);
             String type = "";
-            if (discussListBean.getType() == 2) {
+            /*if (discussListBean.getType() == 2) {
                 type = "【建议】";
             } else if (discussListBean.getType() == 3) {
                 type = "【问题】";
-            }
+            }*/
             viewHolder.title.setText(type + discussListBean.getTitle());
             //头像统一由服务器获取
             if (!TextUtils.isEmpty(discussListBean.getAvatar())) {
