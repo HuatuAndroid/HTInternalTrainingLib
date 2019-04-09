@@ -322,6 +322,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 if (fabEnable) {
                     llContainerFab.setVisibility(View.GONE);
                     fabEnable = false;
+                    fabAll.setImageResource(R.drawable.post_action_button_2);
                 } else {
                     AnimationSet animationSet = new AnimationSet(true);
                     animationSet.addAnimation(new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f));
@@ -331,6 +332,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     llContainerFab.setAnimation(animationSet);
                     llContainerFab.setVisibility(View.VISIBLE);
                     fabEnable = true;
+                    fabAll.setImageResource(R.drawable.post_action_button_all);
                 }
             }
         });
@@ -338,8 +340,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/3/29
-                //发帖
+                //  2019/3/29 发帖
                 Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
                 startActivity(intent);
             }
@@ -702,7 +703,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvDetailText.post(new Runnable() {
             @Override
             public void run() {
-                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0) {
+                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0 || tvDetailText.toString().contains("...")) {
                     tvOpen.setVisibility(View.VISIBLE);
                 } else {
                     tvOpen.setVisibility(View.INVISIBLE);
@@ -775,21 +776,21 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         if (position == -1) {
             //删除评论
             commentList.remove(partenPosition);
-            if (postDetailBean.questionInfo.commentCount > 0) {
-                comment = --postDetailBean.questionInfo.commentCount + "";
-                tvCommentNum.setText("全部评论 (" + comment + ")");
-            } else {
-                comment = "0";
-                tvCommentNum.setText("全部评论 (" + comment + ")");
-            }
             postDetailAdapter.notifyDataSetChanged();
         } else {
             //删除子评论
             int postId = commentList.get(partenPosition).id;
             mPresenter.commentChildrenList(partenPosition, postId, 1, 2, 1);
             showLoadDiaLog("");
-//            commentList.get(partenPosition).parent.remove(position);
-//            commentList.get(partenPosition).count--;
+        }
+        if (postDetailBean.questionInfo.commentCount > 0) {
+            comment = --postDetailBean.questionInfo.commentCount + "";
+            tvCommentNum.setText("全部评论 (" + comment + ")");
+            tvPostNum.setText(comment);
+        } else {
+            comment = "0";
+            tvPostNum.setText(comment);
+            tvCommentNum.setText("全部评论 (" + comment + ")");
         }
         RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, comment));
     }
