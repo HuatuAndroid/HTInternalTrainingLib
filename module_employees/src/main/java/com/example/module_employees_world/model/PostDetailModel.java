@@ -3,6 +3,7 @@ package com.example.module_employees_world.model;
 import com.example.module_employees_world.CommunityServiceApi;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
@@ -21,6 +22,11 @@ public class PostDetailModel implements PostsDetailContranct.PostsDetailModel {
     @Override
     public Observable<Result<CommentListBean>> getCommentList(String question_id, String st,String page,String limit) {
         return HttpManager.newInstance().getService(CommunityServiceApi.class).getCommentList(question_id, st,page,limit);
+    }
+
+    @Override
+    public Observable<Result<IsBannedBean>> getIsBanned(int type) {
+        return HttpManager.newInstance().getService(CommunityServiceApi.class).getIsBanned();
     }
 
     @Override

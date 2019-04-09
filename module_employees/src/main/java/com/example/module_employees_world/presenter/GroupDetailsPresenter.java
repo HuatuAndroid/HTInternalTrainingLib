@@ -2,6 +2,7 @@ package com.example.module_employees_world.presenter;
 
 
 import com.example.module_employees_world.bean.GroupDetailsBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.contranct.GroupDetailsContranct;
 import com.example.module_employees_world.model.GroupDetailsModel;
 import com.wb.baselib.app.AppUtils;
@@ -17,6 +18,43 @@ public class GroupDetailsPresenter extends GroupDetailsContranct.GroupDetailsPre
     public GroupDetailsPresenter(GroupDetailsContranct.GroupDetailsView iView) {
         this.mView = iView;
         this.mModel = new GroupDetailsModel();
+    }
+
+    /**
+     * app-判断是否可以发表评论
+     */
+    @Override
+    public void getIsBanned(){
+
+        HttpManager.newInstance().commonRequest(mModel.getIsBanned(), new BaseObserver<Result<IsBannedBean>>(AppUtils.getContext()) {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSuccess(Result<IsBannedBean> guideBeanResult) {
+
+                IsBannedBean data = guideBeanResult.getData();
+                if (data != null) {
+                    AppUtils.is_banned = data.isBanned;
+                }
+                mView.getIsBanned(data);
+
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+
+            }
+        });
+
+
     }
 
     @Override
