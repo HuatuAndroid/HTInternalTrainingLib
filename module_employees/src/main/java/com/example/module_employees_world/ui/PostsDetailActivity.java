@@ -47,6 +47,7 @@ import com.example.module_employees_world.presenter.PostDetailPersenter;
 import com.example.module_employees_world.ui.home.CommunityActivity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.CustomMovementMethod;
 import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.utils.MyInterpolator;
 import com.example.module_employees_world.utils.RxBusMessageBean;
@@ -476,7 +477,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     @Override
                     public void run() {
                         tvHtml.setText(charSequence);
-                        tvHtml.setMovementMethod(LinkMovementMethod.getInstance());
+                        tvHtml.setMovementMethod(new CustomMovementMethod(PostsDetailActivity.this));
                     }
                 });
             }

@@ -49,12 +49,13 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.comment = convertView.findViewById(R.id.discuss_comment);
             viewHolder.partName = convertView.findViewById(R.id.discuss_part);
             viewHolder.tvDing = convertView.findViewById(R.id.discuss_ding);
-            viewHolder.vLine = convertView.findViewById(R.id.vLine);
+            viewHolder.llLine = convertView.findViewById(R.id.llLine);
             viewHolder.discussDing = convertView.findViewById(R.id.discussDing);
             viewHolder.discussTitle = convertView.findViewById(R.id.discussTitle);
             viewHolder.llDing = convertView.findViewById(R.id.llDing);
             viewHolder.llNoDing = convertView.findViewById(R.id.llNoDing);
             viewHolder.rlHead = convertView.findViewById(R.id.rlHead);
+            viewHolder.vLineTop = convertView.findViewById(R.id.vLineTop);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -81,20 +82,25 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.rlHead.setVisibility(View.GONE);
             viewHolder.discussTitle.setText(discussListBean.getTitle());
             if (position + 1 < getCount() && "1".equals(((DiscussListBean) getItem(position + 1)).getIs_top())) {
-                viewHolder.vLine.setVisibility(View.GONE);
+                viewHolder.llLine.setVisibility(View.GONE);
             } else {
-                viewHolder.vLine.setVisibility(View.VISIBLE);
+                viewHolder.llLine.setVisibility(View.VISIBLE);
+            }
+            if (position == 0){
+                viewHolder.vLineTop.setVisibility(View.VISIBLE);
+            }else {
+                viewHolder.vLineTop.setVisibility(View.GONE);
             }
         } else {
             viewHolder.llDing.setVisibility(View.GONE);
             viewHolder.llNoDing.setVisibility(View.VISIBLE);
             viewHolder.rlHead.setVisibility(View.VISIBLE);
             String type = "";
-            if (discussListBean.getType() == 2) {
+            /*if (discussListBean.getType() == 2) {
                 type = "【建议】";
             } else if (discussListBean.getType() == 3) {
                 type = "【问题】";
-            }
+            }*/
             viewHolder.title.setText(type + discussListBean.getTitle());
             //头像统一由服务器获取
             if (!TextUtils.isEmpty(discussListBean.getAvatar())) {
@@ -133,8 +139,8 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
     class ViewHolder {
         ImageView image, tvDing, discussDing;
         TextView discussTitle, title, read, name, like, comment, time, group, partName;
-        LinearLayout llDing, llNoDing;
-        View vLine;
+        LinearLayout llDing, llNoDing ,llLine;
+        View vLineTop;
         RelativeLayout rlHead;
     }
 }

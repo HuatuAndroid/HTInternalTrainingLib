@@ -123,9 +123,9 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 index = position;
-                //社区详情
+                //帖子详情
                 Intent intent = new Intent(getActivity(), PostsDetailActivity.class);
-                intent.putExtra("question_id", searchCommenBeans.get(position).getId());
+                intent.putExtra("question_id", searchCommenBeans.get(position).getQuestion_id());
                 startActivity(intent);
             }
         });

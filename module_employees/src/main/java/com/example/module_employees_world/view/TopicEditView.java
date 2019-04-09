@@ -818,7 +818,7 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
 
             spannableString = new SpannableString(mEtConnectContentString);
 
-            spannableString.setSpan(new URLSpan(mEtConnectString), 0, mEtConnectString.length(),
+            spannableString.setSpan(new URLSpan(mEtConnectString), 0, spannableString.length(),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 

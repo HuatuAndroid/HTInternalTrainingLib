@@ -2,6 +2,7 @@ package com.example.module_employees_world.ui.topic;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
 import com.wb.baselib.utils.RefreshUtils;
+import com.wb.baselib.utils.StatusBarUtil;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
 
@@ -70,6 +72,10 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
+        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+
         setContentView(R.layout.activity_select_group);
 
         groupId = getIntent().getStringExtra("groupId");
@@ -130,10 +136,8 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-
         showLoadV("加载中...");
         getGroupList(page, 100);
-
     }
 
     public void getGroupList(int page, int sizeCount){
