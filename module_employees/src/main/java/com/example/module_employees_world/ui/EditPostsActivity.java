@@ -261,7 +261,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             @Override
             public void run() {
 //                setTextForSpan("<img src=\\\"http:\\/\\/test-px.huatu.com\\/uploads\\/images\\/20190408\\/0b751d85fdc9240de0f18cca6ec168f5.jpg\\\">哈哈[点赞]哈哈[爱情]哈哈<img src=\\\"http:\\/\\/test-px.huatu.com\\/uploads\\/images\\/20190408\\/0b751d85fdc9240de0f18cca6ec168f5.jpg\\\">");
-                setTextForSpan(editContent);
+                setTextForSpan(editContent,-1);
             }
         }).start();
 
@@ -299,7 +299,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 String newTitle = mEtTopicTitle.getText().toString();
                 String newContent = etContent.getText().toString();
                 if (!TextUtils.isEmpty(newTitle)&&!TextUtils.isEmpty(newContent)){
-                    newContent = newContent.replaceAll("\n", "</br>");
+                    newContent = newContent.replaceAll("\n", "<br/>");
                     mPresenter.commitTopicData(commentId,newTitle,EmojiUtils.getString(newContent),"0",type+"");
                 }else {
                     ToastUtils.showToast(EditPostsActivity.this,"标题或内容不能为空");
@@ -394,8 +394,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             //点击 换行
             int index = etContent.getSelectionStart();
             Editable editable = etContent.getText();
-            editable.insert(index,"</br>");
-            setTextForSpan(editable.toString());
+            editable.insert(index,"<br/>");
+            setTextForSpan(editable.toString(),index);
             //setActivityContent(editContent,etContent);
         }else if (v.getId() == R.id.mHideView){
             hideEmojiKeyboardFragment();
@@ -482,7 +482,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        setTextForSpan(editable.toString());
+                        setTextForSpan(editable.toString(),-1);
                     }
                 }).start();
             }
@@ -522,7 +522,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         int selectionStart = etContent.getSelectionStart();
         Editable editable = etContent.getText();
         editable.insert(selectionStart,tutuIconBean.key);
-        setTextForSpan(editable.toString());
+        setTextForSpan(editable.toString(),-1);
 //        getSpanForUri(tutuIconBean.key);
     }
 
@@ -533,9 +533,9 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     /**
      * @param content "哈哈[点赞]哈哈[爱情]ha"
      */
-    private void setTextForSpan(String content){
+    private void setTextForSpan(String content,int selectPosition){
         // TODO: 2019/4/8
-        content = content.replaceAll("</br>", "\n");
+        content = content.replaceAll("<br/>", "\n");
         content=EmojiUtils.decode(content);
         //1.根据[]标签过滤表情包
         int position=0;
@@ -597,15 +597,14 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 break;
             }
         }
-//        setActivityContent(spannableString,etContent);
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 etContent.setText(spannableString);
+                if (selectPosition>0)
+                etContent.setSelection(selectPosition+1);
             }
         });
-
     }
 
     private void getSpanForUri(String content){
@@ -820,11 +819,11 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             // TODO: 2019/2/22 图片等待添加到光标处
             int selectionStart = etContent.getSelectionStart();
             Editable text = etContent.getText();
-            text.insert(selectionStart,"</br><img src=\""+ HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(i).getPath()+"\"></br>");
+            text.insert(selectionStart,"<br/><img src=\""+ HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(i).getPath()+"\"><br/>");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    setTextForSpan(text.toString());
+                    setTextForSpan(text.toString(),-1);
                 }
             }).start();
             //讲文本转为html格式重新加载数据
