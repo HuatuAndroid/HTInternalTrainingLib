@@ -132,7 +132,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
     protected void processLogic(Bundle savedInstanceState) {
 
         showLoadV("加载中...");
-        getGroupList(page, 30);
+        getGroupList(page, 10);
 
     }
 
