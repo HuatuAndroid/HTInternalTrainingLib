@@ -109,20 +109,20 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
             public void onClick(View v) {
                 multipleStatusView.showLoading();
                 page = 1;
-                getGroupList(page,10);
+                getGroupList(page,30);
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-                getGroupList(page,10);
+                getGroupList(page,30);
             }
         });
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getGroupList(page,10);
+                getGroupList(page,30);
             }
         });
 

@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
+import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
@@ -28,6 +29,44 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
         this.mView=view;
         this.mModel=new PostDetailModel();
     }
+
+    /**
+     * app-判断是否可以发表评论
+     */
+    @Override
+    public void getIsBanned(int type){
+
+        HttpManager.newInstance().commonRequest(mModel.getIsBanned(type), new BaseObserver<Result<IsBannedBean>>(AppUtils.getContext()) {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addSubscribe(d);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSuccess(Result<IsBannedBean> guideBeanResult) {
+
+                IsBannedBean data = guideBeanResult.getData();
+                if (data != null) {
+                    AppUtils.is_banned = data.isBanned;
+                }
+                mView.getIdBanned(data,type);
+
+            }
+
+            @Override
+            public void onFail(ApiException e) {
+
+            }
+        });
+
+
+    }
+
 
     @Override
     public void getCommentList(String question_id, String st, final String page, final String limit) {
