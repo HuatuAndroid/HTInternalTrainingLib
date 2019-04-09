@@ -159,7 +159,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                         etContent.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                showLoadDiaLog("");
+                                showLoadDiaLog("加载中...");
                                 mPresenter.commitImage(bodyMap);
                             }
                         },300);
@@ -178,7 +178,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                             etContent.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    showLoadDiaLog("");
+                                    showLoadDiaLog("加载中...");
                                     mPresenter.commitImage(bodyMap);
                                 }
                             },300);
