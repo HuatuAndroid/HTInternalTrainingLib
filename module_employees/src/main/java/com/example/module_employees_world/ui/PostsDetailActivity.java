@@ -286,14 +286,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppUtils.is_banned == 0) {
-                    //发帖
-                    Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
-                    startActivity(intent);
-                }else{
-                    showShortToast("你已被禁言");
-                }
-
+                mPresenter.getIsBanned(3);
             }
         });
         tvPostNum.setOnClickListener(new View.OnClickListener() {
