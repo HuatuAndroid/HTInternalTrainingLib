@@ -3,6 +3,7 @@ package com.example.module_employees_world.ui.group;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -39,6 +40,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     private TextView title;
     private TextView num;
     private TextView join;
+    private AppBarLayout appBar;
     private TextView content;
     private ScrollIndicatorView scrollIndicatorView;
     private ViewPager mViewPager;
@@ -61,6 +63,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         if (TextUtils.isEmpty(groupId)) {
             return;
         }
+        appBar = getViewById(R.id.appBar);
         ivBack = getViewById(R.id.ivBack);
         ivSearch = getViewById(R.id.ivSearch);
         imageView = getViewById(R.id.group_image);
@@ -88,7 +91,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
                     intent.putExtra("groupId", groupId);
                     intent.putExtra("groupName", name);
                     startActivity(intent);
-                }else{
+                } else {
                     showShortToast("你已被禁言");
                 }
                 /*if (groupInfoBean.getIs_group().equals("1")) {
