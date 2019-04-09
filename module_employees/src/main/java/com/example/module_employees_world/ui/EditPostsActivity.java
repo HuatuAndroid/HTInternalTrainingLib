@@ -12,11 +12,18 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
+import android.text.style.URLSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +34,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baijiayun.glide.Glide;
+import com.baijiayun.glide.request.target.SimpleTarget;
+import com.baijiayun.glide.request.transition.Transition;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.EmojiconBean;
 import com.example.module_employees_world.bean.NImageBean;
@@ -52,6 +62,8 @@ import com.wb.baselib.base.mvp.BaseView;
 import com.wb.baselib.base.mvp.MvpView;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.http.HttpManager;
+import com.wb.baselib.image.GlideManager;
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
@@ -104,6 +116,10 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     private String editContent;
     private String title;
     private String commentId;
+    //超链接url
+    private String hyperLinkUrl;
+    //超链接文本
+    private String hyperLinkContent;
 
     @Override
     protected EditPostsPresenter onCreatePresenter() {
@@ -241,7 +257,13 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         mEtTopicTitle.requestFocus();
 
         mHideView(true);
-        setActivityContent(editContent,etContent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                setTextForSpan("<img src=\\\"http:\\/\\/test-px.huatu.com\\/uploads\\/images\\/20190408\\/0b751d85fdc9240de0f18cca6ec168f5.jpg\\\">哈哈[点赞]哈哈[爱情]哈哈<img src=\\\"http:\\/\\/test-px.huatu.com\\/uploads\\/images\\/20190408\\/0b751d85fdc9240de0f18cca6ec168f5.jpg\\\">");
+                setTextForSpan(editContent);
+            }
+        }).start();
 
     }
 
@@ -275,7 +297,13 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 // TODO: 2019/4/6 发布按钮
                 Log.d("aaaaaa",etContent.getText().toString());
                 String newTitle = mEtTopicTitle.getText().toString();
-                mPresenter.commitTopicData(commentId,newTitle,editContent,"0",type+"");
+                String newContent = etContent.getText().toString();
+                if (!TextUtils.isEmpty(newTitle)&&!TextUtils.isEmpty(newContent)){
+                    newContent = newContent.replaceAll("\n", "</br>");
+                    mPresenter.commitTopicData(commentId,newTitle,EmojiUtils.getString(newContent),"0",type+"");
+                }else {
+                    ToastUtils.showToast(EditPostsActivity.this,"标题或内容不能为空");
+                }
             }
         });
         mEtTopicTitle.setOnClickListener((v) -> {
@@ -299,29 +327,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 }
                 //隐藏表情视图
                 hideEmojiKeyboardFragment();
-            }
-        });
-        String oldStr="";
-        etContent.addTextChangedListener(new TextWatcher() {
-            
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.i("edittext", "beforeTextChanged   CharSequence:(" + s + ");  start: (" + start + "); count: (" + count + "); after: (" + after + ")");
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("edittext", "onTextChanged   CharSequence:(" + s + ");  start: (" + start + "); before: (" + before + "); count: (" + count + ")");
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO: 2019/4/7
-//                editContent=s.toString();
-                int selectionEnd = etContent.getSelectionEnd();
-                int selectionStart = etContent.getSelectionStart();
-                Log.d("aaaaa",s.toString());
-                Log.d("aaaaa","selectionStart:"+selectionStart+",selectionEnd:"+selectionEnd);
             }
         });
 
@@ -388,11 +393,10 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         } else if (v.getId() == R.id.mIvLineFeed) {
             //点击 换行
             int index = etContent.getSelectionStart();
-            etContent.setText(editContent);
             Editable editable = etContent.getText();
             editable.insert(index,"</br>");
-            editContent=editable.toString();
-            setActivityContent(editContent,etContent);
+            setTextForSpan(editable.toString());
+            //setActivityContent(editContent,etContent);
         }else if (v.getId() == R.id.mHideView){
             hideEmojiKeyboardFragment();
             SoftKeyboardUtils.hideSoftKeyboard(this);
@@ -463,17 +467,25 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         });
 
         tvDialogRight.setOnClickListener(v -> {
-            String mEtConnectString = mEtConnect.getText().toString();
-            String mEtConnectContentString = mEtConnectContent.getText().toString();
+            hyperLinkUrl = mEtConnect.getText().toString();
+            hyperLinkContent = mEtConnectContent.getText().toString();
             // TODO: 2019/4/6 插入超链接
-//            mTopicEditView.AddConnect(mEtConnectString,mEtConnectContentString);
-            String httpStr="<a href=\""+mEtConnectString+"\">"+mEtConnectContentString+"</a>";
-            int selectionEnd = etContent.getSelectionEnd();
-            etContent.setText(editContent);
-            Editable editable = etContent.getText();
-            editable.insert(selectionEnd,httpStr);
-            editContent=editable.toString();
-            setActivityContent(editContent,etContent);
+            if (TextUtils.isEmpty(hyperLinkUrl)){
+                ToastUtils.showToast(EditPostsActivity.this,"请输入链接地址");
+            }else if (TextUtils.isEmpty(hyperLinkContent)){
+                ToastUtils.showToast(EditPostsActivity.this,"请输入链接文本");
+            }else {
+                String httpStr="<a href=\""+ hyperLinkUrl +"\">"+ hyperLinkContent +"</a>";
+                int selectionEnd = etContent.getSelectionEnd();
+                Editable editable = etContent.getText();
+                editable.insert(selectionEnd,httpStr);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setTextForSpan(editable.toString());
+                    }
+                }).start();
+            }
             dialog.dismiss();
         });
 
@@ -489,13 +501,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
     @Override
     public void onItemClick(EmojiconBean emojicon) {
-//        int selectionEnd = etContent.getSelectionEnd();
-        etContent.setText(editContent);
         Editable editable = etContent.getText();
         editable.insert(etContent.getSelectionEnd(),emojicon.emojiChart);
-//        etContent.setSelection(selectionEnd+1);
-        editContent=editable.toString();
-        setActivityContent(editContent,etContent);
     }
 
     @Override
@@ -505,19 +512,115 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-        // TODO: 2019/4/6
 //        int selectionEnd = etContent.getSelectionEnd();
-        etContent.setText(editContent);
+        /*etContent.setText(editContent);
         Editable editable = etContent.getText();
         editable.insert(etContent.getSelectionEnd(),tutuIconBean.key);
         editContent=editable.toString();
+        setActivityContent(editContent,etContent);*/
 
-        setActivityContent(editContent,etContent);
+        int selectionStart = etContent.getSelectionStart();
+        Editable editable = etContent.getText();
+        editable.insert(selectionStart,tutuIconBean.key);
+        setTextForSpan(editable.toString());
+//        getSpanForUri(tutuIconBean.key);
     }
 
     @Override
     public void onDeleteTutuClick() {
+    }
 
+    /**
+     * @param content "哈哈[点赞]哈哈[爱情]ha"
+     */
+    private void setTextForSpan(String content){
+        // TODO: 2019/4/8
+        content = content.replaceAll("</br>", "\n");
+        content=EmojiUtils.decode(content);
+        //1.根据[]标签过滤表情包
+        int position=0;
+        SpannableString spannableString = new SpannableString(content);
+        while (content.contains("[")&&content.contains("]")){
+            int startIndex = content.indexOf("[",position);
+            int endIndex = content.indexOf("]",position);
+            if (startIndex>=0&&endIndex>=0){
+                String tutuKey = content.substring(startIndex, endIndex+1);
+                for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
+                    String key = TutuPicInit.EMOJICONS.get(i).key;
+                    if (key.equals(tutuKey)){
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.valueOf(TutuPicInit.EMOJICONS.get(i).TutuId));
+                        ImageSpan span = new ImageSpan(this,bitmap, ImageSpan.ALIGN_BASELINE);
+                        spannableString.setSpan(span,startIndex,endIndex+1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
+                }
+                position=endIndex+1;
+            }else {
+                //已经没有[]标签了，退出循环
+                break;
+            }
+        }
+        //2.根据<img>过滤图片
+        position=0;
+        while (content.contains("<img")){
+            int startIndex = content.indexOf("<img",position);
+            int endIndex = content.indexOf("\">",startIndex);
+            if (startIndex>=0&&endIndex>=0){
+                String substring = content.substring(startIndex+11, endIndex-1);
+                String url;
+                //这里出于对扯淡的图片url偶尔会出现双引号外多个反斜杠的情况，遂在此加入判断，扯淡，扯淡真扯淡
+                if (substring.contains("http")){
+                    url=substring;
+                }else {
+                    url=content.substring(startIndex+10, endIndex);
+                }
+                Bitmap bitmap = getImageNetwork(url);
+                ImageSpan span = new ImageSpan(this,bitmap, ImageSpan.ALIGN_BASELINE);
+                spannableString.setSpan(span,startIndex,endIndex+2, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                position=endIndex+2;
+            }else {
+                //已经没有img标签，退出循环
+                break;
+            }
+        }
+        //3.超链接
+        position=0;
+        while (content.contains("<a")&&content.contains("</a>")){
+            int startIndex = content.indexOf("<a",position);
+            int endIndex = content.indexOf("</a>",startIndex);
+            if (startIndex>=0&&endIndex>=0){
+                String substring = content.substring(startIndex, endIndex+4);
+                URLSpan urlSpan = new URLSpan(substring);
+                spannableString.setSpan(urlSpan,startIndex,endIndex+4, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                position=endIndex+4;
+            }else {
+                //已经没有超链接，退出循环
+                break;
+            }
+        }
+//        setActivityContent(spannableString,etContent);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                etContent.setText(spannableString);
+            }
+        });
+
+    }
+
+    private void getSpanForUri(String content){
+        for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
+            String key = TutuPicInit.EMOJICONS.get(i).key;
+            if (content.toString().contains(key)){
+                SpannableString spannableString = new SpannableString(key);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.valueOf(TutuPicInit.EMOJICONS.get(i).TutuId));
+                ImageSpan span = new ImageSpan(this,bitmap, ImageSpan.ALIGN_BASELINE);
+                spannableString.setSpan(span,0,key.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                int selectionStart = etContent.getSelectionStart();
+                Editable editable = etContent.getText();
+                editable.insert(selectionStart,spannableString);
+            }
+        }
     }
 
     /**
@@ -527,17 +630,17 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
      */
     private void setActivityContent(final String activityContent, final EditText tvHtml) {
         //表情解码
-        String decodeContent = new String(EmojiUtils.decode(activityContent.trim()));
+        /*String decodeContent = new String(EmojiUtils.decode(activityContent.trim()));
         for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
             String key = TutuPicInit.EMOJICONS.get(i).key;
             if (decodeContent.contains(key)){
                 String content="<\\br><img src=\"date:res="+TutuPicInit.EMOJICONS.get(i).TutuId+"\"><\\br>";
                 decodeContent=decodeContent.replace(key,content);
             }
-        }
+        }*/
 
         final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
-        String finalDecodeContent = decodeContent;
+//        String finalDecodeContent = decodeContent;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -556,7 +659,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                             drawable = getResources().getDrawable(Integer.valueOf(resId));
                             resType=1;
                         }else {
-                            drawable = getImageNetwork(source);
+//                            drawable = getImageNetwork(source);
+                            drawable = null;
                             resType=2;
                         }
 
@@ -581,7 +685,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                         return drawable;
                     }
                 };
-                final CharSequence charSequence = Html.fromHtml(finalDecodeContent, imageGetter, null);
+                final CharSequence charSequence = Html.fromHtml(activityContent, imageGetter, null);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -597,10 +701,10 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
      * @param imageUrl
      * @return
      */
-    public Drawable getImageNetwork(String imageUrl) {
+    public Bitmap getImageNetwork(String imageUrl) {
 
         URL myFileUrl = null;
-        Drawable drawable = null;
+        Bitmap bitmap = null;
         try {
             myFileUrl = new URL(imageUrl);
             HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
@@ -608,15 +712,15 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             conn.connect();
             InputStream is = conn.getInputStream();
             // 在这一步最好先将图片进行压缩，避免消耗内存过多
-            Bitmap bitmap = getFitSampleBitmap(is);
-            drawable = new BitmapDrawable(bitmap);
+            bitmap = getFitSampleBitmap(is);
+//            drawable = new BitmapDrawable(bitmap);
             //再次休息100毫秒，等待图片加载
             Thread.sleep(100);
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return drawable;
+        return bitmap;
     }
 
 
@@ -715,14 +819,18 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         for (int i = 0; i < pathList.size(); i++) {
             // TODO: 2019/2/22 图片等待添加到光标处
             int selectionStart = etContent.getSelectionStart();
-            etContent.setText(editContent);
             Editable text = etContent.getText();
-            text.insert(selectionStart,"<br><img src=\""+ HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(i).getPath()+"\"><br>");
-            editContent=text.toString();
+            text.insert(selectionStart,"</br><img src=\""+ HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(i).getPath()+"\"></br>");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    setTextForSpan(text.toString());
+                }
+            }).start();
             //讲文本转为html格式重新加载数据
-            String toHtml = Html.toHtml(etContent.getText()).replace(" dir=\"ltr\"", "").replace("\n", "<br>");
+            /*String toHtml = Html.toHtml(etContent.getText()).replace(" dir=\"ltr\"", "").replace("\n", "<br>");
             toHtml = StringEscapeUtils.unescapeHtml4(toHtml);
-            setActivityContent(toHtml,etContent);
+            setActivityContent(toHtml,etContent);*/
         }
     }
 
