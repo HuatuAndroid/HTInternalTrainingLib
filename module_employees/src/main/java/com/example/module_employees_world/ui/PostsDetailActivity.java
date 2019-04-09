@@ -655,14 +655,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         }
         //帖子类型 1交流 2建议 3提问
         if (postDetailBean.questionInfo.type == 1) {
-            tvPostType.setVisibility(View.INVISIBLE);
+            tvPostType.setVisibility(View.GONE);
         } else if (postDetailBean.questionInfo.type == 2) {
             tvPostType.setVisibility(View.VISIBLE);
             if (postDetailBean.questionInfo.solveStatus == 0) {
                 tvPostType.setText("未采纳");
             } else {
                 topBarView.getRightImageButton().setVisibility(View.GONE);
-                tvPostType.setVisibility(View.INVISIBLE);
+                tvPostType.setText("已采纳");
                 ivBgUser.setVisibility(View.VISIBLE);
             }
         } else if (postDetailBean.questionInfo.type == 3) {

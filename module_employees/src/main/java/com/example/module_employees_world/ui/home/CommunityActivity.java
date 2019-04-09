@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
+import com.example.module_employees_world.bean.IsBannedBean;
+import com.example.module_employees_world.contranct.CommunityContract;
+import com.example.module_employees_world.presenter.CommentDetailPresenter;
+import com.example.module_employees_world.presenter.CommunityPresenter;
 import com.example.module_employees_world.ui.group.MyItemActivity;
 import com.example.module_employees_world.ui.search.SearchActivity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
@@ -29,9 +33,11 @@ import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.BaseActivity;
+import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.utils.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -39,7 +45,7 @@ import java.util.ArrayList;
 /**
  * 员工天地
  */
-public class CommunityActivity extends BaseActivity{
+public class CommunityActivity extends MvpActivity<CommunityPresenter> implements CommunityContract.View {
 
     private View view;
     private ImageView ivPost, ivBack, ivContacts, ivSearch;
@@ -54,27 +60,24 @@ public class CommunityActivity extends BaseActivity{
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected CommunityPresenter onCreatePresenter() {
+        return new CommunityPresenter(this);
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.main_new);
         ivBack = findViewById(R.id.ivBack);
         ivContacts = findViewById(R.id.ivContacts);
         ivSearch = findViewById(R.id.ivSearch);
-        scrollIndicatorView = getViewById(R.id.spring_indicator);
-        view = getViewById(R.id.view_line_xi);
-        mViewPager = getViewById(R.id.viewpager);
+        scrollIndicatorView = findViewById(R.id.spring_indicator);
+        view = findViewById(R.id.view_line_xi);
+        mViewPager = findViewById(R.id.viewpager);
         ivPost = getViewById(R.id.ivPost);
         view.setVisibility(View.VISIBLE);
-
         judgePermission();
-        initView(savedInstanceState);
-        setListener();
-    }
-
-    @Override
-    protected void initView(Bundle savedInstanceState) {
         ArrayList<String> str = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
         str.add("小组");
@@ -119,13 +122,7 @@ public class CommunityActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
                 //需要判断，用户是否被禁言
-                if (AppUtils.is_banned == 0) {
-                    //发帖
-                    Intent intent = new Intent(CommunityActivity.this, NTopicEditActivity.class);
-                    startActivity(intent);
-                }else{
-                    showShortToast("你已被禁言");
-                }
+                mPresenter.getIsBanned();
             }
         });
         ivContacts.setOnClickListener(new View.OnClickListener() {
@@ -199,5 +196,37 @@ public class CommunityActivity extends BaseActivity{
                     .create();
         }
         mPermissionDialog.show();
+    }
+
+    @Override
+    public void showErrorMsg(String msg) {
+
+    }
+
+    @Override
+    public void showLoadV(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadV() {
+
+    }
+
+    @Override
+    public void SuccessData(Object o) {
+        IsBannedBean bannedBean = (IsBannedBean) o;
+        if (bannedBean.isBanned == 0) {
+            //发帖
+            Intent intent = new Intent(CommunityActivity.this, NTopicEditActivity.class);
+            startActivity(intent);
+        }else{
+            showShortToast("你已被禁言");
+        }
+    }
+
+    @Override
+    public LifecycleTransformer binLifecycle() {
+        return null;
     }
 }
