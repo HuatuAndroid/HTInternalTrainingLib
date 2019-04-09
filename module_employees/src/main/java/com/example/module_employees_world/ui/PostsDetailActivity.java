@@ -281,11 +281,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 });
             }
         });
+
         //发布评论
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.getIsBanned(3);
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
+                    startActivity(intent);
+                }else{
+                    showShortToast("你已被禁言");
+                }
+
             }
         });
         tvPostNum.setOnClickListener(new View.OnClickListener() {
