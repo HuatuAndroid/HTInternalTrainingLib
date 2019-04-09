@@ -340,9 +340,15 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  2019/3/29 发帖
-                Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
-                startActivity(intent);
+
+                if (AppUtils.is_banned == 0) {
+                    //发帖
+                    Intent intent = new Intent(PostsDetailActivity.this, NTopicEditActivity.class);
+                    startActivity(intent);
+                }else{
+                    showShortToast("你已被禁言");
+                }
+
             }
         });
         fabTop.setOnClickListener(new View.OnClickListener() {
