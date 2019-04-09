@@ -48,8 +48,8 @@ import io.reactivex.disposables.Disposable;
 public class SelectGroupActivity extends BaseActivity implements CommunityGroupContranct.CommunityGroupView, SelectGroupAdapter.OnItemJoinListener {
 
     private TopBarView mTopBarView;
-    private MultipleStatusView multipleStatusView;
-    private SmartRefreshLayout smartRefreshLayout;
+//    private MultipleStatusView multipleStatusView;
+//    private SmartRefreshLayout smartRefreshLayout;
     private ListView listView;
     private SelectGroupAdapter communityGroupAdapter;
     private int index;
@@ -75,11 +75,11 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
         groupId = getIntent().getStringExtra("groupId");
 
         mTopBarView = getViewById(R.id.mTopBarView);
-        multipleStatusView = getViewById(R.id.multiplestatusview);
-        smartRefreshLayout = getViewById(R.id.refreshLayout);
-        listView = getViewById(R.id.p_lv);
+//        multipleStatusView = getViewById(R.id.multiplestatusview);
+//        smartRefreshLayout = getViewById(R.id.refreshLayout);
+        listView = getViewById(R.id.mListView);
 
-        RefreshUtils.getInstance(smartRefreshLayout,this).defaultRefreSh();
+//        RefreshUtils.getInstance(smartRefreshLayout,this).defaultRefreSh();
 
         if (TextUtils.isEmpty(groupId) || "".equals(groupId)){
             groupId = "";
@@ -104,27 +104,27 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
             }
         });
 
-        multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                multipleStatusView.showLoading();
-                page = 1;
-                getGroupList(page,30);
-            }
-        });
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page = 1;
-                getGroupList(page,30);
-            }
-        });
-        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getGroupList(page,30);
-            }
-        });
+//        multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                multipleStatusView.showLoading();
+//                page = 1;
+//                getGroupList(page,30);
+//            }
+//        });
+//        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                page = 1;
+//                getGroupList(page,30);
+//            }
+//        });
+//        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//                getGroupList(page,30);
+//            }
+//        });
 
     }
 
@@ -132,7 +132,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
     protected void processLogic(Bundle savedInstanceState) {
 
         showLoadV("加载中...");
-        getGroupList(page, 30);
+        getGroupList(page, 100);
 
     }
 
@@ -240,7 +240,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
         }
         listBeans.addAll((Collection<? extends ListBean>) o);
         communityGroupAdapter.notifyDataSetChanged();
-        multipleStatusView.showContent();
+//        multipleStatusView.showContent();
         page++;
     }
 
@@ -256,7 +256,7 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
 
     @Override
     public void isLoadMore(boolean isLoadMore) {
-        RefreshUtils.getInstance(smartRefreshLayout, this).isLoadData(isLoadMore);
+//        RefreshUtils.getInstance(smartRefreshLayout, this).isLoadData(isLoadMore);
     }
 
     @Override
