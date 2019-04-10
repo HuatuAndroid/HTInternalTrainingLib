@@ -222,8 +222,10 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
 
     @Override
     public void isLoadMore(boolean b) {
-        smartRefreshLayout.finishRefresh();
-        smartRefreshLayout.finishLoadMore();
+        if (smartRefreshLayout!=null){
+            smartRefreshLayout.finishRefresh();
+            smartRefreshLayout.finishLoadMore();
+        }
 ////        smartRefreshLayout.setEnableLoadMore(b);
 //        RefreshUtils.getInstance(smartRefreshLayout,getActivity() ).isLoadData(b);
     }

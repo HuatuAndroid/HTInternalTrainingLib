@@ -48,6 +48,15 @@ public class SearchPostBean {
     private int allow_del;
     private String content_text;
     private String text_img;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getContent_text() {
         return content_text;

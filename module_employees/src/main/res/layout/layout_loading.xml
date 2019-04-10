@@ -3,10 +3,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="45dp"
-        android:src="@drawable/git_loading"
-        android:layout_centerInParent="true"/>
-
 </RelativeLayout>

@@ -72,11 +72,24 @@ public class SearchPostAdapter extends ListBaseAdapter {
         viewHolder.tvRead.setText(searchPostBean.getRead_count() + "");
         viewHolder.tvLike.setText(searchPostBean.getLike_count() + "");
         viewHolder.tvComment.setText(searchPostBean.getComment_count() + "");
-        String status = "已采纳";
-        if (searchPostBean.getSolve_status() == 0) {
-            status = "未采纳";
+
+        if (searchPostBean.getType() == 1) {
+            viewHolder.tvime.setText(searchPostBean.getCreated_at());
+        } else {
+            if (searchPostBean.getType() == 2) {
+                String status = " | 未采纳";
+                if (searchPostBean.getSolve_status() == 1) {
+                    status = " | 已采纳";
+                }
+                viewHolder.tvime.setText(searchPostBean.getCreated_at() + status);
+            } else {
+                String status = " | 未解决";
+                if (searchPostBean.getSolve_status() == 1) {
+                    status = " | 已解决";
+                }
+                viewHolder.tvime.setText(searchPostBean.getCreated_at() + status);
+            }
         }
-        viewHolder.tvime.setText(searchPostBean.getCreated_at() + " | " + status);
         viewHolder.tvPostGroup.setText("「" + searchPostBean.getGroup_name() + "」");
         viewHolder.tvPart.setText(searchPostBean.getDepartment_name());
 

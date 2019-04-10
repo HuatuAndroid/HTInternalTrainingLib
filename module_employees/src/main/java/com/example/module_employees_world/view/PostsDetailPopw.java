@@ -133,7 +133,6 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
             myDismiss();
             new PostsTypePopw(context,myHandler);
         }else if (i == R.id.tv_del){
-//            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_107,null));
             Message message = new Message();
             message.what=RxBusMessageBean.MessageType.POST_107;
             myHandler.handleMessage(message);
@@ -146,13 +145,12 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
             myHandler.handleMessage(message);
             myDismiss();
         }else if (i == R.id.tv_adopt){
-//            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_104,null));
             Message message = new Message();
             message.what=RxBusMessageBean.MessageType.POST_104;
             myHandler.handleMessage(message);
             myDismiss();
+            backgroundAlpha(context,0.6f);
         }else if (i == R.id.tv_invite){
-//            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.POST_105,null));
             Message message = new Message();
             message.what=RxBusMessageBean.MessageType.POST_105;
             myHandler.handleMessage(message);
