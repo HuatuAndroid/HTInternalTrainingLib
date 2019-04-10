@@ -56,6 +56,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         bundle.putString("type", type);
         bundle.putString("keyword", keyword);
         bundle.putBoolean("isRefresh", isRefresh);
+        bundle.putBoolean("isUserVisibleHint", true);
         commentFragment.setArguments(bundle);
         return commentFragment;
     }
