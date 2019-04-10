@@ -312,8 +312,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         topBarView.getRightTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/4/6 发布按钮
-                Log.d("aaaaaa",etContent.getText().toString());
+                //  2019/4/6 发布按钮
                 String newTitle = mEtTopicTitle.getText().toString();
                 String newContent = etContent.getText().toString();
                 if (!TextUtils.isEmpty(newTitle)&&!TextUtils.isEmpty(newContent)){
@@ -487,13 +486,13 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         tvDialogRight.setOnClickListener(v -> {
             hyperLinkUrl = mEtConnect.getText().toString();
             hyperLinkContent = mEtConnectContent.getText().toString();
-            // TODO: 2019/4/6 插入超链接
+            //  2019/4/6 插入超链接
             if (TextUtils.isEmpty(hyperLinkUrl)){
                 ToastUtils.showToast(EditPostsActivity.this,"请输入链接地址");
             }else if (TextUtils.isEmpty(hyperLinkContent)){
                 ToastUtils.showToast(EditPostsActivity.this,"请输入链接文本");
             }else {
-                String httpStr="<a href=\""+ hyperLinkUrl +"\">"+ hyperLinkContent +"</a>";
+                String httpStr="<a href="+ hyperLinkUrl +">"+ hyperLinkContent +"</a>";
                 int selectionEnd = etContent.getSelectionEnd();
                 Editable editable = etContent.getText();
                 editable.insert(selectionEnd,httpStr);
@@ -530,18 +529,10 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
     @Override
     public void onItemClick(TutuIconBean tutuIconBean) {
-//        int selectionEnd = etContent.getSelectionEnd();
-        /*etContent.setText(editContent);
-        Editable editable = etContent.getText();
-        editable.insert(etContent.getSelectionEnd(),tutuIconBean.key);
-        editContent=editable.toString();
-        setActivityContent(editContent,etContent);*/
-
         int selectionStart = etContent.getSelectionStart();
         Editable editable = etContent.getText();
         editable.insert(selectionStart,tutuIconBean.key);
         setTextForSpan(editable.toString(),-1);
-//        getSpanForUri(tutuIconBean.key);
     }
 
     @Override
@@ -552,7 +543,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
      * @param content "哈哈[点赞]哈哈[爱情]ha"
      */
     private void setTextForSpan(String content,int selectPosition){
-        // TODO: 2019/4/8
         content = content.replaceAll("<br/>", "\n").replaceAll("<br>", "\n");
         content=EmojiUtils.decode(content);
         //1.根据[]标签过滤表情包
@@ -634,21 +624,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
             }
         });
-    }
-
-    private void getSpanForUri(String content){
-        for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
-            String key = TutuPicInit.EMOJICONS.get(i).key;
-            if (content.toString().contains(key)){
-                SpannableString spannableString = new SpannableString(key);
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.valueOf(TutuPicInit.EMOJICONS.get(i).TutuId));
-                ImageSpan span = new ImageSpan(this,bitmap, ImageSpan.ALIGN_BASELINE);
-                spannableString.setSpan(span,0,key.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                int selectionStart = etContent.getSelectionStart();
-                Editable editable = etContent.getText();
-                editable.insert(selectionStart,spannableString);
-            }
-        }
     }
 
     /**
