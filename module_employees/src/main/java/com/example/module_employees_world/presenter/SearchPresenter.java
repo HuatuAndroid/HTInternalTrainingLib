@@ -40,14 +40,14 @@ public class SearchPresenter extends SearchContranct.SearchPresenter {
 
             @Override
             public void onSuccess(Result<List<SearchCommenBean>> listResult) {
-                if (listResult.getData() == null) {
+                if (listResult.getData() == null&&mView!=null) {
                     if (page == 1) {
                         mView.ErrorData();
                     } else {
                         mView.showErrorMsg("服务器繁忙，请稍后尝试！");
                         mView.isLoadMore(true);
                     }
-                } else {
+                } else if (mView!=null){
                     if (listResult.getData().size() == 0) {
                         if (page == 1) {
                             mView.NoData();
@@ -90,14 +90,14 @@ public class SearchPresenter extends SearchContranct.SearchPresenter {
 
             @Override
             public void onSuccess(Result<List<SearchPostBean>> listResult) {
-                if (listResult.getData() == null) {
+                if (listResult.getData() == null&&mView!=null) {
                     if (page == 1) {
                         mView.ErrorData();
                     } else {
                         mView.showErrorMsg("服务器繁忙，请稍后尝试！");
                         mView.isLoadMore(true);
                     }
-                } else {
+                } else if (mView!=null){
                     if (listResult.getData().size() == 0) {
                         if (page == 1) {
                             mView.NoData();
