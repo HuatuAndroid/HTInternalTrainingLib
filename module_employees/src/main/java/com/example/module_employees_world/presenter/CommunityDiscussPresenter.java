@@ -25,14 +25,14 @@ public class CommunityDiscussPresenter extends CommunityDiscussContranct.Communi
         HttpManager.newInstance().commonRequest(mModel.getDiscussData(type, page), new BaseObserver<Result<CommunityDiscussBean>>(AppUtils.getContext()) {
             @Override
             public void onSuccess(Result<CommunityDiscussBean> communityDiscussBeanResult) {
-                if (communityDiscussBeanResult.getData() == null) {
+                if (communityDiscussBeanResult.getData() == null&&mView!=null) {
                     if (page == 1) {
                         mView.ErrorData();
                     } else {
                         mView.showErrorMsg("服务器繁忙，请稍后尝试！");
                         mView.isLoadMore(false);
                     }
-                } else {
+                } else if (mView!=null){
                     if (communityDiscussBeanResult.getData().getList() == null || communityDiscussBeanResult.getData().getList().size() == 0) {
                         if (page == 1) {
                             mView.NoData();
@@ -78,14 +78,14 @@ public class CommunityDiscussPresenter extends CommunityDiscussContranct.Communi
         HttpManager.newInstance().commonRequest(mModel.getGroupTypeData(type, group_id, page), new BaseObserver<Result<CommunityDiscussBean>>(AppUtils.getContext()) {
             @Override
             public void onSuccess(Result<CommunityDiscussBean> communityDiscussBeanResult) {
-                if (communityDiscussBeanResult.getData() == null) {
+                if (communityDiscussBeanResult.getData() == null&&mView!=null) {
                     if (page == 1) {
                         mView.ErrorData();
                     } else {
                         mView.showErrorMsg("服务器繁忙，请稍后尝试！");
                         mView.isLoadMore(true);
                     }
-                } else {
+                } else if (mView!=null){
                     if (communityDiscussBeanResult.getData().getList() == null || communityDiscussBeanResult.getData().getList().size() == 0) {
                         if (page == 1) {
                             mView.NoData();
