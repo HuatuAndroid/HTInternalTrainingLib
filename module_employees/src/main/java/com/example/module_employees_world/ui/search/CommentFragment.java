@@ -163,12 +163,16 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
 
     @Override
     public void NoData() {
-        multipleStatusView.showEmpty();
+        if (multipleStatusView!=null){
+            multipleStatusView.showEmpty();
+        }
     }
 
     @Override
     public void ErrorData() {
-        multipleStatusView.showError();
+        if (multipleStatusView!=null){
+            multipleStatusView.showError();
+        }
     }
 
     @Override
