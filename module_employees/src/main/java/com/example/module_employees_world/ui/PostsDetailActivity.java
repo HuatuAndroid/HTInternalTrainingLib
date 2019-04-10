@@ -295,7 +295,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvPostNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/3/27 评论置顶
+                //  2019/3/27 评论置顶
             }
         });
         tvPostZan.setOnClickListener(new View.OnClickListener() {
@@ -334,8 +334,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/3/29
-                //发帖
+                //  2019/3/29 发帖
                 mPresenter.getIsBanned(1);
             }
         });
@@ -600,14 +599,6 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
 //        multipleStatusview.showContent();
         smartRefreshLayout.setEnableLoadMore(true);
         page++;
-        /*if (page==1){
-            scvPost.post(new Runnable() {
-                @Override
-                public void run() {
-                    scvPost.scrollTo(0,0);
-                }
-            });
-        }*/
 
     }
 
@@ -698,7 +689,6 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             }
         }
 
-
         //帖子类型 1交流 2建议 3提问
         if (postDetailBean.questionInfo.type == 1) {
             tvPostType.setVisibility(View.GONE);
@@ -760,7 +750,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         imgList.addAll(postDetailBean.questionInfo.contentImg);
         imgAdapter.notifyDataSetChanged();
 
-        postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this, postDetailBean.questionInfo.type, postDetailBean.info, postDetailBean.questionInfo.solveStatus, myHandler);
+        postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this, postDetailBean.questionInfo.type, postDetailBean.info, postDetailBean.questionInfo.solveStatus, postDetailBean.questionInfo.allowDel, myHandler);
 
     }
 
@@ -808,7 +798,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     public void deletePost() {
         hidLoadDiaLog();
-        // TODO: 2019/3/29 事件通知首页刷新数据
+        //  2019/3/29 事件通知首页刷新数据
         RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE, ""));
         finish();
     }
