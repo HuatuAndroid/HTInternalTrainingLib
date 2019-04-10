@@ -74,7 +74,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         smartRefreshLayout = getViewById(R.id.refreshLayout);
         listView = getViewById(R.id.p_lv);
         searchPostBeans = new ArrayList<>();
-        searchPostAdapter = new SearchPostAdapter(getActivity(),keyword, searchPostBeans);
+        searchPostAdapter = new SearchPostAdapter(getActivity(), keyword, searchPostBeans);
         listView.setAdapter(searchPostAdapter);
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
@@ -150,8 +150,11 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
 
     @Override
     public void isLoadMore(boolean b) {
-        smartRefreshLayout.finishRefresh();
-        smartRefreshLayout.finishLoadMore();
+        if (smartRefreshLayout != null) {
+            smartRefreshLayout.finishRefresh();
+            smartRefreshLayout.finishLoadMore();
+
+        }
     }
 
     @Override

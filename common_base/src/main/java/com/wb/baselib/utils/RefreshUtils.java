@@ -42,18 +42,6 @@ public class RefreshUtils {
     }
 
     /**
-     * 员工天地的刷新样式
-     */
-    public void ygtdRefreSh() {
-        smartRefreshLayout.setRefreshHeader(new WaterDropHeader(mContext));
-        smartRefreshLayout.setRefreshFooter(new ClassicsFooter(mContext).setDrawableSize(20));
-//        smartRefreshLayout.setRefreshFooter(new BallPulseFooter(mContext).setSpinnerStyle(SpinnerStyle.Scale));
-        smartRefreshLayout.setEnableFooterTranslationContent(true);
-        smartRefreshLayout.setEnableHeaderTranslationContent(true);
-        smartRefreshLayout.setPrimaryColorsId(R.color.statusbar_color, android.R.color.white);
-    }
-
-    /**
      * 设置刷新头部样式
      *
      * @param refreshHeader
