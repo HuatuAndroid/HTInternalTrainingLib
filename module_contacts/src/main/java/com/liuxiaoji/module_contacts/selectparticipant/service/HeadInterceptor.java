@@ -31,14 +31,14 @@ public class HeadInterceptor implements Interceptor {
 //                .header("Accept-Language", "en;q=1")
 //                .header("Accept-Encoding", "gzip, deflate")
                     .header("Accept", "*/*")
-                    .header("client_version", BuildConfig.VERSION_NAME)
+//                    .header("client_version", BuildConfig.VERSION_NAME)
                     .header("Connection", "keep-alive")
                     .method(request.method(), request.body());
 
         } else {
             builder = request.newBuilder()
                     .header("Accept", "*/*")
-                    .header("client_version", BuildConfig.VERSION_NAME)
+//                    .header("client_version", BuildConfig.VERSION_NAME)
                     .header("Connection", "keep-alive")
                     .header("token", token)
                     .method(request.method(), request.body());

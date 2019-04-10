@@ -67,39 +67,36 @@ public class SearchActivity extends BaseActivity {
         etcSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String temp = v.getText().toString().trim();
-                if ("".equals(temp)){
-                    ToastUtils.showToast(SearchActivity.this,"请输入搜索关键字");
-                }else {
-                    if (!temp.equals(keyword)){
-                        keyword = temp;
-                        if (mFragments.size() == 0) {
-                            llTab.setVisibility(View.VISIBLE);
-                            ArrayList<String> str = new ArrayList<>();
-                            str.add("帖子");
-                            str.add("评论");
-                            mFragments.add(PostMessageFragment.newInstance("1", keyword, true));
-                            mFragments.add(CommentFragment.newInstance("2", keyword, true));
-                            scorllIndicator.setSplitAuto(true);
-                            scorllIndicator.setOnTransitionListener(new OnTransitionTextListener() {
-                                @Override
-                                public TextView getTextView(View tabItemView, int position) {
-                                    return (TextView) tabItemView.findViewById(R.id.test_tv);
-                                }
-                            }.setColor(getResources().getColor(R.color.main_text_blue_458), Color.BLACK));
-                            ColorBar colorBar = new ColorBar(SearchActivity.this, getResources().getColor(R.color.main_text_blue_458), 8);
-                            scorllIndicator.setScrollBar(colorBar);
-                            IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scorllIndicator, viewpager);
-                            ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), SearchActivity.this, mFragments, str);
-                            indicatorViewPager.setAdapter(viewPageTabAdapter);
-                            viewpager.setOffscreenPageLimit(mFragments.size());
-                            viewpager.setCurrentItem(0);
-                        }else {
-                            RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD,v.getText().toString()));
-                        }
+                keyword = v.getText().toString().trim();
+                if ("".equals(keyword)) {
+                    ToastUtils.showToast(SearchActivity.this, "请输入搜索关键字");
+                } else {
+                    if (mFragments.size() == 0) {
+                        llTab.setVisibility(View.VISIBLE);
+                        ArrayList<String> str = new ArrayList<>();
+                        str.add("帖子");
+                        str.add("评论");
+                        mFragments.add(PostMessageFragment.newInstance("1", keyword, true));
+                        mFragments.add(CommentFragment.newInstance("2", keyword, true));
+                        scorllIndicator.setSplitAuto(true);
+                        scorllIndicator.setOnTransitionListener(new OnTransitionTextListener() {
+                            @Override
+                            public TextView getTextView(View tabItemView, int position) {
+                                return (TextView) tabItemView.findViewById(R.id.test_tv);
+                            }
+                        }.setColor(getResources().getColor(R.color.main_text_blue_458), Color.BLACK));
+                        ColorBar colorBar = new ColorBar(SearchActivity.this, getResources().getColor(R.color.main_text_blue_458), 8);
+                        scorllIndicator.setScrollBar(colorBar);
+                        IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scorllIndicator, viewpager);
+                        ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), SearchActivity.this, mFragments, str);
+                        indicatorViewPager.setAdapter(viewPageTabAdapter);
+                        viewpager.setOffscreenPageLimit(mFragments.size());
+                        viewpager.setCurrentItem(0);
+                    } else {
+                        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, v.getText().toString()));
                     }
                 }
-                ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 return true;
             }
         });

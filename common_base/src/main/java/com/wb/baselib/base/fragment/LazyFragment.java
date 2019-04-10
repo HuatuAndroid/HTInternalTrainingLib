@@ -13,6 +13,7 @@ public abstract class LazyFragment extends BaseFragment {
     public static final String INTENT_BOOLEAN_LAZYLOAD = "intent_boolean_lazyLoad";
     private boolean isLazyLoad = true;
     private FrameLayout layout;
+    private boolean isUserVisibleHint = false;
 
     @Deprecated
     protected final void onCreateView(Bundle savedInstanceState) {
@@ -21,9 +22,11 @@ public abstract class LazyFragment extends BaseFragment {
         isLazyLoad=isLazyFragment();
         if (bundle != null) {
             isLazyLoad = bundle.getBoolean(INTENT_BOOLEAN_LAZYLOAD, isLazyLoad);
+            isUserVisibleHint = bundle.getBoolean("isUserVisibleHint", isUserVisibleHint);
         }
+
         if (isLazyLoad) {
-            if (getUserVisibleHint() && !isInit) {
+            if ((getUserVisibleHint() || isUserVisibleHint) && !isInit) {
                 isInit = true;
                 this.savedInstanceState = savedInstanceState;
                 onCreateViewLazy(savedInstanceState);

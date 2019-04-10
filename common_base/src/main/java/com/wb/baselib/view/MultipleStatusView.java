@@ -247,6 +247,7 @@ public class MultipleStatusView extends RelativeLayout {
     public final void showLoading(View view, ViewGroup.LayoutParams layoutParams) {
         checkNull(view, "Loading com.jungan.www.module_public.view is null!");
         mViewStatus = STATUS_LOADING;
+
         if (null == mLoadingView) {
             mLoadingView = view;
             mOtherIds.add(mLoadingView.getId());
