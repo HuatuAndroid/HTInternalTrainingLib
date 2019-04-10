@@ -134,8 +134,10 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
 
     @Override
     public void isLoadMore(boolean b) {
-        smartRefreshLayout.finishRefresh();
-        smartRefreshLayout.finishLoadMore();
+        if (smartRefreshLayout!=null){
+            smartRefreshLayout.finishRefresh();
+            smartRefreshLayout.finishLoadMore();
+        }
     }
 
     @Override
