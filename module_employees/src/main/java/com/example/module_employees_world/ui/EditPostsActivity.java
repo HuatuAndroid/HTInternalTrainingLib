@@ -103,6 +103,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     public final static String TAG_TITLE_STR="title";
     public final static String TAG_CONTENT_STR="content";
     public final static String TAG_CONTENT_ID="contentid";
+    public final static String TAG_CONTENT_TYPE="contentType";
+    public final static String TAG_CONTENT_GROUP="contentGroup";
     public final static int TAG_1=100;
     private int picWidth;
     private MyHandle myHandle;
@@ -110,12 +112,13 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     private boolean emojiKeyboardOpen = false;
     //1交流 2建议 3提问
     private int type = 1;
+    private String commentGroupName;
+    private String commentId;
     //已上传图片个数
     private int picNum;
     private String groupId;
     private String editContent;
     private String title;
-    private String commentId;
     //超链接url
     private String hyperLinkUrl;
     //超链接文本
@@ -221,6 +224,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         title = getIntent().getStringExtra(TAG_TITLE_STR);
         editContent = getIntent().getStringExtra(TAG_CONTENT_STR);
         commentId = getIntent().getStringExtra(TAG_CONTENT_ID);
+        type = getIntent().getIntExtra(TAG_CONTENT_TYPE,1);
+        commentGroupName = getIntent().getStringExtra(TAG_CONTENT_GROUP);
 
         topBarView = findViewById(R.id.topbarview);
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
@@ -248,6 +253,20 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 picWidth = etContent.getWidth();
             }
         });
+
+        mTvXiaoXu.setText(commentGroupName);
+        switch (type){
+            case 1:
+                setUpdataUi_Type(mTvJiaoLiu, mTvJianYi, mTvTiWen);
+                break;
+            case 2:
+                setUpdataUi_Type(mTvJianYi, mTvJiaoLiu, mTvTiWen);
+                break;
+            case 3:
+                setUpdataUi_Type(mTvTiWen, mTvJiaoLiu, mTvJianYi);
+                break;
+        }
+
         //本地图片辅助类初始化
         LocalImageHelper.init(this);
         mEtTopicTitle.setText(title);
@@ -534,7 +553,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
      */
     private void setTextForSpan(String content,int selectPosition){
         // TODO: 2019/4/8
-        content = content.replaceAll("<br/>", "\n");
+        content = content.replaceAll("<br/>", "\n").replaceAll("<br>", "\n");
         content=EmojiUtils.decode(content);
         //1.根据[]标签过滤表情包
         int position=0;
@@ -562,20 +581,28 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         position=0;
         while (content.contains("<img")){
             int startIndex = content.indexOf("<img",position);
-            int endIndex = content.indexOf("\">",startIndex);
+//            int endIndex = content.indexOf("\">",startIndex);
+            int endIndex = content.indexOf(">",startIndex);
             if (startIndex>=0&&endIndex>=0){
+                String url="";
                 String substring = content.substring(startIndex+11, endIndex-1);
-                String url;
+                //这里适配因web端上传图片img标签带有width属性所做处理
+                if (substring.contains("width=")){
+                    int indexOf = substring.indexOf("width=", 0);
+                    substring=substring.substring(0, indexOf-2);
+                }
+
                 //这里出于对扯淡的图片url偶尔会出现双引号外多个反斜杠的情况，遂在此加入判断，扯淡，扯淡真扯淡
                 if (substring.contains("http")){
                     url=substring;
                 }else {
-                    url=content.substring(startIndex+10, endIndex);
+//                    url=substring.substring(startIndex+10, endIndex);
+                    url="h"+substring;
                 }
                 Bitmap bitmap = getImageNetwork(url);
                 ImageSpan span = new ImageSpan(this,bitmap, ImageSpan.ALIGN_BASELINE);
-                spannableString.setSpan(span,startIndex,endIndex+2, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                position=endIndex+2;
+                spannableString.setSpan(span,startIndex,endIndex+1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                position=endIndex+1;
             }else {
                 //已经没有img标签，退出循环
                 break;
