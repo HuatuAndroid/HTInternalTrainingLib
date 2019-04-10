@@ -10,10 +10,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -47,6 +50,7 @@ import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
 
@@ -599,31 +603,40 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
             dialog.dismiss();
         });
 
+        /**
+         * 插入超链接判断
+         *
+         * 需要去除 空格数据，
+         */
         tvDialogRight.setOnClickListener(v -> {
 
             String mEtConnectString = mEtConnect.getText().toString();
 
             String mEtConnectContentString = mEtConnectContent.getText().toString();
 
-//            if (TextUtils.isEmpty(mEtConnectString)) {
-//
-//                if (!TextUtils.isEmpty(mEtConnectContentString)) {
-//                    html = mEtConnectContentString;
-//                }
-//
-//            } else {
-//
-//                if (!TextUtils.isEmpty(mEtConnectContentString)) {
-//                    html = "<a href= " + mEtConnectString + ">" + mEtConnectContentString + "</a >" + " ";
-//                } else {
-//                    html = "<a href= >" + mEtConnectString + "</a >" + " ";
-//                }
-//
-//            }
+            SpannableString spannableString;
 
-//            Spanned spanned = Html.fromHtml(html);
+            if (TextUtils.isEmpty(mEtConnectString)) {
 
-            mTopicEditView.AddConnect(mEtConnectString, mEtConnectContentString);
+//                spannableString = new SpannableString(mEtConnectContentString);
+                ToastUtils.showToast(this, "请输入链接地址");
+                return;
+
+            }else{
+
+                if (TextUtils.isEmpty(mEtConnectContentString)){
+
+                    mEtConnectContentString = mEtConnectString;
+
+                }
+
+                spannableString = new SpannableString(mEtConnectContentString);
+
+                spannableString.setSpan(new URLSpan(mEtConnectString), 0, spannableString.length(),
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+
+            mTopicEditView.AddConnect(spannableString);
 
             dialog.dismiss();
         });
@@ -632,6 +645,17 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         if (!isFinishing()) {
             dialog.show();
         }
+
+        //过滤掉 输入的空格
+        InputFilter filter= (source, start, end, dest, dstart, dend) -> {
+            if(" ".equals(source)){
+                return "";
+            }else{
+                return null;
+            }
+        };
+        mEtConnect.setFilters(new InputFilter[]{filter});
+        mEtConnectContent.setFilters(new InputFilter[]{filter});
 
     }
 
