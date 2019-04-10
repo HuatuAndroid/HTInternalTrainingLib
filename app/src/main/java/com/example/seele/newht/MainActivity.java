@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         toact4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hApp.newInstance().jumpToActivity(MainActivity.this, com.zhiyun88.www.module_main.main.ui.MainActivity.class,"31192", "dfsfsfds", new LoginStatusCall() {
+                hApp.newInstance().jumpToActivity(MainActivity.this, com.zhiyun88.www.module_main.main.ui.MainActivity.class,"31192", "dfsfsfds",true ,new LoginStatusCall() {
                     @Override
                     public void LoginError(String msg, int code) {
                         Log.e("---->>",msg+code);
