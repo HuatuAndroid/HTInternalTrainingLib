@@ -37,14 +37,14 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
      * @param adoptCode 当commentType=2时有用，采纳状态值
      * @param myHandler
      */
-    public PostsDetailPopw(final Activity context, int commentType, ArrayList<String> info, int adoptCode, PostsDetailActivity.MyHandler myHandler) {
+    public PostsDetailPopw(final Activity context, int commentType, ArrayList<String> info, int adoptCode,int allowDel, PostsDetailActivity.MyHandler myHandler) {
         super(context);
         this.context=context;
         this.myHandler=myHandler;
         this.info=info;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popw_posts_detail_layout, null);
-        initView(mMenuView,commentType,adoptCode);
+        initView(mMenuView,commentType,adoptCode,allowDel);
 
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -61,7 +61,7 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
 
     }
 
-    private void initView(View mMenuView, int commentType, int adoptCode) {
+    private void initView(View mMenuView, int type, int commentType, int allowDel) {
         TextView tv_update_type= (TextView) mMenuView.findViewById(R.id.tv_update_type);
         TextView tv_del= (TextView) mMenuView.findViewById(R.id.tv_del);
         TextView tv_cancel= (TextView) mMenuView.findViewById(R.id.tv_cancel);
@@ -75,11 +75,20 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
         tv_adopt.setOnClickListener(this);
         tv_invite.setOnClickListener(this);
 
-        //如果info为null说明没有管理员权限，只能编辑、删除
-        if (info!=null||info.size()>0){
+        //只有本人的帖子才可以编辑
+        if (allowDel==1){
+            //本人
+            tv_edit.setVisibility(View.VISIBLE);
+        }else {
+            tv_edit.setVisibility(View.GONE);
+        }
 
+        //如果info为null说明没有管理员权限，只能删除
+        if (info!=null||info.size()>0){
+            //不是管理员
             for (int i = 0; i < info.size(); i++) {
                 if (info.get(i).equals("1")){
+                    //修改帖子类型
                     tv_update_type.setVisibility(View.VISIBLE);
                 }
             }

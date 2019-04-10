@@ -1,7 +1,10 @@
 package com.example.module_employees_world.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.Layout;
 import android.text.Spannable;
@@ -12,15 +15,16 @@ import android.view.ViewConfiguration;
 import android.widget.TextView;
 
 import com.thefinestartist.utils.log.LogUtil;
+import com.wb.baselib.app.AppUtils;
 
 /**
  * @author liuzhe
  * @date 2019/4/9
  */
-public class CustomMovementMethod  extends LinkMovementMethod {
+public class CustomMovementMethod extends LinkMovementMethod {
     Context mContext;
 
-    public CustomMovementMethod(Context context) {
+    public CustomMovementMethod(Activity context) {
         this.mContext = context;
     }
 
@@ -65,7 +69,24 @@ public class CustomMovementMethod  extends LinkMovementMethod {
         return super.onTouchEvent(widget, buffer, event);
     }
 
-    public void startExplorer(String url){
+    public void startExplorer(String url) {
+
+        if (!url.contains("http")) {
+            url = "http://" + url;
+        }
+
+//        try {
+//            Intent intent = new Intent();
+//            intent.setAction("android.intent.action.VIEW");
+//            Uri content_url = Uri.parse(url);//splitflowurl为分流地址
+//            intent.setData(content_url);
+//            if (!hasPreferredApplication(mContext, intent)) {
+//                intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+//            }
+//            mContext.startActivity(intent);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         try {
             Intent intent = new Intent();
@@ -73,9 +94,22 @@ public class CustomMovementMethod  extends LinkMovementMethod {
             intent.setData(Uri.parse(url));
             mContext.startActivity(intent);
         } catch (Exception e) {
+
             Intent shortcutIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            shortcutIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
-            mContext.startActivity(shortcutIntent);
+            if (hasPreferredApplication(mContext, shortcutIntent)) {
+                shortcutIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                mContext.startActivity(shortcutIntent);
+            }
         }
+    }
+
+    //判断系统是否设置了默认浏览器
+    public boolean hasPreferredApplication(Context mContext, Intent intent) {
+        PackageManager pm = mContext.getPackageManager();
+        ResolveInfo info = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        if (info == null) {
+            return false;
+        }
+        return "android".equals(info.activityInfo.packageName);
     }
 }

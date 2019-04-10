@@ -66,7 +66,7 @@ import rx.schedulers.Schedulers;
  * @author liuzhe
  * @date 2019/3/26
  */
-public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener, EditText.OnClickListener, EditText.OnFocusChangeListener {
+    public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener, EditText.OnClickListener, EditText.OnFocusChangeListener {
 
     public static final String TAG = "ContentEditor";
     public static int maxTextureWidth = 0;
@@ -800,27 +800,7 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
     /**
      * 添加超链接
      */
-    public void AddConnect(String mEtConnectString, String mEtConnectContentString) {
-
-        SpannableString spannableString;
-
-        if (TextUtils.isEmpty(mEtConnectString)) {
-
-            spannableString = new SpannableString(mEtConnectContentString);
-
-        }else{
-
-            if (TextUtils.isEmpty(mEtConnectContentString)){
-
-                mEtConnectContentString = mEtConnectString;
-
-            }
-
-            spannableString = new SpannableString(mEtConnectContentString);
-
-            spannableString.setSpan(new URLSpan(mEtConnectString), 0, spannableString.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
+    public void AddConnect(SpannableString spannableString) {
 
         View view = this.findFocus();
 
@@ -832,8 +812,6 @@ public class TopicEditView extends LinearLayout implements ViewTreeObserver.OnGl
             int index = editText.getSelectionStart();
 
             editable.insert(index, spannableString);
-
-//            editText.setMovementMethod(LinkMovementMethod.getInstance());
 
         }
 
