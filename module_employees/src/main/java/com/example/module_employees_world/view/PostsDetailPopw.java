@@ -37,14 +37,15 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
      * @param adoptCode 当commentType=2时有用，采纳状态值
      * @param myHandler
      */
-    public PostsDetailPopw(final Activity context, int commentType, ArrayList<String> info, int adoptCode,int allowDel, PostsDetailActivity.MyHandler myHandler) {
+//    postsDetailPopw = new PostsDetailPopw(PostsDetailActivity.this, postDetailBean.questionInfo.type, postDetailBean.info, postDetailBean.questionInfo.solveStatus, postDetailBean.questionInfo.allowDel, myHandler);
+    public PostsDetailPopw(final Activity context, int commentType, ArrayList<String> info, int solveStatus,int allowDel, PostsDetailActivity.MyHandler myHandler) {
         super(context);
         this.context=context;
         this.myHandler=myHandler;
         this.info=info;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popw_posts_detail_layout, null);
-        initView(mMenuView,commentType,adoptCode,allowDel);
+        initView(mMenuView,commentType,solveStatus,allowDel);
 
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -61,7 +62,7 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
 
     }
 
-    private void initView(View mMenuView, int type, int commentType, int allowDel) {
+    private void initView(View mMenuView, int commentType, int solveStatus, int allowDel) {
         TextView tv_update_type= (TextView) mMenuView.findViewById(R.id.tv_update_type);
         TextView tv_del= (TextView) mMenuView.findViewById(R.id.tv_del);
         TextView tv_cancel= (TextView) mMenuView.findViewById(R.id.tv_cancel);
