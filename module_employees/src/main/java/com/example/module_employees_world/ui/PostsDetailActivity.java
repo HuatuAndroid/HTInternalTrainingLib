@@ -653,7 +653,6 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     public void getPostDetail(PostDetailBean postDetailBean) {
         hidLoadDiaLog();
-        // : 2019/3/26
         this.postDetailBean = postDetailBean;
         tvTitle.setText(postDetailBean.questionInfo.title);
         topBarView.getCenterTextView().setText(postDetailBean.questionInfo.title);
@@ -679,11 +678,26 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             tvPostZan.setCompoundDrawables(drawable, null, null, null);
         }
         //当帖子为本人所发、未被采纳、未被解决时，显示右上角按钮
-        if (postDetailBean.questionInfo.allowDel==1&&postDetailBean.solve_comment==null&&postDetailBean.questionInfo.solveStatus==0){
-            topBarView.getRightImageButton().setVisibility(View.VISIBLE);
+        if (postDetailBean.info!=null){
+            //管理员
+            if (postDetailBean.questionInfo.solveStatus==0){
+                topBarView.getRightImageButton().setVisibility(View.VISIBLE);
+            }else {
+                topBarView.getRightImageButton().setVisibility(View.GONE);
+            }
         }else {
-            topBarView.getRightImageButton().setVisibility(View.GONE);
+            if (postDetailBean.questionInfo.allowDel==1){
+                //本人
+                if (postDetailBean.questionInfo.solveStatus==0){
+                    topBarView.getRightImageButton().setVisibility(View.VISIBLE);
+                }else {
+                    topBarView.getRightImageButton().setVisibility(View.GONE);
+                }
+            }else {
+                topBarView.getRightImageButton().setVisibility(View.GONE);
+            }
         }
+
 
         //帖子类型 1交流 2建议 3提问
         if (postDetailBean.questionInfo.type == 1) {
@@ -907,7 +921,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     commentId = (int) msg.obj;
                     int partenPosition = msg.arg1;
                     int position = msg.arg2;
-                    activity.mPresenter.deleteComment(commentId + "", partenPosition, position);
+                    activity.commontPopw = new CommontPopw(activity, "确定删除这条回复吗？", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            activity.mPresenter.deleteComment(commentId + "", partenPosition, position);
+                            activity.showLoadDiaLog("");
+                            activity.commontPopw.myDismiss();
+                        }
+                    });
                     break;
                 case RxBusMessageBean.MessageType.POST_103:
                     CommentListBean.ListBean listBean = (CommentListBean.ListBean) msg.obj;
@@ -972,6 +993,8 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     intent1.putExtra(EditPostsActivity.TAG_TITLE_STR, activity.postDetailBean.questionInfo.title);
                     intent1.putExtra(EditPostsActivity.TAG_CONTENT_STR, activity.postDetailBean.questionInfo.content);
                     intent1.putExtra(EditPostsActivity.TAG_CONTENT_ID, activity.postDetailBean.questionInfo.id + "");
+                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_TYPE, activity.postDetailBean.questionInfo.type );
+                    intent1.putExtra(EditPostsActivity.TAG_CONTENT_GROUP, activity.postDetailBean.questionInfo.groupName);
                     activity.startActivity(intent1);
                     break;
             }

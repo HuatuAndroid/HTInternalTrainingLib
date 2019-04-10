@@ -151,8 +151,14 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
             @Override
             public void onClick(View v) {
                 // TODO: 2019/3/30 删除评论
-                mPresenter.deleteComment(commentId+"",-1);
-                showLoadDiaLog("");
+                commontPopw = new CommontPopw(CommentDetailctivity.this, "删除评论后，评论下所有回复都会被删除。", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.deleteComment(commentId+"",-1);
+                        showLoadDiaLog("");
+                        commontPopw.myDismiss();
+                    }
+                });
             }
         });
         tvReply.setOnClickListener(new View.OnClickListener() {
@@ -379,7 +385,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                     // : 2019/3/30 删除子评论
                     commentId= msg.arg1;
                     int position=msg.arg2;
-                    activity.commontPopw = new CommontPopw(activity, "删除评论后，评论下所有回复都会被删除。", new View.OnClickListener() {
+                    activity.commontPopw = new CommontPopw(activity, "确定删除这条回复吗?", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             activity.mPresenter.deleteComment(commentId+"",position);
