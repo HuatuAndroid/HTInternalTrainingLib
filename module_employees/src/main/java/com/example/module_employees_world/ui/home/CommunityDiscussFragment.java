@@ -85,7 +85,7 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
         smartRefreshLayout.setEnableLoadMore(true);
-        multipleStatusView.showLoading();
+        multipleStatusView.showLoadingNew();
         if ("".equals(groupId)) {
             mPresenter.getDiscussData(type, page);
         } else {
@@ -121,7 +121,7 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
         multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multipleStatusView.showLoading();
+                multipleStatusView.showLoadingNew();
                 page = 1;
                 if ("".equals(groupId)) {
                     mPresenter.getDiscussData(type, page);
@@ -171,7 +171,7 @@ public class CommunityDiscussFragment extends MvpFragment<CommunityDiscussPresen
 
     @Override
     public void ShowLoadView() {
-        multipleStatusView.showLoading();
+        multipleStatusView.showLoadingNew();
     }
 
     @Override

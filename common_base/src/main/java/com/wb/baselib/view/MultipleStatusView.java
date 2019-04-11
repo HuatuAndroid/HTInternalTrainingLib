@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.baijiayun.glide.Glide;
+import com.baijiayun.glide.load.engine.DiskCacheStrategy;
+import com.baijiayun.glide.request.RequestOptions;
 import com.wb.baselib.R;
 
 import java.util.ArrayList;
@@ -19,14 +23,14 @@ public class MultipleStatusView extends RelativeLayout {
 
     private static final RelativeLayout.LayoutParams DEFAULT_LAYOUT_PARAMS =
             new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                                            LayoutParams.MATCH_PARENT);
+                    LayoutParams.MATCH_PARENT);
 
-    public static final int STATUS_CONTENT    = 0x00;
-    public static final int STATUS_LOADING    = 0x01;
-    public static final int STATUS_EMPTY      = 0x02;
-    public static final int STATUS_ERROR      = 0x03;
+    public static final int STATUS_CONTENT = 0x00;
+    public static final int STATUS_LOADING = 0x01;
+    public static final int STATUS_EMPTY = 0x02;
+    public static final int STATUS_ERROR = 0x03;
     public static final int STATUS_NO_NETWORK = 0x04;
-    public static final int STATUS_NOLOGIN    = 0x05;
+    public static final int STATUS_NOLOGIN = 0x05;
     private static final int NULL_RESOURCE_ID = -1;
 
     private View mEmptyView;
@@ -35,14 +39,14 @@ public class MultipleStatusView extends RelativeLayout {
     private View mNoNetworkView;
     private View mContentView;
     private View mNoLoginView;
-    private int  mEmptyViewResId;
-    private int  mErrorViewResId;
-    private int  mLoadingViewResId;
-    private int  mNoNetworkViewResId;
-    private int  mContentViewResId;
+    private int mEmptyViewResId;
+    private int mErrorViewResId;
+    private int mLoadingViewResId;
+    private int mNoNetworkViewResId;
+    private int mContentViewResId;
     private int mNoLoginViewResId;
-    private int             mViewStatus;
-    private LayoutInflater  mInflater;
+    private int mViewStatus;
+    private LayoutInflater mInflater;
     private OnClickListener mOnRetryClickListener;
 
     private final ArrayList<Integer> mOtherIds = new ArrayList<>();
@@ -64,19 +68,21 @@ public class MultipleStatusView extends RelativeLayout {
         mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.custom_no_network_view);
         mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.custom_no_network_view);
         mContentViewResId = a.getResourceId(R.styleable.MultipleStatusView_contentView, NULL_RESOURCE_ID);
-        mNoLoginViewResId=a.getResourceId(R.styleable.MultipleStatusView_noLoginView,R.layout.custom_nologin_view);
+        mNoLoginViewResId = a.getResourceId(R.styleable.MultipleStatusView_noLoginView, R.layout.custom_nologin_view);
         a.recycle();
         mInflater = LayoutInflater.from(getContext());
     }
 
-    @Override protected void onFinishInflate() {
+    @Override
+    protected void onFinishInflate() {
         super.onFinishInflate();
         showContent();
     }
 
-    @Override protected void onDetachedFromWindow() {
+    @Override
+    protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        clear(mEmptyView, mLoadingView, mErrorView, mNoNetworkView,mNoLoginView);
+        clear(mEmptyView, mLoadingView, mErrorView, mNoNetworkView, mNoLoginView);
         if (null != mOtherIds) {
             mOtherIds.clear();
         }
@@ -99,7 +105,7 @@ public class MultipleStatusView extends RelativeLayout {
      * @param onRetryClickListener 重试点击事件
      */
     public void setOnRetryClickListener(OnClickListener onRetryClickListener) {
-        Log.e("onRetryClickListener",onRetryClickListener==null?"yes":"no");
+        Log.e("onRetryClickListener", onRetryClickListener == null ? "yes" : "no");
         this.mOnRetryClickListener = onRetryClickListener;
     }
 
@@ -109,6 +115,7 @@ public class MultipleStatusView extends RelativeLayout {
     public final void showEmpty() {
         showEmpty(mEmptyViewResId, DEFAULT_LAYOUT_PARAMS);
     }
+
     /**
      * 显示未登录页面
      */
@@ -118,36 +125,39 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示空视图
-     * @param layoutId 自定义布局文件
+     *
+     * @param layoutId     自定义布局文件
      * @param layoutParams 布局参数
      */
     public final void showNoLogin(int layoutId, ViewGroup.LayoutParams layoutParams) {
         showNoLogin(inflateView(layoutId), layoutParams);
     }
+
     /**
      * 显示空视图
-     * @param view 自定义视图
+     *
+     * @param view         自定义视图
      * @param layoutParams 布局参数
      */
     public final void showNoLogin(View view, ViewGroup.LayoutParams layoutParams) {
         checkNull(view, "Empty view is null!");
-        mViewStatus=STATUS_NOLOGIN;
-        if(mNoLoginView==null){
-            Log.e("mNoLoginView","yesy");
-        }else {
-            Log.e("mNoLoginView","no");
+        mViewStatus = STATUS_NOLOGIN;
+        if (mNoLoginView == null) {
+            Log.e("mNoLoginView", "yesy");
+        } else {
+            Log.e("mNoLoginView", "no");
         }
         if (null == mNoLoginView) {
             mNoLoginView = view;
-            if(mNoLoginView==null){
-                Log.e("emptyRetryView","yes");
-            }else {
-                Log.e("emptyRetryView","no");
+            if (mNoLoginView == null) {
+                Log.e("emptyRetryView", "yes");
+            } else {
+                Log.e("emptyRetryView", "no");
             }
-            if(mOnRetryClickListener==null){
-                Log.e("mOnRetryClickListener","yes");
-            }else {
-                Log.e("mOnRetryClickListener","no");
+            if (mOnRetryClickListener == null) {
+                Log.e("mOnRetryClickListener", "yes");
+            } else {
+                Log.e("mOnRetryClickListener", "no");
             }
             View emptyRetryView = mNoLoginView.findViewById(R.id.nologin);
             if (null != mOnRetryClickListener && null != emptyRetryView) {
@@ -158,9 +168,11 @@ public class MultipleStatusView extends RelativeLayout {
         }
         showViewById(mNoLoginView.getId());
     }
+
     /**
      * 显示空视图
-     * @param layoutId 自定义布局文件
+     *
+     * @param layoutId     自定义布局文件
      * @param layoutParams 布局参数
      */
     public final void showEmpty(int layoutId, ViewGroup.LayoutParams layoutParams) {
@@ -169,7 +181,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示空视图
-     * @param view 自定义视图
+     *
+     * @param view         自定义视图
      * @param layoutParams 布局参数
      */
     public final void showEmpty(View view, ViewGroup.LayoutParams layoutParams) {
@@ -196,7 +209,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示错误视图
-     * @param layoutId 自定义布局文件
+     *
+     * @param layoutId     自定义布局文件
      * @param layoutParams 布局参数
      */
     public final void showError(int layoutId, ViewGroup.LayoutParams layoutParams) {
@@ -205,7 +219,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示错误视图
-     * @param view 自定义视图
+     *
+     * @param view         自定义视图
      * @param layoutParams 布局参数
      */
     public final void showError(View view, ViewGroup.LayoutParams layoutParams) {
@@ -232,7 +247,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示加载中视图
-     * @param layoutId 自定义布局文件
+     *
+     * @param layoutId     自定义布局文件
      * @param layoutParams 布局参数
      */
     public final void showLoading(int layoutId, ViewGroup.LayoutParams layoutParams) {
@@ -241,13 +257,26 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示加载中视图
-     * @param view 自定义视图
+     *
+     */
+    public final void showLoadingNew() {
+        View view = inflateView(R.layout.layout_loading);
+        ImageView imageView = view.findViewById(R.id.ivGif);
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        Glide.with(getContext()).load(R.drawable.git_loading).apply(options).into(imageView);
+        showLoading(view,DEFAULT_LAYOUT_PARAMS );
+    }
+
+    /**
+     * 显示加载中视图
+     *
+     * @param view         自定义视图
      * @param layoutParams 布局参数
      */
     public final void showLoading(View view, ViewGroup.LayoutParams layoutParams) {
         checkNull(view, "Loading com.jungan.www.module_public.view is null!");
         mViewStatus = STATUS_LOADING;
-
         if (null == mLoadingView) {
             mLoadingView = view;
             mOtherIds.add(mLoadingView.getId());
@@ -265,7 +294,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示无网络视图
-     * @param layoutId 自定义布局文件
+     *
+     * @param layoutId     自定义布局文件
      * @param layoutParams 布局参数
      */
     public final void showNoNetwork(int layoutId, ViewGroup.LayoutParams layoutParams) {
@@ -274,7 +304,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     /**
      * 显示无网络视图
-     * @param view 自定义视图
+     *
+     * @param view         自定义视图
      * @param layoutParams 布局参数
      */
     public final void showNoNetwork(View view, ViewGroup.LayoutParams layoutParams) {
@@ -291,7 +322,9 @@ public class MultipleStatusView extends RelativeLayout {
         }
         showViewById(mNoNetworkView.getId());
     }
+
     boolean isAddContentView;
+
     /**
      * 显示内容视图
      */
