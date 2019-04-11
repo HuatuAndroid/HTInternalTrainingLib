@@ -45,6 +45,8 @@ public class GlideManager {
 
     }
 
+
+
     public void setGlideRoundTransImage(ImageView imageViewm, int res, Context mContext, String path){
         Picasso.with(mContext).load(path).error(res).placeholder(res).into(imageViewm);
     }

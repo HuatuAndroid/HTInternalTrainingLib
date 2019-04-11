@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baijiayun.glide.Glide;
+import com.baijiayun.glide.load.resource.bitmap.CircleCrop;
+import com.baijiayun.glide.request.RequestOptions;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.DiscussListBean;
 import com.example.module_employees_world.bean.SearchPostBean;
@@ -26,7 +29,7 @@ import java.util.List;
 public class SearchPostAdapter extends ListBaseAdapter {
     private String keyword;
 
-    public SearchPostAdapter(Context context,String keyword, List<SearchPostBean> searchPostBeans) {
+    public SearchPostAdapter(Context context, String keyword, List<SearchPostBean> searchPostBeans) {
         super(searchPostBeans, context);
         this.keyword = keyword;
     }
@@ -64,11 +67,13 @@ public class SearchPostAdapter extends ListBaseAdapter {
         if (searchPostBean.getIs_anonymity() == 1) {
             viewHolder.tvPostName.setText("匿名");
         } else {
-            viewHolder.tvPostName.setText(searchPostBean.getUser_name()+"");
+            viewHolder.tvPostName.setText(searchPostBean.getUser_name() + "");
         }
         //头像统一由服务器获取
         if (!TextUtils.isEmpty(searchPostBean.getAvatar()))
-            Picasso.with(context).load(searchPostBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.ivHead);
+            Glide.with(context).load(searchPostBean.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(viewHolder.ivHead);
         viewHolder.tvRead.setText(searchPostBean.getRead_count() + "");
         viewHolder.tvLike.setText(searchPostBean.getLike_count() + "");
         viewHolder.tvComment.setText(searchPostBean.getComment_count() + "");
@@ -97,46 +102,46 @@ public class SearchPostAdapter extends ListBaseAdapter {
         String end = "</font>";
         String content = searchPostBean.getText_img();
         String title = searchPostBean.getTitle();
-        if (title.indexOf(keyword)==-1){
+        if (title.indexOf(keyword) == -1) {
             viewHolder.tvPostTitle.setText(title);
-        }else {
+        } else {
             int lengthKeyword = keyword.length();
             String htmlTitle = "";
-           int lastPosition = 0;
+            int lastPosition = 0;
             int lengthTitle = title.length();
-            while (lastPosition < lengthTitle){
+            while (lastPosition < lengthTitle) {
                 int subPosition = title.indexOf(keyword, lastPosition);
                 if (subPosition < 0) {
-                    if (lastPosition < lengthTitle){
-                        htmlTitle = htmlTitle+title.substring(lastPosition);
+                    if (lastPosition < lengthTitle) {
+                        htmlTitle = htmlTitle + title.substring(lastPosition);
                     }
                     break;
                 } else {
-                    htmlTitle = htmlTitle + title.substring(lastPosition,subPosition) + start + keyword + end;
+                    htmlTitle = htmlTitle + title.substring(lastPosition, subPosition) + start + keyword + end;
                     lastPosition = subPosition + lengthKeyword;
                 }
             }
             viewHolder.tvPostTitle.setText(Html.fromHtml(htmlTitle));
         }
-        if (content.length()>90){
-            content = content.substring(0,90);
+        if (content.length() > 90) {
+            content = content.substring(0, 90);
         }
-        if (content.indexOf(keyword)==-1){
+        if (content.indexOf(keyword) == -1) {
             viewHolder.tvPostContent.setText(content);
-        }else {
+        } else {
             int lengthKeyword = keyword.length();
             String htmlTitle = "";
             int lastPosition = 0;
             int lengthTitle = content.length();
-            while (lastPosition < lengthTitle){
+            while (lastPosition < lengthTitle) {
                 int subPosition = content.indexOf(keyword, lastPosition);
                 if (subPosition < 0) {
-                    if (lastPosition < lengthTitle){
-                        htmlTitle = htmlTitle+content.substring(lastPosition);
+                    if (lastPosition < lengthTitle) {
+                        htmlTitle = htmlTitle + content.substring(lastPosition);
                     }
                     break;
                 } else {
-                    htmlTitle = htmlTitle + content.substring(lastPosition,subPosition) + start + keyword + end;
+                    htmlTitle = htmlTitle + content.substring(lastPosition, subPosition) + start + keyword + end;
                     lastPosition = subPosition + lengthKeyword;
                 }
             }

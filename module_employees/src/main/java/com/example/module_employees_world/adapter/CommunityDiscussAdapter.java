@@ -1,6 +1,7 @@
 package com.example.module_employees_world.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baijiayun.glide.Glide;
+import com.baijiayun.glide.load.resource.bitmap.CircleCrop;
+import com.baijiayun.glide.request.RequestOptions;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.DiscussListBean;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.adapter.ListBaseAdapter;
+import com.wb.baselib.image.GlideManager;
 
 import java.util.List;
 
@@ -104,7 +109,9 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             viewHolder.title.setText(type + discussListBean.getTitle());
             //头像统一由服务器获取
             if (!TextUtils.isEmpty(discussListBean.getAvatar())) {
-                Picasso.with(context).load(discussListBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.image);
+                Glide.with(context).load(discussListBean.getAvatar())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .into(viewHolder.image);
             }
             viewHolder.read.setText(discussListBean.getRead_count());
             //  viewHolder.content.setText(discussListBean.getContent());
