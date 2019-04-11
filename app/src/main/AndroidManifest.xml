@@ -13,13 +13,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-<<<<<<< HEAD
 <!--
                 <category android:name="android.intent.category.LAUNCHER" />
 -->
-=======
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
->>>>>>> 7d77c66d381829a569b9feb9ea4b2590642d6ac8
             </intent-filter>
         </activity>
         <!--<activity android:name="com.zhiyun88.www.module_main.commonality.ui.QuestionnaireActivity">-->
