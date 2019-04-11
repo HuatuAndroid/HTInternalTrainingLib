@@ -7,12 +7,13 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.WindowInsets;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * @author liuzhe
  * @date 2019/4/3
  */
-public class CustomLinearLayout extends LinearLayout {
+public class CustomLinearLayout extends RelativeLayout {
     public CustomLinearLayout(Context context) {
         super(context);
     }

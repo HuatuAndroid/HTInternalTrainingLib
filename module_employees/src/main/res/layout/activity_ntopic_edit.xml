@@ -27,6 +27,7 @@
         app:titleBarColor="#007AFF" />
 
     <LinearLayout
+        android:layout_below="@+id/topbarview"
         android:id="@+id/mLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
