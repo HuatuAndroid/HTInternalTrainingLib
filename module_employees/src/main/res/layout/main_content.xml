@@ -14,12 +14,12 @@
             android:layout_height="45dp"
             android:background="@color/white" />
 
-        <View
+        <!--<View
             android:id="@+id/view_line"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/main_bg_grey_f8" />
+            android:background="@color/main_bg_grey_f8" />-->
         <View
             android:id="@+id/view_line_xi"
             android:visibility="gone"

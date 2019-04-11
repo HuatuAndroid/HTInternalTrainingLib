@@ -198,7 +198,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
                 return (TextView) tabItemView.findViewById(R.id.test_tv);
             }
         }.setColor(getResources().getColor(R.color.main_text_blue_458), Color.BLACK));
-        ColorBar colorBar = new ColorBar(this, getResources().getColor(R.color.main_text_blue_458), 4);
+        ColorBar colorBar = new ColorBar(this, getResources().getColor(R.color.main_text_blue_458), 8);
         scrollIndicatorView.setScrollBar(colorBar);
         IndicatorViewPager indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, mViewPager);
         ViewPageTabAdapter viewPageTabAdapter = new ViewPageTabAdapter(getSupportFragmentManager(), this, mFragments, str);

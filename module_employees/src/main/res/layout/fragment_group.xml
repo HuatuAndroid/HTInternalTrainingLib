@@ -8,5 +8,5 @@
     app:contentView="@layout/public_resh_listview"
     app:emptyView="@layout/layout_null_data_other"
     app:errorView="@layout/layout_erro_net"
-    app:loadingView="@layout/main_custom_loading_view"
+    app:loadingView="@layout/custom_loading_view"
     app:noNetworkView="@layout/layout_erro_net"/>
