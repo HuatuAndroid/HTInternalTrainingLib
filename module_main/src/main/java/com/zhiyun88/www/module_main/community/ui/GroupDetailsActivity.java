@@ -51,7 +51,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_group_detail);
+        setContentView(R.layout.activity_group_detail_neixun);
         groupId = getIntent().getStringExtra("groupId");
         topBarView = getViewById(R.id.topbarview);
         if (TextUtils.isEmpty(groupId)) {

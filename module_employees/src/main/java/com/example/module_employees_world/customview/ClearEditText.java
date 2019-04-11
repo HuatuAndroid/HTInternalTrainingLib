@@ -2,6 +2,7 @@ package com.example.module_employees_world.customview;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -19,7 +20,7 @@ import com.example.module_employees_world.R;
  * 创建人：王晓凤
  * 创建时间：2019/3/26 6:12 PM
  */
-public class ClearEditText extends android.support.v7.widget.AppCompatEditText implements OnFocusChangeListener, TextWatcher {
+public class ClearEditText extends AppCompatEditText implements OnFocusChangeListener, TextWatcher {
     /**
      * 删除按钮的引用
      */

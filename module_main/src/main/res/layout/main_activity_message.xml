@@ -5,5 +5,5 @@
     android:background="@color/white"
     android:orientation="vertical">
     <include layout="@layout/main_commom_topbar" />
-    <include layout="@layout/main_content"/>
+    <include layout="@layout/neixun_main"/>
 </LinearLayout>
