@@ -66,7 +66,7 @@ public class CommunityMyGroupFragment extends MvpFragment<CommunityMyGroupPresen
         mAdapter = new CommunityMyGroupAdapter(getActivity(), myItemListBeans);
         listView.setAdapter(mAdapter);
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
-        multipleStatusView.showLoadingNew();
+        multipleStatusView.showLoading();
         mPresenter.getMyGroupData(page);
         RxBus.getIntanceBus().registerRxBus(RxMessageBean.class, new Consumer<RxMessageBean>() {
             @Override
@@ -86,7 +86,7 @@ public class CommunityMyGroupFragment extends MvpFragment<CommunityMyGroupPresen
         multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multipleStatusView.showLoadingNew();
+                multipleStatusView.showLoading();
                 page = 1;
                 mPresenter.getMyGroupData(page);
             }
@@ -138,7 +138,7 @@ public class CommunityMyGroupFragment extends MvpFragment<CommunityMyGroupPresen
 
     @Override
     public void ShowLoadView() {
-        multipleStatusView.showLoadingNew();
+        multipleStatusView.showLoading();
     }
 
     @Override

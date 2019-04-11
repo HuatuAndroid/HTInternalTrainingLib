@@ -70,7 +70,12 @@ public class SearchPresenter extends SearchContranct.SearchPresenter {
 
             @Override
             public void onFail(ApiException e) {
-
+                if (page == 1) {
+                    mView.ErrorData();
+                } else {
+                    mView.showErrorMsg(e.getMessage());
+                    mView.isLoadMore(true);
+                }
             }
         });
     }
@@ -120,7 +125,12 @@ public class SearchPresenter extends SearchContranct.SearchPresenter {
 
             @Override
             public void onFail(ApiException e) {
-
+                if (page == 1) {
+                    mView.ErrorData();
+                } else {
+                    mView.showErrorMsg(e.getMessage());
+                    mView.isLoadMore(true);
+                }
             }
         });
 
