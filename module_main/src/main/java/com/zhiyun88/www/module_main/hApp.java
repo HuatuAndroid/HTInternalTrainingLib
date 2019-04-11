@@ -44,7 +44,7 @@ public class hApp {
     public void initVideoPlay(Application application){
 //        BJVideoPlayerSDK.getInstance().init(application);
         new BJYPlayerSDK.Builder(application)
-                .setDevelopMode(true)
+                .setDevelopMode(false)
                 .build();
     }
 
