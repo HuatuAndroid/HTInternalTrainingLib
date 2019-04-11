@@ -120,7 +120,7 @@ public class SearchPresenter extends SearchContranct.SearchPresenter {
 
             @Override
             public void onFail(ApiException e) {
-
+               
             }
         });
 
