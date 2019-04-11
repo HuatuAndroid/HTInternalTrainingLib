@@ -58,6 +58,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         bundle.putString("type", type);
         bundle.putString("keyword", keyword);
         bundle.putBoolean("isRefresh", isRefresh);
+        bundle.putBoolean("isUserVisibleHint", true);
         postMessageFragment.setArguments(bundle);
         return postMessageFragment;
     }
@@ -79,14 +80,13 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         RefreshUtils.getInstance(smartRefreshLayout, getActivity()).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
         smartRefreshLayout.setEnableLoadMore(true);
-        multipleStatusView.showLoadingNew();
+        multipleStatusView.showLoading();
         mPresenter.getSerachPost(type, keyword, page);
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
                 if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
                     page = 1;
-                    multipleStatusView.showLoadingNew();
                     mPresenter.getSerachPost(type, keyword, page);
                 } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
                     String total = (String) rxMessageBean.getMessage();
@@ -99,7 +99,6 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
                 } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
                     page = 1;
                     keyword = (String) rxMessageBean.getMessage();
-                    multipleStatusView.showLoadingNew();
                     mPresenter.getSerachPost(type, keyword, page);
                 }
             }
@@ -113,7 +112,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multipleStatusView.showLoadingNew();
+                multipleStatusView.showLoading();
                 page = 1;
                 mPresenter.getSerachPost(type, keyword, page);
             }
@@ -169,7 +168,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
 
     @Override
     public void ShowLoadView() {
-        multipleStatusView.showLoadingNew();
+        multipleStatusView.showLoading();
     }
 
     @Override

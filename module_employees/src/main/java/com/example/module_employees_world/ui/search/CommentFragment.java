@@ -78,7 +78,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         RefreshUtils.getInstance(smartRefreshLayout,getActivity() ).defaultRefreSh();
         smartRefreshLayout.setEnableRefresh(isRefresh);
         smartRefreshLayout.setEnableLoadMore(true);
-        multipleStatusView.showLoadingNew();
+        multipleStatusView.showLoading();
         mPresenter.getSearchCommnet(type,keyword,page);
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
@@ -102,7 +102,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multipleStatusView.showLoadingNew();
+                multipleStatusView.showLoading();
                 page = 1;
                 mPresenter.getSearchCommnet(type, keyword, page);
             }
@@ -153,7 +153,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
 
     @Override
     public void ShowLoadView() {
-        multipleStatusView.showLoadingNew();
+        multipleStatusView.showLoading();
     }
 
     @Override

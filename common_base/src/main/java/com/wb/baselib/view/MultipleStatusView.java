@@ -50,6 +50,8 @@ public class MultipleStatusView extends RelativeLayout {
     private OnClickListener mOnRetryClickListener;
 
     private final ArrayList<Integer> mOtherIds = new ArrayList<>();
+    //加载中布局 员工天地
+    private View view;
 
     public MultipleStatusView(Context context) {
         this(context, null);
@@ -65,7 +67,6 @@ public class MultipleStatusView extends RelativeLayout {
         mEmptyViewResId = a.getResourceId(R.styleable.MultipleStatusView_emptyView, R.layout.empty_view);
         mErrorViewResId = a.getResourceId(R.styleable.MultipleStatusView_errorView, R.layout.custom_error_view);
         mLoadingViewResId = a.getResourceId(R.styleable.MultipleStatusView_loadingView, R.layout.custom_loading_view);
-        mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.custom_no_network_view);
         mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.custom_no_network_view);
         mContentViewResId = a.getResourceId(R.styleable.MultipleStatusView_contentView, NULL_RESOURCE_ID);
         mNoLoginViewResId = a.getResourceId(R.styleable.MultipleStatusView_noLoginView, R.layout.custom_nologin_view);
@@ -260,13 +261,15 @@ public class MultipleStatusView extends RelativeLayout {
      *
      */
     public final void showLoadingNew() {
-        View view = inflateView(R.layout.layout_loading);
+        view = inflateView(R.layout.layout_loading);
         ImageView imageView = view.findViewById(R.id.ivGif);
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         Glide.with(getContext()).load(R.drawable.git_loading).apply(options).into(imageView);
         showLoading(view,DEFAULT_LAYOUT_PARAMS );
     }
+
+
 
     /**
      * 显示加载中视图
