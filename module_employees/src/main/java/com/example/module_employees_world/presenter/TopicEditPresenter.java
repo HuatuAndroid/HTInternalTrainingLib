@@ -1,3 +1,4 @@
+
 package com.example.module_employees_world.presenter;
 
 import android.app.Activity;
@@ -31,7 +32,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -147,14 +154,62 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
 
     public void processImage(TopicContentItem[] topicContentItems) {
 
-        Map<String, File> map = new HashMap<>();
-        for (int i = 0; i < topicContentItems.length; i++) {
-            File file = new File(Uri.parse(topicContentItems[i].localUrl).getPath());
-            map.put("file" + i, file);
-        }
+        List<NImageBean> nImageBeans = new ArrayList<>();
 
-        Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
-        commitImages(bodyMap);
+        Observable.fromArray(topicContentItems)
+                .flatMap(new Function<TopicContentItem, Observable<Result<NImageListsBean>>>() {
+                    @Override
+                    public Observable<Result<NImageListsBean>> apply(TopicContentItem topicContentItem) throws Exception {
+                        Map<String, File> map = new HashMap<>();
+                        File file = new File(Uri.parse(topicContentItem.localUrl).getPath());
+                        map.put("file", file);
+
+                        Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+
+                        return mModel.commitImage(bodyMap);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<NImageListsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<NImageListsBean> result) {
+                        if (result.getData() != null && result.getData().getList().size() != 0) {
+                            nImageBeans.addAll(result.getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.closeLoadV();
+                        mView.showErrorMsg(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                        if (nImageBeans != null && nImageBeans.size() != 0) {
+                            processImage(nImageBeans);
+                        }
+
+                    }
+                });
+
+
+//        Map<String, File> map = new HashMap<>();
+//        for (int i = 0; i < topicContentItems.length; i++) {
+//            File file = new File(Uri.parse(topicContentItems[i].localUrl).getPath());
+//            map.put("file" + i, file);
+//        }
+//
+//        Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
+//        commitImages(bodyMap);
 
     }
 
@@ -242,7 +297,7 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
 
             if (TopicContentItem.TYPE_IMG.equals(topicContentItem.type.toString())) {
 
-                stringContent += "<br><img src=\"" + HttpConfig.newInstance().getmBaseUrl() + "/" + topicContentItem.remoteUrl + "\"><br>";
+                stringContent += "<img src=\"" + HttpConfig.newInstance().getmBaseUrl() + "/" + topicContentItem.remoteUrl + "\">";
 
             } else if (TopicContentItem.TYPE_TXT.equals(topicContentItem.type.toString())) {
 
@@ -260,10 +315,9 @@ public class TopicEditPresenter extends TopicEditContranct.Presenter {
 
 
     /**
-     *      * 描述：获取字符串中被两个字符（串）包含的所有数据
-     *      * @param content 处理字符串
-     *      * @return Set<String>
-     *     
+     * * 描述：获取字符串中被两个字符（串）包含的所有数据
+     * * @param content 处理字符串
+     * * @return Set<String>
      */
     public List<String> getStrContainData(String content) {
 
