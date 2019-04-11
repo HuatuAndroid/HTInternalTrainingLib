@@ -121,9 +121,10 @@ public class hApp {
      * @param cls 跳转到
      * @param uid
      * @param token
+     * @param showEmployees  是否展示 员工天地
      * @param loginStatusCall
      */
-    public void jumpToActivity(final Object source, final Class<?> cls, final String uid, final String token, final LoginStatusCall loginStatusCall){
+    public void jumpToActivity(final Object source, final Class<?> cls, final String uid, final String token, final boolean showEmployees, final LoginStatusCall loginStatusCall){
         if(loginStatusCall==null){
             throw new NullPointerException("loginStatusCall is not null");
         }
@@ -158,7 +159,7 @@ public class hApp {
                                         .setmMapHeader(map1)
                                         .setIsReshConfig(true)
                                         .setmIsUseLog(HttpManager.newInstance().getHttpConfig().ismIsUseLog())
-                                        .setEmployeesWorld(true);
+                                        .setEmployeesWorld(showEmployees);
                         HttpConfig.newInstanceBuild(httpConfig);
 //                        CommunityActivity.startForResult((Activity) source);
                         Intent intent = new Intent((Activity) source,cls);

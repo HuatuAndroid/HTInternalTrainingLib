@@ -17,6 +17,7 @@
             android:textColor="#3D3E43"
             android:textSize="15sp"
             android:gravity="center"
+            android:text="删除评论后，评论下所有回复都会被删除。"
             android:background="@drawable/shape_left_right_popw_bg"/>
         <View
             android:layout_width="match_parent"

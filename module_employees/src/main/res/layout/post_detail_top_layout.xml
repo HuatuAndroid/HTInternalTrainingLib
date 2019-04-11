@@ -41,8 +41,7 @@
             android:id="@+id/details_head"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/morentouxiang"/>
+            android:layout_centerVertical="true"/>
 
         <LinearLayout
             android:id="@+id/ll_name"
@@ -58,12 +57,12 @@
                 android:layout_height="wrap_content"
                 android:textColor="#3D3E43"
                 android:textSize="15sp"
-                android:text="张三"/>
+                android:text=""/>
             <TextView
                 android:id="@+id/details_part"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="组织部"
+                android:text=""
                 android:layout_marginLeft="15dp"
                 android:textColor="#999CAA"
                 android:textSize="11sp" />
@@ -83,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#999CAA"
                 android:textSize="12sp"
-                android:text="2019-12-12"/>
+                android:text=""/>
 
             <TextView
                 android:id="@+id/details_browse"
@@ -92,7 +91,7 @@
                 android:textColor="#999CAA"
                 android:layout_marginLeft="7dp"
                 android:textSize="12sp"
-                android:text="l 阅读222"/>
+                android:text=""/>
 
             <TextView
                 android:id="@+id/tv_post_type"
@@ -102,7 +101,7 @@
                 android:layout_marginLeft="7dp"
                 android:textSize="12sp"
                 android:visibility="invisible"
-                android:text="l 阅读222"/>
+                android:text=""/>
         </LinearLayout>
         <TextView
             android:id="@+id/tv_topic_group"
@@ -116,7 +115,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textStyle="bold"
-            android:text="【薪酬组】"/>
+            android:text=""/>
 
     </RelativeLayout>
 
@@ -149,6 +148,7 @@
                 android:layout_below="@+id/tv_details_text"
                 android:textSize="14sp"
                 android:textColor="#007AFF"
+                android:visibility="invisible"
                 android:text="展开"/>
         </RelativeLayout>
 

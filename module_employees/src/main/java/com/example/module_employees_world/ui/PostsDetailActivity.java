@@ -737,7 +737,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvDetailText.post(new Runnable() {
             @Override
             public void run() {
-                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0 || tvDetailText.toString().contains("...")) {
+                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0) {
                     tvOpen.setVisibility(View.VISIBLE);
                 } else {
                     tvOpen.setVisibility(View.INVISIBLE);
@@ -978,7 +978,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                     activity.mPresenter.editQuestion(type, activity.question_id);
                     break;
                 case RxBusMessageBean.MessageType.POST_115:
-                    // TODO: 2019/4/6 编辑
+                    //  2019/4/6 编辑
                     Intent intent1 = new Intent(activity, EditPostsActivity.class);
                     intent1.putExtra(EditPostsActivity.TAG_TITLE_STR, activity.postDetailBean.questionInfo.title);
                     intent1.putExtra(EditPostsActivity.TAG_CONTENT_STR, activity.postDetailBean.questionInfo.content);
