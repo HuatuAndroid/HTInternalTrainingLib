@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,9 +14,6 @@ import android.widget.TextView;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.customview.ClearEditText;
-import com.example.module_employees_world.ui.home.CommunityActivity;
-import com.example.module_employees_world.ui.home.CommunityDiscussFragment;
-import com.example.module_employees_world.ui.home.CommunityGroupFragment;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -47,7 +43,7 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_search_ygtd);
         initView(savedInstanceState);
     }
 
