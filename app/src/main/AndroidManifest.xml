@@ -8,16 +8,12 @@
     android:supportsRtl="true"
     android:name=".mApp"-->
     <application
-        android:theme="@style/BaseAppTheme"
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:name=".mApp">
+        android:theme="@style/BaseAppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
         <!--<activity android:name="com.zhiyun88.www.module_main.commonality.ui.QuestionnaireActivity">-->
