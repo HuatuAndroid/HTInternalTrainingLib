@@ -1,6 +1,7 @@
 package com.example.module_employees_world.presenter;
 
 import android.app.Activity;
+import android.os.CountDownTimer;
 
 import com.example.module_employees_world.bean.GuideBean;
 import com.example.module_employees_world.bean.IsBannedBean;
@@ -9,6 +10,7 @@ import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.GuideContranct;
 import com.example.module_employees_world.model.GuideModel;
 import com.example.module_employees_world.ui.home.CommunityActivity;
+import com.thefinestartist.utils.log.LogUtil;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.appconfig.AppConfigManager;
 import com.wb.baselib.bean.Result;
@@ -23,6 +25,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author liuzhe
@@ -34,6 +37,8 @@ public class GuidePresenter extends GuideContranct.Presenter {
     public Disposable subscribe;
 
     private int times = 3;   //倒计时的时间
+
+    private CountDownTimer timer;
 
     public GuidePresenter(GuideContranct.View iView, Activity mActivity) {
 
@@ -48,26 +53,49 @@ public class GuidePresenter extends GuideContranct.Presenter {
      */
     @Override
     public void countDown() {
-        subscribe = Observable.interval(0, 1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) {
-                        if (times - aLong == 0){
-                            StartActivityCommon.startActivity(mActivity, CommunityActivity.class);
-                            mActivity.finish();
-                        }else{
-                           mView.upData_mTvTime(times - aLong);
-                        }
+//        subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, Schedulers.trampoline())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<Long>() {
+//                    @Override
+//                    public void accept(Long aLong) {
+//                        if (times - aLong == 0){
+//                            StartActivityCommon.startActivity(mActivity, CommunityActivity.class);
+//                            mActivity.finish();
+//                        }else{
+//                           mView.upData_mTvTime(times - aLong);
+//                        }
+//
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) {
+//
+//                    }
+//                });
 
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
+        timer = new CountDownTimer(3100, 1000) {
+            @Override
+            public void onTick(long l) {
 
-                    }
-                });
+                LogUtil.i("CountDownTimer = " + times);
+                mView.upData_mTvTime(times);
+                times--;
 
+            }
+
+            @Override
+            public void onFinish() {
+
+                //倒计时为0时执行此方法
+
+                LogUtil.i("CountDownTimer = " + "onFinish");
+                StartActivityCommon.startActivity(mActivity, CommunityActivity.class);
+                mActivity.finish();
+
+            }
+        };
+
+        timer.start();
     }
 
     /**
@@ -75,9 +103,13 @@ public class GuidePresenter extends GuideContranct.Presenter {
      */
     @Override
     public void onDestroy() {
-        if (subscribe != null){
-            subscribe.dispose();
-            subscribe = null;
+//        if (subscribe != null){
+//            subscribe.dispose();
+//            subscribe = null;
+//        }
+        if (timer != null){
+            timer.cancel();
+            timer = null;
         }
     }
 
