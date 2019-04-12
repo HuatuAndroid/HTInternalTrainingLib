@@ -1,10 +1,12 @@
 package com.example.module_employees_world.bean;
 
+import java.io.Serializable;
+
 /**
  * 创建人：王晓凤
  * 创建时间：2019/3/27 6:06 PM
  */
-public class SearchPostBean {
+public class SearchPostBean implements Serializable {
 
     /**
      * id : 245

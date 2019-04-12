@@ -102,6 +102,12 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
     protected void initView(Bundle savedInstanceState) {
         myHandler = new MyHandler(this);
         setContentView(R.layout.activity_comment_detailctivity);

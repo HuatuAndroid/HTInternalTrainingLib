@@ -37,7 +37,7 @@ public class MessageActivity extends MvpActivity{
         setContentView(R.layout.main_activity_message);
         topBarView = getViewById(R.id.topbarview);
         scrollIndicatorView = getViewById(R.id.spring_indicator);
-        view = getViewById(R.id.view_line);
+//        view = getViewById(R.id.view_line);
         mViewPager = getViewById(R.id.viewpager);
 
     }
@@ -56,7 +56,7 @@ public class MessageActivity extends MvpActivity{
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        view.setVisibility(View.VISIBLE);
+//        view.setVisibility(View.VISIBLE);
         topBarView.getCenterTextView().setText(R.string.main_my_message);
 
         ArrayList<String> str = new ArrayList<>();

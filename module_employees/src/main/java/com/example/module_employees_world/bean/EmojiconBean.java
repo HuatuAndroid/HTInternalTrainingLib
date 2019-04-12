@@ -1,10 +1,12 @@
 package com.example.module_employees_world.bean;
 
+import java.io.Serializable;
+
 /**
  * @author liuzhe
  * @date 2019/3/28
  */
-public class EmojiconBean {
+public class EmojiconBean implements Serializable {
 
     public String emojiChart;
     public int type;

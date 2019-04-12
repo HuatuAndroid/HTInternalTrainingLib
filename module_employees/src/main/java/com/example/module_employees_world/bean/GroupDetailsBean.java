@@ -1,7 +1,9 @@
 package com.example.module_employees_world.bean;
 
 
-public class GroupDetailsBean {
+import java.io.Serializable;
+
+public class GroupDetailsBean implements Serializable {
 
     private GroupInfoBean group_info;
 

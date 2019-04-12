@@ -19,13 +19,13 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/main_bg_grey_f8" />
+            android:background="@color/main_bg_grey_f8" />-->
         <View
             android:id="@+id/view_line_xi"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/main_line_ea" />-->
+            android:background="@color/main_line_ea" />
     </LinearLayout>
 
     <View
@@ -33,8 +33,14 @@
         android:layout_height="8dp"
         android:background="#FFE1E3E9"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </RelativeLayout>
 </LinearLayout>

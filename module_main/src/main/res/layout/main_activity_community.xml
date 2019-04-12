@@ -22,5 +22,5 @@
         app:rightImageResource="@drawable/topic_list_top"
         app:titleBarHeight="45dp" />
 
-    <include layout="@layout/main_content"/>
+    <include layout="@layout/neixun_main"/>
 </LinearLayout>

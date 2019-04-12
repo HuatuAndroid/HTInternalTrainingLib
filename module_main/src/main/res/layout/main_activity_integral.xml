@@ -106,6 +106,6 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/main_content"/>
+    <include layout="@layout/neixun_main"/>
 
 </LinearLayout>
