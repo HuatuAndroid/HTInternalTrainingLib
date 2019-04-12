@@ -265,7 +265,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
         setmTvXiaoXuText(groupName);
 
-        AndroidBug5497Workaround.assistActivity(this);
+//        AndroidBug5497Workaround.assistActivity(this);
     }
 
     @Override

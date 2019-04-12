@@ -45,7 +45,7 @@ public class SelectParticipantHadAdapter extends RecyclerView.Adapter<BaseViewHo
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.select_participant_had_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.select_participant_had_nitem, parent, false);
         return new SelectParticipantHadViewHolder(view);
     }
 

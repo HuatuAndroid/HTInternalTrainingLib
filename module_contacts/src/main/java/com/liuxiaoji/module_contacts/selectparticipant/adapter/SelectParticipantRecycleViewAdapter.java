@@ -72,13 +72,13 @@ public class SelectParticipantRecycleViewAdapter extends RecyclerView.Adapter<Re
         switch (viewType) {
 
             case TypeConstruction:
-                mView = mInflater.inflate(R.layout.select_participant_construction_item, parent, false);
+                mView = mInflater.inflate(R.layout.select_participant_construction_nitem, parent, false);
                 ViewConstructionHolderTop mViewHolderViewPager = new ViewConstructionHolderTop(mView);
 
                 return mViewHolderViewPager;
 
             case TypeContacts:
-                mView = mInflater.inflate(R.layout.select_participant_personal_item, parent, false);
+                mView = mInflater.inflate(R.layout.select_participant_personal_nitem, parent, false);
                 ViewContactsHolder mViewHolderNewBody = new ViewContactsHolder(mView);
 
                 return mViewHolderNewBody;
