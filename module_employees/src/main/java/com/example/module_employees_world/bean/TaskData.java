@@ -3,7 +3,9 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class TaskData implements Parcelable {
+import java.io.Serializable;
+
+public class TaskData implements Serializable {
 
     /**
      * id : 48
@@ -134,28 +136,6 @@ public class TaskData implements Parcelable {
     public TaskData() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.parent_type);
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.count);
-        dest.writeString(this.type);
-        dest.writeString(this.complete);
-        dest.writeString(this.video_states);
-        dest.writeString(this.task_states);
-        dest.writeInt(this.again_number);
-        dest.writeInt(this.report_id);
-        dest.writeInt(this.states);
-        dest.writeString(this.publish_date);
-        dest.writeInt(this.exam_count);
-    }
-
     protected TaskData(Parcel in) {
         this.parent_type = in.readString();
         this.id = in.readString();
@@ -172,15 +152,4 @@ public class TaskData implements Parcelable {
         this.exam_count = in.readInt();
     }
 
-    public static final Creator<TaskData> CREATOR = new Creator<TaskData>() {
-        @Override
-        public TaskData createFromParcel(Parcel source) {
-            return new TaskData(source);
-        }
-
-        @Override
-        public TaskData[] newArray(int size) {
-            return new TaskData[size];
-        }
-    };
 }

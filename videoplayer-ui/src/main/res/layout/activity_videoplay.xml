@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:layout_gravity="center"
-        app:render_type="texture_view"
+        app:render_type="surface_view"
         app:aspect_ratio="fit_parent_16_9" />
 
 </LinearLayout>

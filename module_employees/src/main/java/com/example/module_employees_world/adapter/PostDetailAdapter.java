@@ -2,6 +2,7 @@ package com.example.module_employees_world.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.common.TutuPicInit;
+import com.example.module_employees_world.ui.PictuirePreviewActivity;
 import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.EmojiUtils;
@@ -82,6 +84,16 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         holder.tvCommentZan.setText(listBean.likeCount+"");
         if (listBean.avatar!=null&&!"".equals(listBean.avatar)){
             Picasso.with(context).load(listBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
+            holder.ivAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PictuirePreviewActivity.class);
+                    ArrayList<String> imgs = new ArrayList<>();
+                    imgs.add(listBean.avatar);
+                    intent.putStringArrayListExtra(PictuirePreviewActivity.TAG_JUMP,imgs);
+                    context.startActivity(intent);
+                }
+            });
         }
         if (!TextUtils.isEmpty(listBean.commentPicture)){
             holder.ivCommentImg.setVisibility(View.VISIBLE);

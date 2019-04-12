@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +18,6 @@ import android.widget.Toast;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.CommentChildrenAdapter;
-import com.example.module_employees_world.adapter.CommentOnerAdapter;
-import com.example.module_employees_world.bean.CommentChildrenBean;
 import com.example.module_employees_world.bean.CommentDetailBean;
 import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
@@ -39,12 +36,10 @@ import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
-import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.RefreshUtils;
-import com.wb.baselib.utils.StatusBarUtil;
-import com.wb.baselib.utils.ToastUtils;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
 import com.wb.rxbus.taskBean.RxBus;
@@ -93,8 +88,8 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
 
         commentId = getIntent().getIntExtra(TAG_JUMP, -1);
         mPresenter.commentDetail(commentId);

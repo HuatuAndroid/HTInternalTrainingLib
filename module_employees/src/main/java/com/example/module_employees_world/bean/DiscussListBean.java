@@ -3,7 +3,9 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DiscussListBean implements Parcelable {
+import java.io.Serializable;
+
+public class DiscussListBean implements Serializable {
 
     private String id;
     private String group_id;
@@ -186,10 +188,6 @@ public class DiscussListBean implements Parcelable {
         return department_name;
     }
 
-    public static Creator<DiscussListBean> getCREATOR() {
-        return CREATOR;
-    }
-
     protected DiscussListBean(Parcel in) {
         id = in.readString();
         group_id = in.readString();
@@ -211,42 +209,4 @@ public class DiscussListBean implements Parcelable {
         department_name = in.readString();
     }
 
-    public static final Creator<DiscussListBean> CREATOR = new Creator<DiscussListBean>() {
-        @Override
-        public DiscussListBean createFromParcel(Parcel in) {
-            return new DiscussListBean(in);
-        }
-
-        @Override
-        public DiscussListBean[] newArray(int size) {
-            return new DiscussListBean[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(group_id);
-        dest.writeString(title);
-        dest.writeString(content);
-        dest.writeString(like_count);
-        dest.writeString(read_count);
-        dest.writeString(comment_count);
-        dest.writeString(is_essence);
-        dest.writeString(is_top);
-        dest.writeString(is_recommend);
-        dest.writeString(is_anonymity);
-        dest.writeString(created_id);
-        dest.writeString(created_at);
-        dest.writeString(group_name);
-        dest.writeString(user_name);
-        dest.writeString(avatar);
-        dest.writeString(h5_detail);
-        dest.writeString(department_name);
-    }
 }

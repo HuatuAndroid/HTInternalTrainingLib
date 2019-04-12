@@ -26,10 +26,9 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
-import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.image.GlideManager;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.rxbus.taskBean.RxBus;
 import com.wb.rxbus.taskBean.RxMessageBean;
 
@@ -57,9 +56,9 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
-        setContentView(R.layout.activity_group_detail);
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
+        setContentView(R.layout.activity_group_detail_gongdan);
         groupId = getIntent().getStringExtra("groupId");
         if (TextUtils.isEmpty(groupId)) {
             return;
@@ -68,7 +67,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ivBack = getViewById(R.id.ivBack);
         ivSearch = getViewById(R.id.ivSearch);
         imageView = getViewById(R.id.group_image);
-        ivPost = getViewById(R.id.ivPost);
+        ivPost = getViewById(R.id.ivPostGD);
         title = getViewById(R.id.group_title);
         num = getViewById(R.id.group_num);
         join = getViewById(R.id.group_join);

@@ -1,48 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toos="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:toos="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/mImageView"
-        android:src="@drawable/default_guide"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:src="@drawable/default_guide" />
 
     <TextView
         android:id="@+id/mTvSkip"
         android:layout_width="71dp"
         android:layout_height="28dp"
-        android:layout_marginRight="31dp"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="23dp"
-        android:text="跳过"
-        android:textSize="15sp"
+        android:layout_marginRight="31dp"
         android:background="@drawable/shape_border_ff96bffd_r6"
         android:gravity="center"
+        android:text="跳过"
         android:textColor="@color/color_FF97BFFC"
-        android:layout_alignParentRight="true"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/mTvTime"
         android:layout_width="29dp"
         android:layout_height="29dp"
-        android:background="@drawable/shape_fill_ff97bffc_r90"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        android:gravity="center"
         android:layout_marginTop="23dp"
-        android:text="3"/>
+        android:layout_marginRight="16dp"
+        android:background="@drawable/shape_fill_ff97bffc_r90"
+        android:gravity="center"
+        android:text="3"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
 
-    <TextView
-        android:id="@+id/mTvBottomData"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:text="评论量：287,087,287,341"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="110dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论量: "
+            android:textColor="#0D0D0D"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/mTvBottomData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="287,087,287"
+            android:textStyle="bold"
+            android:textColor="#0D0D0D"
+            android:textSize="19sp"/>
+
+    </LinearLayout>
 </RelativeLayout>

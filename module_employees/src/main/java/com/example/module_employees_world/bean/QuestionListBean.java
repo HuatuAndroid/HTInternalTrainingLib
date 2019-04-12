@@ -3,7 +3,9 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class QuestionListBean implements Parcelable {
+import java.io.Serializable;
+
+public class QuestionListBean implements Serializable {
     private int yesterday_count;
     private int today_count;
     private int all_count;
@@ -32,17 +34,6 @@ public class QuestionListBean implements Parcelable {
         this.all_count = all_count;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.yesterday_count);
-        dest.writeInt(this.today_count);
-        dest.writeInt(this.all_count);
-    }
 
     public QuestionListBean() {
     }
@@ -53,15 +44,4 @@ public class QuestionListBean implements Parcelable {
         this.all_count = in.readInt();
     }
 
-    public static final Creator<QuestionListBean> CREATOR = new Creator<QuestionListBean>() {
-        @Override
-        public QuestionListBean createFromParcel(Parcel source) {
-            return new QuestionListBean(source);
-        }
-
-        @Override
-        public QuestionListBean[] newArray(int size) {
-            return new QuestionListBean[size];
-        }
-    };
 }
