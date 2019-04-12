@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
+import com.thefinestartist.utils.log.LogUtil;
+
 /**
  * @author liuzhe
  * @date 2019/4/12
@@ -36,15 +38,20 @@ public class AndroidBug5497Workaround {
 
     private void possiblyResizeChildOfContent() {
         int usableHeightNow = computeUsableHeight();
+        LogUtil.e("usableHeightNow = " + usableHeightNow);
+
         if (usableHeightNow != usableHeightPrevious) {
             int usableHeightSansKeyboard = mChildOfContent.getRootView().getHeight();
+
+            LogUtil.e("usableHeightSansKeyboard = " + usableHeightSansKeyboard);
+
             int heightDifference = usableHeightSansKeyboard - usableHeightNow;
             if (heightDifference > (usableHeightSansKeyboard/4)) {
                 // keyboard probably just became visible
                 frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
             } else {
                 // keyboard probably just became hidden
-                frameLayoutParams.height = usableHeightSansKeyboard;
+                frameLayoutParams.height = usableHeightNow;
             }
             mChildOfContent.requestLayout();
             usableHeightPrevious = usableHeightNow;
