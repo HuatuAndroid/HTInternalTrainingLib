@@ -37,8 +37,7 @@
             android:name=".ui.topic.NTopicEditActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.topic.LocalAlbumDetailActicity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"

@@ -1,6 +1,8 @@
 package com.example.module_employees_world.bean;
 
-public class CommunityGroupBean {
+import java.io.Serializable;
+
+public class CommunityGroupBean implements Serializable {
 
     private QuestionListBean question_list;
     private GroupListBean group_list;

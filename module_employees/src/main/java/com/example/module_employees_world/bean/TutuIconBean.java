@@ -1,10 +1,12 @@
 package com.example.module_employees_world.bean;
 
+import java.io.Serializable;
+
 /**
  * @author liuzhe
  * @date 2019/3/28
  */
-public class TutuIconBean {
+public class TutuIconBean implements Serializable {
 
     public int TutuId;
     public String key;
