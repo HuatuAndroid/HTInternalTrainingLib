@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
  * Created by lienlin on 2018/9/7.
  */
 
-public class StatusBarUtil {
+public class StatusBarUtilNeiXun {
 
     /**
      * 修改状态栏为全透明

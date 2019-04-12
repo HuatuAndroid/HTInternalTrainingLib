@@ -2,7 +2,6 @@ package com.example.module_employees_world;
 
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.ui.home.CommunityActivity;
 import com.wb.baselib.base.activity.BaseActivity;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 
 public class GuideH5Activity extends BaseActivity {
     private WebView wv;
@@ -24,8 +23,8 @@ public class GuideH5Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         setContentView(R.layout.activity_guide_h5);
         initView(savedInstanceState);
         setListener();

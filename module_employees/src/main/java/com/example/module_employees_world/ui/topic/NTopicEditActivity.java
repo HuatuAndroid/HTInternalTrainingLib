@@ -5,23 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.Html;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,10 +41,8 @@ import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.hss01248.dialog.StyledDialog;
 import com.thefinestartist.utils.log.LogUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
-import com.wb.baselib.http.HttpConfig;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
@@ -101,8 +93,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         initView(savedInstanceState);
         setListener();
     }

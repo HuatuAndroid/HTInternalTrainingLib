@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,12 +21,10 @@ import android.widget.TextView;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.IsBannedBean;
 import com.example.module_employees_world.contranct.CommunityContract;
-import com.example.module_employees_world.presenter.CommentDetailPresenter;
 import com.example.module_employees_world.presenter.CommunityPresenter;
 import com.example.module_employees_world.ui.group.MyItemActivity;
 import com.example.module_employees_world.ui.search.SearchActivity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
-import com.example.module_employees_world.utils.PermissionInterface;
 import com.example.module_employees_world.utils.PermissionUtil;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -35,10 +32,8 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
-import com.wb.baselib.app.AppUtils;
-import com.wb.baselib.base.activity.BaseActivity;
 import com.wb.baselib.base.activity.MvpActivity;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 
 import java.util.ArrayList;
 
@@ -66,8 +61,8 @@ public class CommunityActivity extends MvpActivity<CommunityPresenter> implement
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         setContentView(R.layout.main_new);
         ivBack = findViewById(R.id.ivBack);
         ivContacts = findViewById(R.id.ivContacts);

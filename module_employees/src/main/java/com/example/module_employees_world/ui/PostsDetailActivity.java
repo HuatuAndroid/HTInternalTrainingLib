@@ -18,9 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -30,12 +28,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.ImgAdapter;
 import com.example.module_employees_world.adapter.PostDetailAdapter;
-import com.example.module_employees_world.bean.CommentInsertBean;
 import com.example.module_employees_world.bean.CommentLikeBean;
 import com.example.module_employees_world.bean.CommentListBean;
 import com.example.module_employees_world.bean.IsBannedBean;
@@ -44,7 +40,6 @@ import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.presenter.PostDetailPersenter;
-import com.example.module_employees_world.ui.home.CommunityActivity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.CustomMovementMethod;
@@ -54,19 +49,17 @@ import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.view.CommontPopw;
 import com.example.module_employees_world.view.PostsDetailPopw;
 import com.liuxiaoji.module_contacts.selectparticipant.bean.ContactsBean;
-import com.liuxiaoji.module_contacts.selectparticipant.ui.ContactContract;
 import com.liuxiaoji.module_contacts.selectparticipant.ui.SelectParticipantActivity;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
 import com.wangbo.smartrefresh.layout.api.RefreshLayout;
 import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.MvpActivity;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.RefreshUtils;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
@@ -74,14 +67,11 @@ import com.wb.rxbus.taskBean.RxBus;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import io.reactivex.functions.Consumer;
 
@@ -126,8 +116,8 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         question_id = getIntent().getStringExtra("question_id");
 
 //        mPresenter.getCommentList(question_id,"1",page+"",limit+"");
@@ -681,7 +671,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             tvPostZan.setCompoundDrawables(drawable, null, null, null);
         }
         //当帖子为本人所发、未被采纳、未被解决时，显示右上角按钮
-        if (postDetailBean.info!=null){
+        if (postDetailBean.info!=null&&postDetailBean.info.size()!=0){
             //管理员
             if (postDetailBean.questionInfo.solveStatus==0){
                 topBarView.getRightImageButton().setVisibility(View.VISIBLE);
