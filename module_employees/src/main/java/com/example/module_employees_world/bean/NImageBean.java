@@ -3,13 +3,13 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * @author liuzhe
  * @date 2019/3/25
  */
-public class NImageBean implements Parcelable
-
-{
+public class NImageBean implements Serializable {
 
     private String path;
     private String ext;
@@ -60,37 +60,4 @@ public class NImageBean implements Parcelable
     public NImageBean() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.path);
-        dest.writeString(this.ext);
-        dest.writeString(this.type);
-        dest.writeString(this.size);
-        dest.writeString(this.originalName);
-    }
-
-    protected NImageBean(Parcel in) {
-        this.path = in.readString();
-        this.ext = in.readString();
-        this.type = in.readString();
-        this.size = in.readString();
-        this.originalName = in.readString();
-    }
-
-    public static final Parcelable.Creator<NImageBean> CREATOR = new Parcelable.Creator<NImageBean>() {
-        @Override
-        public NImageBean createFromParcel(Parcel source) {
-            return new NImageBean(source);
-        }
-
-        @Override
-        public NImageBean[] newArray(int size) {
-            return new NImageBean[size];
-        }
-    };
 }

@@ -7,11 +7,13 @@ import android.text.Editable;
 import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.utils.Rgba;
 
+import java.io.Serializable;
+
 /**
  * @author liuzhe
  * @date 2019/3/22
  */
-public class TopicContentItem implements Parcelable {
+public class TopicContentItem implements Serializable {
 
     public transient static final String TYPE_TXT = "text";
     public transient static final String TYPE_IMG = "image";
@@ -114,46 +116,5 @@ public class TopicContentItem implements Parcelable {
         }
         return super.equals(o);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeString(this.content);
-        dest.writeString(this.localUrl);
-        dest.writeString(this.remoteUrl);
-        dest.writeString(this.remoteThumb);
-        dest.writeInt(this.w);
-        dest.writeInt(this.h);
-        dest.writeParcelable(this.color, flags);
-    }
-
-    protected TopicContentItem(Parcel in) {
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : ContentType.values()[tmpType];
-        this.content = in.readString();
-        this.localUrl = in.readString();
-        this.remoteUrl = in.readString();
-        this.remoteThumb = in.readString();
-        this.w = in.readInt();
-        this.h = in.readInt();
-        this.color = in.readParcelable(Rgba.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<TopicContentItem> CREATOR = new Parcelable.Creator<TopicContentItem>() {
-        @Override
-        public TopicContentItem createFromParcel(Parcel source) {
-            return new TopicContentItem(source);
-        }
-
-        @Override
-        public TopicContentItem[] newArray(int size) {
-            return new TopicContentItem[size];
-        }
-    };
 
 }

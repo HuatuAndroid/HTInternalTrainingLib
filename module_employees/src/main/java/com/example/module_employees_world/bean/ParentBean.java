@@ -5,11 +5,13 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * author:LIENLIN
  * date:2019/3/29
  */
-public class ParentBean implements Parcelable {
+public class ParentBean implements Serializable {
     /**
      * id : 437
      * question_id : 212
@@ -102,45 +104,4 @@ public class ParentBean implements Parcelable {
         allowDel = in.readInt();
     }
 
-    public static final Creator<ParentBean> CREATOR = new Creator<ParentBean>() {
-        @Override
-        public ParentBean createFromParcel(Parcel in) {
-            return new ParentBean(in);
-        }
-
-        @Override
-        public ParentBean[] newArray(int size) {
-            return new ParentBean[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeInt(questionId);
-        dest.writeInt(parentId);
-        dest.writeString(content);
-        dest.writeString(commentRule);
-        dest.writeInt(likeCount);
-        dest.writeString(commentPicture);
-        dest.writeString(commentFace);
-        dest.writeInt(replyCount);
-        dest.writeInt(isAnonymity);
-        dest.writeInt(createdId);
-        dest.writeString(createdAt);
-        dest.writeInt(isDel);
-        dest.writeInt(solveStatus);
-        dest.writeString(departmentName);
-        dest.writeInt(userId);
-        dest.writeString(userName);
-        dest.writeString(avatar);
-        dest.writeString(parent_name);
-        dest.writeInt(comment_like);
-        dest.writeInt(allowDel);
-    }
 }

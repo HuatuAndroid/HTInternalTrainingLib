@@ -3,7 +3,9 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MyPartListBean implements Parcelable {
+import java.io.Serializable;
+
+public class MyPartListBean implements Serializable {
 
     private String id;
     private String group_id;
@@ -153,31 +155,6 @@ public class MyPartListBean implements Parcelable {
     public MyPartListBean() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.group_id);
-        dest.writeString(this.title);
-        dest.writeString(this.content);
-        dest.writeString(this.content_picture);
-        dest.writeString(this.like_count);
-        dest.writeString(this.read_count);
-        dest.writeString(this.comment_count);
-        dest.writeString(this.is_essence);
-        dest.writeString(this.is_top);
-        dest.writeString(this.is_recommend);
-        dest.writeString(this.is_anonymity);
-        dest.writeString(this.created_id);
-        dest.writeString(this.created_at);
-        dest.writeString(this.updated_at);
-        dest.writeString(this.h5_detail);
-    }
-
     protected MyPartListBean(Parcel in) {
         this.id = in.readString();
         this.group_id = in.readString();
@@ -197,15 +174,4 @@ public class MyPartListBean implements Parcelable {
         this.h5_detail = in.readString();
     }
 
-    public static final Creator<MyPartListBean> CREATOR = new Creator<MyPartListBean>() {
-        @Override
-        public MyPartListBean createFromParcel(Parcel source) {
-            return new MyPartListBean(source);
-        }
-
-        @Override
-        public MyPartListBean[] newArray(int size) {
-            return new MyPartListBean[size];
-        }
-    };
 }

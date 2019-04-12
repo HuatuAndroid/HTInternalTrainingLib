@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * date:2019/3/26
  * 帖子詳情
  */
-public class PostDetailBean implements Parcelable{
+public class PostDetailBean implements Serializable {
 
     /**
      * question_info : {"id":144,"group_id":38,"title":"了了了了了了了了了了","content":"哦了了了了<br/><img src='http://test-px.huatu.com/uploads/images/20181129/9552a2232a66c9e4aecc0495b2a8ce08.jpg' width='100%' _src='http://test-px.huatu.com/uploads/images/20181129/9552a2232a66c9e4aecc0495b2a8ce08.jpg'/>","like_count":0,"read_count":3,"comment_count":0,"is_essence":0,"is_top":0,"is_recommend":0,"is_anonymity":0,"type":1,"created_id":31192,"created_at":"2018-11-29","updated_at":"2018-11-29 14:50:06","is_del":0,"delete_at":null,"solve_status":0,"department_name":"研发组","group_name":"娱乐吧","user_name":"王晨","avatar":"http://htwuhan.oss-cn-beijing.aliyuncs.com/9255f7f0e86a49d19be19820920b0a62","allow_del":1,"content_text":"哦了了了了<br/>","content_img":"<img src='http://test-px.huatu.com/uploads/images/20181129/9552a2232a66c9e4aecc0495b2a8ce08.jpg' width='100%' _src='http://test-px.huatu.com/uploads/images/20181129/9552a2232a66c9e4aecc0495b2a8ce08.jpg'/>","is_collect":1,"is_like":0}
@@ -29,40 +30,10 @@ public class PostDetailBean implements Parcelable{
     @SerializedName("recommendList")
     public List<RecommendListBean> recommendList;
 
-    protected PostDetailBean(Parcel in) {
-        questionInfo = in.readParcelable(QuestionInfoBean.class.getClassLoader());
-        solve_comment = in.readParcelable(SolveComment.class.getClassLoader());
-        info = in.createStringArrayList();
-        recommendList = in.createTypedArrayList(RecommendListBean.CREATOR);
-    }
-
-    public static final Creator<PostDetailBean> CREATOR = new Creator<PostDetailBean>() {
-        @Override
-        public PostDetailBean createFromParcel(Parcel in) {
-            return new PostDetailBean(in);
-        }
-
-        @Override
-        public PostDetailBean[] newArray(int size) {
-            return new PostDetailBean[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(questionInfo, flags);
-        dest.writeParcelable(solve_comment, flags);
-        dest.writeStringList(info);
-        dest.writeTypedList(recommendList);
-    }
 
 
-    public static class QuestionInfoBean implements Parcelable{
+
+    public static class QuestionInfoBean implements Serializable{
 
         @SerializedName("id")
         public int id;
@@ -149,56 +120,10 @@ public class PostDetailBean implements Parcelable{
             contentImg = in.createStringArrayList();
         }
 
-        public static final Creator<QuestionInfoBean> CREATOR = new Creator<QuestionInfoBean>() {
-            @Override
-            public QuestionInfoBean createFromParcel(Parcel in) {
-                return new QuestionInfoBean(in);
-            }
 
-            @Override
-            public QuestionInfoBean[] newArray(int size) {
-                return new QuestionInfoBean[size];
-            }
-        };
+      }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-            dest.writeInt(groupId);
-            dest.writeString(title);
-            dest.writeString(content);
-            dest.writeInt(likeCount);
-            dest.writeInt(readCount);
-            dest.writeInt(commentCount);
-            dest.writeInt(isEssence);
-            dest.writeInt(isTop);
-            dest.writeInt(isRecommend);
-            dest.writeInt(isAnonymity);
-            dest.writeInt(type);
-            dest.writeInt(createdId);
-            dest.writeString(createdAt);
-            dest.writeString(updatedAt);
-            dest.writeInt(isDel);
-            dest.writeString(deleteAt);
-            dest.writeInt(solveStatus);
-            dest.writeString(departmentName);
-            dest.writeString(groupName);
-            dest.writeString(userName);
-            dest.writeString(avatar);
-            dest.writeInt(allowDel);
-            dest.writeString(contentText);
-            dest.writeInt(isCollect);
-            dest.writeInt(isLike);
-            dest.writeStringList(contentImg);
-        }
-    }
-
-    public static class SolveComment implements Parcelable{
+    public static class SolveComment implements Serializable{
 
 
         /**
@@ -294,49 +219,9 @@ public class PostDetailBean implements Parcelable{
             count = in.readInt();
         }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-            dest.writeInt(questionId);
-            dest.writeInt(parentId);
-            dest.writeString(content);
-            dest.writeString(commentRule);
-            dest.writeInt(likeCount);
-            dest.writeString(commentPicture);
-            dest.writeString(commentFace);
-            dest.writeInt(replyCount);
-            dest.writeInt(isAnonymity);
-            dest.writeInt(createdId);
-            dest.writeString(createdAt);
-            dest.writeInt(isDel);
-            dest.writeInt(solveStatus);
-            dest.writeString(departmentName);
-            dest.writeInt(userId);
-            dest.writeString(userName);
-            dest.writeString(avatar);
-            dest.writeInt(allowDel);
-            dest.writeInt(count);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        public static final Creator<SolveComment> CREATOR = new Creator<SolveComment>() {
-            @Override
-            public SolveComment createFromParcel(Parcel in) {
-                return new SolveComment(in);
-            }
-
-            @Override
-            public SolveComment[] newArray(int size) {
-                return new SolveComment[size];
-            }
-        };
     }
 
-    public static class RecommendListBean implements Parcelable{
+    public static class RecommendListBean implements Serializable{
         /**
          * id : 212
          * group_id : 49
@@ -479,47 +364,5 @@ public class PostDetailBean implements Parcelable{
             avatar = in.readString();
         }
 
-        public static final Creator<RecommendListBean> CREATOR = new Creator<RecommendListBean>() {
-            @Override
-            public RecommendListBean createFromParcel(Parcel in) {
-                return new RecommendListBean(in);
-            }
-
-            @Override
-            public RecommendListBean[] newArray(int size) {
-                return new RecommendListBean[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-            dest.writeInt(groupId);
-            dest.writeString(title);
-            dest.writeString(content);
-            dest.writeString(contentPicture);
-            dest.writeInt(likeCount);
-            dest.writeInt(readCount);
-            dest.writeInt(commentCount);
-            dest.writeInt(isEssence);
-            dest.writeInt(isTop);
-            dest.writeInt(isRecommend);
-            dest.writeInt(isAnonymity);
-            dest.writeInt(type);
-            dest.writeInt(createdId);
-            dest.writeString(createdAt);
-            dest.writeString(updatedAt);
-            dest.writeInt(isDel);
-            dest.writeString(deleteAt);
-            dest.writeInt(solveStatus);
-            dest.writeString(groupName);
-            dest.writeString(userName);
-            dest.writeString(avatar);
-        }
     }
 }

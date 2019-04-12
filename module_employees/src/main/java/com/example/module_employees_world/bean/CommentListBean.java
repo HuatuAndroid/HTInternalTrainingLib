@@ -5,13 +5,14 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * author:LIENLIN
  * date:2019/3/25
  */
-public class CommentListBean implements Parcelable{
+public class CommentListBean implements Serializable {
 
     @SerializedName("total")
     public int total;
@@ -25,30 +26,7 @@ public class CommentListBean implements Parcelable{
         currentPage = in.readInt();
     }
 
-    public static final Creator<CommentListBean> CREATOR = new Creator<CommentListBean>() {
-        @Override
-        public CommentListBean createFromParcel(Parcel in) {
-            return new CommentListBean(in);
-        }
-
-        @Override
-        public CommentListBean[] newArray(int size) {
-            return new CommentListBean[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(total);
-        dest.writeInt(currentPage);
-    }
-
-    public static class ListBean implements Parcelable{
+    public static class ListBean implements Serializable{
         /**
          * id : 429
          * question_id : 212
@@ -123,74 +101,7 @@ public class CommentListBean implements Parcelable{
         @SerializedName("parent")
         public List<ParentBean> parent;
 
-        protected ListBean(Parcel in) {
-            id = in.readInt();
-            questionId = in.readInt();
-            parentId = in.readInt();
-            content = in.readString();
-            commentRule = in.readString();
-            likeCount = in.readInt();
-            commentPicture = in.readString();
-            commentFace = in.readString();
-            replyCount = in.readInt();
-            isAnonymity = in.readInt();
-            createdId = in.readInt();
-            createdAt = in.readString();
-            isDel = in.readInt();
-            solveStatus = in.readInt();
-            departmentName = in.readString();
-            userId = in.readInt();
-            userName = in.readString();
-            avatar = in.readString();
-            allowDel = in.readInt();
-            comment_like = in.readInt();
-            type = in.readInt();
-            count = in.readInt();
-            parent = in.createTypedArrayList(ParentBean.CREATOR);
-        }
 
-        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
-            @Override
-            public ListBean createFromParcel(Parcel in) {
-                return new ListBean(in);
-            }
 
-            @Override
-            public ListBean[] newArray(int size) {
-                return new ListBean[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-            dest.writeInt(questionId);
-            dest.writeInt(parentId);
-            dest.writeString(content);
-            dest.writeString(commentRule);
-            dest.writeInt(likeCount);
-            dest.writeString(commentPicture);
-            dest.writeString(commentFace);
-            dest.writeInt(replyCount);
-            dest.writeInt(isAnonymity);
-            dest.writeInt(createdId);
-            dest.writeString(createdAt);
-            dest.writeInt(isDel);
-            dest.writeInt(solveStatus);
-            dest.writeString(departmentName);
-            dest.writeInt(userId);
-            dest.writeString(userName);
-            dest.writeString(avatar);
-            dest.writeInt(allowDel);
-            dest.writeInt(comment_like);
-            dest.writeInt(type);
-            dest.writeInt(count);
-            dest.writeTypedList(parent);
-        }
-    }
+       }
 }
