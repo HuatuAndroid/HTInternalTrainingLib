@@ -2,6 +2,7 @@ package com.liuxiaoji.module_contacts.selectparticipant.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,7 +198,12 @@ public class SelectParticipantRecycleViewAdapter extends RecyclerView.Adapter<Re
 
             mTvPersonalName.setText(staffsBean.name);
             mTvPersonalId.setText("工号：" + staffsBean.id);
-            mTvDepartmentName.setText(staffsBean.node.name);
+
+            if (TextUtils.isEmpty(staffsBean.node.name)) {
+                mTvDepartmentName.setText("");
+            }else{
+                mTvDepartmentName.setText(staffsBean.node.name);
+            }
             mTvEmail.setText(staffsBean.workEmail);
 
             GlideUtils.setNetImage(mContext, staffsBean.avatar, mCircleImageView);
