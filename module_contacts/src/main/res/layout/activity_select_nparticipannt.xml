@@ -5,7 +5,7 @@
     android:background="@color/app_background"
     android:orientation="vertical">
 
-    <include layout="@layout/reserver_common_title_layout" />
+    <include layout="@layout/reserver_common_title_nlayout" />
 
     <FrameLayout
         android:id="@+id/no_net_fragment"
@@ -14,7 +14,7 @@
         android:layout_below="@+id/common_title_ui_rl"
         android:visibility="gone">
 
-        <include layout="@layout/net_error_layout" />
+        <include layout="@layout/net_error_nlayout" />
     </FrameLayout>
 
     <FrameLayout

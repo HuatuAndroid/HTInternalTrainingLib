@@ -46,7 +46,7 @@ public class SearchContactdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        mView = mInflater.inflate(R.layout.search_contact_item, viewGroup, false);
+        mView = mInflater.inflate(R.layout.search_contact_nitem, viewGroup, false);
         MViewHolder mViewHolderViewPager = new MViewHolder(mView);
 
         return mViewHolderViewPager;
