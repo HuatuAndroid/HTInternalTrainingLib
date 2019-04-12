@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:padding="10dp"
-                        android:src="@drawable/profile_btn_delete"/>
+                        android:src="@drawable/comment1_btn_delete"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/rl_reply_gif"
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:padding="10dp"
-                        android:src="@drawable/profile_btn_delete"/>
+                        android:src="@drawable/comment1_btn_delete"/>
                 </RelativeLayout>
 
             </LinearLayout>

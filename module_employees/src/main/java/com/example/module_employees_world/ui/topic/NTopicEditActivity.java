@@ -38,6 +38,7 @@ import com.example.module_employees_world.common.LocalImageHelper;
 import com.example.module_employees_world.common.StartActivityCommon;
 import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
+import com.example.module_employees_world.utils.AndroidBug5497Workaround;
 import com.example.module_employees_world.utils.EmojiUtils;
 import com.example.module_employees_world.view.TopicEditView;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
@@ -189,6 +190,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
 
     @Override
     protected void initView(Bundle bundle) {
+
         setContentView(R.layout.activity_ntopic_edit);
 
         groupId = getIntent().getStringExtra("groupId");
@@ -262,6 +264,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
         mHideView(true);
 
         setmTvXiaoXuText(groupName);
+
+        AndroidBug5497Workaround.assistActivity(this);
     }
 
     @Override
