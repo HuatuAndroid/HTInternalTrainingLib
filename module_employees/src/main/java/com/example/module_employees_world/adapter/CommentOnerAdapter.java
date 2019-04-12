@@ -20,6 +20,7 @@ import com.example.module_employees_world.bean.ParentBean;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.ui.CommentDetailctivity;
 import com.example.module_employees_world.ui.CommentDialogActivity;
+import com.example.module_employees_world.ui.PictuirePreviewActivity;
 import com.example.module_employees_world.ui.PostsDetailActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.EmojiUtils;
@@ -30,6 +31,7 @@ import com.wb.baselib.image.GlideManager;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.rxbus.taskBean.RxBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,8 +91,19 @@ public class CommentOnerAdapter extends RecyclerView.Adapter<CommentOnerAdapter.
             });
         }else {
             final ParentBean parentBean = parentBeanList.get(position);
-            if (!TextUtils.isEmpty(parentBean.avatar))
-            Picasso.with(context).load(parentBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
+            if (!TextUtils.isEmpty(parentBean.avatar)){
+                Picasso.with(context).load(parentBean.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(holder.ivAvatar);
+                holder.ivAvatar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, PictuirePreviewActivity.class);
+                        ArrayList<String> imgs = new ArrayList<>();
+                        imgs.add(parentBean.avatar);
+                        intent.putStringArrayListExtra(PictuirePreviewActivity.TAG_JUMP,imgs);
+                        context.startActivity(intent);
+                    }
+                });
+            }
             holder.tvName.setText(parentBean.userName);
             holder.tvPartName.setText(parentBean.departmentName);
             holder.tvTime.setText(parentBean.createdAt);

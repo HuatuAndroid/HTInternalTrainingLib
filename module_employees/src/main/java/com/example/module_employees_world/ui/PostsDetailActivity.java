@@ -647,7 +647,19 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         this.postDetailBean = postDetailBean;
         tvTitle.setText(postDetailBean.questionInfo.title);
         topBarView.getCenterTextView().setText(postDetailBean.questionInfo.title);
-        Picasso.with(this).load(postDetailBean.questionInfo.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
+        if (postDetailBean.questionInfo.avatar!=null&&!"".equals(postDetailBean.questionInfo.avatar)){
+            Picasso.with(this).load(postDetailBean.questionInfo.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivAvatar);
+            ivAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(PostsDetailActivity.this,PictuirePreviewActivity.class);
+                    ArrayList<String> imgs = new ArrayList<>();
+                    imgs.add(postDetailBean.questionInfo.avatar);
+                    intent.putStringArrayListExtra(PictuirePreviewActivity.TAG_JUMP,imgs);
+                    startActivity(intent);
+                }
+            });
+        }
         tvName.setText(postDetailBean.questionInfo.userName);
         tvPartName.setText(postDetailBean.questionInfo.departmentName);
         tvTime.setText(postDetailBean.questionInfo.createdAt);
@@ -711,7 +723,9 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 ll_solve_root.setVisibility(View.VISIBLE);
                 //展示已采纳的评论
                 if (postDetailBean.solve_comment != null) {
-                    Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
+                    if (postDetailBean.solve_comment.avatar != null&&!"".equals(postDetailBean.solve_comment.avatar)){
+                        Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
+                    }
                     if (!TextUtils.isEmpty(postDetailBean.solve_comment.commentPicture)) {
                         ivSoleImg.setVisibility(View.VISIBLE);
                         GlideManager.getInstance().setCommonPhoto(ivSoleImg, R.drawable.course_image, this, HttpConfig.newInstance().getmBaseUrl() + "/" + postDetailBean.solve_comment.commentPicture, false);

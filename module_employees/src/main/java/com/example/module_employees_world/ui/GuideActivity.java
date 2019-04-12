@@ -26,7 +26,7 @@ import com.wb.baselib.base.activity.MvpActivity;
 public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideContranct.View {
 
     private ImageView mImageView;
-    private TextView mTvTime, mTvSkip, mTvBottomData;
+    private TextView tvType,mTvTime, mTvSkip, mTvBottomData;
     private GuideBean guideBean;
 
     @Override
@@ -39,6 +39,7 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
 
         setContentView(R.layout.activity_guide);
 
+        tvType = findViewById(R.id.tvType);
         mImageView = findViewById(R.id.mImageView);
         mTvTime = findViewById(R.id.mTvTime);
         mTvSkip = findViewById(R.id.mTvSkip);
@@ -82,13 +83,15 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
 
         if (i == R.id.mImageView) {     //背景图片的点击响应
             if (guideBean!=null){
-                mPresenter.onDestroy();
-                Intent intent = new Intent(this, GuideH5Activity.class);
-                intent.putExtra("url",guideBean.getLink());
-                intent.putExtra("title",guideBean.getTitle());
-                intent.putExtra("content",guideBean.getContent());
-                startActivity(intent);
-                finish();
+                if ((guideBean.getLink()!=null&&!"".equals(guideBean.getLink()))||(guideBean.getContent()!=null&&!"".equals(guideBean.getContent()))){
+                    mPresenter.onDestroy();
+                    Intent intent = new Intent(this, GuideH5Activity.class);
+                    intent.putExtra("url",guideBean.getLink());
+                    intent.putExtra("title",guideBean.getTitle());
+                    intent.putExtra("content",guideBean.getContent());
+                    startActivity(intent);
+                    finish();
+                }
             }
         } else if (i == R.id.mTvSkip) { //跳过按钮的点击响应
             StartActivityCommon.startActivity(this, CommunityActivity.class);
@@ -123,13 +126,14 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
         Picasso.with(this)
                 .load(guideBean.getImg())
                 .into(mImageView);
-        String type = "评论量：";
+        String type = "评论量： ";
         if (guideBean.getShow_type() == 1){
-            type = "访问量：";
+            type = "访问量： ";
         }else if (guideBean.getShow_type() == 3){
-            type = "发帖量：";
+            type = "发帖量： ";
         }
-        mTvBottomData.setText(type + guideBean.getShow_data());
+        tvType.setText(type);
+        mTvBottomData.setText(""+guideBean.getShow_data());
     }
 
     @Override
