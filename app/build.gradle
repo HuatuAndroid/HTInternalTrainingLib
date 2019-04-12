@@ -19,7 +19,7 @@ android {
              }
     compileSdkVersion 27
     defaultConfig {
-//        applicationId "com.example.seele.newht"
+        //applicationId "com.example.seele.newht"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
