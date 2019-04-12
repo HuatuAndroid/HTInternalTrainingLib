@@ -1,8 +1,5 @@
 package com.example.module_employees_world.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -90,36 +87,6 @@ public class PostDetailBean implements Serializable {
         @SerializedName("content_img")
         public List<String> contentImg;
 
-        protected QuestionInfoBean(Parcel in) {
-            id = in.readInt();
-            groupId = in.readInt();
-            title = in.readString();
-            content = in.readString();
-            likeCount = in.readInt();
-            readCount = in.readInt();
-            commentCount = in.readInt();
-            isEssence = in.readInt();
-            isTop = in.readInt();
-            isRecommend = in.readInt();
-            isAnonymity = in.readInt();
-            type = in.readInt();
-            createdId = in.readInt();
-            createdAt = in.readString();
-            updatedAt = in.readString();
-            isDel = in.readInt();
-            deleteAt = in.readString();
-            solveStatus = in.readInt();
-            departmentName = in.readString();
-            groupName = in.readString();
-            userName = in.readString();
-            avatar = in.readString();
-            allowDel = in.readInt();
-            contentText = in.readString();
-            isCollect = in.readInt();
-            isLike = in.readInt();
-            contentImg = in.createStringArrayList();
-        }
-
 
       }
 
@@ -195,29 +162,6 @@ public class PostDetailBean implements Serializable {
         public int count;
         @SerializedName("parent")
         public List<ParentBean> parent;
-
-        protected SolveComment(Parcel in) {
-            id = in.readInt();
-            questionId = in.readInt();
-            parentId = in.readInt();
-            content = in.readString();
-            commentRule = in.readString();
-            likeCount = in.readInt();
-            commentPicture = in.readString();
-            commentFace = in.readString();
-            replyCount = in.readInt();
-            isAnonymity = in.readInt();
-            createdId = in.readInt();
-            createdAt = in.readString();
-            isDel = in.readInt();
-            solveStatus = in.readInt();
-            departmentName = in.readString();
-            userId = in.readInt();
-            userName = in.readString();
-            avatar = in.readString();
-            allowDel = in.readInt();
-            count = in.readInt();
-        }
 
     }
 
@@ -338,31 +282,6 @@ public class PostDetailBean implements Serializable {
         public String userName;
         @SerializedName("avatar")
         public String avatar;
-
-        protected RecommendListBean(Parcel in) {
-            id = in.readInt();
-            groupId = in.readInt();
-            title = in.readString();
-            content = in.readString();
-            contentPicture = in.readString();
-            likeCount = in.readInt();
-            readCount = in.readInt();
-            commentCount = in.readInt();
-            isEssence = in.readInt();
-            isTop = in.readInt();
-            isRecommend = in.readInt();
-            isAnonymity = in.readInt();
-            type = in.readInt();
-            createdId = in.readInt();
-            createdAt = in.readString();
-            updatedAt = in.readString();
-            isDel = in.readInt();
-            deleteAt = in.readString();
-            solveStatus = in.readInt();
-            groupName = in.readString();
-            userName = in.readString();
-            avatar = in.readString();
-        }
 
     }
 }
