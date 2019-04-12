@@ -41,6 +41,8 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         setContentView(R.layout.activity_search_ygtd);
         initView(savedInstanceState);
     }
