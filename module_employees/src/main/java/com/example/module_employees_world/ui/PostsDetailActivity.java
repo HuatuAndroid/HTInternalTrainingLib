@@ -40,6 +40,7 @@ import com.example.module_employees_world.bean.PostDetailBean;
 import com.example.module_employees_world.common.TutuPicInit;
 import com.example.module_employees_world.contranct.PostsDetailContranct;
 import com.example.module_employees_world.presenter.PostDetailPersenter;
+import com.example.module_employees_world.ui.group.GroupDetailsActivity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.utils.CircleTransform;
 import com.example.module_employees_world.utils.CustomMovementMethod;
@@ -655,6 +656,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         tvTime.setText(postDetailBean.questionInfo.createdAt);
         tvBrowseNum.setText("l  " + postDetailBean.questionInfo.readCount + "人浏览");
         tvTopicGroup.setText("【" + postDetailBean.questionInfo.groupName + "】");
+        tvTopicGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PostsDetailActivity.this, GroupDetailsActivity.class);
+                intent.putExtra("groupId",postDetailBean.questionInfo.groupId+"");
+                startActivity(intent);
+            }
+        });
         tvCommentNum.setText("全部评论 (" + postDetailBean.questionInfo.commentCount + ")");
         tvPostNum.setText(postDetailBean.questionInfo.commentCount + "");
         tvPostZan.setText(postDetailBean.questionInfo.likeCount + "");

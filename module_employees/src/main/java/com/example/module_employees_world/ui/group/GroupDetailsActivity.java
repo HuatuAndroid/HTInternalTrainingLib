@@ -58,7 +58,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
     protected void initView(Bundle savedInstanceState) {
         StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
-        setContentView(R.layout.activity_group_detail);
+        setContentView(R.layout.activity_group_detail_gongdan);
         groupId = getIntent().getStringExtra("groupId");
         if (TextUtils.isEmpty(groupId)) {
             return;
@@ -67,7 +67,7 @@ public class GroupDetailsActivity extends MvpActivity<GroupDetailsPresenter> imp
         ivBack = getViewById(R.id.ivBack);
         ivSearch = getViewById(R.id.ivSearch);
         imageView = getViewById(R.id.group_image);
-        ivPost = getViewById(R.id.ivPost);
+        ivPost = getViewById(R.id.ivPostGD);
         title = getViewById(R.id.group_title);
         num = getViewById(R.id.group_num);
         join = getViewById(R.id.group_join);
