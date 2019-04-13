@@ -6,31 +6,37 @@
     <uses-permission android:name="android.permission.FLAG_GRANT_READ_URI_PERMISSION" />
     <uses-permission android:name="android.permission.FLAG_GRANT_WRITE_URI_PERMISSION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    
+
     <application android:theme="@style/BaseAppTheme">
-        <activity android:name=".GuideH5Activity" />
-        <activity android:name=".ui.PictuirePreviewActivity" />
-        <activity android:name=".ui.search.SearchActivity" />
+        <activity
+            android:name=".GuideH5Activity"
+            android:theme="@style/BaseAppTheme.Transparent" />
+        <activity
+            android:name=".ui.PictuirePreviewActivity"
+            android:theme="@style/BaseAppTheme.Transparent" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/BaseAppTheme.Transparent" />
         <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
         <activity
             android:name=".ui.PostsDetailActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
         <activity
             android:name=".ui.CommentDialogActivity"
             android:theme="@style/BaseAppTheme.Transparent"
             android:windowSoftInputMode="adjustPan|stateVisible" />
         <activity
             android:name=".ui.home.CommunityActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
         <activity
             android:name=".ui.CommentDetailctivity"
-            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
         <activity
             android:name=".ui.topic.TopicEditActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
@@ -38,37 +44,38 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.topic.NTopicEditActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.topic.LocalAlbumDetailActicity"
-            android:theme="@style/BaseAppTheme.Transparent"
-            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.topic.SelectGroupActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
-            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.group.GroupDetailsActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.group.MyItemActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ui.EditPostsActivity"
-            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
-            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:theme="@style/BaseAppTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.topic.LocalAlbumDetailActicity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
+        <activity
+            android:name=".ui.topic.SelectGroupActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
+        <activity
+            android:name=".ui.group.GroupDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
+        <activity
+            android:name=".ui.group.MyItemActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent" />
+        <activity
+            android:name=".ui.EditPostsActivity"
+            android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name=".utils.MProvider"
@@ -77,7 +84,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"/>
+                android:resource="@xml/filepaths" />
         </provider>
 
     </application>

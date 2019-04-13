@@ -34,6 +34,7 @@ import com.example.module_employees_world.contranct.TopicEditContranct;
 import com.example.module_employees_world.presenter.TopicEditPresenter;
 import com.example.module_employees_world.utils.AndroidBug5497Workaround;
 import com.example.module_employees_world.utils.EmojiUtils;
+import com.example.module_employees_world.utils.PhotoBitmapUtils;
 import com.example.module_employees_world.view.TopicEditView;
 import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
@@ -93,8 +94,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
-//        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         initView(savedInstanceState);
         setListener();
     }
@@ -114,7 +115,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                         for (int i = 0; i < files.size(); i++) {
 
                             String path = getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri()));
-                            imgs[i] = path;
+                            String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                            imgs[i] = rotatPath;
 
                         }
 
