@@ -93,8 +93,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
+//        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+//        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         initView(savedInstanceState);
         setListener();
     }

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nmain);
+        setContentView(R.layout.activity_main);
         mlist=this.findViewById(R.id.mlist);
 //        RichText.initCacheDir(this);
 //        RichText.debugMode = true;
