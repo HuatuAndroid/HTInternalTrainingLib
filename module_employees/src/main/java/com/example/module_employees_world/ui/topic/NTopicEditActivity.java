@@ -307,6 +307,13 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                 if (datas == null || datas.size() == 0) {
                     showShortToast("内容不能为空");
                     return;
+                }else{
+                    if (datas.size() == 1){
+                        if (TopicContentItem.TYPE_TXT.equals(datas.get(0).type) && TextUtils.isEmpty(datas.get(0).content)){
+                            showShortToast("内容不能为空");
+                            return;
+                        }
+                    }
                 }
 
                 if (TextUtils.isEmpty(groupId) || "".equals(groupId)) {
