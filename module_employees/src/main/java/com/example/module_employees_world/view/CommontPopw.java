@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.module_employees_world.R;
@@ -32,6 +34,7 @@ public class CommontPopw extends PopupWindow {
         TextView tv_canael= (TextView) mMenuView.findViewById(R.id.tv_canael);
         TextView tv_sure= (TextView) mMenuView.findViewById(R.id.tv_sure);
         TextView tv_text= (TextView) mMenuView.findViewById(R.id.tv_text);
+//        LinearLayout comont_root= mMenuView.findViewById(R.id.rl_comont_root);
         //确定
         tv_text.setText(content);
         tv_sure.setOnClickListener(sureLisener);
@@ -41,6 +44,11 @@ public class CommontPopw extends PopupWindow {
                 myDismiss();
             }
         });
+//        comont_root.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
 
         this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);

@@ -199,10 +199,10 @@ public class SelectParticipantRecycleViewAdapter extends RecyclerView.Adapter<Re
             mTvPersonalName.setText(staffsBean.name);
             mTvPersonalId.setText("工号：" + staffsBean.id);
 
-            if (TextUtils.isEmpty(staffsBean.node.name)) {
-                mTvDepartmentName.setText("");
-            }else{
+            if (staffsBean.node!=null&&!TextUtils.isEmpty(staffsBean.node.name)) {
                 mTvDepartmentName.setText(staffsBean.node.name);
+            }else{
+                mTvDepartmentName.setText("");
             }
             mTvEmail.setText(staffsBean.workEmail);
 

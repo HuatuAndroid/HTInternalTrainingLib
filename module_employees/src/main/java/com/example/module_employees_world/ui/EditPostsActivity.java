@@ -276,10 +276,21 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
         //本地图片辅助类初始化
         LocalImageHelper.init(this);
-        mEtTopicTitle.setText(title);
-        mEtTopicTitle.setFocusable(true);
-        mEtTopicTitle.setFocusableInTouchMode(true);
-        mEtTopicTitle.requestFocus();
+        //如果存在帖子类型，除去帖子类型
+        if (!TextUtils.isEmpty(title)){
+            int startIndexOf = title.indexOf("【");
+            int endIndexOf = title.indexOf("】");
+            String newTitle="";
+            if (startIndexOf>=0&&endIndexOf>=0){
+                newTitle=title.substring(endIndexOf+1,title.length());
+            }else {
+                newTitle=title;
+            }
+            mEtTopicTitle.setText(newTitle);
+            mEtTopicTitle.setFocusable(true);
+            mEtTopicTitle.setFocusableInTouchMode(true);
+            mEtTopicTitle.requestFocus();
+        }
 
         mHideView(true);
         new Thread(new Runnable() {

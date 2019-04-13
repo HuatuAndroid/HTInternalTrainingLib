@@ -718,10 +718,11 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                 tvPostType.setText("未解决");
                 ll_solve_root.setVisibility(View.GONE);
             } else {
-                tvPostType.setText("已解决");
-                ll_solve_root.setVisibility(View.VISIBLE);
+
                 //展示已采纳的评论
                 if (postDetailBean.solve_comment != null) {
+                    tvPostType.setText("已解决");
+                    ll_solve_root.setVisibility(View.VISIBLE);
                     if (postDetailBean.solve_comment.avatar != null&&!"".equals(postDetailBean.solve_comment.avatar)){
                         Picasso.with(this).load(postDetailBean.solve_comment.avatar).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(ivSoleAvatar);
                     }
@@ -930,6 +931,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
                             activity.mPresenter.deleteComment(commentId + "", partenPosition, position);
                             activity.showLoadDiaLog("");
                             activity.commontPopw.myDismiss();
+                            activity.commontPopw=null;
                         }
                     });
                     break;
