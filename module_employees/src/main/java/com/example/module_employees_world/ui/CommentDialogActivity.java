@@ -34,6 +34,7 @@ import com.example.module_employees_world.ui.emoji.EmojiItemClickListener;
 import com.example.module_employees_world.ui.emoji.EmojiKeyboardFragment;
 import com.example.module_employees_world.ui.topic.LocalAlbumDetailActicity;
 import com.example.module_employees_world.utils.EmojiUtils;
+import com.example.module_employees_world.utils.PhotoBitmapUtils;
 import com.example.module_employees_world.utils.RxBusMessageBean;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.thefinestartist.utils.log.LogUtil;
@@ -161,33 +162,38 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                     LocalImageHelper.getInstance().setResultOk(false);
                     //获取选中的图片
                     List<LocalImageHelper.LocalFile> files = LocalImageHelper.getInstance().getCheckedItems();
-                    Map<String, File> map = new HashMap<>();
+                    String[] imgs = new String[files.size()];
                     for (int i = 0; i < files.size(); i++) {
-
-                        File file = new File(getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri())));
-                        map.put("file" + i, file);
-
+                        String path = getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri()));
+                        String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                        imgs[i] = rotatPath;
                     }
-
                     //清空选中的图片
                     files.clear();
-
+                    Map<String, File> map = new HashMap<>();
+                    for (int i = 0; i < imgs.length; i++) {
+                        File file = new File(imgs[i]);
+                        map.put("file" + i, file);
+                    }
                     Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
                     etContent.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             showLoadDiaLog("");
                         }
-                    },200);
+                    },300);
                     mPresenter.commitImage(bodyMap);
 
                 } else {
                     if (data != null) {
                         String path = data.getStringExtra("mFileTemp");
-
+                        String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                        String imgs[] = {rotatPath};
                         Map<String, File> map = new HashMap<>();
-                        File file = new File(path);
-                        map.put("file", file);
+                        for (int i = 0; i < imgs.length; i++) {
+                            File file = new File(imgs[i]);
+                            map.put("file" + i, file);
+                        }
 
                         Map<String, RequestBody> bodyMap = HttpManager.newInstance().getRequestBodyMap(map, MediaType.parse("image/*"));
                         etContent.postDelayed(new Runnable() {
@@ -195,7 +201,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
                             public void run() {
                                 showLoadDiaLog("");
                             }
-                        },200);
+                        },300);
                         mPresenter.commitImage(bodyMap);
                     }
                 }
@@ -490,7 +496,7 @@ public class CommentDialogActivity extends MvpActivity<CommentSendDialogPresente
         if (pathList.size() > 0) {
             picNum = 0;
             rlImg.setVisibility(View.VISIBLE);
-            commentPicture = pathList.get(0).getPath();
+            commentPicture = HttpConfig.newInstance().getmBaseUrl() + "/"+pathList.get(0).getPath();
             GlideManager.getInstance().setCommonPhoto(ivReplyimg, R.drawable.course_image, this, HttpConfig.newInstance().getmBaseUrl() + "/" + pathList.get(0).getPath(), false);
 
             //如果上传图片，替换已有表情包

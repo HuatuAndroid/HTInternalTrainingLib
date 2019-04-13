@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -53,6 +54,7 @@ import com.example.module_employees_world.ui.topic.LocalAlbumDetailActicity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.ui.topic.SelectGroupActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
+import com.example.module_employees_world.utils.PhotoBitmapUtils;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.example.module_employees_world.view.TopicEditView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -63,6 +65,7 @@ import com.wb.baselib.base.mvp.MvpView;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.image.GlideManager;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
@@ -132,6 +135,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         myHandle = new MyHandle(this);
     }
 
@@ -149,7 +154,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                         String[] imgs = new String[files.size()];
                         for (int i = 0; i < files.size(); i++) {
                             String path = getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri()));
-                            imgs[i] = path;
+                            String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                            imgs[i] = rotatPath;
                         }
                         //清空选中的图片
                         files.clear();
@@ -171,7 +177,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                     } else {
                         if (data != null) {
                             String path = data.getStringExtra("mFileTemp");
-                            String imgs[] = {path};
+                            String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                            String imgs[] = {rotatPath};
                             Map<String, File> map = new HashMap<>();
                             for (int i = 0; i < imgs.length; i++) {
                                 File file = new File(imgs[i]);
