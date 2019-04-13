@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -64,6 +65,7 @@ import com.wb.baselib.base.mvp.MvpView;
 import com.wb.baselib.http.HttpConfig;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.image.GlideManager;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.baselib.view.NCommontPopw;
 import com.wb.baselib.view.TopBarView;
@@ -133,6 +135,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         myHandle = new MyHandle(this);
     }
 
