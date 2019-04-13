@@ -234,7 +234,7 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         type = getIntent().getIntExtra(TAG_CONTENT_TYPE,1);
         commentGroupName = getIntent().getStringExtra(TAG_CONTENT_GROUP);
 
-        topBarView = findViewById(R.id.topbarview);
+        topBarView = findViewById(R.id.edit_post_topbarview1);
         mEtTopicTitle = findViewById(R.id.mEtTopicTitle);
         etContent = findViewById(R.id.et_new_content);
         llBottom = findViewById(R.id.ll_bottom);
