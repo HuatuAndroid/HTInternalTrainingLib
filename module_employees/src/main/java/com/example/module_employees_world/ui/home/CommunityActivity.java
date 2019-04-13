@@ -61,10 +61,9 @@ public class CommunityActivity extends MvpActivity<CommunityPresenter> implement
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-       /* StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
-        */
-       setContentView(R.layout.main_new);
+        setContentView(R.layout.main_new);
         ivBack = findViewById(R.id.ivBack);
         ivContacts = findViewById(R.id.ivContacts);
         ivSearch = findViewById(R.id.ivSearch);
