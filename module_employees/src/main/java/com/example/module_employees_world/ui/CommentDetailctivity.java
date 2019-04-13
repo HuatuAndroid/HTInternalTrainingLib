@@ -296,7 +296,7 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
         }
         if (!TextUtils.isEmpty(commentDetailBean.commentPicture)){
             ivImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(ivImg, R.drawable.course_image ,this ,  HttpConfig.newInstance().getmBaseUrl()+"/"+ commentDetailBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(ivImg, R.drawable.course_image ,this , commentDetailBean.commentPicture ,false );
         }else {
             ivImg.setVisibility(View.GONE);
         }

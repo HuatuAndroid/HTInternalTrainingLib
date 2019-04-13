@@ -68,7 +68,7 @@ public class CommentChildrenAdapter extends RecyclerView.Adapter<CommentChildren
 
         if (!TextUtils.isEmpty(parentBean.commentPicture)){
             holder.ivImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context ,  HttpConfig.newInstance().getmBaseUrl()+"/"+ parentBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(holder.ivImg, R.drawable.course_image ,context ,   parentBean.commentPicture ,false );
         }else {
             holder.ivImg.setVisibility(View.GONE);
         }
