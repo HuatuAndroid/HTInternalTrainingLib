@@ -34,7 +34,7 @@
                 android:textColor="#3D3E43"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="李曼青"/>
+                android:text=""/>
 
             <TextView
                 android:id="@+id/tv_solve_part"
@@ -43,7 +43,7 @@
                 android:textColor="#999CAA"
                 android:layout_marginLeft="12sp"
                 android:textSize="11sp"
-                android:text="总裁办"/>
+                android:text=""/>
 
         </LinearLayout>
 
