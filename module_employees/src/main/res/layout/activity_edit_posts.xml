@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <com.wb.baselib.view.TopBarView
-        android:id="@+id/topbarview"
+        android:id="@+id/edit_post_topbarview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bottomLineColor="#007AFF"
@@ -30,6 +30,7 @@
         android:id="@+id/mLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/edit_post_topbarview1"
         android:orientation="vertical">
 
         <LinearLayout
