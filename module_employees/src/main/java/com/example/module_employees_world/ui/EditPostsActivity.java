@@ -53,6 +53,7 @@ import com.example.module_employees_world.ui.topic.LocalAlbumDetailActicity;
 import com.example.module_employees_world.ui.topic.NTopicEditActivity;
 import com.example.module_employees_world.ui.topic.SelectGroupActivity;
 import com.example.module_employees_world.utils.EmojiUtils;
+import com.example.module_employees_world.utils.PhotoBitmapUtils;
 import com.example.module_employees_world.utils.SoftKeyboardUtils;
 import com.example.module_employees_world.view.TopicEditView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -149,7 +150,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                         String[] imgs = new String[files.size()];
                         for (int i = 0; i < files.size(); i++) {
                             String path = getRealPathFromURI(this, Uri.parse(files.get(i).getOriginalUri()));
-                            imgs[i] = path;
+                            String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                            imgs[i] = rotatPath;
                         }
                         //清空选中的图片
                         files.clear();
@@ -171,7 +173,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                     } else {
                         if (data != null) {
                             String path = data.getStringExtra("mFileTemp");
-                            String imgs[] = {path};
+                            String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                            String imgs[] = {rotatPath};
                             Map<String, File> map = new HashMap<>();
                             for (int i = 0; i < imgs.length; i++) {
                                 File file = new File(imgs[i]);
