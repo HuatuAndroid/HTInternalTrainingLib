@@ -405,7 +405,6 @@ public class CommentDetailctivity extends MvpActivity<CommentDetailPresenter> im
                         intent.putExtra(CommentDialogActivity.TAG_COMMENT_ID,parentBean.id+"");
                         intent.putExtra(CommentDialogActivity.TAG_COMMENT_NAME,parentBean.userName);
                         activity.startActivity(intent);
-                        activity.startActivity(intent);
                     }else{
                         Toast.makeText(AppUtils.getContext(), "你已被禁言", Toast.LENGTH_SHORT).show();
                     }
