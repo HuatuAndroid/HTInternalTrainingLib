@@ -126,7 +126,8 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     } else {
                         if (data != null) {
                             String path = data.getStringExtra("mFileTemp");
-                            String ints[] = {path};
+                            String rotatPath = PhotoBitmapUtils.amendRotatePhoto(path, this);
+                            String ints[] = {rotatPath};
                             mTopicEditView.addImgs(ints);
                         }
                     }
