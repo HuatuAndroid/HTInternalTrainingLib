@@ -20,7 +20,7 @@
         <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
         <activity
             android:name=".ui.PostsDetailActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Transparent" />
         <activity
