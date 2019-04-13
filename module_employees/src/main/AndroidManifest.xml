@@ -14,6 +14,7 @@
         <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
         <activity
             android:name=".ui.PostsDetailActivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -22,6 +23,7 @@
             android:windowSoftInputMode="adjustPan|stateVisible" />
         <activity
             android:name=".ui.home.CommunityActivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -43,22 +45,27 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.topic.LocalAlbumDetailActicity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.topic.SelectGroupActivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.group.GroupDetailsActivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.group.MyItemActivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.EditPostsActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
