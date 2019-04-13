@@ -308,24 +308,24 @@ import rx.schedulers.Schedulers;
                     } else {
                         isSmall = false;
                     }
-                    if (isSmall) {
-
-                        ExtendImageView imageView = new ExtendImageView(getContext());
-                        imgLp.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                        imgLp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        iv = imageView;
-                        GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
-                        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
-                        imageView.setAspectRatioBySize(bean.w, bean.h);
-                        imageView.loadToLimitScreenSize(bean.localUrl);
-
-                    } else {
+//                    if (isSmall) {
+//
+//                        ExtendImageView imageView = new ExtendImageView(getContext());
+//                        imgLp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//                        imgLp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//                        iv = imageView;
+//                        GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+//                        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
+//                        imageView.setAspectRatioBySize(bean.w, bean.h);
+//                        imageView.loadToLimitScreenSize(bean.localUrl);
+//
+//                    } else {
                         SubsamplingScaleImageView scaleImageView = new SubsamplingScaleImageView(getContext());
                         scaleImageView.setZoomEnabled(false);
                         scaleImageView.setMaxScale(5.0f);
                         scaleImageView.setImage(ImageSource.uri(bean.localUrl));
                         iv = scaleImageView;
-                    }
+//                    }
 
                 } else {    //网络图片， 不可编辑，点击放大
 

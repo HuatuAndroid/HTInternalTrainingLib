@@ -188,7 +188,6 @@ public class HttpConfig {
         return showEmployeesWorld;
     }
 
-
     public boolean isUseCustGson() {
         return isUseCustGson;
     }

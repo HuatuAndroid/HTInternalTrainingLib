@@ -97,7 +97,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.Vi
         }
         if (!TextUtils.isEmpty(listBean.commentPicture)){
             holder.ivCommentImg.setVisibility(View.VISIBLE);
-            GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , HttpConfig.newInstance().getmBaseUrl()+"/"+ listBean.commentPicture ,false );
+            GlideManager.getInstance().setCommonPhoto(holder.ivCommentImg, R.drawable.course_image ,context , listBean.commentPicture ,false );
         }else {
             holder.ivCommentImg.setVisibility(View.GONE);
         }
