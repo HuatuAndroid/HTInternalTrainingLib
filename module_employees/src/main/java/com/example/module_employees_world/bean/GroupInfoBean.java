@@ -3,7 +3,9 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class GroupInfoBean implements Parcelable {
+import java.io.Serializable;
+
+public class GroupInfoBean implements Serializable {
 
     private String id;
     private String name;
@@ -141,30 +143,6 @@ public class GroupInfoBean implements Parcelable {
         this.is_group = is_group;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.img);
-        dest.writeString(this.introduce);
-        dest.writeString(this.notice);
-        dest.writeString(this.user_count);
-        dest.writeString(this.question_count);
-        dest.writeString(this.created_at);
-        dest.writeString(this.relation);
-        dest.writeString(this.created_id);
-        dest.writeString(this.updated_at);
-        dest.writeString(this.states);
-        dest.writeString(this.sort);
-        dest.writeString(this.created_name);
-        dest.writeString(this.is_group);
-    }
-
     public GroupInfoBean() {
     }
 
@@ -186,15 +164,4 @@ public class GroupInfoBean implements Parcelable {
         this.is_group = in.readString();
     }
 
-    public static final Creator<GroupInfoBean> CREATOR = new Creator<GroupInfoBean>() {
-        @Override
-        public GroupInfoBean createFromParcel(Parcel source) {
-            return new GroupInfoBean(source);
-        }
-
-        @Override
-        public GroupInfoBean[] newArray(int size) {
-            return new GroupInfoBean[size];
-        }
-    };
 }

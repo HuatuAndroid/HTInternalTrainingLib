@@ -3,10 +3,11 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupListBean implements Parcelable {
+public class GroupListBean implements Serializable {
 
     private int total;
     private int current_page;
@@ -36,18 +37,6 @@ public class GroupListBean implements Parcelable {
         this.list = list;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.total);
-        dest.writeInt(this.current_page);
-        dest.writeList(this.list);
-    }
-
     public GroupListBean() {
     }
 
@@ -58,16 +47,5 @@ public class GroupListBean implements Parcelable {
         in.readList(this.list, ListBean.class.getClassLoader());
     }
 
-    public static final Creator<GroupListBean> CREATOR = new Creator<GroupListBean>() {
-        @Override
-        public GroupListBean createFromParcel(Parcel source) {
-            return new GroupListBean(source);
-        }
-
-        @Override
-        public GroupListBean[] newArray(int size) {
-            return new GroupListBean[size];
-        }
-    };
 }
 

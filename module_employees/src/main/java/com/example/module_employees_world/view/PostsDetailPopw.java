@@ -80,9 +80,12 @@ public class PostsDetailPopw extends PopupWindow implements View.OnClickListener
         if (allowDel==1){
             //本人
             tv_edit.setVisibility(View.VISIBLE);
+            tv_del.setVisibility(View.VISIBLE);
         }else {
             tv_edit.setVisibility(View.GONE);
+            tv_del.setVisibility(View.GONE);
         }
+
 
         //如果info为null说明没有管理员权限，只能删除
         if (info!=null||info.size()>0){

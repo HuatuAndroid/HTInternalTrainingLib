@@ -3,7 +3,9 @@ package com.example.module_employees_world.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ListBean implements Parcelable {
+import java.io.Serializable;
+
+public class ListBean implements Serializable {
     private String id;
     private String name;
     private String img;
@@ -95,29 +97,6 @@ public class ListBean implements Parcelable {
         return relation;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.img);
-        dest.writeString(this.introduce);
-        dest.writeString(this.notice);
-        dest.writeString(this.user_count);
-        dest.writeString(this.question_count);
-        dest.writeString(this.created_at);
-        dest.writeString(this.relation);
-        dest.writeString(this.created_id);
-        dest.writeString(this.updated_at);
-        dest.writeString(this.states);
-        dest.writeString(this.sort);
-        dest.writeString(this.is_group);
-    }
-
     public ListBean() {
     }
 
@@ -138,15 +117,4 @@ public class ListBean implements Parcelable {
         this.is_group = in.readString();
     }
 
-    public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
-        @Override
-        public ListBean createFromParcel(Parcel source) {
-            return new ListBean(source);
-        }
-
-        @Override
-        public ListBean[] newArray(int size) {
-            return new ListBean[size];
-        }
-    };
 }

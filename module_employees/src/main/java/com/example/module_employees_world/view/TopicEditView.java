@@ -712,7 +712,16 @@ import rx.schedulers.Schedulers;
         if (imgs == null || imgs.length == 0) {
             return;
         }
-        rxImg(Observable.from(imgs));
+//        rxImg(Observable.from(imgs));
+        List<TopicContentItem> topicContentItems = new ArrayList<>();
+        for (String img : imgs){
+            TopicContentItem topicContentItem = new TopicContentItem(img, "");
+            topicContentItems.add(topicContentItem);
+            addImgItem(topicContentItem);
+        }
+
+
+
     }
 
     public void addImg(String path) {

@@ -95,7 +95,7 @@ public class SelectParticipantActivity extends BaseActivity<SelectParticipantCon
 
     @Override
     protected int setLayoutResouceID() {
-        return R.layout.activity_select_participannt;
+        return R.layout.activity_select_nparticipannt;
     }
 
     private void initData() {

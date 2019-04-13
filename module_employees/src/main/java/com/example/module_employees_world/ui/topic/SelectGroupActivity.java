@@ -4,15 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ListView;
 
 import com.example.module_employees_world.CommunityServiceApi;
 import com.example.module_employees_world.R;
-import com.example.module_employees_world.adapter.CommunityGroupAdapter;
 import com.example.module_employees_world.adapter.SelectGroupAdapter;
 import com.example.module_employees_world.bean.CommunityGroupBean;
 import com.example.module_employees_world.bean.ListBean;
@@ -20,21 +17,13 @@ import com.example.module_employees_world.common.CommonUtils;
 import com.example.module_employees_world.contranct.CommunityGroupContranct;
 import com.hss01248.dialog.StyledDialog;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.wangbo.smartrefresh.layout.SmartRefreshLayout;
-import com.wangbo.smartrefresh.layout.api.RefreshLayout;
-import com.wangbo.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.wangbo.smartrefresh.layout.listener.OnRefreshListener;
 import com.wb.baselib.app.AppUtils;
 import com.wb.baselib.base.activity.BaseActivity;
-import com.wb.baselib.base.activity.MvpActivity;
-import com.wb.baselib.base.mvp.BasePreaenter;
 import com.wb.baselib.bean.Result;
 import com.wb.baselib.http.HttpManager;
 import com.wb.baselib.http.exception.ApiException;
 import com.wb.baselib.http.observer.BaseObserver;
-import com.wb.baselib.utils.RefreshUtils;
-import com.wb.baselib.utils.StatusBarUtil;
-import com.wb.baselib.view.MultipleStatusView;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.view.TopBarView;
 
 import java.util.ArrayList;
@@ -73,8 +62,8 @@ public class SelectGroupActivity extends BaseActivity implements CommunityGroupC
     @Override
     protected void initView(Bundle savedInstanceState) {
 
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
 
         setContentView(R.layout.activity_select_group);
 

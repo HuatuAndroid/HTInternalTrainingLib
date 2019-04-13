@@ -2,7 +2,6 @@ package com.example.module_employees_world.ui;
 
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,10 +11,9 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.adapter.MyImageAdapter;
 import com.example.module_employees_world.view.PhotoViewPager;
 import com.wb.baselib.base.activity.BaseActivity;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PictuirePreviewActivity extends BaseActivity {
 
@@ -31,8 +29,8 @@ public class PictuirePreviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#000000"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#000000"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         setContentView(R.layout.activity_pictuire_preview);
         initView(savedInstanceState);
         setListener();

@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baijiayun.glide.Glide;
+import com.baijiayun.glide.load.resource.bitmap.CircleCrop;
+import com.baijiayun.glide.request.RequestOptions;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.SearchCommenBean;
 import com.example.module_employees_world.bean.SearchPostBean;
@@ -61,9 +64,14 @@ public class SearchCommentAdapter extends ListBaseAdapter {
         } else {
             viewHolder.tvPostName.setText(searchCommenBean.getUser_name() + "");
         }
+
         //头像统一由服务器获取
-        if (!TextUtils.isEmpty(searchCommenBean.getAvatar()))
-            Picasso.with(context).load(searchCommenBean.getAvatar()).error(R.drawable.user_head).placeholder(R.drawable.user_head).transform(new CircleTransform()).into(viewHolder.ivHead);
+        if (!TextUtils.isEmpty(searchCommenBean.getAvatar())) {
+            Glide.with(context).load(searchCommenBean.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(viewHolder.ivHead);
+        }
+
         viewHolder.tvPart.setText(searchCommenBean.getDepartment_name());
         viewHolder.tvTime.setText(searchCommenBean.getCreated_at());
 

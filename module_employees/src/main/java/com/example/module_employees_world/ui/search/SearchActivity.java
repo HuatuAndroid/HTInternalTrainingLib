@@ -21,7 +21,7 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.wb.baselib.adapter.ViewPageTabAdapter;
 import com.wb.baselib.base.activity.BaseActivity;
-import com.wb.baselib.utils.StatusBarUtil;
+import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.rxbus.taskBean.RxBus;
 
@@ -41,8 +41,8 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusLayout(this, Color.parseColor("#007AFF"));
-        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
+        StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
+        StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         setContentView(R.layout.activity_search_ygtd);
         initView(savedInstanceState);
     }

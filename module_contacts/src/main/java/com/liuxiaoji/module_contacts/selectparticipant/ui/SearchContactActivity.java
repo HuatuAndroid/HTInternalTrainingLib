@@ -122,7 +122,7 @@ public class SearchContactActivity extends BaseActivity<SearchContactContract.Vi
 
     @Override
     protected int setLayoutResouceID() {
-        return R.layout.activity_search_contact;
+        return R.layout.activity_search_ncontact;
     }
 
     @Override

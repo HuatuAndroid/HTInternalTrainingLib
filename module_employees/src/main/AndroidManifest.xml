@@ -26,6 +26,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.CommentDetailctivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -35,6 +36,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.topic.NTopicEditActivity"
+            android:theme="@style/BaseAppTheme.Transparent"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"
