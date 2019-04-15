@@ -10,71 +10,71 @@
     <application android:theme="@style/BaseAppTheme">
         <activity
             android:name=".GuideH5Activity"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.PictuirePreviewActivity"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.search.SearchActivity"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity android:name=".ui.GuideActivity" /> <!-- <activity android:name=".ui.home.EmplayeesActivity" /> -->
         <activity
             android:name=".ui.PostsDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.CommentDialogActivity"
-            android:theme="@style/BaseAppTheme.Transparent"
+            android:theme="@style/BaseAppTheme.BGTransparent"
             android:windowSoftInputMode="adjustPan|stateVisible" />
         <activity
             android:name=".ui.home.CommunityActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.CommentDetailctivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
-        <activity
+            android:theme="@style/BaseAppTheme.BGTransparent" />
+        <!--<activity
             android:name=".ui.topic.TopicEditActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" />-->
         <activity
             android:name=".ui.topic.NTopicEditActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent"
+            android:theme="@style/BaseAppTheme.BGTransparent"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.topic.LocalAlbumDetailActicity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.topic.SelectGroupActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.group.GroupDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.group.MyItemActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent" />
+            android:theme="@style/BaseAppTheme.BGTransparent" />
         <activity
             android:name=".ui.EditPostsActivity"
             android:configChanges="orientation|keyboardHidden|locale|layoutDirection"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Transparent"
+            android:theme="@style/BaseAppTheme.BGTransparent"
             android:windowSoftInputMode="adjustResize" />
 
         <provider
