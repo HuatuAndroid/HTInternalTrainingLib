@@ -11,11 +11,17 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@style/activity_dh</item>
     </style>
-    <style name="BaseAppTheme.Transparent" >
+    <style name="BaseAppTheme.Transparent">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@style/activity_dh</item>
     </style>
+
+    <style name="BaseAppTheme.BGTransparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/activity_dh</item>
+    </style>
+
     <!--activity切换动画-->
     <style name="activity_dh" parent="@android:style/Animation">
         <!--<item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>-->
