@@ -75,7 +75,7 @@
                                 android:textColor="#3D3E43"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="李曼青"/>
+                                android:text=""/>
 
                             <TextView
                                 android:id="@+id/tv_comment_detail_part"
@@ -84,7 +84,7 @@
                                 android:textColor="#999CAA"
                                 android:layout_marginLeft="12sp"
                                 android:textSize="11sp"
-                                android:text="总裁办"/>
+                                android:text=""/>
 
                         </LinearLayout>
 
@@ -197,7 +197,7 @@
                         android:textColor="#3D3E43"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:text="2条回复 "/>
+                        android:text=""/>
 
                     <com.wb.baselib.view.MultipleStatusView
                         android:id="@+id/comment_multipleStatusview"
@@ -236,7 +236,7 @@
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:background="@drawable/shape_post_bottom"
-            android:text="回复***"/>
+            android:text="回复"/>
         <TextView
             android:id="@+id/tv_comment_detail_send"
             android:layout_width="56dp"
