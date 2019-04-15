@@ -37,7 +37,7 @@ public class mApp extends BaseApplication {
         HttpConfig.HttpConfigBuilder httpConfig =
                 new HttpConfig.HttpConfigBuilder()
                         .setUseCustGson(true)
-                        .setmBaseUrl(TEXT_URL)
+                        .setmBaseUrl(BATE_URL)
                         .setEmployeesWorld(true)
                         .setmIsUseLog(true);
         HttpConfig.newInstanceBuild(httpConfig);

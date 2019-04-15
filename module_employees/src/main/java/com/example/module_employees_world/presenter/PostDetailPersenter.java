@@ -240,7 +240,11 @@ public class PostDetailPersenter extends PostsDetailContranct.PostDetailPresente
 
             @Override
             public void onSuccess(Result result) {
-                mView.deleteComment(position,partenPosition);
+                if (result.getStatus()==201){
+                    mView.showErrorMsg(result.getMsg());
+                }else {
+                    mView.deleteComment(position,partenPosition);
+                }
             }
 
             @Override

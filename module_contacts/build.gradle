@@ -63,7 +63,7 @@ dependencies {
 
 
     // glide , banner 图片使用 ,为了和图片选择的一起裁剪，4.3.0
-    implementation 'com.github.bumptech.glide:glide:4.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 
     // okhttplog
