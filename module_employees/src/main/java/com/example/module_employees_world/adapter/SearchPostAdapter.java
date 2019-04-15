@@ -18,6 +18,7 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.DiscussListBean;
 import com.example.module_employees_world.bean.SearchPostBean;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.adapter.ListBaseAdapter;
 
@@ -101,7 +102,9 @@ public class SearchPostAdapter extends ListBaseAdapter {
         String start = "<font color='#FF4429'>";
         String end = "</font>";
         String content = searchPostBean.getText_img();
+        content = EmojiUtils.decode(content);
         String title = searchPostBean.getTitle();
+        title = EmojiUtils.decode(title);
         if (title.indexOf(keyword) == -1) {
             viewHolder.tvPostTitle.setText(title);
         } else {
