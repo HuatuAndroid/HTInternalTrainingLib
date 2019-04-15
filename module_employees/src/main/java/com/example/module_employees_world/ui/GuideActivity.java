@@ -26,7 +26,7 @@ import com.wb.baselib.base.activity.MvpActivity;
 public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideContranct.View {
 
     private ImageView mImageView;
-    private TextView tvType,mTvTime, mTvSkip, mTvBottomData;
+    private TextView tvType, mTvTime, mTvSkip, mTvBottomData;
     private GuideBean guideBean;
 
     @Override
@@ -49,8 +49,9 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-       mPresenter.getData();
-       mPresenter.getIsBanned();
+        mPresenter.countDown();
+        mPresenter.getData();
+        mPresenter.getIsBanned();
     }
 
     @Override
@@ -82,13 +83,13 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
         int i = v.getId();
 
         if (i == R.id.mImageView) {     //背景图片的点击响应
-            if (guideBean!=null){
-                if ((guideBean.getLink()!=null&&!"".equals(guideBean.getLink()))||(guideBean.getContent()!=null&&!"".equals(guideBean.getContent()))){
+            if (guideBean != null) {
+                if ((guideBean.getLink() != null && !"".equals(guideBean.getLink())) || (guideBean.getContent() != null && !"".equals(guideBean.getContent()))) {
                     mPresenter.onDestroy();
                     Intent intent = new Intent(this, GuideH5Activity.class);
-                    intent.putExtra("url",guideBean.getLink());
-                    intent.putExtra("title",guideBean.getTitle());
-                    intent.putExtra("content",guideBean.getContent());
+                    intent.putExtra("url", guideBean.getLink());
+                    intent.putExtra("title", guideBean.getTitle());
+                    intent.putExtra("content", guideBean.getContent());
                     startActivity(intent);
                     finish();
                 }
@@ -121,19 +122,18 @@ public class GuideActivity extends MvpActivity<GuidePresenter> implements GuideC
 
     @Override
     public void SuccessData(Object o) {
-        mPresenter.countDown();
         guideBean = (GuideBean) o;
         Picasso.with(this)
                 .load(guideBean.getImg())
                 .into(mImageView);
         String type = "评论量： ";
-        if (guideBean.getShow_type() == 1){
+        if (guideBean.getShow_type() == 1) {
             type = "访问量： ";
-        }else if (guideBean.getShow_type() == 3){
+        } else if (guideBean.getShow_type() == 3) {
             type = "发帖量： ";
         }
         tvType.setText(type);
-        mTvBottomData.setText(""+guideBean.getShow_data());
+        mTvBottomData.setText("" + guideBean.getShow_data());
     }
 
     @Override
