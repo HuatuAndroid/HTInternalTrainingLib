@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -155,6 +156,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             myHandler = null;
         }
         RxBus.getIntanceBus().unSubscribe(this);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (commontPopw!=null&&commontPopw.isShowing()){
+            return false;
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override

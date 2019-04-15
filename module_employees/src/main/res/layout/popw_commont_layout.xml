@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/rl_comont_root"
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:background="@color/transparent"/>
 
         <LinearLayout
             android:layout_width="270dp"
@@ -57,8 +56,6 @@
                     android:background="@drawable/shape_bottom_right_popw_bg"
                     android:text="确定"/>
             </LinearLayout>
-        </LinearLayout>
-
     </LinearLayout>
 
 </RelativeLayout>

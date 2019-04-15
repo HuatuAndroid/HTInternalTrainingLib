@@ -16,6 +16,7 @@ import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.SearchCommenBean;
 import com.example.module_employees_world.bean.SearchPostBean;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.adapter.ListBaseAdapter;
 
@@ -76,6 +77,7 @@ public class SearchCommentAdapter extends ListBaseAdapter {
         viewHolder.tvTime.setText(searchCommenBean.getCreated_at());
 
         String comment = searchCommenBean.getText_img();
+        comment = EmojiUtils.decode(comment);
         if (comment.indexOf(keyword)==-1){
             viewHolder.tvComment.setText(comment);
         }else {
@@ -99,7 +101,7 @@ public class SearchCommentAdapter extends ListBaseAdapter {
             }
             viewHolder.tvComment.setText(Html.fromHtml(htmlTitle));
         }
-        viewHolder.tvPostTitle.setText(searchCommenBean.getQuestion_title());
+        viewHolder.tvPostTitle.setText(EmojiUtils.decode(searchCommenBean.getQuestion_title()));
         return convertView;
     }
 

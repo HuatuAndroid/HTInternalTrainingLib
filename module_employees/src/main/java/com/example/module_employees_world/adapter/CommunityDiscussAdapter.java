@@ -17,6 +17,7 @@ import com.baijiayun.glide.request.RequestOptions;
 import com.example.module_employees_world.R;
 import com.example.module_employees_world.bean.DiscussListBean;
 import com.example.module_employees_world.utils.CircleTransform;
+import com.example.module_employees_world.utils.EmojiUtils;
 import com.squareup.picasso.Picasso;
 import com.wb.baselib.adapter.ListBaseAdapter;
 import com.wb.baselib.image.GlideManager;
@@ -106,7 +107,7 @@ public class CommunityDiscussAdapter extends ListBaseAdapter {
             } else if (discussListBean.getType() == 3) {
                 type = "【问题】";
             }*/
-            viewHolder.title.setText(type + discussListBean.getTitle());
+            viewHolder.title.setText(EmojiUtils.decode(type + discussListBean.getTitle()));
             //头像统一由服务器获取
             if (!TextUtils.isEmpty(discussListBean.getAvatar())) {
                 Glide.with(context).load(discussListBean.getAvatar())
