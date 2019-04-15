@@ -25,6 +25,8 @@ import com.wb.baselib.utils.StatusBarUtilNeiXun;
 import com.wb.baselib.utils.ToastUtils;
 import com.wb.rxbus.taskBean.RxBus;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 public class SearchActivity extends BaseActivity {
@@ -44,6 +46,7 @@ public class SearchActivity extends BaseActivity {
         StatusBarUtilNeiXun.setStatusLayout(this, Color.parseColor("#007AFF"));
         StatusBarUtilNeiXun.StatusBarDarkMode(this, StatusBarUtilNeiXun.StatusBarLightMode(this));
         setContentView(R.layout.activity_search_ygtd);
+        //EventBus.getDefault().register(this);
         initView(savedInstanceState);
     }
 
@@ -56,6 +59,12 @@ public class SearchActivity extends BaseActivity {
         scorllIndicator = findViewById(R.id.scorllIndicator);
         viewpager = getViewById(R.id.viewpager);
         setListener();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -89,7 +98,8 @@ public class SearchActivity extends BaseActivity {
                         viewpager.setOffscreenPageLimit(mFragments.size());
                         viewpager.setCurrentItem(0);
                     } else {
-                        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, v.getText().toString()));
+                        // RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, v.getText().toString()));
+                        EventBus.getDefault().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, v.getText().toString()));
                     }
                 }
                 ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);

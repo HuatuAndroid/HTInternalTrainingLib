@@ -67,6 +67,8 @@ import com.wb.baselib.view.MultipleStatusView;
 import com.wb.baselib.view.TopBarView;
 import com.wb.rxbus.taskBean.RxBus;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -823,6 +825,7 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
         hidLoadDiaLog();
         //  2019/3/29 事件通知首页刷新数据
         RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE, ""));
+        EventBus.getDefault().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE, ""));
         finish();
     }
 
@@ -849,7 +852,8 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             tvPostNum.setText(comment);
             tvCommentNum.setText("全部评论 (" + comment + ")");
         }
-        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD, comment));
+        RxBus.getIntanceBus().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE, comment));
+        EventBus.getDefault().post(new RxBusMessageBean(RxBusMessageBean.MessageType.SEARCH_POST_DELETE, comment));
     }
 
     @Override

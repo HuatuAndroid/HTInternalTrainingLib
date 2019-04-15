@@ -32,6 +32,10 @@ import com.wb.baselib.view.MyListView;
 import com.wb.rxbus.taskBean.RxBus;
 import com.wb.rxbus.taskBean.RxMessageBean;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,6 +72,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_post_message);
+        EventBus.getDefault().register(this);
         type = getArguments().getString("type");
         keyword = getArguments().getString("keyword");
         isRefresh = getArguments().getBoolean("isRefresh");
@@ -82,6 +87,7 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
         smartRefreshLayout.setEnableLoadMore(true);
         multipleStatusView.showLoading();
         mPresenter.getSerachPost(type, keyword, page);
+/*
         RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
@@ -103,7 +109,34 @@ public class PostMessageFragment extends MvpFragment<SearchPresenter> implements
                 }
             }
         });
+*/
         setListener();
+    }
+
+    @Override
+    protected void onDestroyViewLazy() {
+        super.onDestroyViewLazy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void change(RxBusMessageBean rxMessageBean) {
+        if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
+            page = 1;
+            mPresenter.getSerachPost(type, keyword, page);
+        } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_COMMENT) {
+            String total = (String) rxMessageBean.getMessage();
+            searchPostBeans.get(index).setComment_count(new Integer(total));
+            searchPostAdapter.notifyDataSetChanged();
+        } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_LIKE) {
+            String likeCount = (String) rxMessageBean.getMessage();
+            searchPostBeans.get(index).setLike_count(new Integer(likeCount));
+            searchPostAdapter.notifyDataSetChanged();
+        } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
+            page = 1;
+            keyword = (String) rxMessageBean.getMessage();
+            mPresenter.getSerachPost(type, keyword, page);
+        }
     }
 
     @Override

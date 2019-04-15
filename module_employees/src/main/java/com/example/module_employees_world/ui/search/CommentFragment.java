@@ -31,6 +31,10 @@ import com.wb.baselib.view.MyListView;
 import com.wb.rxbus.taskBean.RxBus;
 import com.wb.rxbus.taskBean.RxMessageBean;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -66,6 +70,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_post_message);
+        EventBus.getDefault().register(this);
         type = getArguments().getString("type");
         keyword = getArguments().getString("keyword");
         isRefresh = getArguments().getBoolean("isRefresh");
@@ -80,7 +85,7 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         smartRefreshLayout.setEnableLoadMore(true);
         multipleStatusView.showLoading();
         mPresenter.getSearchCommnet(type,keyword,page);
-        RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
+        /*RxBus.getIntanceBus().registerRxBus(RxBusMessageBean.class, new Consumer<RxBusMessageBean>() {
             @Override
             public void accept(RxBusMessageBean rxMessageBean) throws Exception {
                 if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
@@ -92,8 +97,20 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
                     mPresenter.getSearchCommnet(type, keyword, page);
                 }
             }
-        });
+        });*/
         setListener();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void change(RxBusMessageBean rxMessageBean) {
+        if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_POST_DELETE) {
+            page = 1;
+            mPresenter.getSearchCommnet(type, keyword, page);
+        } else if (rxMessageBean.getMessageCode() == RxBusMessageBean.MessageType.SEARCH_CHANGE_KEYWORD) {
+            page = 1;
+            keyword = (String) rxMessageBean.getMessage();
+            mPresenter.getSearchCommnet(type, keyword, page);
+        }
     }
 
     @Override
@@ -202,6 +219,12 @@ public class CommentFragment extends MvpFragment<SearchPresenter> implements Sea
         searchCommentAdapter.notifyDataSetChanged();
         multipleStatusView.showContent();
         page++;
+    }
+
+    @Override
+    protected void onDestroyViewLazy() {
+        super.onDestroyViewLazy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
