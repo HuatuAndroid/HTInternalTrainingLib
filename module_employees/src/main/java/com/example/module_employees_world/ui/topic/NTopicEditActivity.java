@@ -309,7 +309,7 @@ public class NTopicEditActivity extends MvpActivity<TopicEditPresenter> implemen
                     return;
                 }else{
                     if (datas.size() == 1){
-                        if (TopicContentItem.TYPE_TXT.equals(datas.get(0).type) && (TextUtils.isEmpty(datas.get(0).content) || "".equals(datas.get(0).content))){
+                        if (TopicContentItem.ContentType.TXT.equals(datas.get(0).type) && (TextUtils.isEmpty(datas.get(0).content) || "".equals(datas.get(0).content))){
                             showShortToast("内容不能为空");
                             return;
                         }
