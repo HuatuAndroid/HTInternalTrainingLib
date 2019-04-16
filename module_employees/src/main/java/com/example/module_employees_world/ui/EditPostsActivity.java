@@ -611,6 +611,8 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 ImageSpan span = new ImageSpan(this,bitmap, ImageSpan.ALIGN_BASELINE);
                 spannableString.setSpan(span,startIndex,endIndex+1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 position=endIndex+1;
+                //图片总数加一
+                picNum++;
             }else {
                 //已经没有img标签，退出循环
                 break;
