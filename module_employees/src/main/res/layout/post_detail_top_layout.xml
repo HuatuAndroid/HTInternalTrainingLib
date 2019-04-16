@@ -148,7 +148,7 @@
                 android:layout_below="@+id/tv_details_text"
                 android:textSize="14sp"
                 android:textColor="#007AFF"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:text="展开"/>
         </RelativeLayout>
 

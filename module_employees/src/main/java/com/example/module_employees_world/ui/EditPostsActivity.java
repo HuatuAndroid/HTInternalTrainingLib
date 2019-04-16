@@ -645,79 +645,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     }
 
     /**
-     * 加载HTML文本
-     * @param activityContent
-     * @param tvHtml
-     */
-    private void setActivityContent(final String activityContent, final EditText tvHtml) {
-        //表情解码
-        /*String decodeContent = new String(EmojiUtils.decode(activityContent.trim()));
-        for (int i = 0; i < TutuPicInit.EMOJICONS.size(); i++) {
-            String key = TutuPicInit.EMOJICONS.get(i).key;
-            if (decodeContent.contains(key)){
-                String content="<\\br><img src=\"date:res="+TutuPicInit.EMOJICONS.get(i).TutuId+"\"><\\br>";
-                decodeContent=decodeContent.replace(key,content);
-            }
-        }*/
-
-        final int screenWidth = (int) (getWindowManager().getDefaultDisplay().getWidth()*0.95);
-//        String finalDecodeContent = decodeContent;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Html.ImageGetter imageGetter = new Html.ImageGetter() {
-                    @Override
-                    public Drawable getDrawable(String source) {
-                        Drawable drawable;
-                        int resType;
-                        picNum++;
-                        //临时解决方案，介于目前前端上传图片没base64编码，web端有base64编码，判断是否通过base64编码临时解决
-                        if (source.startsWith("data:image/")){
-                            drawable = getBase64ImageNetwork(source);
-                            resType=0;
-                        }else if (source.startsWith("date:res")){
-                            String resId = source.substring(source.indexOf("=")+1, source.length());
-                            drawable = getResources().getDrawable(Integer.valueOf(resId));
-                            resType=1;
-                        }else {
-//                            drawable = getImageNetwork(source);
-                            drawable = null;
-                            resType=2;
-                        }
-
-                        if (drawable == null) {
-                            drawable = getResources().getDrawable(R.drawable.image_failure);
-                            resType=0;
-                        }
-                        switch (resType){
-                            case 0:
-                            case 2:
-                                int minimumWidth = drawable.getMinimumWidth();
-                                int minimumHeight = drawable.getMinimumHeight();
-                                int height = (int) (((float)screenWidth / minimumWidth) * minimumHeight);
-                                drawable.setBounds(0, 0,screenWidth ,height);
-                                break;
-                            case 1:
-                                //GIF大小暂写死
-                                drawable.setBounds(0, 0,360 ,360);
-                                break;
-                        }
-
-                        return drawable;
-                    }
-                };
-                final CharSequence charSequence = Html.fromHtml(activityContent, imageGetter, null);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvHtml.setText(charSequence);
-                    }
-                });
-            }
-        }).start();
-    }
-
-    /**
      * 发起图片请求
      * @param imageUrl
      * @return
@@ -769,12 +696,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
         outStream.close();
         inStream.close();
         return outStream.toByteArray();
-    }
-
-    public Drawable getBase64ImageNetwork(String imageUrl) {
-        byte[] decode = Base64.decode(imageUrl.split(",")[1], Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
-        return new BitmapDrawable(bitmap);
     }
 
     /**
@@ -843,22 +764,18 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
             int selectionStart = etContent.getSelectionStart();
             Editable text = etContent.getText();
             text.insert(selectionStart,"<br/><img src=\""+ HttpConfig.newInstance().getmBaseUrl()+"/"+pathList.get(i).getPath()+"\"><br/>");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    setTextForSpan(text.toString(),-1);
-                }
-            }).start();
-            //讲文本转为html格式重新加载数据
-            /*String toHtml = Html.toHtml(etContent.getText()).replace(" dir=\"ltr\"", "").replace("\n", "<br>");
-            toHtml = StringEscapeUtils.unescapeHtml4(toHtml);
-            setActivityContent(toHtml,etContent);*/
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setTextForSpan(etContent.getText().toString(),-1);
+            }
+        }).start();
     }
 
     @Override
     public void commitTopicData(String content) {
-        // TODO: 2019/4/6 提交编辑
+        //  2019/4/6 提交编辑
         finish();
     }
 

@@ -116,7 +116,7 @@ public class PhotoBitmapUtils{
     public static Bitmap getCompressPhoto(String path) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = false;
-        options.inSampleSize = 2; // 图片的大小设置为原来的十分之一
+        options.inSampleSize = 2; // 图片的大小设置为原来的4分之一
         Bitmap bmp = BitmapFactory.decodeFile(path, options);
         options = null;
         return bmp;

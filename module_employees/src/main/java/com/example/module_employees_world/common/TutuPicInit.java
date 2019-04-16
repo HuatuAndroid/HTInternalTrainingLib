@@ -100,4 +100,14 @@ public class TutuPicInit {
         }
         return R.drawable.image_failure;
     }
+
+    public static int hasTutuNum(String content){
+        int tutuNum=0;
+        for (int i = 0; i < EMOJICONS.size(); i++) {
+            if (content.contains(EMOJICONS.get(i).key)){
+                tutuNum++;
+            }
+        }
+        return tutuNum;
+    }
 }

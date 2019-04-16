@@ -533,10 +533,10 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
     public static Bitmap getFitSampleBitmap(InputStream inputStream) throws Exception {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
         byte[] bytes = readStream(inputStream);
         BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-        options.inSampleSize = 3;
+        options.inSampleSize = 2;
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
     }
@@ -758,14 +758,14 @@ public class PostsDetailActivity extends MvpActivity<PostDetailPersenter> implem
             }
         }
 
-        //显示“展开全部”条件：文本等于五行或者有图片
+        //显示“展开全部”条件：文本等于五行或者有图片或表情包
         tvDetailText.post(new Runnable() {
             @Override
             public void run() {
-                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0) {
+                if (tvDetailText.getLineCount() == 5 || postDetailBean.questionInfo.contentImg.size() > 0 || TutuPicInit.hasTutuNum(postDetailBean.questionInfo.contentText)>1) {
                     tvOpen.setVisibility(View.VISIBLE);
                 } else {
-                    tvOpen.setVisibility(View.INVISIBLE);
+                    tvOpen.setVisibility(View.GONE);
                 }
             }
         });
