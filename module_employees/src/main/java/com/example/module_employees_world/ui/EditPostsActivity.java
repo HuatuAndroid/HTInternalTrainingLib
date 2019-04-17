@@ -404,6 +404,18 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
 
         } else if (v.getId() == R.id.mIvPicture) {
             //点击 照片
+            String string = etContent.getText().toString();
+            int position=0;
+            while (string.contains("<img")) {
+                int startIndex = string.indexOf("<img", position);
+                int endIndex = string.indexOf(">", startIndex);
+                if (startIndex >= 0 && endIndex >= 0) {
+                    picNum++;
+                    position=endIndex;
+                }else {
+                    break;
+                }
+            }
             Intent intent = new Intent(this, LocalAlbumDetailActicity.class);
             intent.putExtra("pic_size", picNum);
             startActivityForResult(intent, CommonUtils.REQUEST_CODE_GETIMAGE_BYCROP);
@@ -612,7 +624,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
                 spannableString.setSpan(span,startIndex,endIndex+1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 position=endIndex+1;
                 //图片总数加一
-                picNum++;
             }else {
                 //已经没有img标签，退出循环
                 break;
@@ -760,7 +771,6 @@ public class EditPostsActivity extends MvpActivity<EditPostsPresenter> implement
     @Override
     public void commitImage(List<NImageBean> pathList) {
 //        hidLoadDiaLog();
-        picNum+=pathList.size();
         for (int i = 0; i < pathList.size(); i++) {
             // : 2019/2/22 图片等待添加到光标处
             int selectionStart = etContent.getSelectionStart();
